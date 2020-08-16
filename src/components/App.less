@@ -1,0 +1,530 @@
+@mainBackground: #fff;
+.mainContainer, body {
+    background: @mainBackground;
+    min-height: 100vh;
+
+    .header {
+        padding-bottom: 20px;
+        height: 60px;
+        background: @primary-color;
+        position: fixed;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        z-index: 10;
+        box-shadow: 0 6px 10px 0 rgba(255,255,255, 0.4);
+
+        .logo {
+           padding: 10px;
+           float: left;
+           
+
+           img {
+                max-height: 40px;
+                cursor: pointer;
+           }
+        }
+
+        .menuContainer {
+            float: left;
+            margin-top: 15px;
+            border-bottom: 0;
+            line-height: 30px;
+            background: @primary-color;
+            color: #fff;
+            font-weight: 600;
+
+            .menuShow {
+                display: inline-block;
+            }
+
+            .menuHide {
+                display: none;
+            }
+
+            .ant-menu-item > a {
+                color: #fff;
+                border-bottom: 2px solid transparent;
+
+                &:hover {
+                    color: rgba(255,255,255, 0.8);
+                    border-bottom: 2px solid rgba(255,255,255, 0.8);
+                }
+            }
+
+            .ant-menu-item-selected > a {
+                color: rgba(255,255,255, 0.8);
+                border-bottom: 2px solid rgba(255,255,255, 0.8);
+
+                &:hover {
+                    color: rgba(255,255,255, 0.8);
+                    border-bottom: 2px solid rgba(255,255,255, 0.8);
+                }
+            }
+            
+        }
+
+        .logout {
+            line-height: 19px;
+            float: right;
+            margin: 20px 20px 0 0;
+            background-color: @primary-color;
+
+            &.bellIcon {
+                padding-top: 1px;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .ant-anchor .anticon svg {
+                fill: #fff;
+                cursor: pointer;
+                
+            }
+            .ant-anchor:hover .anticon svg {
+                fill: rgba(255,255,255, 0.8);
+            }
+            .ant-anchor-ink {
+                display: none;
+            }
+
+            .ant-anchor span {
+                cursor: pointer;
+                color: #fff;
+
+                &:hover {
+                    color: rgba(255,255,255, 0.8);
+                }
+            }
+        }
+    }
+
+    .ant-form-item {
+        margin-bottom: 10px;
+    }
+
+    .footer {
+        background: #444;
+        height: 40px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+    }
+    .login-container {
+        
+         height: 100vh;
+
+        .loginBackground {
+            background: url(../images/Login_1.png);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            width: 100%;
+            height: calc(100vh - 120px);
+        }
+        .loginContainer {
+            width: 100%;
+            min-width: 1000px;
+            height: 120px;
+            background-color: #b30a39;
+            position: relative;
+
+        }
+
+        .logo {
+            text-align: center;
+            padding: 10px;
+            float: left;
+            position: absolute;
+            img{
+                height: 100px;
+            }
+        }
+
+        .copyRightLogin {
+            position: absolute;
+            right: 0px;
+    bottom: 0px;
+            font-size: 12px;
+            color: #fff;
+
+            img {
+                width: 150px;
+            }
+        }
+
+        .login-form {
+            // background-color: #fff;
+            // width: 100%;
+            // max-width: 500px;
+            // padding: 25px;
+            // margin: 0 auto;
+            // border-radius: 10px;
+            // box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+            
+
+            .formTitle {
+                text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    /* padding-top: 20px; */
+    line-height: 150px;
+    padding: 0 20px;
+    float: left;
+    color: #fff;
+            }
+
+            .formContainer {
+                width: 500px;
+                margin: 0 auto;
+                position: relative;
+
+                &.reset {
+                    width: 580px;
+                }
+            }
+            .formData {
+                width: 350px;
+                float: left;
+                margin: 0 20px;
+                padding-top: 7px;
+
+                .ant-form-item {
+                    margin-bottom: 2px;
+                }
+            }
+
+            .login-form-button {
+                float: left;
+                border: 0;
+                color: #b30a39;
+                background: #fff;
+                height: 40px;
+                font-size: 16px;
+                /* padding: 18px; */
+                padding: 0 30px;
+                margin-top: 27px;
+                font-weight: bold;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.7);
+                }
+            }
+
+            .login-checkbox {
+                float: left;
+                width: 150px;
+                line-height: 10px;
+
+                .ant-checkbox-wrapper {
+                    color: #fff;
+                }
+            }
+
+            .login-form-forgot {
+                font-size: 12px;
+                float: right;
+                padding: 0;
+                margin: 0;
+                height: 20px;
+                color: #fff;
+                position: relative;
+                top: -12px;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+        }
+    }
+}
+
+.mainContent {
+    padding: 100px 40px 60px;
+}
+
+.LoadingContainer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background: rgba(0,0,0,0.5);
+}
+
+.LoadingContainer .ant-spin-nested-loading > div > .ant-spin {
+    height: 100vh;
+    max-height: 100vh;
+    color: rgba(255,255,255,1)
+}
+
+.leftEle {
+    width: 300px;
+    height: 234px;
+    float: left;
+    margin: 20px;
+}
+
+.home-button {
+    width: 300px;
+    height: 234px;
+    display: inline-block;
+    position: relative;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    
+    &.btn1 {
+        background: url('../images/Data Viewer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+
+        &:hover {
+            background: url('../images/Data Viewer_Hover.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+    &.btn2 {
+        background: url('../images/Results Viewer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+
+        &:hover {
+            background: url('../images/Results Viewer_Hover.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+    &.btn3 {
+        background: url('../images/Simulator_Optimizer.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+
+        &:hover {
+            background: url('../images/Simulator_Optimizer_Hover.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+  }
+  
+
+  
+
+//   .homeContainer {
+//       text-align: center;
+//       margin-top: 50px;
+//       width: 870px;
+//       height: 180px;
+//       margin-left: auto;
+//       margin-right: auto;
+//   }
+    
+.container {
+    min-height: 100vh;
+}
+.homeContainer {
+    background: url(../images/landing_new.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+    height: calc(100vh - 120px);
+
+    .btnContainer  {
+        padding-top: calc((100vh - 394px)/2);
+        width: 1020px;
+        margin: 0 auto;
+    }
+    
+}
+
+.homeContent {
+    background: url(../images/Mesh_New.png);
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: center;
+    padding: 60px 0 0;
+}
+
+.footerCont {
+    border: 1px solid #b30a39;
+    height: 60px;
+    padding: 5px;
+    position: relative;
+}
+
+.footerLogo {
+    height: 52px;
+    width: 221px;
+    background: url(../images/footer_lge.jpg);
+    position: absolute;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: contain;
+    top: 5px;
+    right: 10px;
+}
+
+.copyRightFooter {
+    position: absolute;
+    color: #333;
+    font-size: 12px;
+    left: 0px;
+    bottom: 0px;
+     img {
+         width: 150px;
+     }
+}
+
+.login-container .ant-checkbox-wrapper span {
+    font-size: 12px;
+}
+
+.container.dataViewer, .container.simulatorContainer {
+    background: url(../images/Mesh_New.png);
+    background-repeat: repeat;
+    background-size: auto;
+    background-position: center;
+
+    .manageContainer {
+        background-color: transparent;
+
+        .tabContent, table {
+            background-color: #fff;
+        }
+
+        .manageFilters .ant-menu-horizontal {
+            max-width: 500px;
+            background: transparent;
+        }
+
+        .ant-menu-horizontal > .ant-menu-item, .ant-tabs-nav .ant-tabs-tab {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            margin-right: 5px;
+
+            &:hover {
+                color: #d17b34;
+            }
+        }
+
+        .ant-menu-horizontal > .ant-menu-item-selected, .ant-tabs-nav .ant-tabs-tab-active {
+            color: #fff;
+            font-weight: 500;
+            background: #fff;
+            margin-right: 5px;
+            background: #c55b11;
+            border: 1px solid #c55b11;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+
+            &:hover {
+                color: #d17b34;
+            }
+        }
+
+        .ant-tabs-top-bar {
+            margin-bottom: 0;
+        }
+    }
+}
+
+h4.ant-typography.emaiPass {
+    color: #fff;
+    text-align: left;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+
+    a {
+        color: #fff;
+        font-size: 12px;
+        margin-left: 166px;
+    }
+}
+
+.forget-form-button.ant-btn-primary {
+    border: 0;
+    color: #b30a39 !important;
+    background: #fff !important;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 254px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.7) !important;
+    }
+}
+.mainContainer .login-container .login-form .login_error {
+    color: #fff;
+position: absolute;
+top: 10px;
+left: 390px;
+}
+body .login-container .login-form .login_error.forget {
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 22px;
+    top: unset;
+}
+
+body .login-container .login-form .login_error.rest { 
+    right: unset;
+    top: 5px;
+    left: 390px;
+}
+
+.has-error .ant-form-explain, .has-error .ant-form-split {
+    color: #fff !important;
+}
+
+.changePasswordContainer .has-error .ant-form-explain {
+    color: #f5222d !important;
+}
+
+.changePasswordContainer .login-form-button {
+    float: right;
+}
+
+.managePopup.ant-modal {
+    width: calc(100vw - 60px) !important;
+    top: 30px;
+
+    .container.simulatorContainer {
+        background: #fff;
+        min-height: unset;
+
+        .mainContent {
+            padding: 0;
+        }
+    }
+}
+
+.resetBack  {
+    a {
+        color: #fff;
+    font-size: 12px;
+    position: relative;
+    top: 6px;
+    left: 57px;
+
+    &:hover {
+        color: #fff;
+    }
+    }
+}
+

@@ -1,0 +1,61 @@
+.manageContainer {
+    background-color: #fff;
+
+    .manageHeader {
+
+        h1 {
+            max-width: 700px;
+            float: left;
+        }
+
+        
+    }
+
+    .manageFilters {
+        clear: both;
+        
+        .ant-menu-horizontal {
+            border-bottom: 0;
+            max-width: 400px;
+            float: left;
+        }
+
+        .ant-input {
+            width: 400px;
+            float: right;
+            height: 43px;
+            margin-top: 4px;
+        }
+
+        .createButtom {
+            float: right;
+            margin-top: 7px;
+            background-color: #449d44;
+            border-color: #398439;
+            margin-left: 20px;
+
+            &:hover {
+                background-color: #5cb85c;
+                border-color: #4cae4c;
+            }
+        }
+    }
+
+    .manageTable {
+        clear: both;
+        border: 1px solid #e8e8e8;
+        overflow: hidden;
+    }
+
+    .tableActionsIcons {
+        font-size: 18px;
+        margin-right: 10px;
+        color: rgba(197,91,17.65);
+        cursor: pointer;
+
+        &.disabled {
+            cursor: default;
+            color: rgba(0, 0, 0, 0.35);;
+        }
+    }
+}

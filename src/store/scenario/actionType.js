@@ -1,0 +1,7 @@
+export const GET_SCENARIOS = 'GET_SCENARIOS';
+export const GET_MODEL_LIST = 'GET_MODEL_LIST';
+export const POST_SCENARIO = 'POST_SCENARIO';
+export const RESET_SCENARIO = 'RESET_SCENARIO';
+export const Delete_SCENARIOS = 'Delete_SCENARIOS';
+export const GET_USERS_LIST = 'GET_USERS_LIST';
+export const SHARE_SCENARIO = 'SHARE_SCENARIO';

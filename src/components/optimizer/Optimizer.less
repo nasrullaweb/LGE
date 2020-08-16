@@ -1,0 +1,286 @@
+.mainContent {
+
+  // .mainLoader {
+  //   width: 80%;
+  //   margin: 40px auto;
+  //   height: 30px;
+  //   font-size: 36px;
+  // }
+
+  .LoaderOptimize {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .LoaderOptimize .ant-spin-nested-loading > div {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .LoaderOptimize .ant-spin-nested-loading > div > .ant-spin {
+    width: 468px;
+    height: 124px;
+    font-size: 36px;
+    margin: 0 auto;
+    top: 120px;
+    right: 0;
+  }
+
+    .setPadding {
+        margin: 0 10px;
+    }
+    
+    .manageHeader {
+
+        h1 {
+            max-width: 700px;
+            float: left;
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 24px;
+            color: #c55b11;
+        }
+
+        &.bottom {
+          height: 40px;
+          margin: 20px 0;
+        }
+
+        .createButtom {
+            float: right;
+            margin-top: 7px;
+            background-color: #449d44;
+            border-color: #398439;
+            margin-left: 15px;
+
+            &.revert {
+              background-color: #c00;
+              border-color: #c00;
+            }
+
+            &:hover {
+                background-color: #5cb85c;
+                border-color: #4cae4c;
+            }
+
+            &[disabled] {
+              background-color: #aaa;
+              border: 1px solid #aaa;
+              color: #777;
+            }
+        }
+    }
+    .simulateContent {
+        padding-top: 10px;
+        clear: both;
+
+        .topSelection .ant-select {
+            margin-right: 15px;
+        }
+
+        .ant-dropdown-link {
+          display: inline-block;
+          width: 18%;
+          min-width: 190px;
+          margin-right: 2.5%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background: #999;
+          color: #fff;
+          font-weight: bold;
+
+          &.noMarginRight {
+              margin-right: 0;
+          }
+
+          .anticon {
+            float: right;
+          }
+        }
+
+        .simulateHeader {
+            margin: 20px 0;
+            background: #fff;
+            box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+        }
+
+        .card-container > .ant-tabs-card > .ant-tabs-content {
+            height: 120px;
+            margin-top: -16px;
+          }
+          
+          .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+            background: #fff;
+            padding: 15px;
+          }
+          
+          .card-container > .ant-tabs-card > .ant-tabs-bar {
+            border-color: #fff;
+          }
+          
+          .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+            border-color: transparent;
+            background: transparent;
+          }
+          
+          .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+            border-color: #fff;
+            background: #fff;
+          }
+          .card-container {
+            position: relative;
+            box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
+          }
+          .card-container .ant-tabs {
+              background-color: #f1f1f1;
+          }
+
+          .radioStyle {
+            display: block;
+            padding: 20px 0;
+          }
+
+          .messageContainer {
+            text-align: center;
+            font-size: 16px;
+            color: #c00;
+          }
+
+          .hide {
+            display: none;
+          }
+
+          .showColumns {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 1;
+            color: #fff;
+
+          }
+          .keyHeading {
+            padding: 15px;
+            background: #333;
+            //background: rgba(197,91,17,0.8);
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 0;
+            position: relative;
+
+            .selectedOptions {
+              font-size: 12px;
+              margin: 5px;
+            }
+          }
+    }
+  .components-table-demo-nested {
+    .ant-table-thead > tr > th {
+      text-align: right;
+    }
+    .ant-table-tbody > tr > td {
+      text-align: right;
+    }
+    .ant-table-thead > tr > th.leftAlign, .ant-table-tbody > tr > td.leftAlign {
+      text-align: left;
+    }
+    input {
+      text-align: right;
+    }
+    .ant-input-number {
+      margin-left: 5px;
+    }
+    .maxTD {
+      width: 165px;
+    }
+    .maxTdSpend {
+      width: 200px;
+    }
+    .maxTdSpendPer {
+      width: 65px;
+    }
+    
+  }
+}
+
+.positive {
+  color: #5cb85c !important;
+
+  span {
+    display: block;
+  }
+}
+
+.negitive {
+  color: #c00 !important;
+
+  span {
+    display: block;
+  }
+}
+
+.DropDownOverLay {
+  min-width: 190px;
+  max-width: 400px;
+
+  .ant-dropdown-menu {
+    padding: 5px 15px;
+
+    label {
+      padding: 10px 0;
+      display: block;
+    }
+  }
+}
+
+.ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
+  width: 22px;
+  height: 22px;
+  font-size: 17px;
+  line-height: 19px;
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+.ant-table .ant-table-row-indent + .ant-table-row-expand-icon.ant-table-row-expanded {
+  background-color: #c55b11;
+  border-color: #c55b11;
+}
+
+.ant-input-number .ant-input-number-handler-wrap {
+  display: none;
+}
+
+.marginTop {
+  margin-top: 15px;
+}
+
+.popUpMenuCont {
+  position: relative;
+}
+
+.popUpMenu {
+  position: absolute;
+    background: #fff;
+    z-index: 10;
+    padding: 20px;
+    left: 200px;
+    top: 0px;
+    width: 140px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.simulatorContainer .FilterSelection {
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
