@@ -20,7 +20,7 @@ export class SimpulateOptionsSelection extends React.Component {
             checkAll: false,
         },
         subBrand: {
-            checkedList: [],
+            checkedList: ['LGE'],
             indeterminate: false,
             checkAll: false,
         },
@@ -75,15 +75,15 @@ export class SimpulateOptionsSelection extends React.Component {
             //}
         }
 
-        if (props.subBrandValue !== state.subBrand.checkedList && props.subBrandOptions.length > 0 ) {
-            //return {
-                subBrand = {
-                    checkedList: props.subBrandValue,
-                    indeterminate: !!props.subBrandValue.length && props.subBrandValue.length < props.subBrandOptions.length,
-                    checkAll: props.subBrandValue.length === props.subBrandOptions.length,
-                }
-            //}
-        }
+        // if (props.subBrandValue !== state.subBrand.checkedList && props.subBrandOptions.length > 0 ) {
+        //     //return {
+        //         subBrand = {
+        //             checkedList: props.subBrandValue,
+        //             indeterminate: !!props.subBrandValue.length && props.subBrandValue.length < props.subBrandOptions.length,
+        //             checkAll: props.subBrandValue.length === props.subBrandOptions.length,
+        //         }
+        //     //}
+        // }
 
         if (props.periodValue !== state.period.checkedList && props.periodOptions.length > 0) {
             //return {
@@ -230,7 +230,7 @@ export class SimpulateOptionsSelection extends React.Component {
             :
             this.setboxOption(geographyOptions, 'geography', '', this.onGeographyChangeSingle, false)
 
-        const subBrandMenu = this.setboxOption(subBrandOptions, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true)
+        //const subBrandMenu = this.setboxOption(subBrandOptions, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true)
 
         const periodMenu = this.setboxOption(periodOptions, 'period', '', this.onPeriodChange, false)
 
@@ -266,11 +266,11 @@ export class SimpulateOptionsSelection extends React.Component {
                         </a>
                     </Dropdown>
 
-                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Sub Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
 
                     <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -374,7 +374,7 @@ export class SimpulateOptionsSelection extends React.Component {
                                         geographyList}
                                     </span>
                                 }
-                                {subBrandValue.length > 0 &&
+                                {/* {subBrandValue.length > 0 &&
                                     <span>
                                         SubBrand: {
                                         subBrandValue.map((item, index) =>
@@ -385,7 +385,7 @@ export class SimpulateOptionsSelection extends React.Component {
                                         )
                                         }
                                     </span>
-                                }
+                                } */}
                                 {periodValue.length > 0 &&
                                     <span>
                                         Time Period: {

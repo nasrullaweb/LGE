@@ -30,7 +30,7 @@ class ResultsViewer extends Component {
             checkedList: '',
         },
         region: {
-            checkedList: 'ALL',
+            checkedList: '',
         },
         brand: {
             checkedList: '',
@@ -43,7 +43,7 @@ class ResultsViewer extends Component {
         },
         modelValue: JSON.parse(sessionStorage.getItem('RmodelValue')) || '',
         geographyValue: JSON.parse(sessionStorage.getItem('RgeographyValue')) || '',
-        regionValue: 'ALL',
+        regionValue: JSON.parse(sessionStorage.getItem('RregionValue')) || '',
         brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || '',
         subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
@@ -67,11 +67,11 @@ class ResultsViewer extends Component {
             }
         }
         
-        // if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
-        //     region = {
-        //         checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
-        //     }
-        // }
+        if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
+            region = {
+                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+            }
+        }
 
         if (state.brandValue !== state.brand.checkedList) {
             brand = {
@@ -107,7 +107,6 @@ class ResultsViewer extends Component {
         this.props.clearData();
         this.props.setMenu('resultsViewer');
         this.props.history.push('/MarketingROI')
-        sessionStorage.setItem('RregionValue', 'ALL');
         
         if (JSON.parse(sessionStorage.getItem('RmodelValue'))) {
             this.props.getAllData();
@@ -127,7 +126,7 @@ class ResultsViewer extends Component {
         geography.checkedList = ''
         sessionStorage.setItem('RmodelValue', JSON.stringify(e.target.value));
         sessionStorage.removeItem('RgeographyValue');
-        //sessionStorage.removeItem('RregionValue');
+        sessionStorage.removeItem('RregionValue');
         sessionStorage.removeItem('RbrandValue');
         sessionStorage.removeItem('RsubBrandValue');
         this.props.getGeographyList(e.target.value)
@@ -136,7 +135,7 @@ class ResultsViewer extends Component {
             modelName,
             geographyValue: '',
             geography,
-            regionValue: 'ALL',
+            regionValue: '',
             brandValue: '',
             subBrandValue: '',
             tacticValue: '',
@@ -149,18 +148,18 @@ class ResultsViewer extends Component {
         const geography = {}
         geography.checkedList = e.target.value
         sessionStorage.setItem('RgeographyValue', JSON.stringify(e.target.value));
-        //sessionStorage.removeItem('RregionValue');
+        sessionStorage.removeItem('RregionValue');
         sessionStorage.removeItem('RbrandValue');
         sessionStorage.removeItem('RsubBrandValue');
-        this.props.getBrandList(modelValue, e.target.value, 'ALL')
+        this.props.getRegionList(modelValue, e.target.value)
         this.setState({
             geographyValue: e.target.value,
             geography,
-            regionValue: 'ALL',
+            regionValue: '',
             brandValue: '',
             subBrandValue: '',
             tacticValue: '',
-            message: 'Please Select Channel'
+            message: 'Please Select Brand'
         })
     }
 
@@ -180,22 +179,22 @@ class ResultsViewer extends Component {
     //     })
     // };
 
-    // onRegionChange = (e) => {
-    //     sessionStorage.setItem('RregionValue', JSON.stringify(e.target.value));
-    //     sessionStorage.removeItem('RbrandValue');
-    //     sessionStorage.removeItem('RsubBrandValue');
-    //     this.setState({
-    //         regionValue: e.target.value,
-    //         brandValue: '',
-    //         subBrandValue: '',
-    //         tacticValue: '',
-    //         message: 'Please Select Brand'
-    //     }, () => {
-    //         const { modelValue, geographyValue } = this.state
-    //         const { regionValue } =this.state
-    //         this.props.getBrandList(modelValue, geographyValue, regionValue)
-    //     })
-    // }
+    onRegionChange = (e) => {
+        sessionStorage.setItem('RregionValue', JSON.stringify(e.target.value));
+        sessionStorage.removeItem('RbrandValue');
+        sessionStorage.removeItem('RsubBrandValue');
+        this.setState({
+            regionValue: e.target.value,
+            brandValue: '',
+            subBrandValue: '',
+            tacticValue: '',
+            message: 'Please Select Channel'
+        }, () => {
+            const { modelValue, geographyValue } = this.state
+            const { regionValue } =this.state
+            this.props.getBrandList(modelValue, geographyValue, regionValue)
+        })
+    }
 
     onBrandChange = (e) => {
         sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.value));
@@ -235,7 +234,6 @@ class ResultsViewer extends Component {
             subBrandValue: e.target.value,
             tacticValue: '',
             message: '',
-            regionValue: 'ALL'
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue } =this.state
@@ -303,7 +301,7 @@ class ResultsViewer extends Component {
                         <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
                             {
                                 listOption.map((option) =>
-                                    <Radio value={option} key={option}>{option}</Radio>
+                                    <Radio value={option}>{option}</Radio>
                                 )
                             }
                         </Radio.Group>
@@ -323,7 +321,7 @@ class ResultsViewer extends Component {
         const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, message, messageTac } = this.state
         const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
-        //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
         const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
@@ -351,11 +349,11 @@ class ResultsViewer extends Component {
                                     Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                            {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Region <Icon type="caret-down" theme="outlined" />
+                                    Brand <Icon type="caret-down" theme="outlined" />
                                 </a>
-                            </Dropdown> */}
+                            </Dropdown>
                             <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Channel <Icon type="caret-down" theme="outlined" />
@@ -380,11 +378,11 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {/* {regionValue &&
+                                                {regionValue &&
                                                     <span>
-                                                        Region: {regionValue}
+                                                        Brand: {regionValue}
                                                     </span>
-                                                } */}
+                                                }
                                                 {brandValue &&
                                                     <span>
                                                         Channel: {brandValue}
@@ -415,11 +413,11 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {/* {regionValue &&
+                                                {regionValue &&
                                                     <span>
-                                                        Region: {regionValue}
+                                                        Brand: {regionValue}
                                                     </span>
-                                                } */}
+                                                }
                                                 {brandValue &&
                                                     <span>
                                                         Channel: {brandValue}
@@ -452,11 +450,11 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {/* {regionValue &&
+                                                {regionValue &&
                                                     <span>
-                                                        Region: {regionValue}
+                                                        Brand: {regionValue}
                                                     </span>
-                                                } */}
+                                                }
                                                 {brandValue &&
                                                     <span>
                                                         Channel: {brandValue}
@@ -502,11 +500,11 @@ class ResultsViewer extends Component {
                                                                     Geography: {geographyValue}
                                                                 </span>
                                                             }
-                                                            {/* {regionValue &&
+                                                            {regionValue &&
                                                                 <span>
-                                                                    Region: {regionValue}
+                                                                    Brand: {regionValue}
                                                                 </span>
-                                                            } */}
+                                                            }
                                                             {brandValue &&
                                                                 <span>
                                                                     Channel: {brandValue}
@@ -522,7 +520,8 @@ class ResultsViewer extends Component {
                                                                     Tactic: {tacticValue}
                                                                 </span>
                                                             } */}
-                                                            <p>Response curves are at overall level and will be the same across all models</p>
+
+                                                            <p>Response curves are at overall level and will be the same across all models.</p>
                                                         </div>
                                                     }
                                                     <div className="chartContent">

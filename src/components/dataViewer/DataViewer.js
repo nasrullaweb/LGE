@@ -7,7 +7,7 @@ import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
 import { setMenu } from '../../store/auth/actionCreator'
 import Loading from '../common/Loading'
-import { getModelList, getGeographyList, getRegionList, getAllData, clearData, getBrandList } from '../../store/dataViewer/actionCreator'
+import { getModelList, getGeographyList, getRegionList, getAllData, clearData } from '../../store/dataViewer/actionCreator'
 import MainTab from './MainTab'
 import Tab1 from './Tab1'
 import Tab2 from './Tab2'
@@ -38,7 +38,6 @@ class DataViewer extends Component {
         this.props.clearData();
         this.props.setMenu('dataViewer');
         this.props.history.push('/DataSnapshot')
-        sessionStorage.setItem('regionValue', 'ALL');
         
         if (JSON.parse(sessionStorage.getItem('modelValue'))) {
             this.props.getAllData();
@@ -53,9 +52,8 @@ class DataViewer extends Component {
         const geography = {}
         geography.checkedList = ''
         sessionStorage.setItem('modelValue', JSON.stringify(e.target.value));
-        sessionStorage.setItem('regionValue', 'ALL');
         sessionStorage.removeItem('geographyValue');
-        //sessionStorage.removeItem('regionValue');
+        sessionStorage.removeItem('regionValue');
         sessionStorage.removeItem('brandValue');
         sessionStorage.removeItem('subBrandValue');
         sessionStorage.removeItem('var2Value');
@@ -75,12 +73,12 @@ class DataViewer extends Component {
         const geography = {}
         geography.checkedList = e.target.value
         sessionStorage.setItem('geographyValue', JSON.stringify(e.target.value));
-        //sessionStorage.removeItem('regionValue');
+        sessionStorage.removeItem('regionValue');
         sessionStorage.removeItem('brandValue');
         sessionStorage.removeItem('subBrandValue');
         sessionStorage.removeItem('var2Value');
         sessionStorage.removeItem('var1Value');
-        this.props.getBrandList(modelValue, e.target.value, 'ALL')
+        this.props.getRegionList(modelValue, e.target.value)
         this.setState({
             geographyValue: e.target.value,
             message: '',
@@ -129,7 +127,7 @@ class DataViewer extends Component {
                         <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
                             {
                                 listOption.map((option) =>
-                                    <Radio value={option} key={option}>{option}</Radio>
+                                    <Radio value={option}>{option}</Radio>
                                 )
                             }
                         </Radio.Group>
@@ -144,7 +142,7 @@ class DataViewer extends Component {
     }
 
     render() {
-        const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList } = this.props
+        const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList } = this.props
         const {modelValue, geographyValue, message} = this.state
         const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
@@ -174,26 +172,26 @@ class DataViewer extends Component {
                             </Dropdown>
                             </div>
                             {
-                                modelValue && geographyValue && brandList.length > 0 &&
+                                modelValue && geographyValue && regionList.length > 0 &&
                                 <div className="manageTable">
                                     <Tabs defaultActiveKey="1" onChange={this.activateTab}>
                                         <TabPane tab="KPI vs Tactic" key="main" type="card">
                                             <MainTab
-                                                brandList = {brandList}
+                                                regionList = {regionList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
                                         </TabPane>
                                         <TabPane tab="Brand Comparison" key="tab1" type="card">
                                             <Tab1
-                                                brandList = {brandList}
+                                                regionList = {regionList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
                                         </TabPane>
                                         <TabPane tab="Tactic Comparision" key="tab2" type="card">
                                             <Tab2
-                                                brandList = {brandList}
+                                                regionList = {regionList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
@@ -217,7 +215,6 @@ const mapStateToProps = (state) => {
         modelList: state.dataViewer.modelList,
         geographyList: state.dataViewer.geographyList,
         regionList: state.dataViewer.regionList,
-        brandList: state.dataViewer.brandList,
         
     };
   }
@@ -229,7 +226,6 @@ const mapStateToProps = (state) => {
     getRegionList,
     getAllData,
     clearData,
-    getBrandList,
   }, dispatch)
   
   export default connect(mapStateToProps, mapDispatchToProps)(DataViewer)

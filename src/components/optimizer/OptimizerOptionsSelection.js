@@ -21,7 +21,7 @@ export class OptimizerOptionsSelection extends React.Component {
             checkAll: false,
         },
         subBrand: {
-            checkedList: [],
+            checkedList: ['LGE'],
             indeterminate: false,
             checkAll: false,
         },
@@ -79,15 +79,15 @@ export class OptimizerOptionsSelection extends React.Component {
             //}
         }
 
-        if (props.subBrandValue !== state.subBrand.checkedList && props.subBrandOptions.length > 0 ) {
-            //return {
-                subBrand = {
-                    checkedList: props.subBrandValue,
-                    indeterminate: !!props.subBrandValue.length && props.subBrandValue.length < props.subBrandOptions.length,
-                    checkAll: props.subBrandValue.length === props.subBrandOptions.length,
-                }
-            //}
-        }
+        // if (props.subBrandValue !== state.subBrand.checkedList && props.subBrandOptions.length > 0 ) {
+        //     //return {
+        //         subBrand = {
+        //             checkedList: props.subBrandValue,
+        //             indeterminate: !!props.subBrandValue.length && props.subBrandValue.length < props.subBrandOptions.length,
+        //             checkAll: props.subBrandValue.length === props.subBrandOptions.length,
+        //         }
+        //     //}
+        // }
 
         if (props.periodValue !== state.period.checkedList && props.periodOptions.length > 0) {
             //return {
@@ -277,7 +277,7 @@ export class OptimizerOptionsSelection extends React.Component {
             :
             this.setboxOption(geographyOptions, 'geography', '', this.onGeographyChangeSingle, false)
 
-        const subBrandMenu = this.setboxOption(subBrandOptions, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true)
+        //const subBrandMenu = this.setboxOption(subBrandOptions, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true)
 
         const periodMenu = this.setboxOption(periodOptions, 'period', '', this.onPeriodChange, false)
 
@@ -315,11 +315,11 @@ export class OptimizerOptionsSelection extends React.Component {
                         </a>
                     </Dropdown>
 
-                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Sub Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
 
                     <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -328,13 +328,13 @@ export class OptimizerOptionsSelection extends React.Component {
                     </Dropdown>
 
                     <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
-                        <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Tactic <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
 
                     <Dropdown overlay={optimizationTypeMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
-                        <a className="ant-dropdown-link marginTop" onClick={e => e.preventDefault()}>
+                        <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                             OptimizationType <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
@@ -359,7 +359,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                         geographyList}
                                     </span>
                                 }
-                                {subBrandValue && subBrandValue.length > 0 &&
+                                {/* {subBrandValue && subBrandValue.length > 0 &&
                                     <span>
                                         SubBrand: {
                                         subBrandValue.map((item, index) =>
@@ -370,7 +370,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                         )
                                         }
                                     </span>
-                                }
+                                } */}
                                 {periodValue && periodValue.length > 0 &&
                                     <span>
                                         Time Period: {

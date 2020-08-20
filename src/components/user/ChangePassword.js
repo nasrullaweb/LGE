@@ -6,6 +6,7 @@ import { Form, Input, Button, Typography } from 'antd';
 import { changePassword } from '../../store/user/actionCreator'
 import Loading from '../common/Loading'
 import { setMenu } from '../../store/auth/actionCreator'
+import { Link  } from 'react-router-dom';
 
 
 const { Text } = Typography;
@@ -68,7 +69,10 @@ class ChangePasswordForm extends Component {
                         {
                 
                             changePasswordError &&
-                            <p className='change-password_error'>{changePasswordError}</p>
+                            <p className='change-password_error'>
+                                {changePasswordError}
+                                <Link to="/home" className="backHome">Back To Home</Link>
+                            </p>
                         }
                         <Form.Item hasFeedback>
                             {getFieldDecorator('oldpassword', {

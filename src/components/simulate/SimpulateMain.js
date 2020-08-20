@@ -30,7 +30,7 @@ export class SimpulateMain extends React.Component {
         geographyList: [],
         periodValue: [],
         tacticValue: [],
-        subBrandValue: [],
+        subBrandValue: ['LGE'],
         showColumns: false,
         multiProduct: true,
         message: 'Please Select Brand',
@@ -102,7 +102,7 @@ export class SimpulateMain extends React.Component {
                 geographyList: [],
                 periodValue: [],
                 tacticValue: [],
-                subBrandValue: [],
+                subBrandValue: ['LGE'],
                 message: 'Please Select Geography'
             })
 
@@ -124,13 +124,13 @@ export class SimpulateMain extends React.Component {
         //         message: 'Please select Geography to proceed further'
         //     })
         // } else {
-            this.props.getSubBrands(this.state.brandList, value, this.props.modal)
+            this.props.getPeriod(this.props.modal)
             this.setState({
                 geographyList: value,
                 periodValue: [],
                 tacticValue: [],
-                subBrandValue: [],
-                message: 'Please Select Sub Brands'
+                subBrandValue: ['LGE'],
+                message: 'Please Select Period'
             })
         //}
     }
@@ -139,6 +139,7 @@ export class SimpulateMain extends React.Component {
         this.props.getTactics(this.state.brandList, this.state.geographyList, this.state.subBrandValue, value, this.props.modal)
         this.setState({
             periodValue: value,
+            subBrandValue: ['LGE'],
             tacticValue: [],
             message: 'Please Select Tactics'
         })
@@ -183,7 +184,7 @@ export class SimpulateMain extends React.Component {
             geographyList: [],
             periodValue: [],
             tacticValue: [],
-            subBrandValue: [],
+            subBrandValue: ['LGE'],
             brandList: [],
             message: 'Please Select Brands',
             spendNewData: [],
@@ -230,7 +231,7 @@ export class SimpulateMain extends React.Component {
                     geographyList: [],
                     periodValue: [],
                     tacticValue: [],
-                    subBrandValue: [],
+                    subBrandValue: ['LGE'],
                     brandList: [],
                     message: 'Please Select Brands',
                     spendNewData: [],
@@ -324,7 +325,7 @@ export class SimpulateMain extends React.Component {
                                 </div>
                             </Tooltip>
                         }
-                        { !this.state.spendNewData.length === 0 ?
+                        { this.state.spendNewData.length > 0 ?
                             <Tooltip title="Revert Changes">
                                 <Button type="primary" className="createButtom revert revertChanges" disabled={this.state.spendNewData.length === 0} onClick={this.handleRevertChanges} >Revert Changes</Button>
                             </Tooltip>

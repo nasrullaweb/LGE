@@ -31,7 +31,7 @@ export class SimpulateMain extends React.Component {
         geographyList: [],
         periodValue: [],
         tacticValue: [],
-        subBrandValue: [],
+        subBrandValue: ['LGE'],
         optimizationType: [],
         multiProduct: true,
         message: 'Please Select Brand',
@@ -108,7 +108,7 @@ export class SimpulateMain extends React.Component {
                 geographyList: [],
                 periodValue: [],
                 tacticValue: [],
-                subBrandValue: [],
+                subBrandValue: ['LGE'],
                 optimizationType: [],
                 setOptimizerDefault: false,
                 message: 'Please Select Geography'
@@ -132,14 +132,14 @@ export class SimpulateMain extends React.Component {
         //         message: 'Please select Geography'
         //     })
         // } else {
-            this.props.getSubBrands(this.state.brandList, value, this.props.modal)
+            this.props.getPeriod(this.props.modal)
             this.setState({
                 geographyList: value,
                 periodValue: [],
                 tacticValue: [],
-                subBrandValue: [],
+                subBrandValue: ['LGE'],
                 optimizationType: [],
-                message: 'Please Select Sub Brands',
+                message: 'Please Select Period',
                 spendNewData: [],
                 setOptimizerDefault: false,
             })
@@ -237,7 +237,7 @@ export class SimpulateMain extends React.Component {
             geographyList: [],
             periodValue: [],
             tacticValue: [],
-            subBrandValue: [],
+            subBrandValue: ['LGE'],
             brandList: [],
             optimizationType: [],
             message: 'Please Select Brands',
@@ -300,7 +300,7 @@ export class SimpulateMain extends React.Component {
                     geographyList: [],
                     periodValue: [],
                     tacticValue: [],
-                    subBrandValue: [],
+                    subBrandValue: ['LGE'],
                     brandList: [],
                     optimizationType: [],
                     message: 'Please Select Brands',

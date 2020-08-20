@@ -278,7 +278,7 @@ export function getGraphData3(modal, geography, region, brand, subBrand) {
 export function getGraphData4(modal, geography, region, brand, subBrand, tactic) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/RVCharts/GetResponsive/${modal}/${geography}/${region}/${brand}/${subBrand}/${encodeURIComponent(tactic)}`, config
+    axios.get(`${apiURL}/RVCharts/GetResponsive/${modal}/${geography}/${region}/${brand}/${subBrand}/${tactic}`, config
     )
     .then(response => {
       dispatch({
@@ -325,15 +325,15 @@ export function getAllData() {
                   type: RV_GET_REGION_LIST,
                   payload: response.data,
               })
-              //if (sessionStorage.getItem('RregionValue')) { 
-                const region = 'ALL'
-                // axios.get(`${apiURL}/RVFilters/GetBrands/${modal}/${geography}/${region}`, config
-                // )
-                // .then(response => {
-                //   dispatch({
-                //       type: RV_GET_BRAND_LIST,
-                //       payload: response.data,
-                //   })
+              if (sessionStorage.getItem('RregionValue')) { 
+                const region = JSON.parse(sessionStorage.getItem('RregionValue'))
+                axios.get(`${apiURL}/RVFilters/GetBrands/${modal}/${geography}/${region}`, config
+                )
+                .then(response => {
+                  dispatch({
+                      type: RV_GET_BRAND_LIST,
+                      payload: response.data,
+                  })
                   if (sessionStorage.getItem('RbrandValue')) { 
                     const brand = JSON.parse(sessionStorage.getItem('RbrandValue'))
                     axios.get(`${apiURL}/RVFilters/GetSubBrands/${modal}/${geography}/${region}/${brand}`, config
@@ -495,16 +495,16 @@ export function getAllData() {
               } else {
                 dispatch(ajaxCallSuccess());
               }
-           // })
-            // .catch(error => {
-            //   // dispatch(ajaxCallError());
-            //   // dispatch({
-            //   //   type: RV_GET_REGION_LIST_ERROR,
-            //   // })
-            // })
-          // } else {
-          //   dispatch(ajaxCallSuccess());
-          // }
+            })
+            .catch(error => {
+              dispatch(ajaxCallError());
+              dispatch({
+                type: RV_GET_REGION_LIST_ERROR,
+              })
+            })
+          } else {
+            dispatch(ajaxCallSuccess());
+          }
         })
         .catch(error => {
           dispatch(ajaxCallError());

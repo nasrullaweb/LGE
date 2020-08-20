@@ -12,12 +12,12 @@ class MainTab extends Component {
 
     state = {
         region: {
-            checkedList: ['ALL'],
-            indeterminate: false,
-            checkAll: false,
+            checkedList: '',
         },
         brand: {
-            checkedList: '',
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
         },
         subBrand: {
             checkedList: [],
@@ -30,30 +30,30 @@ class MainTab extends Component {
         var2: {
             checkedList: '',
         },
-        regionValue: ['ALL'],
-        brandValue: JSON.parse(sessionStorage.getItem('brandValue')) || '',
+        regionValue: JSON.parse(sessionStorage.getItem('regionValue')) || '',
+        brandValue: JSON.parse(sessionStorage.getItem('brandValue')) || [],
         subBrandValue: JSON.parse(sessionStorage.getItem('subBrandValue')) || [],
         var1Value: JSON.parse(sessionStorage.getItem('var1Value')) || '',
         var2Value: JSON.parse(sessionStorage.getItem('var2Value')) || '',
         dataChanged: true,
-        message: 'Please Select Channel'
+        message: 'Please Select Brand'
     }
 
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, var1, var2} = state
         
-        // if (state.regionValue !== state.region.checkedList) {
-        //     region = {
-        //         checkedList: state.regionValue,
-        //         indeterminate: !!state.regionValue.length && state.regionValue.length < props.regionList.length,
-        //         checkAll: state.regionValue.length === props.regionList.length,
-        //     }
-        // }
+        if (state.regionValue !== state.region.checkedList) {
+            region = {
+                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+            }
+        }
 
-        if (state.brandValue !== state.brand.checkedList) {
+        if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
-                checkedList: Array.isArray(state.brandValue) ? state.brandValue[0] : state.brandValue,
+                checkedList: state.brandValue,
+                indeterminate: !!state.brandValue.length && state.brandValue.length < props.brandList.length,
+                checkAll: state.brandValue.length === props.brandList.length,
             }
         }
 
@@ -88,53 +88,71 @@ class MainTab extends Component {
         //return { };
       }
 
-    // onCheckAllRegionChange = e => {
-    //     sessionStorage.setItem('regionValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-    //     sessionStorage.removeItem('brandValue');
-    //     sessionStorage.removeItem('subBrandValue');
-    //     sessionStorage.removeItem('var2Value');
-    //     sessionStorage.removeItem('var1Value');
-    //     this.setState({
-    //         regionValue: e.target.checked ? e.target.data_opt : [],
-    //         brandValue: '',
-    //         subBrandValue: [],
-    //         var1Value: '',
-    //         var2Value: '',
-    //         message: 'Please Select Brand'
-    //     }, () => {
-    //         const { modelValue, geographyValue } = this.props
-    //         const { regionValue } =this.state
-    //         this.props.getBrandList(modelValue, geographyValue, regionValue)
-    //     })
-    // };
-
-    // onRegionChange = (value) => {
-    //     sessionStorage.setItem('regionValue', JSON.stringify(value));
-    //     sessionStorage.removeItem('brandValue');
-    //     sessionStorage.removeItem('subBrandValue');
-    //     sessionStorage.removeItem('var2Value');
-    //     sessionStorage.removeItem('var1Value');
-    //     this.setState({
-    //         regionValue: value,
-    //         brandValue: '',
-    //         subBrandValue: [],
-    //         var1Value: '',
-    //         var2Value: '',
-    //         message: 'Please Select Brand'
-    //     }, () => {
-    //         const { modelValue, geographyValue } = this.props
-    //         const { regionValue } =this.state
-    //         this.props.getBrandList(modelValue, geographyValue, regionValue)
-    //     })
-    // }
-
-    onBrandChange = (e) => {
-        sessionStorage.setItem('brandValue', JSON.stringify(e.target.value));
+    onCheckAllRegionChange = e => {
+        sessionStorage.setItem('regionValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        sessionStorage.removeItem('brandValue');
         sessionStorage.removeItem('subBrandValue');
         sessionStorage.removeItem('var2Value');
         sessionStorage.removeItem('var1Value');
         this.setState({
-            brandValue: e.target.value,
+            regionValue: e.target.checked ? e.target.data_opt : [],
+            brandValue: [],
+            subBrandValue: [],
+            var1Value: '',
+            var2Value: '',
+            message: 'Please Select Channel'
+        }, () => {
+            const { modelValue, geographyValue } = this.props
+            const { regionValue } =this.state
+            this.props.getBrandList(modelValue, geographyValue, regionValue)
+        })
+    };
+
+    onRegionChange = (e) => {
+        sessionStorage.setItem('regionValue', JSON.stringify(e.target.value));
+        sessionStorage.removeItem('brandValue');
+        sessionStorage.removeItem('subBrandValue');
+        sessionStorage.removeItem('var2Value');
+        sessionStorage.removeItem('var1Value');
+        this.setState({
+            regionValue: e.target.value,
+            brandValue: [],
+            subBrandValue: [],
+            var1Value: '',
+            var2Value: '',
+            message: 'Please Select Channel'
+        }, () => {
+            const { modelValue, geographyValue } = this.props
+            const { regionValue } =this.state
+            this.props.getBrandList(modelValue, geographyValue, regionValue)
+        })
+    }
+
+    onCheckAllBrandChange = e => {
+        sessionStorage.setItem('brandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        sessionStorage.removeItem('subBrandValue');
+        sessionStorage.removeItem('var2Value');
+        sessionStorage.removeItem('var1Value');
+        this.setState({
+            brandValue: e.target.checked ? e.target.data_opt : [],
+            subBrandValue: [],
+            var1Value: '',
+            var2Value: '',
+            message: 'Please Select Type'
+        }, () => {
+            const { modelValue, geographyValue } = this.props
+            const { regionValue, brandValue } =this.state
+            this.props.getSubBrandList(modelValue, geographyValue, regionValue, brandValue)
+        })
+    };
+
+    onBrandChange = (value) => {
+        sessionStorage.setItem('brandValue', JSON.stringify(value));
+        sessionStorage.removeItem('subBrandValue');
+        sessionStorage.removeItem('var2Value');
+        sessionStorage.removeItem('var1Value');
+        this.setState({
+            brandValue: value,
             subBrandValue: [],
             var1Value: '',
             var2Value: '',
@@ -248,7 +266,7 @@ class MainTab extends Component {
                         <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
-                                    <Radio value={option}>{option}</Radio>
+                                    <Radio value={option} key={option}>{option}</Radio>
                                 )
                             }
                         </Radio.Group>
@@ -266,8 +284,8 @@ class MainTab extends Component {
         const { regionList, brandList, subBrandList, tacticList, graphData, geographyValue } = this.props
         const { depedentTactics = [], inDepedentTactics = [] } = tacticList
         const {regionValue, brandValue, subBrandValue, message, var2Value } = this.state
-        //const regionMenu = this.setboxOption(regionList, 'region', this.onCheckAllRegionChange, this.onRegionChange, true, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
+        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
         const var1Menu = this.setboxOption(depedentTactics, 'tactic', '', this.onVar1Change, false, 'var1')
         const var2Menu = this.setboxOption(inDepedentTactics, 'tactic', '', this.onVar2Change, false, 'var2')
@@ -280,14 +298,14 @@ class MainTab extends Component {
                         {message}
                     </div>
                 }
-                    {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            Region <Icon type="caret-down" theme="outlined" />
+                            Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown> */}
+                    </Dropdown>
                     <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            Channel <Icon type="caret-down" theme="outlined" />
+                            Channel  <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
                     <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
@@ -313,18 +331,12 @@ class MainTab extends Component {
                             Geography: {geographyValue}
                         </span>
                     }
-                    {/* {regionValue.length > 0 &&
+                    {regionValue &&
                         <span>
-                            Region: {
-                            regionValue.map((item, index) =>
-                            index === regionValue.length-1 ?
-                            `${item} `
-                            :
-                            `${item}, `
-                            )
-                            }
+                            Brand: {
+                            regionValue}
                         </span>
-                    } */}
+                    }
                     {brandValue &&
                         <span>
                             Channel: {brandValue}
@@ -361,7 +373,7 @@ class MainTab extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        //brandList: state.dataViewer.brandList,
+        brandList: state.dataViewer.brandList,
         subBrandList: state.dataViewer.subBrandList,
         tacticList: state.dataViewer.tacticList,
         graphData: state.dataViewer.graphData,

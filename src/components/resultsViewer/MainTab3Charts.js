@@ -153,7 +153,7 @@ class MainTab3Charts extends React.Component {
                       labels: {
                         show: true,
                         style: {
-                          fontSize: '12px',
+                          fontSize: '11px',
                           color: '#fff',
                           fontFamily: '"futura-pt", sans-serif',
                         },
@@ -280,14 +280,11 @@ class MainTab3Charts extends React.Component {
 
   <div id="chart">
             <div className="chartContent">
-              <div className="widthHalf titleAdded">
+              <div className="widthHalf titleAdded emptyChart">
               <div className="chartTitle">Base</div>
-              {/* <Chart
-                        options={this.state.cart3.options}
-                        series={this.state.cart3.series}
-                        type='rangeBar'
-                        height={450}
-                        /> */}
+              <div className="emptyChartdiv">
+
+              </div>
               </div>
               <div className="widthHalfRight titleAdded">
               <div className="chartTitle">Incremental</div>
