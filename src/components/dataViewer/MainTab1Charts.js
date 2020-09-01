@@ -306,7 +306,8 @@ class MainTab1Charts extends React.Component {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+                  width: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+                  curve: 'smooth',
                 },
                 xaxis: {
                   categories: [],

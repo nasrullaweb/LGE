@@ -7,6 +7,7 @@ import { changePassword } from '../../store/user/actionCreator'
 import Loading from '../common/Loading'
 import { setMenu } from '../../store/auth/actionCreator'
 import { Link  } from 'react-router-dom';
+import {PageView, initGA} from '../common/Tracking';
 
 
 const { Text } = Typography;
@@ -15,6 +16,8 @@ class ChangePasswordForm extends Component {
 
     componentDidMount() {
         this.props.setMenu('changePassword')
+        initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     }
 
     state = {

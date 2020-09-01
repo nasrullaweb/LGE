@@ -281,7 +281,9 @@ class MainTabCharts extends React.Component {
                     zoom: {
                         enabled: false
                     },
+                    
                 },
+                
                 grid: {
                   show: false,
                 },
@@ -290,7 +292,8 @@ class MainTabCharts extends React.Component {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4]
+                  width: [4, 4, 4],
+                  curve: 'smooth',
                 },
                 xaxis: {
                   type: 'datetime',

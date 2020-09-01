@@ -6,6 +6,7 @@ import logo from '../../images/Login_GFK_Logo.png';
 import copyRight from '../../images/mmmplatform.png';
 import Loading from '../common/Loading'
 import { Link  } from 'react-router-dom'; 
+import {PageView, initGA} from '../common/Tracking';
 
 import { Form, Icon, Input, Button, Checkbox, Spin, Typography  } from 'antd';
 
@@ -56,6 +57,8 @@ class ResetPasswordForm extends React.Component {
       const query = new URLSearchParams(this.props.location.search);
       const token = query.get('token')
       const emaiId = query.get('emailId')
+      initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     if (sessionStorage.getItem('user') !== null) {
       window.location = window.location.origin
     } else {

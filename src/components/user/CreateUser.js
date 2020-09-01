@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import { Form, Select, Input, Button, Typography } from 'antd';
 import './user.less'
+import {PageView, initGA} from '../common/Tracking';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 class CreateUser extends Component {
+
+    componentDidMount() {
+        this.props.setMenu('changePassword')
+        initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {

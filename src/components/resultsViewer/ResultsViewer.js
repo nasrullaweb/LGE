@@ -15,6 +15,7 @@ import MainTab1Charts from './MainTab1Charts'
 import MainTab2Charts from './MainTab2Charts'
 import MainTab4Charts from './MainTab4Charts'
 import MainTab3Charts from './MainTab3Charts'
+import {PageView, initGA} from '../common/Tracking';
 
 const CheckboxGroup = Checkbox.Group;
 const { Title } = Typography;
@@ -107,6 +108,8 @@ class ResultsViewer extends Component {
         this.props.clearData();
         this.props.setMenu('resultsViewer');
         this.props.history.push('/MarketingROI')
+        initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
         
         if (JSON.parse(sessionStorage.getItem('RmodelValue'))) {
             this.props.getAllData();

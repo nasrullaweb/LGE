@@ -7,10 +7,12 @@ import Footer from '../common/Footer.js';
 import { resetScenario, getScenarios, postScenario, getModelList } from '../../store/scenario/actionCreator'
 import { setMenu } from '../../store/auth/actionCreator'
 import CreateScenario from '../scenario/CreateScenario'
+import Scenario from '../scenario/Scenario'
 import './Simulate.less'
 import SimpulateMain from './SimpulateMain'
 import Loading from '../common/Loading'
 import { clearData, getBrands } from '../../store/simulate/actionCreator'
+import {PageView, initGA} from '../common/Tracking';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -39,6 +41,8 @@ export class Simulate extends React.Component {
     scenarioName: '',
     modal: '',
     isSimulated: false,
+    manageVisible: false,
+    url: ''
   }
 
   componentDidMount() {
@@ -48,18 +52,46 @@ export class Simulate extends React.Component {
     this.props.history.push('/simulator')
     this.props.getScenarios()
     this.props.getModelList()
+    initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     if(this.props.match.params.id && this.props.match.params.modal) {
       const scenarioId = this.props.match.params.id
       const modal= this.props.match.params.modal
       const isSimulated = this.props.match.params.isSimulated ? true : false
 
-      this.setState({scenarioId: scenarioId, modal: modal, visible: false, isSimulated: isSimulated})
+      this.setState({url: window.location.href, scenarioId: scenarioId, modal: modal, visible: false, isSimulated: isSimulated})
+    } else {
+      this.setState({url: window.location.href})
     }
   }
 
   componentWillUnmount() {
     this.props.clearData()
     this.props.resetScenario()
+  }
+
+  componentDidUpdate() {
+    if (this.state.url !== window.location.href) {
+      window.location.reload();
+    }
+  }
+
+  showManageModal = () => {
+    this.setState({
+      manageVisible: true,
+    });
+  };
+
+  handleManageOk = e => {
+    this.setState({
+      manageVisible: false,
+    });
+  };
+
+  handleManageCancel = e => {
+    this.setState({
+      manageVisible: false,
+    });
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -162,6 +194,7 @@ export class Simulate extends React.Component {
                               } 
                             </Select>
                             Or <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
+                            <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenario</Button>
                         </div>
                     }
                     {
@@ -194,6 +227,22 @@ export class Simulate extends React.Component {
                         isSimulatorOptimiser='Simulator'
                       />
                     </Modal>
+
+                    {
+                      this.state.manageVisible &&
+                        <Modal
+                          title="Manage Scenario"
+                          visible={this.state.manageVisible}
+                          onOk={this.handleManageOk}
+                          onCancel={this.handleManageCancel}
+                          className="managePopup"
+                        >
+                          <Scenario 
+                            handleManageOk={this.handleManageOk} 
+                            handleManageCancel={this.handleManageCancel} 
+                          />
+                        </Modal>
+                    }
 
                 {/* <Footer /> */}
               </div>

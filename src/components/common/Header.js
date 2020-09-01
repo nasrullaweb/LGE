@@ -104,9 +104,9 @@ export class Header extends React.Component {
                                 {/* {
                                     (currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') &&
                                     <React.Fragment> */}
-                                        <Menu.Item key="scenario" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
+                                        {/* <Menu.Item key="scenario" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
                                             <Link to="/scenario">Manage Scenarios</Link>
-                                        </Menu.Item>
+                                        </Menu.Item> */}
                                         <Menu.Item key="simulator" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
                                             <Link to="/simulator">Simulator</Link>
                                         </Menu.Item>

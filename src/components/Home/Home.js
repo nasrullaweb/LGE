@@ -7,11 +7,14 @@ import { Link  } from 'react-router-dom';
 
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
+import {PageView, initGA} from '../common/Tracking';
 
 
 export class Home extends React.Component {
   componentDidMount() {
     this.props.setMenu('home')
+      initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
   }
     render() {
             return (
@@ -31,7 +34,7 @@ export class Home extends React.Component {
                         </Link>
                       </div>
                       <div className="leftEle">
-                        <Link to="/scenario">
+                        <Link to="/simulator">
                           <button className="home-button btn3"></button>
                         </Link>
                       </div>

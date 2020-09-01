@@ -11,6 +11,7 @@ import { getModelList, getGeographyList, getRegionList, getAllData, clearData } 
 import MainTab from './MainTab'
 import Tab1 from './Tab1'
 import Tab2 from './Tab2'
+import {PageView, initGA} from '../common/Tracking';
 
 const CheckboxGroup = Checkbox.Group;
 const { Title } = Typography;
@@ -38,6 +39,8 @@ class DataViewer extends Component {
         this.props.clearData();
         this.props.setMenu('dataViewer');
         this.props.history.push('/DataSnapshot')
+        initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
         
         if (JSON.parse(sessionStorage.getItem('modelValue'))) {
             this.props.getAllData();

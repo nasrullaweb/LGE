@@ -15,6 +15,7 @@ import { setMenu } from '../../store/auth/actionCreator'
 import Moment from 'react-moment';
 import ShareScenario from './ShareScenario'
 import moment from 'moment';
+import {PageView, initGA} from '../common/Tracking';
 
 
 
@@ -46,8 +47,10 @@ export class Scenario extends React.Component {
     this.props.getScenarios()
     this.props.getModelList()
     this.props.getUsersList()
-    this.props.setMenu('scenario')
-    this.props.history.push('/scenario')
+    initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
+    // this.props.setMenu('scenario')
+    // this.props.history.push('/scenario')
   }
 
   showConfirm = (id, deleteScenario) => {
@@ -244,9 +247,9 @@ export class Scenario extends React.Component {
 
             return (
               <div className="container simulatorContainer">
-                { addedId && <Redirect to={url} /> }
+                {/* { addedId && <Redirect to={url} /> }
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header /> */}
                   <div className="mainContent">
                     <div className="manageContainer">
                       <div className="manageFilters">
@@ -261,14 +264,14 @@ export class Scenario extends React.Component {
                             All Scenarios
                           </Menu.Item>
                         </Menu>
-                        <Button type="primary" className="createButtom" onClick={this.showModal}>Create New Scenario</Button>
+                        {/* <Button type="primary" className="createButtom" onClick={this.showModal}>Create New Scenario</Button> */}
                         <Input placeholder="Search" value={this.state.searchText} onChange={this.onSearch} />
                       </div>
                       <div className="manageTable">
                         <Table columns={columns} dataSource={finalData} onChange={this.onChange} scroll={{ x: true }} />
                       </div>
                     </div>
-                    <Modal
+                    {/* <Modal
                       title="Create New Scenario"
                       visible={this.state.visible}
                       onOk={this.handleOk}
@@ -283,7 +286,7 @@ export class Scenario extends React.Component {
                         postScenarioHandle={this.postScenarioHandle}
                         visible={this.state.visible}
                       />
-                    </Modal>
+                    </Modal> */}
                     <Modal
                       title={`Share Scenario ${this.state.selectedName}`}
                       visible={this.state.shareVisible}
