@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon } from 'antd';
+import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Layout } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { setMenu, logOut } from '../../store/auth/actionCreator'
 import { Link  } from 'react-router-dom'; 
+import LefNav from '../common/LefNav.js';
 
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
@@ -11,6 +12,7 @@ import {PageView, initGA} from '../common/Tracking';
 import { getModelList, getGeographyList, getModelandGeographyList } from '../../store/dataViewer/actionCreator'
 
 const CheckboxGroup = Checkbox.Group;
+const { Sider } = Layout;
 
 export class Home extends React.Component {
   state = {
@@ -23,6 +25,7 @@ export class Home extends React.Component {
     modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
     geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
     message: 'Please Select Model',
+    collapsed: true,
 }
 
   componentDidMount() {
@@ -36,6 +39,10 @@ export class Home extends React.Component {
         this.props.getModelList();
     }
   }
+
+  onCollapse = collapsed => {
+    this.setState({ collapsed });
+  };
 
   onModelChange = (e) => {
     const modelName = {}
@@ -130,7 +137,12 @@ onGeographyChange = (e) => {
             return (
               <div className="container">
                 <Header />
-                  <div className="mainContent homeContent">
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
+                <div className="mainContent homeContent">
                     <div className="manageContainer homeContainer">
                     <div className="topSelection">
                             {
@@ -170,6 +182,8 @@ onGeographyChange = (e) => {
                     </div>
                   </div>
                 <Footer />
+                </Layout>
+              </Layout>
               </div>
              
               

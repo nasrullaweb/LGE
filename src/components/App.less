@@ -378,7 +378,7 @@
     background-repeat: repeat;
     background-size: auto;
     background-position: center;
-    padding: 60px 0 0;
+    padding: 0;
 }
 
 .footerCont {
@@ -549,3 +549,332 @@ body .login-container .login-form .login_error.rest {
     }
 }
 
+.layout {
+    height: 100vh;
+    padding-top: 60px;
+}
+
+.ant-layout-sider.layout-aside-nav {
+    background : linear-gradient(180deg, rgba(83, 83, 85, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    width : 50px;
+
+    .logo {
+        img {
+            padding: 10px;
+            width: 100%;
+        }
+    }
+
+    .ant-layout-sider-trigger {
+        background : linear-gradient(270deg, rgba(83, 83, 85, 0.22) 0%, rgba(0, 0, 0, 0.22) 100%);
+        width : 100%;
+        height : 52px;
+  border-bottom : 1px solid rgba(15, 15, 15, 0.5);
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+        i {
+            background: url(../images/LG_Menu_collapse_icon.png);
+            width: 24px;
+            height: 24px;
+            background-size: cover;
+            display: block;
+            position: relative;
+            top: 12px;
+            left: 12px;
+
+            &.anticon-left {
+                background-image: url(../images/LG_Menu_Expand_icon.png);
+            }
+
+            svg {
+                display: none;
+            }
+        }
+    }
+
+    // .ant-layout-sider-trigger {
+    //     position: absolute;
+    //     width: 16px !important;
+    //     height: 100vh;
+    //     right: -16px;
+    //     background-image: linear-gradient(to right, #aaa, #ddd);
+
+    //     .anticon-right, .anticon-left {
+    //         position: absolute;
+    //         left: 2px;
+    //         top: 50%;
+    //         margin-top: -7px;
+    //         color: #333;
+    //     }
+    // }
+    .ant-menu-inline {
+        width: 211px;
+        background: transparent;
+        padding-top: 53px;
+
+        .ant-menu-item, .ant-menu-submenu {
+            background : linear-gradient(270deg, rgba(83, 83, 85, 0.22) 0%, rgba(0, 0, 0, 0.22) 100%);
+                width : 211px;
+                height : 52px;
+        border-bottom : 1px solid rgba(15, 15, 15, 0.5);
+        cursor: pointer;
+        padding: 5px 0 !important;
+        margin: 0;
+
+            .ant-menu-submenu-title {
+                padding: 0px !important;
+            }
+
+            a::before {
+                display: none;
+            }
+            .MenuItems {
+                width: 100%;
+                display: inline-block;
+                padding-top: 2px;
+                padding-left: 10px;
+
+                .iconMenu {
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    position: relative;
+                    top: 7px;
+                    left: 12px;
+
+                    &.dataSnapshot {
+                        background: url(../images/LG_Data_Snapshot_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    &.resultViewer {
+                        background: url(../images/LG_Marketing_roi_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    &.simulator {
+                        background: url(../images/LG_Simulator_icon_Grey.png);
+                        background-size: cover;
+                    }
+
+                    &.optimizer {
+                        background: url(../images/LG_Optimizer_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    i {
+                        font-size: 20px;
+                    }
+                }
+
+                .textMenu {
+                    padding-left: 20px;
+                    line-height: 20px;
+                }
+
+            }
+
+            &.ant-menu-item-active, &.ant-menu-item-selected {
+                a::before {
+                    display: block;
+                    left: 1px;
+                    top: 14px;
+                    background : #CC1F55;
+                    width : 2px;
+                    height : 24px;
+                }
+                .MenuItems {
+    
+                    .iconMenu {
+    
+                        &.dataSnapshot {
+                            background: url(../images/LG_Data_Snapshot_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.resultViewer {
+                            background: url(../images/LG_Marketing_roi_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.simulator {
+                            background: url(../images/LG_Simulator_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.optimizer {
+                            background: url(../images/LG_Optimizer_icon_red.png);
+                            background-size: cover;
+                        }
+                    }
+    
+                }
+            }
+        }
+    }
+    .ant-menu-inline-collapsed {
+        width: 50px;
+        background: transparent;
+        padding-top: 53px;
+        
+
+        .ant-menu-item, .ant-menu-submenu {
+            background : linear-gradient(270deg, rgba(83, 83, 85, 0.22) 0%, rgba(0, 0, 0, 0.22) 100%);
+                width : 50px;
+                height : 52px;
+        border-bottom : 1px solid rgba(15, 15, 15, 0.5);
+        cursor: pointer;
+        padding: 5px 0 !important;
+        margin: 0;
+
+        a::before {
+            display: none;
+        }
+
+            .ant-menu-submenu-title {
+                padding: 0px !important;
+            }
+
+            .MenuItems {
+                width: 50px;
+                text-align: center;
+                display: inline-block;
+                padding-top: 2px;
+
+                .iconMenu {
+                    width: 20px;
+                    height: 20px;
+                    display: block;
+                    position: relative;
+                    top: 7px;
+                    left: 12px;
+
+                    &.dataSnapshot {
+                        background: url(../images/LG_Data_Snapshot_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    &.resultViewer {
+                        background: url(../images/LG_Marketing_roi_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    &.simulator {
+                        background: url(../images/LG_Simulator_icon_Grey.png);
+                        background-size: cover;
+                    }
+
+                    &.optimizer {
+                        background: url(../images/LG_Optimizer_icon_grey.png);
+                        background-size: cover;
+                    }
+
+                    i {
+                        font-size: 20px;
+                    }
+                }
+
+                .textMenu {
+                    display: none;
+                }
+            }
+
+            &.ant-menu-item-active, &.ant-menu-item-selected {
+
+                a::before {
+                    display: block;
+                    left: 1px;
+                    top: 14px;
+                    background : #CC1F55;
+                    width : 2px;
+                    height : 24px;
+                }
+                .MenuItems {
+    
+                    .iconMenu {
+    
+                        &.dataSnapshot {
+                            background: url(../images/LG_Data_Snapshot_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.resultViewer {
+                            background: url(../images/LG_Marketing_roi_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.simulator {
+                            background: url(../images/LG_Simulator_icon_red.png);
+                            background-size: cover;
+                        }
+    
+                        &.optimizer {
+                            background: url(../images/LG_Optimizer_icon_red.png);
+                            background-size: cover;
+                        }
+                    }
+    
+                }
+            }
+        }
+    }
+
+    .MenuItems.ant-dropdown-trigger {
+        width: 100%;
+        text-align: center;
+        display: inline-block;
+        padding-top: 2px;
+        margin: 5px 0;
+        
+
+        .iconMenu {
+
+            i {
+                font-size: 20px;
+                color : #B5B5B5;
+
+                &:hover {
+                    color: rgba(255, 255, 255);
+                }
+            }
+        }
+
+        .textMenu {
+            font-size : 14px;
+            color : #B5B5B5;
+
+
+            &:hover {
+                color: rgba(255, 255, 255);
+            }
+        }
+    }
+
+    &.ant-layout-sider-collapsed {
+        .MenuItems.ant-dropdown-trigger {
+            width: 100%;
+            text-align: center;
+            display: inline-block;
+            padding-top: 2px;
+            margin: 5px 0;
+
+            .iconMenu {
+                
+                i {
+                    font-size: 20px;
+                    color: rgba(255, 255, 255, 0.65);
+
+                    &:hover {
+                        color: rgba(255, 255, 255);
+                    }
+                }
+            }
+
+            .textMenu {
+                display: none;
+            }
+        }
+    }
+
+}

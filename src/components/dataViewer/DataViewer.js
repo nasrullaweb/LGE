@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout } from 'antd';
 import './DataViewer.less'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -12,10 +12,13 @@ import MainTab from './MainTab'
 import Tab1 from './Tab1'
 import Tab2 from './Tab2'
 import {PageView, initGA} from '../common/Tracking';
+import LefNav from '../common/LefNav.js';
+
 
 const CheckboxGroup = Checkbox.Group;
 const { Title } = Typography;
 const { TabPane } = Tabs;
+const { Sider } = Layout;
 
 class DataViewer extends Component {
 
@@ -29,11 +32,16 @@ class DataViewer extends Component {
         modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
         geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
         message: '',
+        collapsed: true,
     }
 
     componentWillUnmount() {
         this.props.clearData()
       }
+
+      onCollapse = collapsed => {
+        this.setState({ collapsed });
+      };
 
     componentDidMount() {
         this.props.clearData();
@@ -153,6 +161,11 @@ class DataViewer extends Component {
             <div className="container dataViewer tabsDesign">
                 {ajaxCallsInProgress > 0 && <Loading />}
                 <Header />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                 <div className="mainContent">
                     <div className="manageContainer">
                         <div className="simulateContent">
@@ -206,6 +219,8 @@ class DataViewer extends Component {
                     </div>
                 </div>
                 {/* <Footer /> */}
+                </Layout>
+              </Layout>
             </div>
         )
     }
