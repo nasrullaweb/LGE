@@ -61,11 +61,14 @@ export class Header extends React.Component {
                 {
                     (Role === 'SuperAdmin') &&
                         <Menu.Item key="user">
-                            <Link to="/users">User Management</Link>
+                            <Link to="/users"><Icon type="user" /> User Management</Link>
                         </Menu.Item>
                 }
                 <Menu.Item key="changePassword">
-                    <Link to="/changePassword">Change Password</Link>
+                    <Link to="/changePassword"><Icon type="lock" /> Change Password</Link>
+                </Menu.Item>
+                <Menu.Item key="logout">
+                    <Link onClick={this.logout}><Icon type="logout" /> Logout</Link>
                 </Menu.Item>
             </Menu>
           );
@@ -90,10 +93,7 @@ export class Header extends React.Component {
                     <Col xs={24} sm={8}>
                         { user &&
                             <div>
-                                <Anchor  className='logout'>
-                                    <span onClick={this.logout}>Logout</span>
-                                </Anchor>
-                                <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay'>
+                                <Dropdown overlay={menuSetting} trigger={['click']} overlayClassName='DropDownOverLay headerPopup'>
                                     <span className='logout bellIcon'>
                                         
                                     </span>
