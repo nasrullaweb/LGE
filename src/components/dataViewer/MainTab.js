@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { getBrandList, getSubBrandList, getTacticList, getGraphData, setGraphChange } from '../../store/dataViewer/actionCreator'
 import MainTabCharts from './MainTabCharts'
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -324,6 +325,7 @@ class MainTab extends Component {
                         </a>
                     </Dropdown>
                 </div>
+                <div className="graphContent">
                 {geographyValue &&
                 <div className="FilterSelection">
                     {geographyValue &&
@@ -357,6 +359,7 @@ class MainTab extends Component {
                 </div>
                 }
                 <div className="chartContent">
+                <ColoredScrollbars>
                     {
                         this.props.setGraphData && graphData && this.state.dataChanged &&
                         <MainTabCharts 
@@ -364,7 +367,8 @@ class MainTab extends Component {
                         var1Value={this.state.var1Value} 
                         var2Value={this.state.var2Value} />
                     }
-                    
+                    </ColoredScrollbars>
+                </div>
                 </div>
             </div>
         )

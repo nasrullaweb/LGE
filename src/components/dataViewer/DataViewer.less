@@ -74,13 +74,23 @@
         margin-top: 30px;
 
         .tabContent {
-            padding: 20px;
+            padding: 10px;
+
+            .tabHeader {
+                background : #F9F9F9;
+                min-height : 50px;
+                border-radius : 8px;
+                box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.08);
+                padding: 15px;
+            }
         }
 
         .chartContent {
-            padding: 20px 0;
-            max-width: 1000px;
-            margin: 0 auto;
+            height: calc(100vh - 260px);
+
+            .chartContent {
+                padding: 15px;
+            }
 
             .widthHalf {
                 width: calc(50% - 40px);
@@ -127,24 +137,21 @@
 
 
 .tabsDesign .ant-tabs-nav .ant-tabs-tab {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin: 0 5px 0 0;
-    padding: 12px 24px;
+    background: transparent;
+    height : 37px;
 }
 
 .tabsDesign .ant-tabs-nav .ant-tabs-tab-active {
-    color: #fff;
-    font-weight: 500;
-    background: #fff;
-    margin-right: 5px;
-    background: #c55b11;
-    border: 1px solid #c55b11;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    background : rgba(242, 242, 242, 0.1);
+    height : 37px;
+    box-shadow: inset 0px 0px 15px 0px rgba(0,0,0,0.1);
+
+
 }
+
+// .tabsDesign .ant-tabs-nav .ant-tabs-ink-bar {
+//     display: none;
+// }
 
 .tabsDesign .ant-tabs-bar {
     position: absolute;
@@ -156,9 +163,14 @@
 }
 
 .tabsDesign .manageContainer .manageTable {
-    margin-top: 80px;
+    margin-top: 40px;
     position: relative;
     overflow: unset;
+    border: 0;
+}
+
+.tabsDesign .manageContainer .ant-tabs-nav-scroll {
+    text-align: center;
 }
 
 .positveClass {
@@ -170,7 +182,7 @@
 }
 
 .dataViewer .mainContent {
-    padding: 90px 40px 60px;
+    padding: 0;
 }
 .apexcharts-xaxis-label {
     color: #c00;
@@ -179,8 +191,4 @@
 
 .tabsDesign .messageContainer {
     padding-bottom: 10px;
-}
-
-.dataViewer .tabContent .chartContent {
-    padding-top: 0 !important;
 }

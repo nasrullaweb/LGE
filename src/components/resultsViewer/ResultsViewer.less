@@ -74,7 +74,7 @@
         margin-top: 30px;
 
         .tabContent {
-            padding: 20px;
+            padding: 10px;
             position: relative;
         }
 
@@ -89,36 +89,33 @@
                 top: 10px;
             }
 
-            .ant-dropdown-link {
-                background-color: #bbb;
-
-                &.noMarginRight {
-                    margin-right: 0;
-                }
-            }
+            
         }
 
         .chartContent {
-            padding: 20px 0;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0;
+            max-width: 100%;
+            margin: 0;
 
             .widthHalf {
                 width: calc(50% - 10px);
                 padding: 10px;
-                border: 1px solid #ccc;
-                float: left;
+                border: 1px Solid rgba(198, 198, 198, 0.5);
+                border-radius : 8px;
+                background-color: #fff;
 
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
                     left: 0;
                     top: 0;
-                    background-color: #333;
+                    background : linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(249, 249, 249, 1) 47.72%, rgba(227, 227, 227, 1) 100%);
+                    height : 36px;
+                    border-radius : 8px 8px 0px 0px;
+                    border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size: 15px;
-                    font-weight: bold;
-                    color: #fff;
+                    font-size : 13px;
+                    color : #3D3D3D;
                 }
                 
                 &.titleAdded {
@@ -128,19 +125,22 @@
             .widthHalfRight {
                 width: calc(50% - 10px);
                 padding: 10px;
-                border: 1px solid #ccc;
-                float: right;
+                border: 1px Solid rgba(198, 198, 198, 0.5);
+                border-radius : 8px;
+                background-color: #fff;
 
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
                     left: 0;
                     top: 0;
-                    background-color: #333;
+                    background : linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(249, 249, 249, 1) 47.72%, rgba(227, 227, 227, 1) 100%);
+                    height : 36px;
+                    border-radius : 8px 8px 0px 0px;
+                    border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size: 15px;
-                    color:#fff;
-                    font-weight: bold;
+                    font-size : 13px;
+                    color : #3D3D3D;
                 }
                 
                 &.titleAdded {
@@ -150,18 +150,22 @@
             .downChart {
                 width: 100%;
                 padding: 10px;
-                border: 1px solid #ccc;
+                border: 1px Solid rgba(198, 198, 198, 0.5);
+                border-radius : 8px;
+                background-color: #fff;
 
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
                     left: 0;
                     top: 0;
-                    background-color: #333;
+                    background : linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(249, 249, 249, 1) 47.72%, rgba(227, 227, 227, 1) 100%);
+                    height : 36px;
+                    border-radius : 8px 8px 0px 0px;
+                    border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size: 15px;
-                    color:#fff;
-                    font-weight: bold;
+                    font-size : 13px;
+                    color : #3D3D3D;
                 }
                 
                 &.titleAdded {
@@ -184,40 +188,20 @@
     overflow-y: auto;
 }
 
-.tabsDesign .ant-tabs-nav .ant-tabs-tab {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    margin: 0 5px 0 0;
-    padding: 12px 24px;
-}
-
-.tabsDesign .ant-tabs-nav .ant-tabs-tab-active {
-    color: #fff;
-    font-weight: 500;
-    background: #fff;
-    margin-right: 5px;
-    background: #c55b11;
-    border: 1px solid #c55b11;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
 
 .tabsDesign .ant-tabs-bar {
     position: absolute;
     top: -44px;
+    width: 100%;
+    background : #F7F5F5;
+    height : 37px;
+    border-bottom: 1px Solid #d3d3d3;
 }
 
 .tabsDesign .ant-tabs {
     overflow: unset;
 }
 
-.tabsDesign .manageContainer .manageTable {
-    margin-top: 80px;
-    position: relative;
-    overflow: unset;
-}
 .chartContent {
     position: relative;
 }
@@ -231,17 +215,18 @@
     }
 }
 
-.dataViewer .mainContent {
-    padding: 90px 40px 60px;
-}
+.graphContent {
+    background: #F9F9F9;
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
 
-.FilterSelection {
-    padding: 10px 0;
-    margin: 20px 0;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-    background-color: #fff;
+    .FilterSelection {
+
+        border-bottom : 1px solid rgba(219, 219, 219, 0.5);
+        padding: 15px;
+        font-size : 12px;
+        color : #1A1B1C;
 
     p {
         margin-bottom: 0;
@@ -250,6 +235,7 @@
     span {
         padding-right: 15px;
     }
+}
 }
 
 .resultViewer .FilterSelection {
@@ -264,5 +250,13 @@
 
     .emptyChartdiv {
         height: 465px;
+    }
+}
+
+.apexcharts-toolbar {
+    top: -44px !important;
+
+    .apexcharts-menu-icon svg {
+        fill: #CC1F55;
     }
 }

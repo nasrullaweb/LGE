@@ -47,7 +47,7 @@
         }
     }
     .simulateContent {
-        padding-top: 10px;
+        padding-top: 0px;
         clear: both;
 
         .topSelection .ant-select {
@@ -55,23 +55,11 @@
         }
 
         .ant-dropdown-link {
-          display: inline-block;
-          width: 18%;
-          min-width: 190px;
-          margin-right: 2.5%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background: #999;
-          color: #fff;
-          font-weight: bold;
-
-          &.noMarginRight {
-            margin-right: 0;
-          }
+          
 
           .anticon {
             float: right;
+            line-height: 27px;
           }
         }
 
@@ -187,8 +175,46 @@
     padding: 5px 15px;
 
     label {
-      padding: 10px 0;
+      padding: 5px 0;
       display: block;
+      font-size : 12px;
+      color : #444444;
+
+      &:hover {
+        color : #CC1F55;
+      }
+
+      .ant-radio-checked .ant-radio-inner {
+        
+        border-color: #CC1F55;
+
+        &::after {
+          background-color: #CC1F55;
+        }
+      }
+
+      .ant-radio-inner {
+        &::after {
+          background-color: #CC1F55;
+        }
+      }
+      
+      .ant-checkbox-inner::after {
+        border-color: #CC1F55;
+      }
+      .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: #CC1F55;
+        border-color: #CC1F55;
+
+        &::after {
+          border-color: #fff;
+        }
+
+        
+    }
+    .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+      background-color: #CC1F55;
+  }
     }
   }
 }

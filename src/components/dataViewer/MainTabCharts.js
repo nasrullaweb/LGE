@@ -21,7 +21,7 @@ class MainTabCharts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#1976D2'],
+                colors: ['#CC1F55'],
                 plotOptions: {
                   bar: {
                     horizontal: true,
@@ -66,17 +66,15 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#8E8E8E'
                     },
                   },
                   title: {
                     text: "Sales Value (USD)",
                     style: {
-                      color: '#333',
-                      fontWeight:  'normal',
-                      fontSize:  '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      color: '#8E8E8E',
+                        fontSize: '10px',
                     }
                   },
                   axisTicks: {
@@ -84,15 +82,15 @@ class MainTabCharts extends React.Component {
                   },
                   axisBorder: {
                     show: true,
-                    color: '#999'
+                    color: '#8E8E8E'
                   },
                 },
                 yaxis: [
                   {
                     labels: {
                       style: {
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        fontSize: '10px',
+                      color: '#373D3F',
                       },
                       formatter: function (value) {
                         return Math.round(value);
@@ -103,7 +101,7 @@ class MainTabCharts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#999'
+                      color: '#8E8E8E'
                     },
                   },
                 ],
@@ -111,6 +109,10 @@ class MainTabCharts extends React.Component {
                   show: false,
                   horizontalAlign: 'center',
                   position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                   },
                   tooltip: {
                     enabled: true,
@@ -148,7 +150,7 @@ class MainTabCharts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#F57C00'],
+                colors: ['#FF9933'],
                 plotOptions: {
                   bar: {
                     horizontal: true,
@@ -193,8 +195,8 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#8E8E8E'
                     },
                   },
                   axisTicks: {
@@ -202,15 +204,13 @@ class MainTabCharts extends React.Component {
                   },
                   axisBorder: {
                     show: true,
-                    color: '#999'
+                    color: '#8E8E8E'
                   },
                   title: {
                     text: "Sales Value (USD)",
                     style: {
-                      color: '#333',
-                      fontWeight:  'normal',
-                      fontSize:  '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#8E8E8E'
                     }
                   },
                 },
@@ -218,8 +218,8 @@ class MainTabCharts extends React.Component {
                   {
                     labels: {
                       style: {
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        fontSize: '10px',
+                      color: '#373D3F',
                       },
                       formatter: function (value) {
                         return Math.round(value);
@@ -230,7 +230,7 @@ class MainTabCharts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#999'
+                      color: '#8E8E8E'
                     },
                   },
                 ],
@@ -238,6 +238,10 @@ class MainTabCharts extends React.Component {
                   show: false,
                     horizontalAlign: 'center',
                   position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                   },
                   tooltip: {
                     enabled: true,
@@ -287,12 +291,12 @@ class MainTabCharts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#1976D2', '#F57C00', '#689f38', '#e64a19'],
+                colors: ['#DB1348', '#FF9933', '#689f38', '#e64a19'],
                 dataLabels: {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4],
+                  width: [2, 2, 2],
                   curve: 'smooth',
                 },
                 xaxis: {
@@ -301,8 +305,8 @@ class MainTabCharts extends React.Component {
                   categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
                   labels: {
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#373D3F',
                     },
                     formatter: function(val) {
                       return moment(new Date(val)).format("DD MMM YY");
@@ -327,13 +331,12 @@ class MainTabCharts extends React.Component {
                     
                     axisBorder: {
                       show: true,
-                      color: '#1976D2'
+                      color: '#8E8E8E'
                     },
                     labels: {
                       style: {
-                        colors: '#1976D2',
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#8E8E8E',
+                        fontSize: '10px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -354,10 +357,9 @@ class MainTabCharts extends React.Component {
                     title: {
                       text: "Sales Value (USD)",
                       style: {
-                        color: '#1976D2',
-                        fontWeight:  'normal',
-                        fontSize:  '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#DB1348',
+                        fontWeight : 'bold',
+                        fontSize : '13px',
                       }
                     },
                     tooltip: {
@@ -372,23 +374,22 @@ class MainTabCharts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#F57C00'
+                      color: '#8E8E8E'
                     },
                     title: {
                       text: "Sales Value (USD)",
                       rotate: -90,
                       style: {
-                        color: '#F57C00',
-                        fontWeight:  'normal',
-                        fontSize:  '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#FF9933',
+                        fontWeight : 'bold',
+                        fontSize : '13px',
+                        
                       }
                     },
                     labels: {
                       style: {
-                        colors: '#F57C00',
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#8E8E8E',
+                        fontSize: '10px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -417,9 +418,13 @@ class MainTabCharts extends React.Component {
                 //   },
                 // },
                 legend: {
-                  show: false,
+                  show: true,
                   horizontalAlign: 'center',
                   position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                 },
                 tooltip: {
                   enabled: true,
@@ -427,7 +432,6 @@ class MainTabCharts extends React.Component {
                     fontSize: '12px',
                     fontFamily: undefined,
                     background: '#fff',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                   y: {
                     title: {
