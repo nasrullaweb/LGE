@@ -16,12 +16,11 @@
         box-shadow: 0 6px 10px 0 rgba(255,255,255, 0.4);
 
         .logo {
-           padding: 10px;
            float: left;
            
 
            img {
-                max-height: 40px;
+                max-height: 60px;
                 cursor: pointer;
            }
         }
@@ -68,13 +67,32 @@
         .logout {
             line-height: 19px;
             float: right;
-            margin: 20px 20px 0 0;
-            background-color: @primary-color;
+            margin: 18px 15px 0 0;
+            background-color: transparent;
 
             &.bellIcon {
-                padding-top: 1px;
-                color: #fff;
+                background: url(../images/LG_Settings_icon_white.png);
+                background-size: 100% 100%;
                 cursor: pointer;
+                width: 25px;
+                height: 25px;
+            }
+
+            &.homeIcon {
+                background: url(../images/LG_Home_icon_white.png);
+                background-size: 100% 100%;
+                cursor: pointer;
+                width: 25px;
+                height: 25px;
+            }
+
+            &.homeLogo {
+                background: url(../images/LG_GFK_Logo.png);
+                background-size: 100% 100%;
+                cursor: pointer;
+                width: 30px;
+                height: 30px;
+                margin: 17px 15px 0 0;
             }
 
             .ant-anchor .anticon svg {
@@ -877,4 +895,9 @@ body .login-container .login-form .login_error.rest {
         }
     }
 
+}
+
+body .mainContainer .header {
+    background-image: url(../images/LG_Header_bg.png);
+    background-size: 100% 100%;
 }

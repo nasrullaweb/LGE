@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col, Menu, Anchor, Icon, Dropdown } from 'antd';
-import logo from '../../images/Login_GFK_Logo.png';
+import logo from '../../images/LG_LG_Logo_Tool.png';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { setMenu, logOut } from '../../store/auth/actionCreator'
@@ -84,48 +84,7 @@ export class Header extends React.Component {
                         <div className="logo">
                             <img src={logo} />
                         </div>
-                        { user &&
-                            <Menu onClick={this.handleClick} className="menuContainer" selectedKeys={[currentMenu]} mode="horizontal">
-                                {
-                                    <Menu.Item key="home" className={currentMenu === 'home' ? 'menuHide' : 'menuShow'} >
-                                        <Link to="/home">Home</Link>
-                                    </Menu.Item>
-                                }
-                                {
-                                    <Menu.Item key="dataViewer" className={currentMenu === 'dataViewer' ? 'menuShow' : 'menuHide'}>
-                                        <Link to="/DataSnapshot">Data Snapshot</Link>
-                                    </Menu.Item>
-                                }
-                                {
-                                    <Menu.Item key="resultsViewer" className={currentMenu === 'resultsViewer' ? 'menuShow' : 'menuHide'}>
-                                        <Link to="/MarketingROI">Marketing ROI</Link>
-                                    </Menu.Item>
-                                }
-                                {/* {
-                                    (currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') &&
-                                    <React.Fragment> */}
-                                        {/* <Menu.Item key="scenario" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
-                                            <Link to="/scenario">Manage Scenarios</Link>
-                                        </Menu.Item> */}
-                                        <Menu.Item key="simulator" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
-                                            <Link to="/simulator">Simulator</Link>
-                                        </Menu.Item>
-                                        <Menu.Item key="optimizer" className={(currentMenu === 'scenario' || currentMenu === 'simulator' || currentMenu === 'optimizer') ? 'menuShow' : 'menuHide'}>
-                                            <Link to="/optimizer">Optimizer</Link>
-                                        </Menu.Item>
-                                    {/* </React.Fragment>
-                                } */}
-                                
-                                
-                                
-                                {/* {
-                                    (Role === 'SuperAdmin' || Role === 'Admin') &&
-                                        <Menu.Item key="user">
-                                            <Link to="/users">User</Link>
-                                        </Menu.Item>
-                                } */}
-                            </Menu>
-                        }
+                       
                         
                     </Col>
                     <Col xs={24} sm={8}>
@@ -136,9 +95,13 @@ export class Header extends React.Component {
                                 </Anchor>
                                 <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay'>
                                     <span className='logout bellIcon'>
-                                        <Icon type="setting" />
+                                        
                                     </span>
                                 </Dropdown>
+                                <Anchor  className='logout homeIcon'>
+                                </Anchor>
+                                <span  className='logout homeLogo'>
+                                </span>
                             </div>
                         }
                     </Col>

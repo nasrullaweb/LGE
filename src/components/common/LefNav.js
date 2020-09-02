@@ -1,12 +1,10 @@
 import React from 'react'
 import { Row, Col, Menu, Anchor, Icon, Dropdown } from 'antd';
 
-import logo from '../../images/Login_GFK_Logo.png';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { setMenu, logOut } from '../../store/auth/actionCreator'
 import { Link  } from 'react-router-dom'; 
-import IdleTimer from 'react-idle-timer';
 const { SubMenu } = Menu;
 
 export class LeftNav extends React.Component {
@@ -15,16 +13,10 @@ export class LeftNav extends React.Component {
         super(props)
 
         this.state = {
-            timeout:1000 * 60 * 15,
             showModal: false,
             userLoggedIn: false,
-            isTimedOut: false
         }
 
-        this.idleTimer = null
-        this.onAction = this._onAction.bind(this)
-        this.onActive = this._onActive.bind(this)
-        this.onIdle = this._onIdle.bind(this)
     }
 
     handleClick = (e) => {
@@ -34,26 +26,8 @@ export class LeftNav extends React.Component {
         this.props.logOut()
     }
 
-    
-    _onAction(e) {
-        this.setState({isTimedOut: false})
-      }
      
-      _onActive(e) {
-        this.setState({isTimedOut: false})
-      }
-     
-      _onIdle(e) {
-        const isTimedOut = this.state.isTimedOut
-        if (isTimedOut) {
-            this.props.logOut()
-        } else {
-          this.setState({showModal: true})
-          this.idleTimer.reset();
-          this.setState({isTimedOut: true})
-        }
-        
-      }
+      
     render() {
         const { user, currentMenu } = this.props
         const Role = JSON.parse(sessionStorage.getItem('role'))
@@ -72,14 +46,6 @@ export class LeftNav extends React.Component {
           );
             return (
               <div className="nav">
-                <IdleTimer
-                    ref={ref => { this.idleTimer = ref }}
-                    element={document}
-                    onActive={this.onActive}
-                    onIdle={this.onIdle}
-                    onAction={this.onAction}
-                    debounce={250}
-                    timeout={this.state.timeout} />
                     {/* <div className="collapsediv" onClick={this.props.collapseChange()}>
                       <span className="collapseIcon"></span>
                     </div> */}
