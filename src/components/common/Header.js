@@ -93,15 +93,15 @@ export class Header extends React.Component {
                     <Col xs={24} sm={8}>
                         { user &&
                             <div>
-                                <Dropdown overlay={menuSetting} trigger={['click']} overlayClassName='DropDownOverLay headerPopup'>
+                                <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay headerPopup'>
                                     <span className='logout bellIcon'>
                                         
                                     </span>
                                 </Dropdown>
-                                <Anchor  className='logout homeIcon'>
-                                </Anchor>
-                                <span  className='logout homeLogo'>
-                                </span>
+                                <Link to="/home"  className='logout homeIcon'>
+                                </Link>
+                                <Link to="/home" className='logout homeLogo'>
+                                </Link>
                             </div>
                         }
                     </Col>

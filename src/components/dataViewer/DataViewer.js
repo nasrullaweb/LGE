@@ -218,7 +218,7 @@ class DataViewer extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
                 </Layout>
               </Layout>
             </div>

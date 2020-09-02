@@ -400,10 +400,9 @@
 }
 
 .footerCont {
-    border: 1px solid #b30a39;
-    height: 60px;
-    padding: 5px;
-    position: relative;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
 }
 
 .footerLogo {
@@ -419,18 +418,14 @@
 }
 
 .copyRightFooter {
-    position: absolute;
-    color: #333;
-    font-size: 12px;
-    left: 0px;
-    bottom: 0px;
-     img {
-         width: 150px;
-     }
+    font-size : 10px;
+  text-transform : uppercase;
+  color : #545454;
 }
 
 .login-container .ant-checkbox-wrapper span {
     font-size: 12px;
+   
 }
 
 .container.dataViewer, .container.simulatorContainer {
@@ -932,4 +927,9 @@ body .mainContainer .header {
       }
       
   }
+}
+
+.site-layout.ant-layout {
+    position: relative;
+    background : #EFEFEF;
 }

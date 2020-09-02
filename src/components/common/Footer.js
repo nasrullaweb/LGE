@@ -6,10 +6,7 @@ export class Header extends React.Component {
     render() {
             return (
               <div className="footerCont">
-                <div className="copyRightFooter"><img src={copyRight} /></div>
-                <div className="footerLogo">
-
-                </div>
+                <div className="copyRightFooter">©MMMPLATFORM2020</div>
               </div>
             )
           }
