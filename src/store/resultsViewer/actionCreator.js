@@ -300,24 +300,27 @@ export function getGraphData4(modal, geography, region, brand, subBrand, tactic)
 export function getAllData() {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/RVFilters/GetModels`, config
-    )
-    .then(response => {
-      dispatch({
-          type: RV_GET_MODEL_LIST,
-          payload: response.data,
-      })
-      if (sessionStorage.getItem('RmodelValue')) {
-        const modal = JSON.parse(sessionStorage.getItem('RmodelValue'))
-        axios.get(`${apiURL}/RVFilters/GetGeography/${modal}`, config
-        )
-        .then(response => {
-          dispatch({
-              type: RV_GET_GEOGRAPHY_LIST,
-              payload: response.data,
-          })
-          if (sessionStorage.getItem('RgeographyValue')) { 
-            const geography = JSON.parse(sessionStorage.getItem('RgeographyValue'))
+    console.log('test')
+    // axios.get(`${apiURL}/RVFilters/GetModels`, config
+    // )
+    // .then(response => {
+    //   dispatch({
+    //       type: RV_GET_MODEL_LIST,
+    //       payload: response.data,
+    //   })
+    //   if (sessionStorage.getItem('RmodelValue')) {
+    //     const modal = JSON.parse(sessionStorage.getItem('RmodelValue'))
+    //     axios.get(`${apiURL}/RVFilters/GetGeography/${modal}`, config
+    //     )
+    //     .then(response => {
+    //       dispatch({
+    //           type: RV_GET_GEOGRAPHY_LIST,
+    //           payload: response.data,
+    //       })
+          if (sessionStorage.getItem('geographyValue')) { 
+            console.log('tttt111')
+            const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
+            const modal = JSON.parse(sessionStorage.getItem('modelValue'))
             axios.get(`${apiURL}/RVFilters/GetRegion/${modal}/${geography}`, config
             )
             .then(response => {
@@ -505,23 +508,23 @@ export function getAllData() {
           } else {
             dispatch(ajaxCallSuccess());
           }
-        })
-        .catch(error => {
-          dispatch(ajaxCallError());
-          dispatch({
-            type: RV_GET_GEOGRAPHY_LIST_ERROR,
-          })
-        })
-      } else {
-        dispatch(ajaxCallSuccess());
-      }
-    })
-    .catch(error => {
-      dispatch(ajaxCallError());
-      dispatch({
-        type: RV_GET_MODEL_LIST_ERROR,
-      })
-    })
+    //     })
+    //     .catch(error => {
+    //       dispatch(ajaxCallError());
+    //       dispatch({
+    //         type: RV_GET_GEOGRAPHY_LIST_ERROR,
+    //       })
+    //     })
+    //   } else {
+    //     dispatch(ajaxCallSuccess());
+    //   }
+    // })
+    // .catch(error => {
+    //   dispatch(ajaxCallError());
+    //   dispatch({
+    //     type: RV_GET_MODEL_LIST_ERROR,
+    //   })
+    // })
   }
   return action
 }

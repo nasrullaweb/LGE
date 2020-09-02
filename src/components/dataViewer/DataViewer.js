@@ -28,7 +28,7 @@ class DataViewer extends Component {
         },
         modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
         geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
-        message: 'Please Select Model',
+        message: '',
     }
 
     componentWillUnmount() {
@@ -42,53 +42,53 @@ class DataViewer extends Component {
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
         
-        if (JSON.parse(sessionStorage.getItem('modelValue'))) {
+        if (JSON.parse(sessionStorage.getItem('regionValue'))) {
             this.props.getAllData();
-        } else {
-            this.props.getModelList();
+        } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
+            this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
         }
     }
 
-    onModelChange = (e) => {
-        const modelName = {}
-        modelName.checkedList = e.target.value
-        const geography = {}
-        geography.checkedList = ''
-        sessionStorage.setItem('modelValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('geographyValue');
-        sessionStorage.removeItem('regionValue');
-        sessionStorage.removeItem('brandValue');
-        sessionStorage.removeItem('subBrandValue');
-        sessionStorage.removeItem('var2Value');
-        sessionStorage.removeItem('var1Value');
-        this.props.getGeographyList(e.target.value)
-        this.setState({
-            modelValue: e.target.value,
-            modelName,
-            geographyValue: '',
-            message: 'Please Select Geography',
-            geography
-        })
-    }
+    // onModelChange = (e) => {
+    //     const modelName = {}
+    //     modelName.checkedList = e.target.value
+    //     const geography = {}
+    //     geography.checkedList = ''
+    //     sessionStorage.setItem('modelValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('geographyValue');
+    //     sessionStorage.removeItem('regionValue');
+    //     sessionStorage.removeItem('brandValue');
+    //     sessionStorage.removeItem('subBrandValue');
+    //     sessionStorage.removeItem('var2Value');
+    //     sessionStorage.removeItem('var1Value');
+    //     this.props.getGeographyList(e.target.value)
+    //     this.setState({
+    //         modelValue: e.target.value,
+    //         modelName,
+    //         geographyValue: '',
+    //         message: 'Please Select Geography',
+    //         geography
+    //     })
+    // }
 
-    onGeographyChange = (e) => {
-        const { modelValue } = this.state
-        const geography = {}
-        geography.checkedList = e.target.value
-        sessionStorage.setItem('geographyValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('regionValue');
-        sessionStorage.removeItem('brandValue');
-        sessionStorage.removeItem('subBrandValue');
-        sessionStorage.removeItem('var2Value');
-        sessionStorage.removeItem('var1Value');
-        this.props.getRegionList(modelValue, e.target.value)
-        this.setState({
-            geographyValue: e.target.value,
-            message: '',
-            geography
-        })
+    // onGeographyChange = (e) => {
+    //     const { modelValue } = this.state
+    //     const geography = {}
+    //     geography.checkedList = e.target.value
+    //     sessionStorage.setItem('geographyValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('regionValue');
+    //     sessionStorage.removeItem('brandValue');
+    //     sessionStorage.removeItem('subBrandValue');
+    //     sessionStorage.removeItem('var2Value');
+    //     sessionStorage.removeItem('var1Value');
+    //     this.props.getRegionList(modelValue, e.target.value)
+    //     this.setState({
+    //         geographyValue: e.target.value,
+    //         message: '',
+    //         geography
+    //     })
         
-    }
+    // }
 
     setboxOption = (list, keyName, checkAllChange, onChange, multiSelect) => {
 
@@ -147,8 +147,8 @@ class DataViewer extends Component {
     render() {
         const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList } = this.props
         const {modelValue, geographyValue, message} = this.state
-        const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
-        const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
+        //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
+        //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         return (
             <div className="container dataViewer tabsDesign">
                 {ajaxCallsInProgress > 0 && <Loading />}
@@ -156,7 +156,7 @@ class DataViewer extends Component {
                 <div className="mainContent">
                     <div className="manageContainer">
                         <div className="simulateContent">
-                            <div className="topSelection">
+                            {/* <div className="topSelection">
                             {
                                 message && !geographyValue &&
                                 <div className="messageContainer">
@@ -173,7 +173,7 @@ class DataViewer extends Component {
                                     Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                            </div>
+                            </div> */}
                             {
                                 modelValue && geographyValue && regionList.length > 0 &&
                                 <div className="manageTable">

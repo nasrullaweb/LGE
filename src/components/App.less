@@ -1,7 +1,9 @@
+
 @mainBackground: #fff;
 .mainContainer, body {
     background: @mainBackground;
     min-height: 100vh;
+    font-family: 'Lato', sans-serif !important;
 
     .header {
         padding-bottom: 20px;
@@ -115,41 +117,52 @@
          height: 100vh;
 
         .loginBackground {
-            background: url(../images/Login_1.png);
+            background: url(../images/LG_Login_BG.png);
             background-repeat: no-repeat;
-            background-size: contain;
+            background-size: 100% 100%;
             background-position: center;
             width: 100%;
-            height: calc(100vh - 120px);
+            height: 100vh;
+            position: fixed;
         }
         .loginContainer {
-            width: 100%;
-            min-width: 1000px;
-            height: 120px;
-            background-color: #b30a39;
+            position: absolute;
+            width: 28%;
+            left: 67%;
+            top: 15%;
+            height: 70%;
+            background : #fdfdfd;
+            padding: 30px;
+            box-shadow: 0px 0px 10px rgba(34, 46, 176, 0.12);
             position: relative;
+            border-radius: 6px;
 
         }
 
         .logo {
             text-align: center;
-            padding: 10px;
-            float: left;
-            position: absolute;
             img{
-                height: 100px;
+                width: 50%;
             }
         }
 
         .copyRightLogin {
-            position: absolute;
-            right: 0px;
-    bottom: 0px;
-            font-size: 12px;
-            color: #fff;
+            position: fixed;
+    left: 3%;
+    bottom: 5%;
+    font-size: 12px;
+    font-size : 11px;
+    text-transform : uppercase;
+    color : #FFFFFF;
+        }
+
+        .copyRightLogo {
+            position: fixed;
+            right: 2%;
+            bottom: 4%;
 
             img {
-                width: 150px;
+                width: 30px;
             }
         }
 
@@ -175,67 +188,79 @@
     color: #fff;
             }
 
-            .formContainer {
-                width: 500px;
-                margin: 0 auto;
-                position: relative;
-
-                &.reset {
-                    width: 580px;
-                }
-            }
+            
             .formData {
-                width: 350px;
-                float: left;
-                margin: 0 20px;
-                padding-top: 7px;
+                padding: 40px 0;
+                text-align: center;
 
                 .ant-form-item {
-                    margin-bottom: 2px;
+
+                    input {
+                        background-color: #fff !important;
+                        border: 1px Solid rgba(119, 119, 119, 0.5);
+                        height: 30px;
+                        border-radius: 15px;
+                        font-size : 11px;
+                        color : #424242;
+                        margin-top: 12px;
+                    }
                 }
             }
 
             .login-form-button {
-                float: left;
-                border: 0;
-                color: #b30a39;
-                background: #fff;
-                height: 40px;
-                font-size: 16px;
-                /* padding: 18px; */
-                padding: 0 30px;
-                margin-top: 27px;
-                font-weight: bold;
+                background : #CC1F55;
+                width : 104px;
+                height : 32px;
+                border-radius : 15px;
+                box-shadow: 1px 4px 5px 0px rgba(0,0,0,0.15);
+                font-size : 12px;
+                text-transform : uppercase;
+                color : #FFFFFF;
+
+                &.reset-btn {
+                    margin-top: 20px;
+                    width: 140px;
+                }
 
                 &:hover {
-                    background: rgba(255, 255, 255, 0.7);
+                    background: rgba(204,31,85, 0.7);
                 }
             }
 
             .login-checkbox {
-                float: left;
-                width: 150px;
-                line-height: 10px;
+                text-align: center;
+                padding-top: 15px;
 
                 .ant-checkbox-wrapper {
-                    color: #fff;
+                    font-size : 10px;
+                    color : #424242;
+                }
+            }
+            
+            .login_bottom {
+                margin-bottom: 0;
+
+                .ant-form-item-children {
+                    display: block;
+
+                    .login-form-forgot {
+                        color: #ccc;
+                        width: 100%;
+                        display: inline-block;
+                        position: absolute;
+                        top: -24px;
+                        left: 0;
+                        text-align: center;
+        
+                        a {
+                            font-size : 10px;
+                            color : #CC1F55;
+                        }
+                    }
                 }
             }
 
-            .login-form-forgot {
-                font-size: 12px;
-                float: right;
-                padding: 0;
-                margin: 0;
-                height: 20px;
-                color: #fff;
-                position: relative;
-                top: -12px;
-
-                a {
-                    color: #fff;
-                }
-            }
+            
 
         }
     }
@@ -469,24 +494,20 @@ h4.ant-typography.emaiPass {
     }
 }
 .mainContainer .login-container .login-form .login_error {
-    color: #fff;
-position: absolute;
-top: 10px;
-left: 390px;
-width: 400px;
+    color: #c00;
+    position: relative;
+    margin-bottom: 5px;
 }
 body .login-container .login-form .login_error.forget {
-    color: #fff;
-    position: absolute;
-    bottom: 0;
-    left: 22px;
-    top: unset;
+    color: #c00;
+    position: relative;
+    margin-bottom: 5px;
 }
 
 body .login-container .login-form .login_error.rest { 
-    right: unset;
-    top: 5px;
-    left: 390px;
+    color: #c00;
+    position: relative;
+    margin-bottom: 5px;
 }
 
 .has-error .ant-form-explain, .has-error .ant-form-split {
@@ -517,14 +538,13 @@ body .login-container .login-form .login_error.rest {
 
 .resetBack  {
     a {
-        color: #fff;
-    font-size: 12px;
+        font-size : 12px;
+        color : #424242;
     position: relative;
     top: 6px;
-    left: 57px;
 
     &:hover {
-        color: #fff;
+        color: #333;
     }
     }
 }

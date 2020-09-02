@@ -239,6 +239,7 @@ export class Optimizer extends React.Component {
                           <Scenario 
                             handleManageOk={this.handleManageOk} 
                             handleManageCancel={this.handleManageCancel} 
+                            pageName="Optimizer"
                           />
                         </Modal>
                     }

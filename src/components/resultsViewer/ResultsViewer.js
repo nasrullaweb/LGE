@@ -42,13 +42,13 @@ class ResultsViewer extends Component {
         tactic: {
             checkedList: '',
         },
-        modelValue: JSON.parse(sessionStorage.getItem('RmodelValue')) || '',
-        geographyValue: JSON.parse(sessionStorage.getItem('RgeographyValue')) || '',
+        modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
+        geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
         regionValue: JSON.parse(sessionStorage.getItem('RregionValue')) || '',
         brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || '',
         subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
-        message: 'Please Select Model',
+        message: 'Please Select Brand',
         messageTac: 'Please Select Tactic'
     }
 
@@ -56,17 +56,17 @@ class ResultsViewer extends Component {
 
         let {region, brand, subBrand, modelName, geography, tactic} = state
 
-        if (state.modelValue !== state.modelName.checkedList) {
-            modelName = {
-                checkedList: Array.isArray(state.modelValue) ? state.modelValue[0] : state.modelValue,
-            }
-        }
+        // if (state.modelValue !== state.modelName.checkedList) {
+        //     modelName = {
+        //         checkedList: Array.isArray(state.modelValue) ? state.modelValue[0] : state.modelValue,
+        //     }
+        // }
 
-        if (state.geographyValue !== state.brand.checkedList) {
-            geography = {
-                checkedList: Array.isArray(state.geographyValue) ? state.geographyValue[0] : state.geographyValue,
-            }
-        }
+        // if (state.geographyValue !== state.brand.checkedList) {
+        //     geography = {
+        //         checkedList: Array.isArray(state.geographyValue) ? state.geographyValue[0] : state.geographyValue,
+        //     }
+        // }
         
         if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
             region = {
@@ -111,60 +111,61 @@ class ResultsViewer extends Component {
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
         
-        if (JSON.parse(sessionStorage.getItem('RmodelValue'))) {
+        if (JSON.parse(sessionStorage.getItem('RregionValue'))) {
+            console.log('test')
             this.props.getAllData();
-        } else {
-            this.props.getModelList();
+        } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
+            this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
         }
     }
 
-    componentWillUnmount() {
-        this.props.clearData()
-      }
+    // componentWillUnmount() {
+    //     this.props.clearData()
+    //   }
 
-    onModelChange = (e) => {
-        const modelName = {}
-        modelName.checkedList = e.target.value
-        const geography = {}
-        geography.checkedList = ''
-        sessionStorage.setItem('RmodelValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('RgeographyValue');
-        sessionStorage.removeItem('RregionValue');
-        sessionStorage.removeItem('RbrandValue');
-        sessionStorage.removeItem('RsubBrandValue');
-        this.props.getGeographyList(e.target.value)
-        this.setState({
-            modelValue: e.target.value,
-            modelName,
-            geographyValue: '',
-            geography,
-            regionValue: '',
-            brandValue: '',
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Geography'
-        })
-    }
+    // onModelChange = (e) => {
+    //     const modelName = {}
+    //     modelName.checkedList = e.target.value
+    //     const geography = {}
+    //     geography.checkedList = ''
+    //     sessionStorage.setItem('RmodelValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('RgeographyValue');
+    //     sessionStorage.removeItem('RregionValue');
+    //     sessionStorage.removeItem('RbrandValue');
+    //     sessionStorage.removeItem('RsubBrandValue');
+    //     this.props.getGeographyList(e.target.value)
+    //     this.setState({
+    //         modelValue: e.target.value,
+    //         modelName,
+    //         geographyValue: '',
+    //         geography,
+    //         regionValue: '',
+    //         brandValue: '',
+    //         subBrandValue: '',
+    //         tacticValue: '',
+    //         message: 'Please Select Geography'
+    //     })
+    // }
 
-    onGeographyChange = (e) => {
-        const { modelValue } = this.state
-        const geography = {}
-        geography.checkedList = e.target.value
-        sessionStorage.setItem('RgeographyValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('RregionValue');
-        sessionStorage.removeItem('RbrandValue');
-        sessionStorage.removeItem('RsubBrandValue');
-        this.props.getRegionList(modelValue, e.target.value)
-        this.setState({
-            geographyValue: e.target.value,
-            geography,
-            regionValue: '',
-            brandValue: '',
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Brand'
-        })
-    }
+    // onGeographyChange = (e) => {
+    //     const { modelValue } = this.state
+    //     const geography = {}
+    //     geography.checkedList = e.target.value
+    //     sessionStorage.setItem('RgeographyValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('RregionValue');
+    //     sessionStorage.removeItem('RbrandValue');
+    //     sessionStorage.removeItem('RsubBrandValue');
+    //     this.props.getRegionList(modelValue, e.target.value)
+    //     this.setState({
+    //         geographyValue: e.target.value,
+    //         geography,
+    //         regionValue: '',
+    //         brandValue: '',
+    //         subBrandValue: '',
+    //         tacticValue: '',
+    //         message: 'Please Select Brand'
+    //     })
+    // }
 
     // onCheckAllRegionChange = e => {
     //     sessionStorage.setItem('RregionValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
@@ -304,7 +305,7 @@ class ResultsViewer extends Component {
                         <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
                             {
                                 listOption.map((option) =>
-                                    <Radio value={option}>{option}</Radio>
+                                    <Radio value={option} key={option}>{option}</Radio>
                                 )
                             }
                         </Radio.Group>
@@ -322,8 +323,8 @@ class ResultsViewer extends Component {
         const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList, subBrandList,
             setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData3, setGraphData1, graphData1, tacticList = [], RSquare= [], setGraphData4, graphData4 } = this.props
         const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, message, messageTac } = this.state
-        const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
-        const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
+        //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
+        //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
         const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
@@ -342,7 +343,7 @@ class ResultsViewer extends Component {
                                     {message}
                                 </div>
                             }
-                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            {/* <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Model <Icon type="caret-down" theme="outlined" />
                                 </a>
@@ -351,7 +352,7 @@ class ResultsViewer extends Component {
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
-                            </Dropdown>
+                            </Dropdown> */}
                             <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Brand <Icon type="caret-down" theme="outlined" />

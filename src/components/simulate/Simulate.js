@@ -240,6 +240,7 @@ export class Simulate extends React.Component {
                           <Scenario 
                             handleManageOk={this.handleManageOk} 
                             handleManageCancel={this.handleManageCancel} 
+                            pageName="Simulator"
                           />
                         </Modal>
                     }

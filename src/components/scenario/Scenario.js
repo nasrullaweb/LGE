@@ -126,11 +126,11 @@ export class Scenario extends React.Component {
     let scenarioData
 
     if (this.state.filterScenario === 'my') {
-      scenarioData = scenarios.filter(scenario => scenario.isShared === 0);
+      scenarioData = scenarios.filter(scenario => scenario.isShared === 0 && scenario.isSimulatorOptimiser === this.props.pageName);
     } else if (this.state.filterScenario === 'shared') {
-      scenarioData = scenarios.filter(scenario => scenario.isShared === 1);
+      scenarioData = scenarios.filter(scenario => scenario.isShared === 1 && scenario.isSimulatorOptimiser === this.props.pageName);
     } else {
-      scenarioData = scenarios
+      scenarioData = scenarios.filter(scenario => scenario.isSimulatorOptimiser === this.props.pageName);
     }
     
     return scenarioData
