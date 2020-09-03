@@ -13,7 +13,7 @@ class MainTab2Charts extends React.Component {
           options: {
             chart: {
               width: 380,
-              type: 'pie',
+              type: 'donut',
               fontFamily: '"Lato", sans-serif',
               toolbar: {
                 show: true,
@@ -76,7 +76,7 @@ class MainTab2Charts extends React.Component {
           options: {
             chart: {
               width: 380,
-              type: 'pie',
+              type: 'donut',
               fontFamily: '"Lato", sans-serif',
               toolbar: {
                 show: true,
@@ -257,7 +257,7 @@ class MainTab2Charts extends React.Component {
               <Chart
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
-                        type="pie" 
+                        type="donut" 
                         height={300}
                         />
               </div>
@@ -266,7 +266,7 @@ class MainTab2Charts extends React.Component {
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
-                        type="pie" 
+                        type="donut" 
                         height={300}
                         />
               </div>
