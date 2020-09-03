@@ -136,7 +136,7 @@ onGeographyChange = (e) => {
         console.log('ggg', geographyList)
             return (
               <div className="container">
-                <Header />
+                <Header modelTitle="HOME" />
                 <Layout className="layout">
                 <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
                   <LefNav  />

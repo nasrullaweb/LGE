@@ -178,7 +178,7 @@ export class Simulate extends React.Component {
             return (
               <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="SIMULATOR"  />
                 <Layout className="layout">
                 <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
                   <LefNav  />

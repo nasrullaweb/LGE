@@ -160,7 +160,7 @@ class DataViewer extends Component {
         return (
             <div className="container dataViewer tabsDesign">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="DATA SNAPSHOT" />
                 <Layout className="layout">
                 <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
                   <LefNav  />

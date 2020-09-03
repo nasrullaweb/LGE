@@ -83,6 +83,9 @@ export class Header extends React.Component {
                     debounce={250}
                     timeout={this.state.timeout} />
                 <Row type="flex" justify="center" align="top">
+                <div className="modelTitle">
+                           {this.props.modelTitle}
+                       </div>
                     <Col xs={24} sm={16}>
                         <div className="logo">
                             <img src={logo} />

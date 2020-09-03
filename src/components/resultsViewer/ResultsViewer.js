@@ -342,7 +342,7 @@ class ResultsViewer extends Component {
         return (
             <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="MARKETING ROI" />
                 <Layout className="layout">
                 <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
                   <LefNav  />

@@ -177,7 +177,7 @@ export class Optimizer extends React.Component {
             return (
               <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="OPTIMIZER"  />
                 <Layout className="layout">
                 <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
                   <LefNav  />
