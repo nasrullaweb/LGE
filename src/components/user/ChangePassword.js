@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../common/Header.js';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import { changePassword } from '../../store/user/actionCreator'
 import Loading from '../common/Loading'
 import { setMenu } from '../../store/auth/actionCreator'
 import { Link  } from 'react-router-dom';
 import {PageView, initGA} from '../common/Tracking';
+import Footer from '../common/Footer.js';
 
 
 const { Text } = Typography;
+const { Sider } = Layout;
 
 class ChangePasswordForm extends Component {
 
@@ -22,7 +25,12 @@ class ChangePasswordForm extends Component {
 
     state = {
         confirmDirty: false,
-      };
+        collapsed: true,
+}
+
+onCollapse = collapsed => {
+    this.setState({ collapsed });
+  };
     
       handleSubmit = e => {
         e.preventDefault();
@@ -66,6 +74,11 @@ class ChangePasswordForm extends Component {
             <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
                 <Header />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                 <div className="mainContent">
                     <div className="changePasswordContainer">
                     <Form onSubmit={this.handleSubmit} className="create_User">
@@ -124,7 +137,9 @@ class ChangePasswordForm extends Component {
                     </div>
                    
                 </div>
-                {/* <Footer /> */}
+                <Footer />
+                </Layout>
+              </Layout>
             </div>
         )
     }

@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { Select, Button, Modal, Typography } from 'antd';
+import { Select, Button, Modal, Typography, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
 import { resetScenario, getScenarios, postScenario, getModelList } from '../../store/scenario/actionCreator'
@@ -16,6 +17,7 @@ import {PageView, initGA} from '../common/Tracking';
 
 const { Option } = Select;
 const { Title } = Typography;
+const { Sider } = Layout;
 
 function genareteMYScenarioList(scenarios)  {
   const scenarioList = scenarios.filter((scenario) => {
@@ -42,8 +44,13 @@ export class Simulate extends React.Component {
     modal: '',
     isSimulated: false,
     manageVisible: false,
-    url: ''
+    url: '',
+    collapsed: true,
   }
+
+  onCollapse = collapsed => {
+      this.setState({ collapsed });
+    };
 
   componentDidMount() {
     this.props.clearData()
@@ -172,6 +179,11 @@ export class Simulate extends React.Component {
               <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
                 <Header />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                   <div className="mainContent">
                     {
                       !this.state.scenarioId &&
@@ -245,7 +257,9 @@ export class Simulate extends React.Component {
                         </Modal>
                     }
 
-                {/* <Footer /> */}
+                <Footer />
+                </Layout>
+              </Layout>
               </div>
             )
           }

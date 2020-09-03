@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import './ResultsViewer.less'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -17,9 +18,11 @@ import MainTab4Charts from './MainTab4Charts'
 import MainTab3Charts from './MainTab3Charts'
 import {PageView, initGA} from '../common/Tracking';
 
+
 const CheckboxGroup = Checkbox.Group;
 const { Title } = Typography;
 const { TabPane } = Tabs;
+const { Sider } = Layout;
 
 class ResultsViewer extends Component {
 
@@ -49,8 +52,14 @@ class ResultsViewer extends Component {
         subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
         message: 'Please Select Brand',
-        messageTac: 'Please Select Tactic'
+        messageTac: 'Please Select Tactic',
+        collapsed: true,
     }
+
+    onCollapse = collapsed => {
+        this.setState({ collapsed });
+      };
+
 
     static getDerivedStateFromProps(props, state) {
 
@@ -333,6 +342,11 @@ class ResultsViewer extends Component {
             <div className="container dataViewer tabsDesign">
                 {ajaxCallsInProgress > 0 && <Loading />}
                 <Header />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                 <div className="mainContent">
                     <div className="manageContainer">
                         <div className="simulateContent">
@@ -546,7 +560,9 @@ class ResultsViewer extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
+                </Layout>
+              </Layout>
             </div>
         )
     }
