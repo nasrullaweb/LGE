@@ -243,10 +243,8 @@
 }
 
 .emptyChart {
+    position: relative;
 
-    .chartTitle {
-        width: inherit !important;
-    }
 
     .emptyChartdiv {
         height: 465px;
@@ -259,4 +257,54 @@
     .apexcharts-menu-icon svg {
         fill: #CC1F55;
     }
+}
+
+.resultView {
+
+    .mainContent .simulateContent .ant-dropdown-link {
+      width: 30%;
+      margin-right: 5%;
+  
+      &.noMarginRight {
+        margin-right: 0;
+      }
+    }
+  
+    &.tabsDesign .ant-tabs-bar {
+      top: -24px;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      width: 475px;
+      background : #F9F9F9;
+      height : 33px;
+      border-radius : 17px;
+      box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.1);
+
+    }
+  }
+
+.container.dataViewer.resultView .manageContainer .ant-tabs-nav .ant-tabs-tab {
+    height: 33px;
+    line-height: 9px;
+    font-size : 13px;
+    color : #383838;
+    text-transform: unset;
+}
+
+.container.dataViewer.resultView .manageContainer .ant-tabs-nav .ant-tabs-tab-active {
+  height: 33px;
+  line-height: 9px;
+  font-size : 13px;
+  background: #cc1f55 ;
+  box-shadow: unset;
+  color: #fff;
+
+  &:hover {
+      color: #fff;
+  }
+}
+
+.container.dataViewer.resultView .ant-tabs-ink-bar {
+    display: none;
 }

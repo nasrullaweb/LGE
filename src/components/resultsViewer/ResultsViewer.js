@@ -17,6 +17,7 @@ import MainTab2Charts from './MainTab2Charts'
 import MainTab4Charts from './MainTab4Charts'
 import MainTab3Charts from './MainTab3Charts'
 import {PageView, initGA} from '../common/Tracking';
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 
 const CheckboxGroup = Checkbox.Group;
@@ -339,7 +340,7 @@ class ResultsViewer extends Component {
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
         return (
-            <div className="container dataViewer tabsDesign">
+            <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
                 <Header />
                 <Layout className="layout">
@@ -351,12 +352,7 @@ class ResultsViewer extends Component {
                     <div className="manageContainer">
                         <div className="simulateContent">
                             <div className="topSelection">
-                            {
-                                message && !subBrandValue &&
-                                <div className="messageContainer">
-                                    {message}
-                                </div>
-                            }
+                            
                             {/* <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Model <Icon type="caret-down" theme="outlined" />
@@ -382,6 +378,12 @@ class ResultsViewer extends Component {
                                     Type <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
+                            {
+                                message && !subBrandValue &&
+                                <div className="messageContainer">
+                                    {message}
+                                </div>
+                            }
                             </div>
                             {
                                 subBrandValue.length > 0 &&
@@ -389,6 +391,7 @@ class ResultsViewer extends Component {
                                     <Tabs defaultActiveKey="1" onChange={this.activateTab}>
                                         <TabPane tab="Model Statistics" key="tab1" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -398,21 +401,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData2.series && setGraphData2 &&
                                             <MainTab1Charts 
@@ -420,10 +428,14 @@ class ResultsViewer extends Component {
                                                 subBrandValue={subBrandValue}
                                                 RSquare={RSquare}  />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Contributions" key="tab2" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -433,21 +445,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData1.series && setGraphData1 && graphData21.series && graphData22 &&
                                             <MainTab2Charts 
@@ -457,10 +474,14 @@ class ResultsViewer extends Component {
                                                 graphData22={graphData22}
                                                   />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Due - to's" key="tab3" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -470,21 +491,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData3.series1 && setGraphData3 &&
                                             <MainTab3Charts 
@@ -492,6 +518,9 @@ class ResultsViewer extends Component {
                                                 subBrandValue={subBrandValue}
                                                   />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Response Curve" key="tab4" type="card">
@@ -511,6 +540,7 @@ class ResultsViewer extends Component {
                                                             </a>
                                                         </Dropdown>
                                                     </div>
+                                                    <div className="graphContent">
                                                     {geographyValue &&
                                                         <div className="FilterSelection">
                                                             {geographyValue &&
@@ -520,16 +550,19 @@ class ResultsViewer extends Component {
                                                             }
                                                             {regionValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Brand: {regionValue}
                                                                 </span>
                                                             }
                                                             {brandValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Channel: {brandValue}
                                                                 </span>
                                                             }
                                                             {subBrandValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Type: {subBrandValue}
                                                                 </span>
                                                             }
@@ -543,6 +576,7 @@ class ResultsViewer extends Component {
                                                         </div>
                                                     }
                                                     <div className="chartContent">
+                                                    <ColoredScrollbars>
                                                     {
                                                         graphData4.series && setGraphData4 &&
                                                         <MainTab4Charts 
@@ -550,6 +584,8 @@ class ResultsViewer extends Component {
                                                             subBrandValue={subBrandValue}
                                                             tacticValue={tacticValue} />
                                                     }
+                                                    </ColoredScrollbars>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             }
