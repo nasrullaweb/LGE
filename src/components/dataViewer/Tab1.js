@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { getBrandList1, getSubBrandList1, getTacticList1, setGraphChange1,
     getGraphData11, getGraphData12, getGraphData13 } from '../../store/dataViewer/actionCreator'
 import MainTab1Charts from './MainTab1Charts'
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -310,6 +311,7 @@ class Tab1 extends Component {
                         </a>
                     </Dropdown>
                 </div>
+                <div className="graphContent">
                 {geographyValue &&
                 <div className="FilterSelection">
                     {geographyValue &&
@@ -319,12 +321,14 @@ class Tab1 extends Component {
                     }
                     {regionValue &&
                         <span>
+                            <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
                     }
                     {brandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Channel: {brandValue.map((item, index) =>
                             index === brandValue.length-1 ?
                             `${item} `
@@ -336,6 +340,7 @@ class Tab1 extends Component {
                     }
                     {subBrandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Type: {
                             subBrandValue.map((item, index) =>
                                 index === subBrandValue.length-1 ?
@@ -355,6 +360,7 @@ class Tab1 extends Component {
                 </div>
                 }
                 <div className="chartContent">
+                    <ColoredScrollbars>
                     {
                         this.props.setGraphData1 && this.props.setGraphData2 && this.props.setGraphData3 && graphData1.series && graphData2.series && graphData3.series && this.state.dataChanged && this.state.var2Value &&
                         <MainTab1Charts 
@@ -363,7 +369,8 @@ class Tab1 extends Component {
                         graphData3={graphData3}
                         var2Value={this.state.var2Value}  />
                     }
-                    
+                    </ColoredScrollbars>
+                </div>
                 </div>
             </div>
         )

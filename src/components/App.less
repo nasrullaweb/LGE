@@ -941,3 +941,72 @@ body .mainContainer .header {
     position: relative;
     background : #EFEFEF;
 }
+
+.pipe {
+    color : #CC1F55; 
+}
+
+.smallLeftBorder {
+    position: absolute;
+    background : #CC1F55;
+  width : 2px;
+  height : 18px;
+  left:0;
+}
+
+.changePop {
+    background : #FFFFFF;
+    width : 145px;
+    height : 63px;
+    border-radius : 5px;
+    box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.15);
+    margin: 0 auto;
+    position: relative;
+    top: 15px;
+
+    .changePopLeft {
+        float: left;
+        width: 100px;
+        padding: 10px;
+        font-size : 11px;
+        color : #4C4C4C;
+        
+        p {
+            font-size : 11px !important;
+
+            strong {
+                font-weight : bold;
+                font-size : 27px;
+            }
+        }
+
+    }
+    .changePopRight {
+        position: relative;
+        .changeBorder {
+            width: 1px;
+            height: 30px;
+            display: inline-block;
+            position: absolute;
+            top: 15px;
+    left: 91px;
+            background-color: rgba(201, 201, 201, 0.5);
+        }
+
+        .changepopIcon {
+            height: 29px;
+            width: 34px;
+            
+            display: inline-block;
+            background-image: url(../images/LG_Change_Vs_icon.png);
+    background-size: 100% 100%;
+    position: relative;
+    top: 18px;
+            
+        }
+    }
+}
+
+.changpopCont .apexcharts-toolbar {
+    top: -106px !important;
+}

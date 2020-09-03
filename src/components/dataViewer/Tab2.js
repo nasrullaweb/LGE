@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { getBrandList2, getSubBrandList2, getTacticList2, getGraphData21, getGraphData22, getGraphData23, setGraphChange2 } from '../../store/dataViewer/actionCreator'
 import MainTab2Charts from './MainTab2Charts'
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -396,6 +397,7 @@ class Tab2 extends Component {
                         </a>
                     </Dropdown>
                 </div>
+                <div className="graphContent">
                 {geographyValue &&
                 <div className="FilterSelection">
                     {geographyValue &&
@@ -405,17 +407,20 @@ class Tab2 extends Component {
                     }
                     {regionValue &&
                         <span>
+                            <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
                     }
                     {brandValue &&
                         <span>
+                            <span className="pipe">||</span>
                             Channel: {brandValue}
                         </span>
                     }
                     {subBrandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Type: {
                             subBrandValue.map((item, index) =>
                                 index === subBrandValue.length-1 ?
@@ -429,6 +434,7 @@ class Tab2 extends Component {
                 </div>
                 }
                 <div className="chartContent">
+                <ColoredScrollbars>
                     {
                         this.props.setGraphData1 && this.props.setGraphData2 && this.props.setGraphData3 && graphData1.series && graphData2.series && graphData3.series && this.state.dataChanged && this.state.var2Value &&
                         <MainTab2Charts 
@@ -438,7 +444,8 @@ class Tab2 extends Component {
                         var1Value={this.state.var1Value}
                         var2Value={this.state.var2Value} />
                     }
-                    
+                </ColoredScrollbars>
+                </div>
                 </div>
             </div>
         )

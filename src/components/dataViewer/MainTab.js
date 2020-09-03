@@ -334,18 +334,22 @@ class MainTab extends Component {
                         </span>
                     }
                     {regionValue &&
+                    
                         <span>
+                            <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
                     }
                     {brandValue &&
                         <span>
+                            <span className="pipe">||</span>
                             Channel: {brandValue}
                         </span>
                     }
                     {subBrandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Type: {
                             subBrandValue.map((item, index) =>
                                 index === subBrandValue.length-1 ?

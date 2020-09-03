@@ -16,7 +16,7 @@ class MainTabCharts extends React.Component {
                 chart: {
                   type: 'bar',
                   height: 150,
-                  fontFamily: '"futura-pt", sans-serif'
+                  fontFamily: '"Lato", sans-serif'
                 },
                 grid: {
                   show: false,
@@ -74,7 +74,7 @@ class MainTabCharts extends React.Component {
                     text: "Sales Value (USD)",
                     style: {
                       color: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '12px',
                     }
                   },
                   axisTicks: {
@@ -118,9 +118,7 @@ class MainTabCharts extends React.Component {
                     enabled: true,
                     style: {
                       fontSize: '12px',
-                      fontFamily: undefined,
                       background: '#fff',
-                      fontFamily: '"futura-pt", sans-serif',
                     },
                     y: {
                       title: {
@@ -145,7 +143,7 @@ class MainTabCharts extends React.Component {
                 chart: {
                   type: 'bar',
                   height: 150,
-                  fontFamily: '"futura-pt", sans-serif'
+                  fontFamily: '"Lato", sans-serif'
                 },
                 grid: {
                   show: false,
@@ -209,7 +207,7 @@ class MainTabCharts extends React.Component {
                   title: {
                     text: "Sales Value (USD)",
                     style: {
-                      fontSize: '10px',
+                      fontSize: '12px',
                       color: '#8E8E8E'
                     }
                   },
@@ -247,9 +245,7 @@ class MainTabCharts extends React.Component {
                     enabled: true,
                     style: {
                       fontSize: '12px',
-                      fontFamily: undefined,
                       background: '#fff',
-                      fontFamily: '"futura-pt", sans-serif',
                     },
                     y: {
                       title: {
@@ -280,7 +276,7 @@ class MainTabCharts extends React.Component {
                 chart: {
                   height: 400,
                   type: 'line',
-                  fontFamily: '"futura-pt", sans-serif',
+                  fontFamily: '"Lato", sans-serif',
                   stacked: false,
                     zoom: {
                         enabled: false
@@ -430,7 +426,6 @@ class MainTabCharts extends React.Component {
                   enabled: true,
                   style: {
                     fontSize: '12px',
-                    fontFamily: undefined,
                     background: '#fff',
                   },
                   y: {
@@ -506,7 +501,9 @@ class MainTabCharts extends React.Component {
           this.props.graphData.data &&
             <div className="chartContent">
                 <div className="downChart titleAdded">
-                <div className="chartTitle">{this.props.var1Value} vs {this.props.var2Value}</div>
+                <div className="chartTitle">
+                  <span className="smallLeftBorder"></span>
+                  {this.props.var1Value} vs {this.props.var2Value}</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -515,29 +512,48 @@ class MainTabCharts extends React.Component {
                         />
                 </div>
                 <div className="spaceBetween"></div>
-                <div className="widthHalf titleAdded">
-                <div className="chartTitle">{this.props.var1Value}</div>
+                <div className="widthHalf titleAdded changpopCont">
+                <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.var1Value}</div>
+                <div className="changePop">
+                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage) ? 'NA' : 
+                        <span className={getPercentage >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage}%</span>
+                        }</strong>
+                    </p></div>
+                    <div className="changePopRight">
+                      <span className="changeBorder"></span>
+                      <span className="changepopIcon"></span>
+                    </div>
+                    </div>
                     <Chart
                         options={this.state.cart1.options}
                         series={this.state.cart1.series}
                         type="bar" 
                         height={150}
                         />
-                        <p>% Change: <strong>{isNaN(getPercentage) ? 'NA' : 
+                        {/* <div className="changePop"><p>% Change: <strong>{isNaN(getPercentage) ? 'NA' : 
                           <span className={getPercentage >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage}%</span>
-                        }</strong></p>
+                        }</strong></p></div> */}
                 </div>
-                <div className="widthHalfRight titleAdded">
-                <div className="chartTitle">{this.props.var2Value}</div>
+                <div className="widthHalfRight titleAdded changpopCont">
+                <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.var2Value}</div>
+
+                <div className="changePop">
+                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage1) ? 'NA' : 
+                        <span className={getPercentage1 >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage1}%</span>
+                        }</strong>
+                    </p></div>
+                    <div className="changePopRight">
+                      <span className="changeBorder"></span>
+                      <span className="changepopIcon"></span>
+                    </div>
+                    </div>
                     <Chart
                         options={this.state.cart2.options}
                         series={this.state.cart2.series}
                         type="bar" 
                         height={150}
                         />
-                        <p>% Change: <strong>{isNaN(getPercentage1) ? 'NA' : 
-                        <span className={getPercentage1 >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage1}%</span>
-                        }</strong></p>
+                        
                 </div>
                 <div className="spaceBetween"></div>
             </div>
