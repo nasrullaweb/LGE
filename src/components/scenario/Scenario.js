@@ -16,11 +16,13 @@ import Moment from 'react-moment';
 import ShareScenario from './ShareScenario'
 import moment from 'moment';
 import {PageView, initGA} from '../common/Tracking';
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 
 
 const { Title } = Typography;
 const { confirm } = Modal;
+const { Search } = Input;
 
 
 function genareteScenarioList(scenarios)  {
@@ -265,10 +267,12 @@ export class Scenario extends React.Component {
                           </Menu.Item>
                         </Menu>
                         {/* <Button type="primary" className="createButtom" onClick={this.showModal}>Create New Scenario</Button> */}
-                        <Input placeholder="Search" value={this.state.searchText} onChange={this.onSearch} />
+                        <Search placeholder="Search" value={this.state.searchText} onChange={this.onSearch} />
                       </div>
                       <div className="manageTable">
-                        <Table columns={columns} dataSource={finalData} onChange={this.onChange} scroll={{ x: true }} />
+                        <ColoredScrollbars>
+                          <Table columns={columns} dataSource={finalData} onChange={this.onChange} scroll={{ x: true }} />
+                        </ColoredScrollbars>
                       </div>
                     </div>
                     {/* <Modal

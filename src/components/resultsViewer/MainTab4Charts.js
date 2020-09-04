@@ -109,7 +109,7 @@ class MainTab4Charts extends React.Component {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4],
+                  width: [2, 2, 2, 2, 2],
                   curve: 'smooth',
                 },
                 xaxis: {

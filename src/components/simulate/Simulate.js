@@ -19,6 +19,8 @@ const { Option } = Select;
 const { Title } = Typography;
 const { Sider } = Layout;
 
+
+
 function genareteMYScenarioList(scenarios)  {
   const scenarioList = scenarios.filter((scenario) => {
     return scenario.isShared === 0 && scenario.scenarioName && scenario.isSimulatorOptimiser === 'Simulator'
@@ -100,6 +102,8 @@ export class Simulate extends React.Component {
       manageVisible: false,
     });
   }
+
+  
 
   static getDerivedStateFromProps(props, state) {
     if (props.saveAsId) {
@@ -188,6 +192,8 @@ export class Simulate extends React.Component {
                     {
                       !this.state.scenarioId &&
                       <div className="setScenario">
+                        <div className="setScenarioHeader"></div>
+                        <div className="setScenarioContent">
                           <Select
                               showSearch
                               style={{ width: 200 }}
@@ -205,8 +211,9 @@ export class Simulate extends React.Component {
                                   )
                               } 
                             </Select>
-                            Or <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
+                            <span className="setPadding">Or</span> <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
                             <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenario</Button>
+                          </div>
                         </div>
                     }
                     {

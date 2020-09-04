@@ -1,6 +1,6 @@
 module.exports = {
-    'primary-color': '#c55b11',
+    'primary-color': '#CC1F55',
     'link-color': '#546996',
-    'font-family': '"futura-pt", sans-serif',
+    'font-family': '"Lato", sans-serif',
     'line-height-base': 1.3,
   };
