@@ -208,6 +208,7 @@ class MainTab1Charts extends React.Component {
                     <Table columns={columns} dataSource={this.props.RSquare} pagination={false} />
                   </div>
                 }
+                <div className="spaceBetween"></div>
                 
                 
                 

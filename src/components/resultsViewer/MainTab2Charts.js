@@ -280,6 +280,7 @@ class MainTab2Charts extends React.Component {
                         height={400}
                         />
                 </div>
+                <div className="spaceBetween"></div>
             </div>
       }
       
