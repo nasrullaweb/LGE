@@ -511,7 +511,7 @@ export class OptimizerDetails extends React.Component {
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend">$0</div>
+                        <div className="newSpend"><span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                 </span>
             }},
@@ -559,7 +559,7 @@ export class OptimizerDetails extends React.Component {
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend">$0.00</div>
+                        <div className="newSpend"><span>{`$${parseFloat(roi).toFixed(2)}`}</span></div>
                     }
                 </span>
             }},
