@@ -8,10 +8,7 @@ import LefNav from '../common/LefNav.js';
 
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
-import logo from '../../images/LG_Tool_Sprite-52.png';
-import logoBottom from '../../images/LG_Tool_Sprite_Shadow_image.png';
 import {PageView, initGA} from '../common/Tracking';
-import copyRight from '../../images/LG_GFK_Logo.png';
 import { getModelList, getGeographyList, getModelandGeographyList } from '../../store/dataViewer/actionCreator'
 
 const CheckboxGroup = Checkbox.Group;
@@ -138,82 +135,58 @@ onGeographyChange = (e) => {
         const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         console.log('ggg', geographyList)
             return (
-              <div className="home-container">
-                <div className="home-left-container">
-                  <div className="home-left-top">
-                    <div className="home-lg-img"><img src={logo} /></div>
-                    <div className="home-form-container">
-                      <div className="home-form">
-                        <div className="home-form-item">
-                          <div className="left-icon"></div>
-                          <div className="right-drop">
-                            <span className="label">Model</span>
+              <div className="container">
+                <Header modelTitle="HOME" />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
+                <div className="mainContent homeContent">
+                    <div className="manageContainer homeContainer">
+                    <div className="topSelection">
+                            {
+                                message && !geographyValue &&
+                                <div className="messageContainer">
+                                    {message}
+                                </div>
+                            }
                             <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Model <Icon type="caret-down" theme="outlined" />
+                                    Model <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                          </div>
-                        </div>
-                        <div className="home-form-item">
-                          <div className="left-icon1"></div>
-                          <div className="right-drop">
-                            <span className="label">Geography</span>
                             <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Geography <Icon type="caret-down" theme="outlined" />
+                                    Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                          </div>
-                        </div>
+                            </div>
+                      <div className="btnContainer">
+                      <div className="leftEle">
+                        <Link to="/DataSnapshot">
+                          <button className="home-button btn1"></button>
+                        </Link>
+                      </div>
+                      <div className="leftEle">
+                        <Link to="/MarketingROI">
+                          <button className="home-button btn2"></button>
+                        </Link>
+                      </div>
+                      <div className="leftEle">
+                        <Link to="/simulator">
+                          <button className="home-button btn3"></button>
+                        </Link>
+                      </div>
                       </div>
                     </div>
                   </div>
-
-                </div>
-                <div className="home-right-container">
-                  <div className={`home-form ${!geographyValue ? "disable" : ""}`}>
-                    {
-                      !geographyValue &&
-                      <div class="home-form-disable"></div>
-                    }
-                    <div className="home-form-item">
-                      <Link to="/DataSnapshot">
-                        <div className="left-icon"></div>
-                        <div className="right-drop">
-                          <span className="label">DATA SNAPSHOT</span>
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="home-form-item">
-                      <Link to="/MarketingROI">
-                        <div className="left-icon icon2"></div>
-                        <div className="right-drop">
-                          <span className="label">MARKETING ROI</span>
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="home-form-item">
-                      <Link to="/simulator">
-                        <div className="left-icon icon3"></div>
-                        <div className="right-drop">
-                          <span className="label">SIMULATOR</span>
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="home-form-item">
-                      <Link to="/optimizer">
-                        <div className="left-icon icon4"></div>
-                        <div className="right-drop">
-                          <span className="label">OPTIMIZER</span>
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="copyRightLogin">©MMMPLATFORM2020</div>
-                <div className="copyRightLogo"><img src={copyRight} /></div>
+                <Footer />
+                </Layout>
+              </Layout>
               </div>
+             
+              
             )
           }
 
