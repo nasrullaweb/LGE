@@ -1,8 +1,11 @@
 import React, {Fragment} from 'react'
-import { Tabs, Table, Switch, Icon, InputNumber  } from 'antd';
+import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover  } from 'antd';
+import { InfoCircleFilled } from '@ant-design/icons';
 import './Simulate.less'
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 const { TabPane } = Tabs;
+const { Title } = Typography;
 
 export class SimpulateDetails extends React.Component {
 
@@ -336,101 +339,191 @@ export class SimpulateDetails extends React.Component {
     }
 
     render() {
-        const { brandList, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
         const columns = [
-            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign' },
+            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { title: 'Change Spending', dataIndex: 'changeInSpend', key: 'changeInSpend', render: (changeInSpend, record) => (
-                <span>
+                <span className="borderRight" >
                     <InputNumber disabled={record.spend <=0} value={`${Math.round(changeInSpend)}`} onBlur={(e) => this.handleChangeInSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInSpend(e)} id={`spend_${record.key}`} />
                     <InputNumber disabled={record.spend <=0} min={-100} value={`${parseFloat(record.changeInPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInSpendPercentage(e)} id={`percentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} />
                 </span>
             )},
-            { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
-                <span>
-                    <div>{record.newSpend && <strong>Old</strong> } {`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    <InputNumber defaultValue={spend}  id={`oldspend_${record.key}`} className="hide" />
-                    {record.newSpend && 
-                        <div><strong>New</strong> {`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    }       
-                    {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
-                        Math.round(record.newSpend) - Math.round(spend) > 0 ?
-                            <div className="newSpend positive">${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                            :
-                            <div className="newSpend negitive">${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-                        :
-                        <div className="newSpend">$0</div>
-                    }
-                </span>
-            )},
             { title: 'Cost', dataIndex: 'cost', key: 'cost', className: showColumns ? "show" : "hide", render: (cost, record) => (
-                <InputNumber disabled={record.costDisabled === 1 || record.spend <=0} value={cost} id={`cost_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onBlur={(e) => this.handleChangeCost(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeCost(e)} />
+                <span className="borderRight"><InputNumber disabled={record.costDisabled === 1 || record.spend <=0} value={cost} id={`cost_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onBlur={(e) => this.handleChangeCost(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeCost(e)} /></span>
             )},
             { title: 'Response', dataIndex: 'response', key: 'response', className: showColumns ? "show" : "hide", render: (response, record) => (
-                <InputNumber  disabled={record.responseDisabled === 1 || record.spend <=0} value={response} id={`response_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onBlur={(e) => this.handleChangeResponse(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeResponse(e)} />
+                <span className="borderRight"><InputNumber  disabled={record.responseDisabled === 1 || record.spend <=0} value={response} id={`response_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onBlur={(e) => this.handleChangeResponse(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeResponse(e)} /></span>
             )},
-            // { title: 'Profit', dataIndex: 'profit', key: 'profit', render: (profit, record) => (
-            //    <span>
-            //        <div>{record.newProfit && <strong>Old</strong> } {`$${Math.round(profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-            //         {record.newProfit && 
-            //             <div><strong>New</strong> {`$${Math.round(record.newProfit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-            //         }    
-            //        {record.newProfit && Math.round(record.newProfit) - Math.round(profit) != 0 ?
-            //             Math.round(record.newProfit) - Math.round(profit) > 0 ?
-            //                 <div className="newSpend positive">${Math.round(Math.round(record.newProfit) - Math.round(profit)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-            //                 :
-            //                 <div className="newSpend negitive">${Math.round(Math.round(record.newProfit) - Math.round(profit)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-            //             :
-            //             <div className="newSpend">$0</div>
-            //         }
-            //     </span>
-            // )},
-            { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
-                <span>
-                    <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+            { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => {
+
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newSpend && <strong>Old</strong> } {`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        {/* <InputNumber defaultValue={spend}  id={`oldspend_${record.key}`} className="hide" /> */}
+                        {record.newSpend && 
+                            <div><strong>New</strong> {`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        }       
+                        {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
+                            Math.round(record.newSpend) - Math.round(spend) > 0 ?
+                                <div className="newSpend positive">
+                                    <span className="title">Change</span>
+                                    <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                </div>
+                                :
+                                <div className="newSpend negitive">
+                                    <span className="title">Change</span>
+                                    <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                </div>
+                            :
+                            <div className="newSpend">$0</div>
+                        }
+                    </div>
+                  );
+                  return <span className="borderRight">
+                    <InputNumber defaultValue={spend}  id={`oldspend_${record.key}`} className="hide" />
+                    {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
+                        Math.round(record.newSpend) - Math.round(spend) > 0 ?
+                            <div className="newSpend positive">
+                                <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                        :
+                        <div className="newSpend"><span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                    }
+                    
+                    </span>
+                }
+            },
+            { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     {record.newRevenue && 
                         <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     } 
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
-                            <div className="newSpend positive">${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                            </div>
                             :
-                            <div className="newSpend negitive">${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">$0</div>
+                    }
+                    </div>
+                  );
+                return <span className="borderRight">
+                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newRevenue && 
+                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    }  */}
+                    {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
+                        Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
+                            <div className="newSpend positive">
+                                <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                               <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
                         :
                         <div className="newSpend">$0</div>
                     }
                 </span>
-             )},
-            { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
-                <span>
-                    <div>{record.newROI && <strong>Old</strong> } {`$${parseFloat(roi).toFixed(2)}`}</div>
+            }},
+            { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newROI && <strong>Old</strong> } {`$${parseFloat(roi).toFixed(2)}`}</div>
                     {record.newROI && 
                         <div><strong>New</strong> {`$${parseFloat(record.newROI).toFixed(2)}`}</div>
                     } 
                     {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
                         parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
-                            <div className="newSpend positive">${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</div>
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                            </div>
                             :
-                            <div className="newSpend negitive">${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</div>
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">$0.00</div>
+                    }
+                    </div>
+                  );
+                return <span>
+                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
+                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                            <div className="newSpend positive">
+                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
                         :
                         <div className="newSpend">$0.00</div>
                     }
                 </span>
-             )},
+            }},
         ];
         const tableData = spendData
         const columnsKey = [
-            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign' },
+            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
-                <span>
+                <span className="borderRight">
                     {record.tactic && record.tactic === 'Change' ?
                             spend >= 0 ?
                             <span className="positive">
                                 <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${Math.round(record.spendPercentage)}%`}</span>
                             </span>
                             :
                             <span className="negitive">
                                 <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${Math.round(record.spendPercentage)}%`}</span>
                             </span>
                         :
@@ -457,16 +550,18 @@ export class SimpulateDetails extends React.Component {
             //     </span>
             //  )},
             { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
-                <span>
+                <span className="borderRight">
                     {record.tactic && record.tactic === 'Change' ?
                             revenue >= 0 ?
                             <span className="positive">
                                 <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${Math.round(record.revenuePercentage)}%`}</span>
                             </span>
                             :
                             <span className="negitive">
                                 <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${Math.round(record.revenuePercentage)}%`}</span>
                             </span>
                         :
@@ -480,11 +575,13 @@ export class SimpulateDetails extends React.Component {
                             roi >= 0 ?
                             <span className="positive">
                                 <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
                             </span>
                             :
                             <span className="negitive">
                                 <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
                                 <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
                             </span>
                         :
@@ -495,41 +592,99 @@ export class SimpulateDetails extends React.Component {
         ];
     
             return (
-                <Fragment>
+                <div className="simulateDetails">
+                    <div className="detailsHead">
+                    <Title><Icon type="edit" className="icon" /> {scenarioName}</Title>
+                    {brandList.length > 0 &&
+                            <div className="FilterSelection">
+                                {brandList.length > 0 &&
+                                    <span>
+                                        Brand: {
+                                        brandList.map((item, index) =>
+                                        index === brandList.length-1 ?
+                                        `${item} `
+                                        :
+                                        `${item}, `
+                                        )
+                                        }
+                                    </span>
+                                }
+                                {geographyList.length > 0 &&
+                                    <span>
+                                        <span className="pipe">||</span>
+                                        Geography: {
+                                        geographyList}
+                                    </span>
+                                }
+                                {/* {subBrandValue.length > 0 &&
+                                    <span>
+                                        SubBrand: {
+                                        subBrandValue.map((item, index) =>
+                                        index === subBrandValue.length-1 ?
+                                        `${item} `
+                                        :
+                                        `${item}, `
+                                        )
+                                        }
+                                    </span>
+                                } */}
+                                {periodValue.length > 0 &&
+                                    <span>
+                                        <span className="pipe">||</span>
+                                        Time Period: {
+                                        periodValue}
+                                    </span>
+                                }
+                                {/* {tacticValue.length > 0 &&
+                                    <span>
+                                        Tactic: {
+                                        tacticValue.map((item, index) =>
+                                        index === tacticValue.length-1 ?
+                                        `${item} `
+                                        :
+                                        `${item}, `
+                                        )
+                                        }
+                                    </span>
+                                } */}
+                            </div>
+                        } 
+                        </div>
                 {
                     brandList.length > 0 && geographyList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
-                    <div>
+                    <div className="simulatorTableData">
+                        <ColoredScrollbars>
                         {
                             keyHighlights.length > 0 &&
                             <div className="simulateHeader">
-                                <h3 className="keyHeading"><Icon type="highlight" /> Key Highlights</h3>
-                                
+                                <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights</h3>
+                                <div className="simulateTable">
                                 <Table
                                     className="components-table-demo-nested"
                                     columns={columnsKey}
                                     pagination={false}
                                     dataSource={keyHighlights}
                                 />
-                                
+                                </div>
                             </div>
                         }
                         {
                             tableData && tableData.length > 0 &&
-                            <div className="simulateHeader">
+                            <div className="simulateHeader noMargin">
                                 <h3 className="keyHeading">
-                                    <Icon type="highlight" /> Spending Input Table
+                                <span className="smallLeftBorder"></span> Spending Input Table
                                     {/* <p className="selectedOptions">Geography: {geographyList}</p>
                                     <p className="selectedOptions">Time Period: {periodValue}</p> */}
                                     <span className="showColumns"> <Switch checked={showColumns} onChange={changeShowColumns} /> Cost & Response</span>
                                 </h3>
-                                
+                                <div className="simulateTable">
                                 <Table
                                     className="components-table-demo-nested"
                                     columns={columns}
                                     dataSource={tableData}
                                     pagination={false}
                                 />
-                                
+                                </div>
                             </div>
                             // <div className="card-container">
                             //     {console.log('tab Dat ', tableData)}
@@ -548,9 +703,10 @@ export class SimpulateDetails extends React.Component {
                             //     </Tabs>
                             // </div>
                         }
+                        </ColoredScrollbars>
                     </div>
                 }
-                </Fragment>
+                </div>
             )
           }
 

@@ -234,6 +234,7 @@ export class Simulate extends React.Component {
                       visible={this.state.visible}
                       onOk={this.handleOk}
                       onCancel={this.handleCancel}
+                      className="createSc"
                     >
                       <CreateScenario 
                         handleOk={this.handleOk} 

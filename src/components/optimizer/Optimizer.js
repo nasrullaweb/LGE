@@ -187,6 +187,8 @@ export class Optimizer extends React.Component {
                     {
                       !this.state.scenarioId &&
                       <div className="setScenario">
+                        <div className="setScenarioHeader"></div>
+                        <div className="setScenarioContent">
                           <Select
                               showSearch
                               style={{ width: 200 }}
@@ -204,8 +206,9 @@ export class Optimizer extends React.Component {
                                   )
                               } 
                             </Select>
-                            Or <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
+                            <span className="setPadding">Or</span> <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
                             <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenario</Button>
+                        </div>
                         </div>
                     }
                     {
@@ -226,6 +229,7 @@ export class Optimizer extends React.Component {
                       visible={this.state.visible}
                       onOk={this.handleOk}
                       onCancel={this.handleCancel}
+                      className="createSc"
                     >
                       <CreateScenario 
                         handleOk={this.handleOk} 
@@ -236,6 +240,7 @@ export class Optimizer extends React.Component {
                         postScenarioHandle={this.postScenarioHandle}
                         visible={this.state.visible}
                         isSimulatorOptimiser='Optimizer'
+                        
                       />
                     </Modal>
 

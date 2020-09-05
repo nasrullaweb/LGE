@@ -117,12 +117,12 @@
 
           .showColumns {
             position: absolute;
-            right: 15px;
-            top: 15px;
+            right: 18px;
+            top: 8px;
             z-index: 1;
-            color: #fff;
-
+            color: #333;
           }
+
           .keyHeading {
             padding: 15px;
             background: #333;
@@ -141,10 +141,10 @@
     }
   .components-table-demo-nested {
     .ant-table-thead > tr > th {
-      text-align: right;
+      text-align: center;
     }
     .ant-table-tbody > tr > td {
-      text-align: right;
+      text-align: center;
     }
     .ant-table-thead > tr > th.leftAlign, .ant-table-tbody > tr > td.leftAlign {
       text-align: left;
@@ -154,17 +154,33 @@
     }
     .ant-input-number {
       margin-left: 5px;
+      background : #FFFFFF;
+      border-style : Solid;
+      border-color : rgba(214, 214, 214, 0.5);
+      border-width : 1px;
+      width : 80px;
+      height : 25px;
+      border-radius : 2px;
+
+      .ant-input-number-input {
+        height : 25px;
+      }
     }
     
   }
 }
 
 .positive {
-  color: #5cb85c !important;
+  color: #11A818 !important;
+
+  span.title {
+    color: #333 !important;
+    font-weight: bold;
+  }
 }
 
 .negitive {
-  color: #c00 !important;
+  color: #EA1B1B !important;
 }
 
 .DropDownOverLay {
@@ -225,18 +241,18 @@
 }
 
 .ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   font-size: 17px;
-  line-height: 19px;
+  line-height: 14px;
   color: #fff;
-  background-color: #449d44;
-  border-color: #398439;
+  background-color: #CC1F55;
+  border-color: #CC1F55;
 }
 
 .ant-table .ant-table-row-indent + .ant-table-row-expand-icon.ant-table-row-expanded {
-  background-color: #c55b11;
-  border-color: #c55b11;
+  background-color: #CCC;
+  border-color: #CCC;
 }
 
 .ant-input-number .ant-input-number-handler-wrap {
@@ -252,93 +268,100 @@
 
   }
   .createButtom {
-    background: url(../../images/Button_Discard.png) transparent;
+    background: url(../../images/LG_Tool_Sprite_icon_07.png) transparent;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    margin-top: 0;
-    width: 54px;
-    height: 66px;
-    margin-left: 0;
+    margin-top: 4px;
+    width: 28px;
+    height: 28px;
+    margin-left: 5px;
     text-indent: -999999px;
-    background-color: #fff !important;
-    border-color: #333 !important;
+    background-color: transparent !important;
+    border: 0 !important;
 
-    &:hover:not([disabled]) {
-      background: url(../../images/Button_Discard_Highlight.png);
-      background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    border-color: #c55b11 !important;
-    }
+    // &:hover:not([disabled]) {
+    //   background: url(../../images/LG_Tool_Sprite_icon_07.png);
+    //   background-repeat: no-repeat;
+    // background-size: contain;
+    // background-position: center;
+    // border-color: #c55b11 !important;
+    // }
 
     &[disabled] {
       opacity: 0.4;
       cursor: no-drop;
+      background-color: transparent !important;
+    border: 0 !important;
+    }
+
+    &.revert {
+      background-color: transparent !important;
+    border: 0 !important;
     }
 
     &.download {
-      background-image: url(../../images/Button_Download.png);
+      background-image: url(../../images/LG_Tool_Sprite_icon_07.png);
 
-      &:hover:not([disabled]) {
-        background-image: url(../../images/Button_Download_Highlight.png);
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url(../../images/Button_Download_Highlight.png);
+      // }
     }
 
     &.share {
-      background-image: url(../../images/Button_Share.png);
+      background-image: url(../../images/LG_Tool_Sprite_icon_06.png);
 
-      &:hover:not([disabled]) {
-        background-image: url(../../images/Button_Share_Highlight.png);
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url(../../images/Button_Share_Highlight.png);
+      // }
     }
 
     &.saveAs {
-      background-image: url("../../images/Button_Save As.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_05.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Save As_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Save As_Highlight.png");
+      // }
     }
 
     &.save {
-      background-image: url("../../images/Button_Save.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_04.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Save_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Save_Highlight.png");
+      // }
     }
 
     &.simulate {
-      background-image: url("../../images/Button_Optimize.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_03.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Optimize_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Optimize_Highlight.png");
+      // }
     }
 
     &.optimize {
-      background-image: url("../../images/Button_Optimize.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_03.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Optimize_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Optimize_Highlight.png");
+      // }
     }
 
     &.revertChanges {
-      background-image: url("../../images/Button_Revert Changes.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_02.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Revert Changes_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Revert Changes_Highlight.png");
+      // }
     }
 
     &.reset {
-      background-image: url("../../images/Button_Reset.png");
+      background-image: url("../../images/LG_Tool_Sprite_icon_01.png");
 
-      &:hover:not([disabled]) {
-        background-image: url("../../images/Button_Reset_Highlight.png");
-      }
+      // &:hover:not([disabled]) {
+      //   background-image: url("../../images/Button_Reset_Highlight.png");
+      // }
     }
 
   }
@@ -346,10 +369,10 @@
 
 .simulateHeader {
   .ant-switch {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: #999;
 
     &.ant-switch-checked {
-      background-color: rgba(255, 255, 255, 0.75);
+      background-color: rgb(204, 31, 85);
     }
   }
 }
@@ -484,36 +507,7 @@ body .ant-modal-header {
     top: -15px;
   }
 
-  .manageContainer .manageTable {
-    border: 0;
-  }
-
-  .ant-table-thead > tr > th {
-    border: 0;
-    border-top: 0 !important;
-    background : linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
-  height : 50px;
-  border-top : 1px Solid rgba(219, 219, 219, 0.5);
-  font-size : 13px;
-  color : #4C4C4C;
-  padding: 15px;
-  }
-
-  .ant-table-tbody > tr > td { 
-    border-bottom : 1px dashed rgba(188, 188, 188, 0.5);
-    font-size : 13px;
-  color : #333333;
-  padding: 15px;
-  }
-
-  .ant-table-tbody > tr:nth-child(even) > td {
-    background : #F4F4F4;
-  }
   
-  .ant-pagination-item-active a {
-    background: #CC1F55;
-    color: #fff;
-}
 
 // .ant-modal-close-x {
 //   background: #CC1F55;
@@ -530,4 +524,172 @@ body .ant-modal-header {
 //     font-size: 12px;
 //     }
 // }
+}
+
+.manageContainer .manageTable {
+  border: 0;
+}
+
+body .ant-table-thead > tr > th {
+  border: 0;
+  border-top: 0 !important;
+  background : linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
+height : 50px;
+border-top : 1px Solid rgba(219, 219, 219, 0.5);
+font-size : 13px;
+color : #4C4C4C;
+padding: 15px;
+}
+
+body .ant-table-tbody > tr > td { 
+  border-bottom : 1px dashed rgba(188, 188, 188, 0.5);
+  font-size : 13px;
+color : #333333;
+padding: 15px;
+white-space: nowrap;
+
+span.pipe {
+  color: #C1C1C1;
+}
+}
+
+body .ant-table-tbody > tr:nth-child(even) > td {
+  background : #F4F4F4;
+}
+
+body .ant-pagination-item-active a {
+  background: #CC1F55;
+  color: #fff;
+}
+
+.spenTooltip {
+  border-top: 5px solid #CC1F55;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: right;
+  font-size : 11px;
+  color : #4C4C4C;
+}
+
+.borderRight {
+display: inline-block;
+width: 100%;
+border-right: 1px solid rgba(188, 188, 188, 0.5);
+}
+
+.simulateNew {
+  .manageHeader  {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+  }
+  
+  .radioStyle {
+    padding: 5px 0 5px 20px !important;
+
+    label {
+      font-size: 12px;
+      color: #000;
+    }
+  }
+
+  .dropSelection {
+    background: #F9F9F9;
+    min-height: 50px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+
+    .ant-dropdown-link {
+      text-align: left;
+    }
+
+  }
+  .simulateDetails {
+    background: #F9F9F9;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
+
+    .detailsHead {
+      border-bottom: 1px solid rgba(219, 219, 219, 0.5);
+      padding: 15px;
+      font-size: 12px;
+      position: relative;
+      color: #1A1B1C;
+
+      h1.ant-typography {
+        color: #1A1B1C;
+        font-size: 18px;
+        margin-bottom: 0;
+      }
+
+      .FilterSelection {
+        display: inline-block;
+        position: absolute;
+        top: 18px;
+        right: 10px;
+        border: 0;
+      }
+
+      span {
+        padding-right: 15px;
+      }
+    }
+
+    .simulatorTableData {
+      height: calc(100vh - 255px);
+
+      .simulateHeader {
+        margin: 15px;
+        border-radius: 10px;
+
+        &.noMargin {
+          margin-top: 0;
+        }
+
+        .keyHeading {
+          padding: 10px;
+          background : linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0,  0.15) 100%);
+          height: 36px;
+          border-radius: 8px 8px 0px 0px;
+          border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
+          width: 100%;
+          font-size: 13px;
+          color: #3D3D3D;
+          text-align: left;
+        }
+
+        .simulateTable {
+          padding: 10px 10px 0 10px;
+        }
+      }
+    }
+  }
+  
+}
+
+body .ant-popover-inner-content {
+  padding: 0;
+}
+
+body .ant-popover-inner {
+  border-radius: 8px;
+}
+
+body .ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.createSc.ant-modal {
+  top: 30px;
+}
+
+body .ant-pagination-item-active:focus, body .ant-pagination-item-active:hover {
+  color: #fff;
+}
+body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
+  margin-top: -4px;
 }

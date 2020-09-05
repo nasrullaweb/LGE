@@ -173,6 +173,7 @@ export class Scenario extends React.Component {
           title: 'Simulator/Optimizer',
           dataIndex: 'isSimulatorOptimiser',
           key: 'isSimulatorOptimiser',
+          render: (text, record) => <span className="borderRight">{text}</span>,
           //defaultSortOrder: 'descend',
           //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
         },
@@ -180,6 +181,7 @@ export class Scenario extends React.Component {
           title: 'Scenario Notes',
           dataIndex: 'scenarioNotes',
           key: 'scenarioNotes',
+          render: (text, record) => <span className="borderRight">{text}</span>,
           //defaultSortOrder: 'descend',
           //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
         },
@@ -187,17 +189,19 @@ export class Scenario extends React.Component {
           title: 'Model',
           dataIndex: 'model',
           sorter: (a, b) => a.model.length - b.model.length,
+          render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
           title: 'Created By',
           dataIndex: 'createdBy',
           sorter: (a, b) => a.createdBy.length - b.createdBy.length,
           sortDirections: ['descend', 'ascend'],
+          render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
           title: 'Created Date',
           dataIndex: 'createdDate',
-          render: (text) => moment(new Date(text)).format("YYYY-MM-DD HH:MM"),
+          render: (text) => <span className="borderRight">{moment(new Date(text)).format("YYYY-MM-DD HH:MM")}</span>,
           sorter: (a, b) => a.createdDate.length - b.createdDate.length,
           sortDirections: ['descend', 'ascend'],
         },
@@ -206,7 +210,7 @@ export class Scenario extends React.Component {
           dataIndex: 'lastModified',
           render: (text) => {
           let newVal = text !== null ? moment(new Date(text)).format("YYYY-MM-DD HH:MM") : ''
-          return newVal
+          return <span className="borderRight">{newVal}</span>
         },
           sorter: (a, b) => a.createdDate.length - b.createdDate.length,
           sortDirections: ['descend', 'ascend'],
