@@ -372,7 +372,7 @@ class MainTab extends Component {
                             regionValue}
                         </span>
                     }
-                    {brandValue &&
+                    {brandValue.length > 0 &&
                         <span>
                             <span className="pipe">||</span>
                             Channel: {brandValue}

@@ -288,7 +288,7 @@ class MainTab3Charts extends React.Component {
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
                         type="rangeBar" 
-                        height={450}
+                        height={650}
                         />
               </div>
               <div className="spaceBetween"></div>

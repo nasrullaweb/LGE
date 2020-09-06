@@ -603,7 +603,7 @@ class ResultsViewer extends Component {
                                                                 </span>
                                                             } */}
 
-                                                            <p>Response curves are at overall level and will be the same across all models.</p>
+                                                            
                                                         </div>
                                                     }
                                                     <div className="chartContent">
@@ -615,6 +615,7 @@ class ResultsViewer extends Component {
                                                             subBrandValue={subBrandValue}
                                                             tacticValue={tacticValue} />
                                                     }
+                                                    
                                                     </ColoredScrollbars>
                                                     </div>
                                                     </div>

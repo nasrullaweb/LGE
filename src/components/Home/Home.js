@@ -12,6 +12,7 @@ import logo from '../../images/LG_Tool_Sprite-52.png';
 import logoBottom from '../../images/LG_Tool_Sprite_Shadow_image.png';
 import {PageView, initGA} from '../common/Tracking';
 import copyRight from '../../images/LG_GFK_Logo.png';
+import shadow from '../../images/LG_Tool_Sprite_Shadow_image.png';
 import { getModelList, getGeographyList, getModelandGeographyList } from '../../store/dataViewer/actionCreator'
 
 const CheckboxGroup = Checkbox.Group;
@@ -132,11 +133,27 @@ onGeographyChange = (e) => {
 }
     render() {
 
-      const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList } = this.props
+      const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, user } = this.props
+        const Role = JSON.parse(sessionStorage.getItem('role'))
         const {modelValue, geographyValue, message} = this.state
         const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
-        console.log('ggg', geographyList)
+        const menuSetting = (
+          <Menu>
+              {
+                  (Role === 'SuperAdmin') &&
+                      <Menu.Item key="user">
+                          <Link to="/users"><Icon type="user" /> User Management</Link>
+                      </Menu.Item>
+              }
+              <Menu.Item key="changePassword">
+                  <Link to="/changePassword"><Icon type="lock" /> Change Password</Link>
+              </Menu.Item>
+              {/* <Menu.Item key="logout">
+                  <Link onClick={this.logout}><Icon type="logout" /> Logout</Link>
+              </Menu.Item> */}
+          </Menu>
+        );
             return (
               <div className="home-container">
                 <div className="home-left-container">
@@ -185,6 +202,9 @@ onGeographyChange = (e) => {
                         </div>
                       </Link>
                     </div>
+                    <div className="home-shadow">
+                      <img src={shadow} />
+                    </div>
                     <div className="home-form-item">
                       <Link to="/MarketingROI">
                         <div className="left-icon icon2"></div>
@@ -193,6 +213,7 @@ onGeographyChange = (e) => {
                         </div>
                       </Link>
                     </div>
+                    <div className="home-shadow"><img src={shadow} /></div>
                     <div className="home-form-item">
                       <Link to="/simulator">
                         <div className="left-icon icon3"></div>
@@ -201,6 +222,7 @@ onGeographyChange = (e) => {
                         </div>
                       </Link>
                     </div>
+                    <div className="home-shadow"><img src={shadow} /></div>
                     <div className="home-form-item">
                       <Link to="/optimizer">
                         <div className="left-icon icon4"></div>
@@ -212,7 +234,21 @@ onGeographyChange = (e) => {
                   </div>
                 </div>
                 <div className="copyRightLogin">©MMMPLATFORM2020</div>
-                <div className="copyRightLogo"><img src={copyRight} /></div>
+                
+                
+                { user &&
+                            <div className="home-logout">
+                                <div className="copyRightLogo"><img src={copyRight} /></div>
+                                <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay headerPopup'>
+                                    <span className='logout bellIcon'>
+                                        
+                                    </span>
+                                </Dropdown>
+                                <Link onClick={this.logout} className='logout logoutIcon'>
+                                </Link>
+                                
+                            </div>
+                        }
               </div>
             )
           }

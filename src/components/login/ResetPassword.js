@@ -94,7 +94,7 @@ class ResetPasswordForm extends React.Component {
               MMM Platform 
             </div> */}
             {
-                !this.state.emaiId &&
+                this.state.emaiId &&
                 <div className="formContainer reset">
             <div className="formData">
                 

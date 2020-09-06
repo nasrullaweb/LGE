@@ -2,8 +2,9 @@
 @mainBackground: #fff;
 .mainContainer, body {
     background: @mainBackground;
-    min-height: 100vh;
+    max-height: 100vh;
     font-family: 'Lato', sans-serif !important;
+    overflow: hidden;
 
     .header {
         padding-bottom: 20px;
@@ -86,6 +87,14 @@
                 height: 25px;
             }
 
+            &.logoutIcon {
+                background: url(../images/LG_Tool_Sprite_Logout_head.png);
+                background-size: 100% 100%;
+                cursor: pointer;
+                width: 25px;
+                height: 25px;
+            }
+
             &.homeLogo {
                 background: url(../images/LG_GFK_Logo.png);
                 background-size: 100% 100%;
@@ -135,7 +144,7 @@
          height: 100vh;
 
         .loginBackground {
-            background: url(../images/LG_Login_BG.png);
+            background: url(../images/LG_Login_BG.jpg);
             background-repeat: no-repeat;
             background-size: 100% 100%;
             background-position: center;
@@ -177,15 +186,7 @@
     color : #FFFFFF;
         }
 
-        .copyRightLogo {
-            position: fixed;
-            right: 2%;
-            bottom: 4%;
-
-            img {
-                width: 30px;
-            }
-        }
+        
 
         .login-form {
             display: table-cell;
@@ -301,6 +302,9 @@
     height: 100vh;
     z-index: 100;
     background: rgba(0,0,0,0.5);
+    background-image: url('../images/Spinner-1.6s-190px.gif');
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .LoadingContainer .ant-spin-nested-loading > div > .ant-spin {
@@ -429,7 +433,7 @@
 }
 
 .login-container .ant-checkbox-wrapper span {
-    font-size: 12px;
+    font-size: 10px;
    
 }
 
@@ -589,19 +593,19 @@ body .login-container .login-form .login_error.rest {
     .ant-layout-sider-trigger {
         background : linear-gradient(270deg, rgba(83, 83, 85, 0.22) 0%, rgba(0, 0, 0, 0.22) 100%);
         width : 100%;
-        height : 52px;
+        height : 33px;
   border-bottom : 1px solid rgba(15, 15, 15, 0.5);
   cursor: pointer;
   position: absolute;
   top: 0;
         i {
             background: url(../images/LG_Menu_collapse_icon.png);
-            width: 24px;
-            height: 24px;
-            background-size: cover;
+            width: 20px;
+            height: 20px;
+            background-size: 100% 100%;
             display: block;
             position: relative;
-            top: 12px;
+            top: 6px;
             left: 12px;
 
             &.anticon-left {
@@ -632,7 +636,7 @@ body .login-container .login-form .login_error.rest {
     .ant-menu-inline {
         width: 211px;
         background: transparent;
-        padding-top: 53px;
+        padding-top: 33px;
 
         .ant-menu-item, .ant-menu-submenu {
             background : linear-gradient(270deg, rgba(83, 83, 85, 0.22) 0%, rgba(0, 0, 0, 0.22) 100%);
@@ -737,7 +741,7 @@ body .login-container .login-form .login_error.rest {
     .ant-menu-inline-collapsed {
         width: 50px;
         background: transparent;
-        padding-top: 53px;
+        padding-top: 33px;
         
 
         .ant-menu-item, .ant-menu-submenu {
@@ -1047,7 +1051,7 @@ body .mainContainer .header {
 
             .home-form-container {
                 width: 400px;
-                height: calc(100vh - 170px);
+                height: calc(100vh - 185px);
                 margin: 0 auto;
                 display: flex;
                 justify-content: center;
@@ -1102,7 +1106,8 @@ body .mainContainer .header {
                             color : #8E8E8E;
                             line-height: 23px;
                             padding: 10px;
-
+                            text-align: left;
+                            
                             i {
                                 float: right;
                                 line-height: 24px;
@@ -1123,6 +1128,12 @@ body .mainContainer .header {
         position: relative;
 
         .home-form {
+
+            .home-shadow {
+                img {
+                    width: 360px;
+                }
+            }
 
             .home-form-disable {
                 position: absolute;
@@ -1229,12 +1240,109 @@ body .mainContainer .header {
 
     .copyRightLogo {
         position: fixed;
-        right: 2%;
-        bottom: 4%;
+        right: 2.4%;
+        top: 4.2%;
 
         img {
             width: 30px;
         }
     }
 
+}
+
+.home-logout {
+    position: absolute;
+    right: 2.4%;
+    top: 4.2%;
+
+    .logoutIcon {
+        background: url(../images/LG_Tool_Sprite_Logout_head_Hover.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 36px;
+        height: 32px;
+        display: inline-block;
+        position: relative;
+        left: -42px;
+    }
+
+    .bellIcon {
+        background: url(../images/LG_Tool_Sprite_Settings_icon_red.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 36px;
+        height: 32px;
+        display: inline-block;
+        position: relative;
+        left: -54px;
+    }
+
+    .copyRightLogo {
+        cursor: pointer;
+        width: 36px;
+        height: 32px;
+        display: inline-block;
+        position: relative;
+        left: -13px;
+        top: -11px;
+        right: unset;
+
+        img {
+            width: 30px;
+        }
+    }
+}
+
+body .ant-modal-content  {
+    .formLabel {
+        font-size : 12px;
+        color : #000000;
+    }
+
+    input {
+        background : #FFFFFF;
+        height : 37px;  border-radius : 3px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+        font-size : 12px;
+
+    }
+    .ant-select-selection--single {
+        background : #FFFFFF;
+        height : 37px;  border-radius : 3px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+        font-size : 12px;
+        width: 100% !important;
+    }
+
+    .ant-select-disabled {
+        .ant-select-selection--single {
+            background : #EAEAEA;
+        }
+    }
+
+    .modelButtons {
+        text-align: center;
+        margin: 0;
+
+        .ant-btn {
+            background : #C4C4C4;
+            height : 25px;
+            border-radius : 3px;
+            font-size : 12px;
+            color : #FFFFFF;
+
+            &.ant-btn-primary {
+                background : #CC1F55;
+            }
+        }
+    }
+}
+
+.downChart p {
+    font-size : 10px;
+  color : #686868;
+}
+
+.resultView .messageContainer {
+    padding-top: 10px;
 }

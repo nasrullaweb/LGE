@@ -360,7 +360,10 @@ export class SimpulateMain extends React.Component {
                     {
                         this.props.setLoader && this.props.spendData.length === 0 &&
                             <div className="LoaderOptimize">
-                                <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin>
+                                <div className="loadOptimizeImg">
+                                </div>
+                                {/* <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin> */}
+
                             </div>
                     }
                         <div className="manageHeader">

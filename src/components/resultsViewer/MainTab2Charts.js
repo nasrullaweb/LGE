@@ -31,7 +31,10 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#DB1348', '#FF9933', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             labels: [],
             tooltip: {
               enabled: true,
@@ -94,7 +97,10 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#DB1348', '#FF9933', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             tooltip: {
               enabled: true,
               style: {
@@ -146,7 +152,10 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#DB1348', '#FF9933', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             plotOptions: {
               bar: {
                 horizontal: false,

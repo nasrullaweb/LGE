@@ -39,7 +39,7 @@ class MainTab1Charts extends React.Component {
                 },
                 xaxis: {
                   type: 'datetime',
-                  tickAmount: 24,
+                  tickAmount: 30,
                   categories: [],
                   axisTicks: {
                     show: true,

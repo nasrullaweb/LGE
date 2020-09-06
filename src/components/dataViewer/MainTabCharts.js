@@ -70,13 +70,13 @@ class MainTabCharts extends React.Component {
                       color: '#8E8E8E'
                     },
                   },
-                  title: {
-                    text: "Sales Value (USD)",
-                    style: {
-                      color: '#8E8E8E',
-                        fontSize: '12px',
-                    }
-                  },
+                  // title: {
+                  //   text: "Sales Value (USD)",
+                  //   style: {
+                  //     color: '#8E8E8E',
+                  //       fontSize: '12px',
+                  //   }
+                  // },
                   axisTicks: {
                     show: true,
                   },
@@ -204,13 +204,13 @@ class MainTabCharts extends React.Component {
                     show: true,
                     color: '#8E8E8E'
                   },
-                  title: {
-                    text: "Sales Value (USD)",
-                    style: {
-                      fontSize: '12px',
-                      color: '#8E8E8E'
-                    }
-                  },
+                  // title: {
+                  //   text: "Sales Value (USD)",
+                  //   style: {
+                  //     fontSize: '12px',
+                  //     color: '#8E8E8E'
+                  //   }
+                  // },
                 },
                 yaxis: [
                   {
@@ -287,7 +287,10 @@ class MainTabCharts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#DB1348', '#FF9933', '#689f38', '#e64a19'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 dataLabels: {
                   enabled: false
                 },
@@ -297,7 +300,7 @@ class MainTabCharts extends React.Component {
                 },
                 xaxis: {
                   type: 'datetime',
-                  tickAmount: 24,
+                  tickAmount: 30,
                   categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
                   labels: {
                     style: {
@@ -453,7 +456,7 @@ class MainTabCharts extends React.Component {
         cart1.series[0].data = props.graphData.data
         cart1.series[0].name = props.var1Value
         cart1.options.xaxis.categories = props.graphData.xValue
-        cart1.options.xaxis.title.text = props.var1Value
+       // cart1.options.xaxis.title.text = props.var1Value
         // cart1.options.xaxis.min = Math.round(props.graphData.min)
         // cart1.options.xaxis.max = Math.round(props.graphData.max)
     }
@@ -462,7 +465,7 @@ class MainTabCharts extends React.Component {
         cart2.series[0].data = props.graphData.data1
         cart2.series[0].name = props.var2Value
         cart2.options.xaxis.categories = props.graphData.xValue1
-        cart2.options.xaxis.title.text = props.var2Value
+        //cart2.options.xaxis.title.text = props.var2Value
         // cart2.options.xaxis.min = Math.round(props.graphData.min)
         // cart2.options.xaxis.max = Math.round(props.graphData.max)
 

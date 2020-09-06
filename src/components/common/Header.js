@@ -67,9 +67,9 @@ export class Header extends React.Component {
                 <Menu.Item key="changePassword">
                     <Link to="/changePassword"><Icon type="lock" /> Change Password</Link>
                 </Menu.Item>
-                <Menu.Item key="logout">
+                {/* <Menu.Item key="logout">
                     <Link onClick={this.logout}><Icon type="logout" /> Logout</Link>
-                </Menu.Item>
+                </Menu.Item> */}
             </Menu>
           );
             return (
@@ -96,6 +96,8 @@ export class Header extends React.Component {
                     <Col xs={24} sm={8}>
                         { user &&
                             <div>
+                                <Link onClick={this.logout} className='logout logoutIcon'>
+                                </Link>
                                 <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay headerPopup'>
                                     <span className='logout bellIcon'>
                                         

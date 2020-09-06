@@ -403,14 +403,14 @@ export class OptimizerDetails extends React.Component {
                                     <span className="title">Change</span>
                                     <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                                 :
                                 <div className="newSpend negitive">
                                     <span className="title">Change</span>
                                     <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                             :
                             <div className="newSpend">$0</div>
@@ -423,16 +423,16 @@ export class OptimizerDetails extends React.Component {
                 {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                     Math.round(record.newSpend) - Math.round(spend) > 0 ?
                         <div className="newSpend positive">
-                            <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
-                            <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                            <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                         </div>
                         :
                         <div className="newSpend negitive">
-                            <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
-                            <span>{parseFloat(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100).toFixed(2)}%</span>
+                            <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                         </div>
                     :
@@ -476,14 +476,14 @@ export class OptimizerDetails extends React.Component {
                                 <span className="title">Change</span>
                                     <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
                                     <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                         :
                         <div className="newSpend">$0</div>
@@ -498,16 +498,16 @@ export class OptimizerDetails extends React.Component {
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
@@ -546,14 +546,14 @@ export class OptimizerDetails extends React.Component {
                     {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
                         parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
                             <div className="newSpend positive">
-                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
@@ -754,7 +754,7 @@ export class OptimizerDetails extends React.Component {
                                 <div className="simulateTable">
                                 
                                 <Table
-                                    className="components-table-demo-nested"
+                                    className="components-table-demo-nested keyHighlights"
                                     columns={columnsKey}
                                     pagination={false}
                                     dataSource={keyHighlights}

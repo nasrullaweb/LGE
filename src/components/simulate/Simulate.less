@@ -107,7 +107,7 @@
 
           .messageContainer {
             text-align: center;
-            font-size: 16px;
+            font-size: 10px;
             color: #c00;
           }
 
@@ -161,6 +161,7 @@
       width : 80px;
       height : 25px;
       border-radius : 2px;
+      font-size: 12px;
 
       .ant-input-number-input {
         height : 25px;
@@ -177,10 +178,23 @@
     color: #333 !important;
     font-weight: bold;
   }
+
+  span.oldSpend {
+    color: #333 !important;
+  }
 }
 
 .negitive {
   color: #EA1B1B !important;
+
+  span.title {
+    color: #333 !important;
+    font-weight: bold;
+  }
+
+  span.oldSpend {
+    color: #333 !important;
+  }
 }
 
 .DropDownOverLay {
@@ -268,7 +282,7 @@
 
   }
   .createButtom {
-    background: url(../../images/LG_Tool_Sprite_icon_07.png) transparent;
+    background: url(../../images/LG_Tool_Sprite_icon_08.png) transparent;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -289,10 +303,74 @@
     // }
 
     &[disabled] {
-      opacity: 0.4;
       cursor: no-drop;
       background-color: transparent !important;
-    border: 0 !important;
+      border: 0 !important;
+
+      &.download {
+        background-image: url(../../images/LG_Tool_Sprite_icon_07_disabled.png);
+      }
+
+      &.discard {
+        background-image: url(../../images/LG_Tool_Sprite_icon_08_disabled.png);
+      }
+
+      &.share {
+        background-image: url(../../images/LG_Tool_Sprite_icon_06_disabled.png);
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url(../../images/Button_Share_Highlight.png);
+        // }
+      }
+  
+      &.saveAs {
+        background-image: url("../../images/LG_Tool_Sprite_icon_05_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Save As_Highlight.png");
+        // }
+      }
+  
+      &.save {
+        background-image: url("../../images/LG_Tool_Sprite_icon_04_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Save_Highlight.png");
+        // }
+      }
+  
+      &.simulate {
+        background-image: url("../../images/LG_Tool_Sprite_icon_03_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Optimize_Highlight.png");
+        // }
+      }
+  
+      &.optimize {
+        background-image: url("../../images/LG_Tool_Sprite_icon_03_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Optimize_Highlight.png");
+        // }
+      }
+  
+      &.revertChanges {
+        background-image: url("../../images/LG_Tool_Sprite_icon_02_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Revert Changes_Highlight.png");
+        // }
+      }
+  
+      &.reset {
+        background-image: url("../../images/LG_Tool_Sprite_icon_01_disabled.png");
+  
+        // &:hover:not([disabled]) {
+        //   background-image: url("../../images/Button_Reset_Highlight.png");
+        // }
+      }
+  
     }
 
     &.revert {
@@ -428,14 +506,37 @@
   }
 }
 
+body .ant-modal-content {
+  border-radius: 10px;
+}
+
+body .ant-modal-close-icon {
+  padding: 4px;
+  font-size: 12px;
+  background: #CC1F55;
+  color: #fff;
+  border-radius: 20px;
+  position: relative;
+  top: -10px;
+  left: 5px;
+}
 
 body .ant-modal-header {
   // background-image: url(../../images/LG_Header_bg.png);
   //   background-size: 100% 100%;
-    background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 47.72%, #e3e3e3 100%);
-    border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
-    width: 100%;
-    color: #3D3D3D;
+    // background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 47.72%, #e3e3e3 100%);
+    // border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
+    // width: 100%;
+    // color: #3D3D3D;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+
+    .ant-modal-title {
+      font-weight : bold;
+      font-size : 17px;
+      color : #CC1F55;
+      text-align: center;
+    }
 }
 
 .managePopup.ant-modal {
@@ -445,13 +546,6 @@ body .ant-modal-header {
   top: 30px;
   border-radius: 10px;
 
-  .ant-modal-title {
-    color: #3D3D3D;
-  }
-
-  .ant-modal-close-x {
-    color: #3D3D3D;
-  }
 
   .ant-modal-body {
     padding: 15px;
@@ -534,18 +628,18 @@ body .ant-table-thead > tr > th {
   border: 0;
   border-top: 0 !important;
   background : linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
-height : 50px;
 border-top : 1px Solid rgba(219, 219, 219, 0.5);
-font-size : 13px;
+font-size : 12px;
 color : #4C4C4C;
-padding: 15px;
+padding: 8px 15px;
+font-weight: bold;
 }
 
 body .ant-table-tbody > tr > td { 
   border-bottom : 1px dashed rgba(188, 188, 188, 0.5);
-  font-size : 13px;
+  font-size : 12px;
 color : #333333;
-padding: 15px;
+padding: 10px 15px;
 white-space: nowrap;
 
 span.pipe {
@@ -595,10 +689,10 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
 
   .dropSelection {
     background: #F9F9F9;
-    min-height: 50px;
+    min-height: 45px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
-    padding: 15px;
+    padding: 10px 15px;
     margin: 10px;
     text-align: center;
 
@@ -615,7 +709,7 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
 
     .detailsHead {
       border-bottom: 1px solid rgba(219, 219, 219, 0.5);
-      padding: 15px;
+      padding: 10px 15px;
       font-size: 12px;
       position: relative;
       color: #1A1B1C;
@@ -629,7 +723,7 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
       .FilterSelection {
         display: inline-block;
         position: absolute;
-        top: 18px;
+        top: 13px;
         right: 10px;
         border: 0;
       }
@@ -640,7 +734,7 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
     }
 
     .simulatorTableData {
-      height: calc(100vh - 255px);
+      height: calc(100vh - 245px);
 
       .simulateHeader {
         margin: 15px;
@@ -692,4 +786,12 @@ body .ant-pagination-item-active:focus, body .ant-pagination-item-active:hover {
 }
 body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
   margin-top: -4px;
+}
+
+.mainContent .components-table-demo-nested td.show .ant-input-number {
+  width: 55px;
+}
+
+.mainContent .components-table-demo-nested.keyHighlights .ant-table-thead > tr > th.leftAlign {
+  text-indent: -99999px;
 }

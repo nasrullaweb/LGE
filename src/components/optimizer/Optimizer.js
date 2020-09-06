@@ -207,7 +207,7 @@ export class Optimizer extends React.Component {
                               } 
                             </Select>
                             <span className="setPadding">Or</span> <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
-                            <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenario</Button>
+                            <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenarios</Button>
                         </div>
                         </div>
                     }
@@ -247,7 +247,7 @@ export class Optimizer extends React.Component {
                     {
                       this.state.manageVisible &&
                         <Modal
-                          title="Manage Scenario"
+                          title="Manage Scenarios"
                           visible={this.state.manageVisible}
                           onOk={this.handleManageOk}
                           onCancel={this.handleManageCancel}

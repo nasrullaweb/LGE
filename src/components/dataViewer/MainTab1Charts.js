@@ -23,11 +23,14 @@ class MainTab1Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#DB1348', '#FF9933', '#689f38', '#e64a19'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 plotOptions: {
                   bar: {
                     horizontal: false,
-                    columnWidth: '90%',
+                    columnWidth: '70%',
                   }
                   
                 },
@@ -61,6 +64,7 @@ class MainTab1Charts extends React.Component {
                 xaxis: {
                   categories: [],
                   labels: {
+                    show: false,
                     style: {
                       fontSize: '10px',
                       color: '#373D3F',
@@ -158,11 +162,14 @@ class MainTab1Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#DB1348', '#FF9933', '#689f38', '#e64a19'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 plotOptions: {
                   bar: {
                     horizontal: false,
-                    columnWidth: '90%',
+                    columnWidth: '70%',
                   }
                 },
                 dataLabels: {
@@ -195,6 +202,7 @@ class MainTab1Charts extends React.Component {
                 xaxis: {
                   categories: [],
                   labels: {
+                    show: false,
                     style: {
                       fontSize: '10px',
                       color: '#373D3F',
@@ -295,7 +303,10 @@ class MainTab1Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#DB1348', '#FF9933', '#689f38', '#e64a19'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 dataLabels: {
                   enabled: false
                 },
@@ -337,6 +348,7 @@ class MainTab1Charts extends React.Component {
                       color: '#8E8E8E'
                     },
                     title: {
+                      offsetX: 3,
                       text: "Sales Value (USD)",
                       style: {
                         color: '#DB1348',

@@ -71,6 +71,7 @@
           width: 18%;
           min-width: 190px;
           margin-right: 2.5%;
+          text-align: left;
           padding: 0 10px;
           background : #FFFFFF;
           height : 27px;
@@ -134,8 +135,9 @@
 
           .messageContainer {
             text-align: center;
-            font-size: 16px;
+            font-size: 10px;
             color: #c00;
+            padding-bottom:5px;
           }
 
           .hide {
@@ -254,10 +256,11 @@
   position: absolute;
     background: #fff;
     z-index: 10;
-    padding: 20px;
-    left: 200px;
-    top: 0px;
-    width: 140px;
+    padding: 6px;
+    left: -160px;
+    top: -5px;
+    width: 160px;
+    text-align: center;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
@@ -265,5 +268,22 @@
 .simulatorContainer .FilterSelection {
   border-top: 1px solid #333;
   border-bottom: 1px solid #333;
+}
+
+.LoaderOptimize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.loadOptimizeImg {
+ 
+  background: url(../../images/LG_Tool_Sprite-68.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 405px;
+        height: 99px;
+        position: relative;
+        top: -30px;
 }
 
