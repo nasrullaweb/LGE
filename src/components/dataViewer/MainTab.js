@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { getBrandList, getSubBrandList, getTacticList, getGraphData, setGraphChange } from '../../store/dataViewer/actionCreator'
 import MainTabCharts from './MainTabCharts'
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -236,44 +237,75 @@ class MainTab extends Component {
             return (
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
-                        <div>
-                            <div className="site-checkbox-all-wrapper">
-                                <Checkbox
-                                    indeterminate={this.state[stateNane].indeterminate}
-                                    onChange={checkAllChange}
-                                    checked={this.state[stateNane].checkAll}
-                                    data_opt={listOption}
-                                >
-                                Select All
-                                </Checkbox>
+                        listOption.length > 4 ?
+                            <ColoredScrollbars style={{height: 150 }}>
+                            <div>
+                                <div className="site-checkbox-all-wrapper">
+                                    <Checkbox
+                                        indeterminate={this.state[stateNane].indeterminate}
+                                        onChange={checkAllChange}
+                                        checked={this.state[stateNane].checkAll}
+                                        data_opt={listOption}
+                                    >
+                                    Select All
+                                    </Checkbox>
+                                </div>
+                                <CheckboxGroup
+                                    options={listOption}
+                                    value={this.state[stateNane].checkedList}
+                                    onChange={onChange}
+                                />
                             </div>
-                            <CheckboxGroup
-                                options={listOption}
-                                value={this.state[stateNane].checkedList}
-                                onChange={onChange}
-                            />
-                        </div>
+                            </ColoredScrollbars>
+                            :
+                            <div>
+                                <div className="site-checkbox-all-wrapper">
+                                    <Checkbox
+                                        indeterminate={this.state[stateNane].indeterminate}
+                                        onChange={checkAllChange}
+                                        checked={this.state[stateNane].checkAll}
+                                        data_opt={listOption}
+                                    >
+                                    Select All
+                                    </Checkbox>
+                                </div>
+                                <CheckboxGroup
+                                    options={listOption}
+                                    value={this.state[stateNane].checkedList}
+                                    onChange={onChange}
+                                />
+                            </div>
                         :
                         <Empty />
                     }
-                    
                 </Menu>
             );
         } else {
             return (
                 <Menu className="data_viewer">
+                    
                     {listOption.length > 0 ?
-                        <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
+                            listOption.length > 5 ? 
+                            <ColoredScrollbars style={{height: 150 }}>
+                            <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
                                     <Radio value={option} key={option}>{option}</Radio>
                                 )
                             }
-                        </Radio.Group>
+                            </Radio.Group>
+                            </ColoredScrollbars>
+                            :
+                            <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
+                            {
+                                listOption.map((option) =>
+                                    <Radio value={option} key={option}>{option}</Radio>
+                                )
+                            }
+                            </Radio.Group>
                         :
                         <Empty />
                     }
-                    
                 </Menu>
             );
         }
@@ -324,6 +356,7 @@ class MainTab extends Component {
                         </a>
                     </Dropdown>
                 </div>
+                <div className="graphContent">
                 {geographyValue &&
                 <div className="FilterSelection">
                     {geographyValue &&
@@ -332,18 +365,22 @@ class MainTab extends Component {
                         </span>
                     }
                     {regionValue &&
+                    
                         <span>
+                            <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
                     }
-                    {brandValue &&
+                    {brandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Channel: {brandValue}
                         </span>
                     }
                     {subBrandValue.length > 0 &&
                         <span>
+                            <span className="pipe">||</span>
                             Type: {
                             subBrandValue.map((item, index) =>
                                 index === subBrandValue.length-1 ?
@@ -357,6 +394,7 @@ class MainTab extends Component {
                 </div>
                 }
                 <div className="chartContent">
+                <ColoredScrollbars>
                     {
                         this.props.setGraphData && graphData && this.state.dataChanged &&
                         <MainTabCharts 
@@ -364,7 +402,8 @@ class MainTab extends Component {
                         var1Value={this.state.var1Value} 
                         var2Value={this.state.var2Value} />
                     }
-                    
+                    </ColoredScrollbars>
+                </div>
                 </div>
             </div>
         )

@@ -351,7 +351,7 @@ export class SimpulateMain extends React.Component {
       const { multiProductChange, handleProductChange, handleCompanyChange,  handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange } = this
       const url = `/optimizer/${saveAsId}/${modal}/${isSimulated ? `Simulated` : ''}`
             return (
-                <div className="simulateContainer">
+                <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
                     {
                         this.props.setLoader && this.props.spendData.length === 0 &&
@@ -360,12 +360,13 @@ export class SimpulateMain extends React.Component {
                     {
                         this.props.setLoader && this.props.spendData.length === 0 &&
                             <div className="LoaderOptimize">
-                                <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin>
+                                <div className="loadOptimizeImg">
+                                </div>
+                                {/* <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin> */}
+
                             </div>
                     }
-                    <div>
                         <div className="manageHeader">
-                            <Title><Icon type="edit" className="icon" />{scenarioName}</Title>
                             { isSimulated ?
                                 <Tooltip title="Download">
                                     <Button type="primary" className="createButtom download" disabled={!isSimulated} onClick={this.handleDownload} >Download</Button>
@@ -447,10 +448,6 @@ export class SimpulateMain extends React.Component {
                                 </Tooltip>
                             }
                             
-                            
-                            
-                            
-                            
                         </div>
                         <div className="simulateContent">
                             <OptimizerOptionsSelection 
@@ -471,19 +468,9 @@ export class SimpulateMain extends React.Component {
                                 spendData={spendData}
                                 keyHighlights={keyHighlights}
                                 handleChangeSpendData={this.handleChangeSpendData}
+                                scenarioName={scenarioName}
                             />
                         </div>
-                        {/* <div className="manageHeader bottom">
-                        <Button type="primary" className="createButtom" disabled={!isSimulated} onClick={this.handleDownload} >Download</Button>
-                            <Button type="primary" className="createButtom" disabled={!isSimulated} onClick={this.showShareModal} >Share</Button>
-                            <Button type="primary" className="createButtom" disabled={!(isOptimized || !spendData.length===0) || isSaved} onClick={this.showSaveAsModal} >Save As</Button>
-                            <Button type="primary" className="createButtom" disabled={!(isOptimized || !spendData.length===0) || isSaved} onClick={this.handleSave} >Save</Button>
-                            <Button type="primary" className="createButtom" disabled={!this.state.revertActive  && !this.state.setOptimizerDefault} onClick={this.handleSimulate} >Optimize</Button>
-                            <Button type="primary" className="createButtom revert" disabled={!(isSimulated && isOptimized && !isSaved) } onClick={this.handleDiscard} >Discard</Button>
-                            <Button type="primary" className="createButtom revert" disabled={!this.state.revertActive} onClick={this.handleRevertChanges} >Revert Changes</Button>
-                            <Button type="primary" className="createButtom revert" disabled={!isSimulated} onClick={this.handleReset} >Reset</Button>
-                        </div> */}
-                    </div>
 
                     <Modal
                       title="Save As"

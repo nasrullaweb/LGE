@@ -286,13 +286,8 @@ export class OptimizerOptionsSelection extends React.Component {
         const optimizationTypeMenu = this.setboxOption(optimizationTypeOptions, 'optimizationType', '', this.onOptimizationTypeChange, false)
             
             return (
+                <div>
                 <div className="topSelection">
-                    {
-                        message &&
-                        <div className="messageContainer">
-                            {message}
-                        </div>
-                    }
                     
                     <Radio.Group onChange={multiProductChange} value={multiProduct} className="radioStyle" >
                         <Radio value={true}>
@@ -302,7 +297,14 @@ export class OptimizerOptionsSelection extends React.Component {
                             Multiple Geographies, One Brand
                         </Radio>
                     </Radio.Group>
-
+                    </div>
+                    <div className="dropSelection">
+                    {
+                        message &&
+                        <div className="messageContainer">
+                            {message}
+                        </div>
+                    }
                     <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
@@ -338,75 +340,8 @@ export class OptimizerOptionsSelection extends React.Component {
                             OptimizationType <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
-
-                    {brandList.length > 0 &&
-                            <div className="FilterSelection">
-                                {brandList && brandList.length > 0 &&
-                                    <span>
-                                        Brand: {
-                                        brandList.map((item, index) =>
-                                        index === brandList.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                }
-                                {geographyList && geographyList.length > 0 &&
-                                    <span>
-                                        Geography: {
-                                        geographyList}
-                                    </span>
-                                }
-                                {/* {subBrandValue && subBrandValue.length > 0 &&
-                                    <span>
-                                        SubBrand: {
-                                        subBrandValue.map((item, index) =>
-                                        index === subBrandValue.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                } */}
-                                {periodValue && periodValue.length > 0 &&
-                                    <span>
-                                        Time Period: {
-                                        periodValue}
-                                    </span>
-                                }
-                                {/* {tacticValue.length > 0 &&
-                                    <span>
-                                        Tactic: {
-                                        tacticValue.map((item, index) =>
-                                        index === tacticValue.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                } */}
-                                {optimizationType && optimizationType.length > 0 &&
-                                    <span>
-                                        Optimization Type: {
-                                        optimizationType}
-                                    </span>
-                                }
-                                {optimizationType && optimizationType.length > 0 && optimizationType == 'Minimize Spend' &&
-                                    <span>
-                                        Revenue Goal: {Math.round(minimizeSpendValue)+100}%
-                                    </span>
-                                }
-                                {optimizationType && optimizationType.length > 0 && optimizationType == 'Maximize Revenue' &&
-                                    <span>
-                                        Spend Constraint: {Math.round(maximizeRevenueValue)+100}%
-                                    </span>
-                                }
-                            </div>
-                        }
+                    </div>
+                    
                 </div>
                        
             )

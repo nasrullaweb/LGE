@@ -30,10 +30,6 @@
     top: 120px;
     right: 0;
   }
-
-    .setPadding {
-        margin: 0 10px;
-    }
     
     .manageHeader {
 
@@ -53,33 +49,18 @@
           margin: 20px 0;
         }
 
-        .createButtom {
-            float: right;
-            margin-top: 7px;
-            background-color: #449d44;
-            border-color: #398439;
-            margin-left: 15px;
-
-            &.revert {
-              background-color: #c00;
-              border-color: #c00;
-            }
-
-            &:hover {
-                background-color: #5cb85c;
-                border-color: #4cae4c;
-            }
-
-            &[disabled] {
-              background-color: #aaa;
-              border: 1px solid #aaa;
-              color: #777;
-            }
-        }
     }
     .simulateContent {
-        padding-top: 10px;
+        padding-top: 0px;
         clear: both;
+
+        .topSelection {
+          width: 100%;
+          background: #F7F5F5;
+          height: 37px;
+          border-bottom: 1px Solid #d3d3d3;
+          padding: 4px 10px;
+        }
 
         .topSelection .ant-select {
             margin-right: 15px;
@@ -90,12 +71,16 @@
           width: 18%;
           min-width: 190px;
           margin-right: 2.5%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background: #999;
-          color: #fff;
-          font-weight: bold;
+          text-align: left;
+          padding: 0 10px;
+          background : #FFFFFF;
+          height : 27px;
+          line-height: 27px;
+          border: 0;
+          border-radius : 3px;
+          box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+          font-size : 12px;
+          color : #424242;
 
           &.noMarginRight {
               margin-right: 0;
@@ -150,22 +135,23 @@
 
           .messageContainer {
             text-align: center;
-            font-size: 16px;
+            font-size: 10px;
             color: #c00;
+            padding-bottom:5px;
           }
 
           .hide {
             display: none;
           }
 
-          .showColumns {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            z-index: 1;
-            color: #fff;
+          // .showColumns {
+          //   position: absolute;
+          //   right: 15px;
+          //   top: 15px;
+          //   z-index: 1;
+          //   color: #fff;
 
-          }
+          // }
           .keyHeading {
             padding: 15px;
             background: #333;
@@ -184,10 +170,10 @@
     }
   .components-table-demo-nested {
     .ant-table-thead > tr > th {
-      text-align: right;
+      text-align: center;
     }
     .ant-table-tbody > tr > td {
-      text-align: right;
+      text-align: center;
     }
     .ant-table-thead > tr > th.leftAlign, .ant-table-tbody > tr > td.leftAlign {
       text-align: left;
@@ -212,18 +198,16 @@
 }
 
 .positive {
-  color: #5cb85c !important;
 
   span {
-    display: block;
+    padding: 0 3px;
   }
 }
 
 .negitive {
-  color: #c00 !important;
 
   span {
-    display: block;
+    padding: 0 3px;
   }
 }
 
@@ -235,26 +219,26 @@
     padding: 5px 15px;
 
     label {
-      padding: 10px 0;
+      padding: 5px 0;
       display: block;
     }
   }
 }
 
-.ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
-  width: 22px;
-  height: 22px;
-  font-size: 17px;
-  line-height: 19px;
-  color: #fff;
-  background-color: #449d44;
-  border-color: #398439;
-}
+// .ant-table .ant-table-row-indent + .ant-table-row-expand-icon {
+//   width: 22px;
+//   height: 22px;
+//   font-size: 17px;
+//   line-height: 19px;
+//   color: #fff;
+//   background-color: #449d44;
+//   border-color: #398439;
+// }
 
-.ant-table .ant-table-row-indent + .ant-table-row-expand-icon.ant-table-row-expanded {
-  background-color: #c55b11;
-  border-color: #c55b11;
-}
+// .ant-table .ant-table-row-indent + .ant-table-row-expand-icon.ant-table-row-expanded {
+//   background-color: #c55b11;
+//   border-color: #c55b11;
+// }
 
 .ant-input-number .ant-input-number-handler-wrap {
   display: none;
@@ -272,10 +256,11 @@
   position: absolute;
     background: #fff;
     z-index: 10;
-    padding: 20px;
-    left: 200px;
-    top: 0px;
-    width: 140px;
+    padding: 6px;
+    left: -160px;
+    top: -5px;
+    width: 160px;
+    text-align: center;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
@@ -284,3 +269,21 @@
   border-top: 1px solid #333;
   border-bottom: 1px solid #333;
 }
+
+.LoaderOptimize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.loadOptimizeImg {
+ 
+  background: url(../../images/LG_Tool_Sprite-68.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 405px;
+        height: 99px;
+        position: relative;
+        top: -30px;
+}
+

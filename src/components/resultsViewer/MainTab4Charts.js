@@ -95,7 +95,7 @@ class MainTab4Charts extends React.Component {
                 chart: {
                   height: 400,
                   type: 'line',
-                  fontFamily: '"futura-pt", sans-serif',
+                  fontFamily: '"Lato", sans-serif',
                   stacked: false,
                     zoom: {
                         enabled: false
@@ -104,12 +104,13 @@ class MainTab4Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#e64a19', '#689f38', '#1976D2'],
+                colors: ['#DB1348', '#FF9933', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
                 dataLabels: {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4]
+                  width: [2, 2, 2, 2, 2],
+                  curve: 'smooth',
                 },
                 xaxis: {
                   type: 'numeric',
@@ -130,9 +131,7 @@ class MainTab4Charts extends React.Component {
                     offsetY: 8,
                     style: {
                       color: '#333',
-                      fontWeight:  'normal',
                       fontSize:  '12px',
-                      fontFamily: '"futura-pt", sans-serif',
                     }
                   },
                   labels: {
@@ -141,9 +140,8 @@ class MainTab4Charts extends React.Component {
                     rotateAlways: true,
                     hideOverlappingLabels: true,
                     style: {
-                        colors: [],
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#373D3F',
                     },
                     offsetX: 0,
                     offsetY: 0,
@@ -156,13 +154,12 @@ class MainTab4Charts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#e64a19'
+                      color: '#8E8E8E'
                     },
                     labels: {
                       style: {
-                        colors: '#e64a19',
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        colors: '#8E8E8E',
+                        fontSize: '10px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -192,10 +189,9 @@ class MainTab4Charts extends React.Component {
                     title: {
                       text: "Incremental Sales (€)",
                       style: {
-                        color: '#e64a19',
-                        fontWeight:  'normal',
-                        fontSize:  '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#DB1348',
+                        fontWeight : 'bold',
+                        fontSize : '13px',
                       }
                     },
                   },
@@ -208,16 +204,15 @@ class MainTab4Charts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#689f38'
+                      color: '#8E8E8E'
                     },
                     title: {
                       text: "ROI (€)",
                       rotate: -90,
                       style: {
-                        color: '#689f38',
-                        fontWeight:  'normal',
-                        fontSize:  '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#FF9933',
+                        fontWeight : 'bold',
+                        fontSize : '13px',
                       }
                     },
                     // title: {
@@ -228,9 +223,8 @@ class MainTab4Charts extends React.Component {
                     // },
                     labels: {
                       style: {
-                        colors: '#689f38',
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        colors: '#8E8E8E',
+                        fontSize: '10px',
                       },
                       formatter: function (value) {
                         return parseFloat(value).toFixed(2);
@@ -246,9 +240,7 @@ class MainTab4Charts extends React.Component {
                   enabled: true,
                   style: {
                     fontSize: '12px',
-                    fontFamily: undefined,
                     background: '#fff',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                   x: {
                       show: true,
@@ -284,6 +276,10 @@ class MainTab4Charts extends React.Component {
                   horizontalAlign: 'center',
                   position: 'bottom',
                   offsetY: 10,
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                 },
                 annotations: {
                   xaxis: [
@@ -301,7 +297,6 @@ class MainTab4Charts extends React.Component {
                           fontSize: '10px',
                           color: '#333',
                           background: '#B3F7CA',
-                          fontFamily: '"futura-pt", sans-serif',
                         },
                       }
                     }
@@ -324,7 +319,6 @@ class MainTab4Charts extends React.Component {
                           color: '#fff',
                           background: '#FF4560',
                           fontSize: '10px',
-                          fontFamily: '"futura-pt", sans-serif',
                         },
                         text: 'Current Spend',
                         
@@ -371,13 +365,14 @@ class MainTab4Charts extends React.Component {
           this.props.graphData4 &&
             <div className="chartContent">
                 <div className="downChart titleAdded">
-              <div className="chartTitle">Sufficiency & Efficiency: {this.props.tacticValue}</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Sufficiency & Efficiency: {this.props.tacticValue}</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
                         type="line" 
                         height={400}
                         />
+                  <p>Response curves are at overall level and will be the same across all models.</p>
                 </div>
                 <div className="spaceBetween"></div>
                 

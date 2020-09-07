@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { forgetPassword, clearAuth } from '../../store/auth/actionCreator'
-import logo from '../../images/Login_GFK_Logo.png';
-import copyRight from '../../images/mmmplatform.png';
+import logo from '../../images/LG_Logo_LG_Login.png';
+import copyRight from '../../images/LG_GFK_Logo.png';
 import Loading from '../common/Loading'
 import { Link  } from 'react-router-dom'; 
+import {PageView, initGA} from '../common/Tracking';
 
 import { Form, Icon, Input, Button, Checkbox, Spin, Typography  } from 'antd';
 
@@ -23,6 +24,8 @@ class ForgetPassword extends React.Component {
   };
 
   componentDidMount() {
+    initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     if (sessionStorage.getItem('user') !== null) {
       window.location = window.location.origin
     } else {
@@ -64,25 +67,27 @@ class ForgetPassword extends React.Component {
                 //rules: [{ required: true, message: 'Please input your username!' }],
               })(
                 <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="Email"
                   required
                 />,
               )}
             </Form.Item>
-            </div>
             {
               
               loginError &&
               <p className='login_error forget'>{loginError}</p>
             }
-            <Button type="primary" htmlType="submit" className="forget-form-button">
+            <Button type="primary" htmlType="submit" className="login-form-button">
                 Send Email
               </Button>
+              <p className="resetBack"><Link to="/login">Back To Login</Link></p>
+            </div>
+           
             
               </div>
           </Form>
-          <div className="copyRightLogin"><img src={copyRight} /></div>
+          <div className="copyRightLogin">©MMMPLATFORM2020</div>
+          <div className="copyRightLogo"><img src={copyRight} /></div>
         </div>
       </div>
     );

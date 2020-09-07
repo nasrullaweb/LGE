@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { resetPassword, clearAuth } from '../../store/auth/actionCreator'
-import logo from '../../images/Login_GFK_Logo.png';
-import copyRight from '../../images/mmmplatform.png';
+import logo from '../../images/LG_Logo_LG_Login.png';
+import copyRight from '../../images/LG_GFK_Logo.png';
 import Loading from '../common/Loading'
 import { Link  } from 'react-router-dom'; 
+import {PageView, initGA} from '../common/Tracking';
 
 import { Form, Icon, Input, Button, Checkbox, Spin, Typography  } from 'antd';
 
@@ -56,6 +57,8 @@ class ResetPasswordForm extends React.Component {
       const query = new URLSearchParams(this.props.location.search);
       const token = query.get('token')
       const emaiId = query.get('emailId')
+      initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     if (sessionStorage.getItem('user') !== null) {
       window.location = window.location.origin
     } else {
@@ -95,7 +98,7 @@ class ResetPasswordForm extends React.Component {
                 <div className="formContainer reset">
             <div className="formData">
                 
-            <Form.Item hasFeedback>
+            <Form.Item >
                 {getFieldDecorator('password', {
                     rules: [
                     {
@@ -106,9 +109,9 @@ class ResetPasswordForm extends React.Component {
                         validator: this.validateToNextPassword,
                     },
                     ],
-                })(<Input.Password placeholder="Password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />)}
+                })(<Input.Password placeholder="Password" />)}
                 </Form.Item>
-                <Form.Item hasFeedback>
+                <Form.Item >
                 {getFieldDecorator('confirm', {
                     rules: [
                     {
@@ -119,23 +122,25 @@ class ResetPasswordForm extends React.Component {
                         validator: this.compareToFirstPassword,
                     },
                     ],
-                })(<Input.Password onBlur={this.handleConfirmBlur} placeholder="Confirm Password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />)}
+                })(<Input.Password onBlur={this.handleConfirmBlur} placeholder="Confirm Password" />)}
             </Form.Item>
-            </div>
             {
               
               loginError &&
               <p className='login_error rest'>{loginError}</p>
             }
-            <Button type="primary" htmlType="submit" className="login-form-button">
-                Reset Password
+            <Button type="primary" htmlType="submit" className="login-form-button reset-btn">
+                Reset Password 
               </Button>
             <p className="resetBack"><Link to="/login">Back To Login</Link></p>
+            </div>
+            
               </div>
             }
             
           </Form>
-          <div className="copyRightLogin"><img src={copyRight} /></div>
+          <div className="copyRightLogin">©MMMPLATFORM2020</div>
+          <div className="copyRightLogo"><img src={copyRight} /></div>
         </div>
       </div>
     );

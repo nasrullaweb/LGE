@@ -4,6 +4,7 @@ import auth from '../store/auth/reducer'
 import ajaxCallsInProgress from '../store/ajaxStatus/reducer'
 import RVajaxCallsInProgress from '../store/RVajaxStatus/reducer'
 import DVajaxCallsInProgress from '../store/DVajaxStatus/reducer'
+import GBajaxCallsInProgress from '../store/GBajaxStatus/reducer'
 import simulate from '../store/simulate/reducer'
 import optimizer from '../store/optimizer/reducer'
 import users from '../store/user/reducer'
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     ajaxCallsInProgress,
     RVajaxCallsInProgress,
     DVajaxCallsInProgress,
+    GBajaxCallsInProgress,
     users,
     dataViewer,
     resultsViewer,

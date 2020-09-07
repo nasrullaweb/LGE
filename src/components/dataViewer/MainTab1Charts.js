@@ -18,17 +18,19 @@ class MainTab1Charts extends React.Component {
                 chart: {
                   type: 'bar',
                   height: 250,
-                  fontFamily: '"futura-pt", sans-serif',
+                  fontFamily: '"Lato", sans-serif',
                 },
                 grid: {
                   show: false,
                 },
-                colors: ['#d32f2f', '#7b1fa2', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7',
-              '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 plotOptions: {
                   bar: {
                     horizontal: false,
-                    columnWidth: '90%',
+                    columnWidth: '70%',
                   }
                   
                 },
@@ -52,7 +54,6 @@ class MainTab1Charts extends React.Component {
                   style: {
                     colors: ['#333'],
                     fontSize: '9px',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                 },
                 stroke: {
@@ -63,9 +64,10 @@ class MainTab1Charts extends React.Component {
                 xaxis: {
                   categories: [],
                   labels: {
+                    show: false,
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#373D3F',
                     },
                   },
                   axisTicks: {
@@ -79,9 +81,7 @@ class MainTab1Charts extends React.Component {
                     text: "Sales Value (USD)",
                     style: {
                       color: '#333',
-                      fontWeight:  'normal',
                       fontSize:  '12px',
-                      fontFamily: '"futura-pt", sans-serif',
                     }
                   },
                 },
@@ -94,7 +94,7 @@ class MainTab1Charts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#999'
+                      color: '#8E8E8E'
                     },
                     labels: {
                       formatter: function (value) {
@@ -113,8 +113,8 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        fontSize: '10px',
+                        color: '#8E8E8E'
                       },
                     },
                   },
@@ -122,14 +122,16 @@ class MainTab1Charts extends React.Component {
                 legend: {
                     horizontalAlign: 'center',
                     position: 'bottom',
+                    style: {
+                      color: '#3D3D3D',
+                      fontSize: '12px',
+                    },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
                       fontSize: '12px',
-                      fontFamily: undefined,
                       background: '#fff',
-                      fontFamily: '"futura-pt", sans-serif',
                     },
                     y: {
                       title: {
@@ -155,17 +157,19 @@ class MainTab1Charts extends React.Component {
                 chart: {
                   type: 'bar',
                   height: 250,
-                  fontFamily: '"futura-pt", sans-serif',
+                  fontFamily: '"Lato", sans-serif',
                 },
                 grid: {
                   show: false,
                 },
-                colors: ['#d32f2f', '#7b1fa2', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7',
-              '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 plotOptions: {
                   bar: {
                     horizontal: false,
-                    columnWidth: '90%',
+                    columnWidth: '70%',
                   }
                 },
                 dataLabels: {
@@ -173,7 +177,6 @@ class MainTab1Charts extends React.Component {
                   style: {
                     colors: ['#333'],
                     fontSize: '9px',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                   formatter: function (value) {
                     let val = value;
@@ -199,9 +202,10 @@ class MainTab1Charts extends React.Component {
                 xaxis: {
                   categories: [],
                   labels: {
+                    show: false,
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#373D3F',
                     },
                   },
                   axisTicks: {
@@ -215,9 +219,7 @@ class MainTab1Charts extends React.Component {
                     text: "Sales Value (USD)",
                     style: {
                       color: '#333',
-                      fontWeight:  'normal',
                       fontSize:  '12px',
-                      fontFamily: '"futura-pt", sans-serif',
                     }
                   },
                 },
@@ -230,7 +232,7 @@ class MainTab1Charts extends React.Component {
                       },
                       axisBorder: {
                         show: true,
-                        color: '#999'
+                        color: '#8E8E8E'
                       },
                     labels: {
                       formatter: function (value) {
@@ -249,9 +251,8 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '12px',
-                        color: '#333',
-                        fontFamily: '"futura-pt", sans-serif',
+                        fontSize: '10px',
+                        color: '#8E8E8E',
                       },
                     },
                   },
@@ -259,14 +260,16 @@ class MainTab1Charts extends React.Component {
                 legend: {
                   horizontalAlign: 'center',
                   position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
                       fontSize: '12px',
-                      fontFamily: undefined,
                       background: '#fff',
-                      fontFamily: '"futura-pt", sans-serif',
                     },
                     y: {
                       title: {
@@ -291,7 +294,7 @@ class MainTab1Charts extends React.Component {
                 chart: {
                   height: 400,
                   type: 'line',
-                  fontFamily: '"futura-pt", sans-serif',
+                  fontFamily: '"Lato", sans-serif',
                   stacked: false,
                     zoom: {
                         enabled: false
@@ -300,22 +303,25 @@ class MainTab1Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#d32f2f', '#7b1fa2', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7',
-              '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+                colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
                 dataLabels: {
                   enabled: false
                 },
                 stroke: {
-                  width: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4]
+                  width: [2, 2, 2, 2, 2],
+                  curve: 'smooth',
                 },
                 xaxis: {
                   categories: [],
                   type: 'datetime',
-                  tickAmount: 24,
+                  tickAmount: 30,
                   labels: {
                     style: {
-                      fontSize: '12px',
-                      fontFamily: '"futura-pt", sans-serif',
+                      fontSize: '10px',
+                      color: '#373D3F',
                     },
                     formatter: function(val) {
                       return moment(new Date(val)).format("DD MMM YY");
@@ -339,22 +345,21 @@ class MainTab1Charts extends React.Component {
                     },
                     axisBorder: {
                       show: true,
-                      color: '#999'
+                      color: '#8E8E8E'
                     },
                     title: {
+                      offsetX: 3,
                       text: "Sales Value (USD)",
                       style: {
-                        color: '#333',
-                        fontWeight:  'normal',
-                        fontSize:  '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        color: '#DB1348',
+                        fontWeight : 'bold',
+                        fontSize : '13px',
                       }
                     },
                     labels: {
                       style: {
-                        colors: '#333',
-                        fontSize: '12px',
-                        fontFamily: '"futura-pt", sans-serif',
+                        colors: '#8E8E8E',
+                        fontSize: '10px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -417,14 +422,16 @@ class MainTab1Charts extends React.Component {
                 legend: {
                   horizontalAlign: 'center',
                   position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
                 },
                 tooltip: {
                   enabled: true,
                   style: {
                     fontSize: '12px',
-                    fontFamily: undefined,
                     background: '#fff',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                   y: {
                     title: {
@@ -488,7 +495,7 @@ class MainTab1Charts extends React.Component {
           this.props.graphData1 &&
             <div className="chartContent">
                 <div className="downChart titleAdded">
-                <div className="chartTitle">{this.props.var2Value}</div>
+                <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.var2Value}</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -498,7 +505,7 @@ class MainTab1Charts extends React.Component {
                 </div>
                 <div className="spaceBetween"></div>
                 <div className="widthHalf titleAdded">
-                <div className="chartTitle">{this.state.cart1.titleValue}</div>
+                <div className="chartTitle"><span className="smallLeftBorder"></span>{this.state.cart1.titleValue}</div>
                     <Chart
                         options={this.state.cart1.options}
                         series={this.state.cart1.series}
@@ -507,7 +514,7 @@ class MainTab1Charts extends React.Component {
                         />
                 </div>
                 <div className="widthHalfRight titleAdded">
-                <div className="chartTitle">{this.state.cart2.titleValue}</div>
+                <div className="chartTitle"><span className="smallLeftBorder"></span>{this.state.cart2.titleValue}</div>
                     <Chart
                         options={this.state.cart2.options}
                         series={this.state.cart2.series}

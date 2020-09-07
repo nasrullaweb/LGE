@@ -1,4 +1,5 @@
 import { ajaxCallBegin, ajaxCallSuccess, ajaxCallError } from "../DVajaxStatus/actionCreators";
+import { ajaxCallBeginGB, ajaxCallErrorGB, ajaxCallSuccessGB } from "../GBajaxStatus/actionCreators";
 import { DV_GET_MODEL_LIST, DV_GET_GEOGRAPHY_LIST, DV_GET_REGION_LIST, DV_GET_BRAND_LIST, DV_GET_SUBBRAND_LIST,
   DV_GET_TACTIC_LIST, DV_GET_GRAPH_DATA, DV_GET_MODEL_LIST_ERROR, DV_GET_GEOGRAPHY_LIST_ERROR, DV_GET_REGION_LIST_ERROR,
   DV_GET_BRAND_LIST_ERROR, DV_GET_SUBBRAND_LIST_ERROR, DV_GET_TACTIC_LIST_ERROR, DV_GET_GRAPH_DATA_ERROR,
@@ -18,7 +19,7 @@ const config = {
 
 export function getModelList() {
   const action = function (dispatch) {
-    dispatch(ajaxCallBegin())
+    dispatch(ajaxCallBeginGB())
     axios.get(`${apiURL}/DMModel/GetDMModels`, config
     )
     .then(response => {
@@ -26,10 +27,10 @@ export function getModelList() {
           type: DV_GET_MODEL_LIST,
           payload: response.data,
       })
-      dispatch(ajaxCallSuccess());
+      dispatch(ajaxCallSuccessGB());
     })
     .catch(error => {
-      dispatch(ajaxCallError());
+      dispatch(ajaxCallErrorGB());
       dispatch({
         type: DV_GET_MODEL_LIST_ERROR,
       })
@@ -40,7 +41,7 @@ export function getModelList() {
 
 export function getGeographyList(modal) {
   const action = function (dispatch) {
-    dispatch(ajaxCallBegin())
+    dispatch(ajaxCallBeginGB())
     axios.get(`${apiURL}/DMGeography/GetGeography/${modal}`, config
     )
     .then(response => {
@@ -48,10 +49,10 @@ export function getGeographyList(modal) {
           type: DV_GET_GEOGRAPHY_LIST,
           payload: response.data,
       })
-      dispatch(ajaxCallSuccess());
+      dispatch(ajaxCallSuccessGB());
     })
     .catch(error => {
-      dispatch(ajaxCallError());
+      dispatch(ajaxCallErrorGB());
       dispatch({
         type: DV_GET_GEOGRAPHY_LIST_ERROR,
       })
@@ -173,24 +174,25 @@ export function getGraphData(modal, geography, region, brand, subBrand, var1, va
 export function getAllData() {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/DMModel/GetDMModels`, config
-    )
-    .then(response => {
-      dispatch({
-          type: DV_GET_MODEL_LIST,
-          payload: response.data,
-      })
-      if (sessionStorage.getItem('modelValue')) {
-        const modal = JSON.parse(sessionStorage.getItem('modelValue'))
-        axios.get(`${apiURL}/DMGeography/GetGeography/${modal}`, config
-        )
-        .then(response => {
-          dispatch({
-              type: DV_GET_GEOGRAPHY_LIST,
-              payload: response.data,
-          })
+    // axios.get(`${apiURL}/DMModel/GetDMModels`, config
+    // )
+    // .then(response => {
+    //   dispatch({
+    //       type: DV_GET_MODEL_LIST,
+    //       payload: response.data,
+    //   })
+      // if (sessionStorage.getItem('modelValue')) {
+      //   const modal = JSON.parse(sessionStorage.getItem('modelValue'))
+      //   axios.get(`${apiURL}/DMGeography/GetGeography/${modal}`, config
+      //   )
+      //   .then(response => {
+      //     dispatch({
+      //         type: DV_GET_GEOGRAPHY_LIST,
+      //         payload: response.data,
+      //     })
           if (sessionStorage.getItem('geographyValue')) { 
             const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
+            const modal = JSON.parse(sessionStorage.getItem('modelValue'))
             axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
             )
             .then(response => {
@@ -245,6 +247,7 @@ export function getAllData() {
                                 type: DV_GET_GRAPH_DATA_ERROR,
                               })
                             })
+                            //dispatch(ajaxCallSuccess());
                           } else {
                             dispatch(ajaxCallSuccess());
                           }
@@ -289,23 +292,23 @@ export function getAllData() {
           } else {
             dispatch(ajaxCallSuccess());
           }
-        })
-        .catch(error => {
-          dispatch(ajaxCallError());
-          dispatch({
-            type: DV_GET_GEOGRAPHY_LIST_ERROR,
-          })
-        })
-      } else {
-        dispatch(ajaxCallSuccess());
-      }
-    })
-    .catch(error => {
-      dispatch(ajaxCallError());
-      dispatch({
-        type: DV_GET_MODEL_LIST_ERROR,
-      })
-    })
+      //   })
+      //   .catch(error => {
+      //     dispatch(ajaxCallError());
+      //     dispatch({
+      //       type: DV_GET_GEOGRAPHY_LIST_ERROR,
+      //     })
+      //   })
+      // } else {
+      //   dispatch(ajaxCallSuccess());
+      // }
+    // })
+    // .catch(error => {
+    //   dispatch(ajaxCallError());
+    //   dispatch({
+    //     type: DV_GET_MODEL_LIST_ERROR,
+    //   })
+    // })
   }
   return action
 }
@@ -802,6 +805,46 @@ export function clearData() {
     dispatch({
         type: DV_CLEAR_DATA
     }) 
+  }
+  return action
+}
+
+export function getModelandGeographyList() {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMModel/GetDMModels`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_MODEL_LIST,
+          payload: response.data,
+      })
+      if (sessionStorage.getItem('modelValue')) {
+        const modal = JSON.parse(sessionStorage.getItem('modelValue'))
+        axios.get(`${apiURL}/DMGeography/GetGeography/${modal}`, config
+        )
+        .then(response => {
+          dispatch({
+              type: DV_GET_GEOGRAPHY_LIST,
+              payload: response.data,
+          })
+        })
+        .catch(error => {
+          dispatch(ajaxCallError());
+          dispatch({
+            type: DV_GET_GEOGRAPHY_LIST_ERROR,
+          })
+        })
+      } else {
+        dispatch(ajaxCallSuccess());
+      }
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_MODEL_LIST_ERROR,
+      })
+    })
   }
   return action
 }

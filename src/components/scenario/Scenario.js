@@ -15,11 +15,14 @@ import { setMenu } from '../../store/auth/actionCreator'
 import Moment from 'react-moment';
 import ShareScenario from './ShareScenario'
 import moment from 'moment';
+import {PageView, initGA} from '../common/Tracking';
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 
 
 const { Title } = Typography;
 const { confirm } = Modal;
+const { Search } = Input;
 
 
 function genareteScenarioList(scenarios)  {
@@ -46,8 +49,10 @@ export class Scenario extends React.Component {
     this.props.getScenarios()
     this.props.getModelList()
     this.props.getUsersList()
-    this.props.setMenu('scenario')
-    this.props.history.push('/scenario')
+    initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
+    // this.props.setMenu('scenario')
+    // this.props.history.push('/scenario')
   }
 
   showConfirm = (id, deleteScenario) => {
@@ -123,11 +128,11 @@ export class Scenario extends React.Component {
     let scenarioData
 
     if (this.state.filterScenario === 'my') {
-      scenarioData = scenarios.filter(scenario => scenario.isShared === 0);
+      scenarioData = scenarios.filter(scenario => scenario.isShared === 0 && scenario.isSimulatorOptimiser === this.props.pageName);
     } else if (this.state.filterScenario === 'shared') {
-      scenarioData = scenarios.filter(scenario => scenario.isShared === 1);
+      scenarioData = scenarios.filter(scenario => scenario.isShared === 1 && scenario.isSimulatorOptimiser === this.props.pageName);
     } else {
-      scenarioData = scenarios
+      scenarioData = scenarios.filter(scenario => scenario.isSimulatorOptimiser === this.props.pageName);
     }
     
     return scenarioData
@@ -168,6 +173,7 @@ export class Scenario extends React.Component {
           title: 'Simulator/Optimizer',
           dataIndex: 'isSimulatorOptimiser',
           key: 'isSimulatorOptimiser',
+          render: (text, record) => <span className="borderRight">{text}</span>,
           //defaultSortOrder: 'descend',
           //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
         },
@@ -175,6 +181,7 @@ export class Scenario extends React.Component {
           title: 'Scenario Notes',
           dataIndex: 'scenarioNotes',
           key: 'scenarioNotes',
+          render: (text, record) => <span className="borderRight">{text}</span>,
           //defaultSortOrder: 'descend',
           //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
         },
@@ -182,17 +189,19 @@ export class Scenario extends React.Component {
           title: 'Model',
           dataIndex: 'model',
           sorter: (a, b) => a.model.length - b.model.length,
+          render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
           title: 'Created By',
           dataIndex: 'createdBy',
           sorter: (a, b) => a.createdBy.length - b.createdBy.length,
           sortDirections: ['descend', 'ascend'],
+          render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
           title: 'Created Date',
           dataIndex: 'createdDate',
-          render: (text) => moment(new Date(text)).format("YYYY-MM-DD HH:MM"),
+          render: (text) => <span className="borderRight">{moment(new Date(text)).format("YYYY-MM-DD HH:MM")}</span>,
           sorter: (a, b) => a.createdDate.length - b.createdDate.length,
           sortDirections: ['descend', 'ascend'],
         },
@@ -201,7 +210,7 @@ export class Scenario extends React.Component {
           dataIndex: 'lastModified',
           render: (text) => {
           let newVal = text !== null ? moment(new Date(text)).format("YYYY-MM-DD HH:MM") : ''
-          return newVal
+          return <span className="borderRight">{newVal}</span>
         },
           sorter: (a, b) => a.createdDate.length - b.createdDate.length,
           sortDirections: ['descend', 'ascend'],
@@ -244,9 +253,9 @@ export class Scenario extends React.Component {
 
             return (
               <div className="container simulatorContainer">
-                { addedId && <Redirect to={url} /> }
+                {/* { addedId && <Redirect to={url} /> }
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header /> */}
                   <div className="mainContent">
                     <div className="manageContainer">
                       <div className="manageFilters">
@@ -261,14 +270,16 @@ export class Scenario extends React.Component {
                             All Scenarios
                           </Menu.Item>
                         </Menu>
-                        <Button type="primary" className="createButtom" onClick={this.showModal}>Create New Scenario</Button>
-                        <Input placeholder="Search" value={this.state.searchText} onChange={this.onSearch} />
+                        {/* <Button type="primary" className="createButtom" onClick={this.showModal}>Create New Scenario</Button> */}
+                        <Search placeholder="Search" value={this.state.searchText} onChange={this.onSearch} />
                       </div>
                       <div className="manageTable">
-                        <Table columns={columns} dataSource={finalData} onChange={this.onChange} scroll={{ x: true }} />
+                        <ColoredScrollbars>
+                          <Table columns={columns} dataSource={finalData} onChange={this.onChange} scroll={{ x: true }} />
+                        </ColoredScrollbars>
                       </div>
                     </div>
-                    <Modal
+                    {/* <Modal
                       title="Create New Scenario"
                       visible={this.state.visible}
                       onOk={this.handleOk}
@@ -283,7 +294,7 @@ export class Scenario extends React.Component {
                         postScenarioHandle={this.postScenarioHandle}
                         visible={this.state.visible}
                       />
-                    </Modal>
+                    </Modal> */}
                     <Modal
                       title={`Share Scenario ${this.state.selectedName}`}
                       visible={this.state.shareVisible}

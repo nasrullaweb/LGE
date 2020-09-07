@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import './ResultsViewer.less'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -15,10 +16,14 @@ import MainTab1Charts from './MainTab1Charts'
 import MainTab2Charts from './MainTab2Charts'
 import MainTab4Charts from './MainTab4Charts'
 import MainTab3Charts from './MainTab3Charts'
+import {PageView, initGA} from '../common/Tracking';
+import ColoredScrollbars from '../common/ColoredScrollbars';
+
 
 const CheckboxGroup = Checkbox.Group;
 const { Title } = Typography;
 const { TabPane } = Tabs;
+const { Sider } = Layout;
 
 class ResultsViewer extends Component {
 
@@ -41,31 +46,37 @@ class ResultsViewer extends Component {
         tactic: {
             checkedList: '',
         },
-        modelValue: JSON.parse(sessionStorage.getItem('RmodelValue')) || '',
-        geographyValue: JSON.parse(sessionStorage.getItem('RgeographyValue')) || '',
+        modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
+        geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
         regionValue: JSON.parse(sessionStorage.getItem('RregionValue')) || '',
         brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || '',
         subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
-        message: 'Please Select Model',
-        messageTac: 'Please Select Tactic'
+        message: 'Please Select Brand',
+        messageTac: 'Please Select Tactic',
+        collapsed: true,
     }
+
+    onCollapse = collapsed => {
+        this.setState({ collapsed });
+      };
+
 
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, modelName, geography, tactic} = state
 
-        if (state.modelValue !== state.modelName.checkedList) {
-            modelName = {
-                checkedList: Array.isArray(state.modelValue) ? state.modelValue[0] : state.modelValue,
-            }
-        }
+        // if (state.modelValue !== state.modelName.checkedList) {
+        //     modelName = {
+        //         checkedList: Array.isArray(state.modelValue) ? state.modelValue[0] : state.modelValue,
+        //     }
+        // }
 
-        if (state.geographyValue !== state.brand.checkedList) {
-            geography = {
-                checkedList: Array.isArray(state.geographyValue) ? state.geographyValue[0] : state.geographyValue,
-            }
-        }
+        // if (state.geographyValue !== state.brand.checkedList) {
+        //     geography = {
+        //         checkedList: Array.isArray(state.geographyValue) ? state.geographyValue[0] : state.geographyValue,
+        //     }
+        // }
         
         if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
             region = {
@@ -107,61 +118,64 @@ class ResultsViewer extends Component {
         this.props.clearData();
         this.props.setMenu('resultsViewer');
         this.props.history.push('/MarketingROI')
+        initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
         
-        if (JSON.parse(sessionStorage.getItem('RmodelValue'))) {
+        if (JSON.parse(sessionStorage.getItem('RregionValue'))) {
+            console.log('test')
             this.props.getAllData();
-        } else {
-            this.props.getModelList();
+        } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
+            this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
         }
     }
 
-    componentWillUnmount() {
-        this.props.clearData()
-      }
+    // componentWillUnmount() {
+    //     this.props.clearData()
+    //   }
 
-    onModelChange = (e) => {
-        const modelName = {}
-        modelName.checkedList = e.target.value
-        const geography = {}
-        geography.checkedList = ''
-        sessionStorage.setItem('RmodelValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('RgeographyValue');
-        sessionStorage.removeItem('RregionValue');
-        sessionStorage.removeItem('RbrandValue');
-        sessionStorage.removeItem('RsubBrandValue');
-        this.props.getGeographyList(e.target.value)
-        this.setState({
-            modelValue: e.target.value,
-            modelName,
-            geographyValue: '',
-            geography,
-            regionValue: '',
-            brandValue: '',
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Geography'
-        })
-    }
+    // onModelChange = (e) => {
+    //     const modelName = {}
+    //     modelName.checkedList = e.target.value
+    //     const geography = {}
+    //     geography.checkedList = ''
+    //     sessionStorage.setItem('RmodelValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('RgeographyValue');
+    //     sessionStorage.removeItem('RregionValue');
+    //     sessionStorage.removeItem('RbrandValue');
+    //     sessionStorage.removeItem('RsubBrandValue');
+    //     this.props.getGeographyList(e.target.value)
+    //     this.setState({
+    //         modelValue: e.target.value,
+    //         modelName,
+    //         geographyValue: '',
+    //         geography,
+    //         regionValue: '',
+    //         brandValue: '',
+    //         subBrandValue: '',
+    //         tacticValue: '',
+    //         message: 'Please Select Geography'
+    //     })
+    // }
 
-    onGeographyChange = (e) => {
-        const { modelValue } = this.state
-        const geography = {}
-        geography.checkedList = e.target.value
-        sessionStorage.setItem('RgeographyValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('RregionValue');
-        sessionStorage.removeItem('RbrandValue');
-        sessionStorage.removeItem('RsubBrandValue');
-        this.props.getRegionList(modelValue, e.target.value)
-        this.setState({
-            geographyValue: e.target.value,
-            geography,
-            regionValue: '',
-            brandValue: '',
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Brand'
-        })
-    }
+    // onGeographyChange = (e) => {
+    //     const { modelValue } = this.state
+    //     const geography = {}
+    //     geography.checkedList = e.target.value
+    //     sessionStorage.setItem('RgeographyValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('RregionValue');
+    //     sessionStorage.removeItem('RbrandValue');
+    //     sessionStorage.removeItem('RsubBrandValue');
+    //     this.props.getRegionList(modelValue, e.target.value)
+    //     this.setState({
+    //         geographyValue: e.target.value,
+    //         geography,
+    //         regionValue: '',
+    //         brandValue: '',
+    //         subBrandValue: '',
+    //         tacticValue: '',
+    //         message: 'Please Select Brand'
+    //     })
+    // }
 
     // onCheckAllRegionChange = e => {
     //     sessionStorage.setItem('RregionValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
@@ -261,7 +275,7 @@ class ResultsViewer extends Component {
         })
     }
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect) => {
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -269,46 +283,77 @@ class ResultsViewer extends Component {
         })
         if (multiSelect) {
             return (
-                <Menu>
+                <Menu className="data_viewer">
                     {listOption.length > 0 ?
-                        <div>
-                            <div className="site-checkbox-all-wrapper">
-                                <Checkbox
-                                    indeterminate={this.state[keyName].indeterminate}
-                                    onChange={checkAllChange}
-                                    checked={this.state[keyName].checkAll}
-                                    data_opt={listOption}
-                                >
-                                Select All
-                                </Checkbox>
+                        listOption.length > 4 ?
+                            <ColoredScrollbars style={{height: 150 }}>
+                            <div>
+                                <div className="site-checkbox-all-wrapper">
+                                    <Checkbox
+                                        indeterminate={this.state[stateNane].indeterminate}
+                                        onChange={checkAllChange}
+                                        checked={this.state[stateNane].checkAll}
+                                        data_opt={listOption}
+                                    >
+                                    Select All
+                                    </Checkbox>
+                                </div>
+                                <CheckboxGroup
+                                    options={listOption}
+                                    value={this.state[stateNane].checkedList}
+                                    onChange={onChange}
+                                />
                             </div>
-                            <CheckboxGroup
-                                options={listOption}
-                                value={this.state[keyName].checkedList}
-                                onChange={onChange}
-                            />
-                        </div>
+                            </ColoredScrollbars>
+                            :
+                            <div>
+                                <div className="site-checkbox-all-wrapper">
+                                    <Checkbox
+                                        indeterminate={this.state[stateNane].indeterminate}
+                                        onChange={checkAllChange}
+                                        checked={this.state[stateNane].checkAll}
+                                        data_opt={listOption}
+                                    >
+                                    Select All
+                                    </Checkbox>
+                                </div>
+                                <CheckboxGroup
+                                    options={listOption}
+                                    value={this.state[stateNane].checkedList}
+                                    onChange={onChange}
+                                />
+                            </div>
                         :
                         <Empty />
                     }
-                    
                 </Menu>
             );
         } else {
             return (
-                <Menu>
+                <Menu className="data_viewer">
+                    
                     {listOption.length > 0 ?
-                        <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
+                            listOption.length > 5 ? 
+                            <ColoredScrollbars style={{height: 150 }}>
+                            <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
-                                    <Radio value={option}>{option}</Radio>
+                                    <Radio value={option} key={option}>{option}</Radio>
                                 )
                             }
-                        </Radio.Group>
+                            </Radio.Group>
+                            </ColoredScrollbars>
+                            :
+                            <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
+                            {
+                                listOption.map((option) =>
+                                    <Radio value={option} key={option}>{option}</Radio>
+                                )
+                            }
+                            </Radio.Group>
                         :
                         <Empty />
                     }
-                    
                 </Menu>
             );
         }
@@ -319,27 +364,27 @@ class ResultsViewer extends Component {
         const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList, subBrandList,
             setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData3, setGraphData1, graphData1, tacticList = [], RSquare= [], setGraphData4, graphData4 } = this.props
         const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, message, messageTac } = this.state
-        const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
-        const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
+        //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
+        //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
         const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
         return (
-            <div className="container dataViewer tabsDesign">
+            <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="MARKETING ROI" />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                 <div className="mainContent">
                     <div className="manageContainer">
                         <div className="simulateContent">
                             <div className="topSelection">
-                            {
-                                message && !subBrandValue &&
-                                <div className="messageContainer">
-                                    {message}
-                                </div>
-                            }
-                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            
+                            {/* <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Model <Icon type="caret-down" theme="outlined" />
                                 </a>
@@ -348,7 +393,7 @@ class ResultsViewer extends Component {
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
-                            </Dropdown>
+                            </Dropdown> */}
                             <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Brand <Icon type="caret-down" theme="outlined" />
@@ -364,6 +409,12 @@ class ResultsViewer extends Component {
                                     Type <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
+                            {
+                                message && !subBrandValue &&
+                                <div className="messageContainer">
+                                    {message}
+                                </div>
+                            }
                             </div>
                             {
                                 subBrandValue.length > 0 &&
@@ -371,6 +422,7 @@ class ResultsViewer extends Component {
                                     <Tabs defaultActiveKey="1" onChange={this.activateTab}>
                                         <TabPane tab="Model Statistics" key="tab1" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -380,21 +432,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData2.series && setGraphData2 &&
                                             <MainTab1Charts 
@@ -402,10 +459,14 @@ class ResultsViewer extends Component {
                                                 subBrandValue={subBrandValue}
                                                 RSquare={RSquare}  />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Contributions" key="tab2" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -415,21 +476,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData1.series && setGraphData1 && graphData21.series && graphData22 &&
                                             <MainTab2Charts 
@@ -439,10 +505,14 @@ class ResultsViewer extends Component {
                                                 graphData22={graphData22}
                                                   />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Due - to's" key="tab3" type="card">
                                         <div className="tabContent">
+                                        <div className="graphContent">
                                         {geographyValue &&
                                             <div className="FilterSelection">
                                                 {geographyValue &&
@@ -452,21 +522,26 @@ class ResultsViewer extends Component {
                                                 }
                                                 {regionValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
                                                 {brandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Channel: {brandValue}
                                                     </span>
                                                 }
                                                 {subBrandValue &&
                                                     <span>
+                                                        <span className="pipe">||</span>
                                                         Type: {subBrandValue}
                                                     </span>
                                                 }
                                             </div>
                                         }
+                                        <div className="chartContent">
+                                        <ColoredScrollbars>
                                         {
                                             graphData3.series1 && setGraphData3 &&
                                             <MainTab3Charts 
@@ -474,6 +549,9 @@ class ResultsViewer extends Component {
                                                 subBrandValue={subBrandValue}
                                                   />
                                         }
+                                        </ColoredScrollbars>
+                                        </div>
+                                        </div>
                                         </div>
                                         </TabPane>
                                         <TabPane tab="Response Curve" key="tab4" type="card">
@@ -493,6 +571,7 @@ class ResultsViewer extends Component {
                                                             </a>
                                                         </Dropdown>
                                                     </div>
+                                                    <div className="graphContent">
                                                     {geographyValue &&
                                                         <div className="FilterSelection">
                                                             {geographyValue &&
@@ -502,16 +581,19 @@ class ResultsViewer extends Component {
                                                             }
                                                             {regionValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Brand: {regionValue}
                                                                 </span>
                                                             }
                                                             {brandValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Channel: {brandValue}
                                                                 </span>
                                                             }
                                                             {subBrandValue &&
                                                                 <span>
+                                                                    <span className="pipe">||</span>
                                                                     Type: {subBrandValue}
                                                                 </span>
                                                             }
@@ -521,10 +603,11 @@ class ResultsViewer extends Component {
                                                                 </span>
                                                             } */}
 
-                                                            <p>Response curves are at overall level and will be the same across all models.</p>
+                                                            
                                                         </div>
                                                     }
                                                     <div className="chartContent">
+                                                    <ColoredScrollbars>
                                                     {
                                                         graphData4.series && setGraphData4 &&
                                                         <MainTab4Charts 
@@ -532,6 +615,9 @@ class ResultsViewer extends Component {
                                                             subBrandValue={subBrandValue}
                                                             tacticValue={tacticValue} />
                                                     }
+                                                    
+                                                    </ColoredScrollbars>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             }
@@ -542,7 +628,9 @@ class ResultsViewer extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
+                </Layout>
+              </Layout>
             </div>
         )
     }

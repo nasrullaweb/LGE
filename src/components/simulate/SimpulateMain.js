@@ -271,10 +271,9 @@ export class SimpulateMain extends React.Component {
       const url = `/simulator/${saveAsId}/${modal}/${isSimulated ? `Simulated` : ''}`  
       console.log(isSimulated, runSimulate)
         return (
-                <div className="simulateContainer">
+                <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
-                    <div className="manageHeader">
-                        <Title><Icon type="edit" className="icon" />{scenarioName}</Title>
+                    <div className="manageHeader ">
                         { isSimulated ?
                             <Tooltip title="Download">
                                 <Button type="primary" className="createButtom download" disabled={!isSimulated} onClick={this.handleDownload} >Download</Button>
@@ -365,17 +364,9 @@ export class SimpulateMain extends React.Component {
                             spendData={spendData}
                             keyHighlights={keyHighlights}
                             handleChangeSpendData={this.handleChangeSpendData}
+                            scenarioName={scenarioName}
                         />
                     </div>
-                    {/* <div className="manageHeader bottom">
-                        <Button type="primary" className="createButtom" disabled={!isSimulated} onClick={this.handleDownload} >Download</Button>
-                        <Button type="primary" className="createButtom" disabled={!isSimulated} onClick={this.showShareModal} >Share</Button>
-                        <Button type="primary" className="createButtom" disabled={!(runSimulate && this.state.spendNewData.length === 0)} onClick={this.showSaveAsModal} >Save As</Button>
-                        <Button type="primary" className="createButtom" disabled={!(runSimulate && this.state.spendNewData.length === 0)} onClick={this.handleSave} >Save</Button>
-                        <Button type="primary" className="createButtom" disabled={this.state.spendNewData.length === 0} onClick={this.handleSimulate} >Simulate</Button>
-                        <Button type="primary" className="createButtom revert" disabled={this.state.spendNewData.length === 0} onClick={this.handleRevertChanges} >Revert Changes</Button>
-                        <Button type="primary" className="createButtom revert" disabled={!isSimulated} onClick={this.handleReset} >Reset</Button>
-                    </div> */}
 
                     <Modal
                       title="Save As"

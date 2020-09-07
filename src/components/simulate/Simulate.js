@@ -1,19 +1,25 @@
 import React, {Fragment} from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { Select, Button, Modal, Typography } from 'antd';
+import { Select, Button, Modal, Typography, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
 import { resetScenario, getScenarios, postScenario, getModelList } from '../../store/scenario/actionCreator'
 import { setMenu } from '../../store/auth/actionCreator'
 import CreateScenario from '../scenario/CreateScenario'
+import Scenario from '../scenario/Scenario'
 import './Simulate.less'
 import SimpulateMain from './SimpulateMain'
 import Loading from '../common/Loading'
 import { clearData, getBrands } from '../../store/simulate/actionCreator'
+import {PageView, initGA} from '../common/Tracking';
 
 const { Option } = Select;
 const { Title } = Typography;
+const { Sider } = Layout;
+
+
 
 function genareteMYScenarioList(scenarios)  {
   const scenarioList = scenarios.filter((scenario) => {
@@ -39,7 +45,14 @@ export class Simulate extends React.Component {
     scenarioName: '',
     modal: '',
     isSimulated: false,
+    manageVisible: false,
+    url: '',
+    collapsed: true,
   }
+
+  onCollapse = collapsed => {
+      this.setState({ collapsed });
+    };
 
   componentDidMount() {
     this.props.clearData()
@@ -48,12 +61,16 @@ export class Simulate extends React.Component {
     this.props.history.push('/simulator')
     this.props.getScenarios()
     this.props.getModelList()
+    initGA('UA-176821185-1', sessionStorage.getItem('user'));
+      PageView();
     if(this.props.match.params.id && this.props.match.params.modal) {
       const scenarioId = this.props.match.params.id
       const modal= this.props.match.params.modal
       const isSimulated = this.props.match.params.isSimulated ? true : false
 
-      this.setState({scenarioId: scenarioId, modal: modal, visible: false, isSimulated: isSimulated})
+      this.setState({url: window.location.href, scenarioId: scenarioId, modal: modal, visible: false, isSimulated: isSimulated})
+    } else {
+      this.setState({url: window.location.href})
     }
   }
 
@@ -61,6 +78,32 @@ export class Simulate extends React.Component {
     this.props.clearData()
     this.props.resetScenario()
   }
+
+  componentDidUpdate() {
+    if (this.state.url !== window.location.href) {
+      window.location.reload();
+    }
+  }
+
+  showManageModal = () => {
+    this.setState({
+      manageVisible: true,
+    });
+  };
+
+  handleManageOk = e => {
+    this.setState({
+      manageVisible: false,
+    });
+  };
+
+  handleManageCancel = e => {
+    this.setState({
+      manageVisible: false,
+    });
+  }
+
+  
 
   static getDerivedStateFromProps(props, state) {
     if (props.saveAsId) {
@@ -139,11 +182,18 @@ export class Simulate extends React.Component {
             return (
               <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="SIMULATOR"  />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                   <div className="mainContent">
                     {
                       !this.state.scenarioId &&
                       <div className="setScenario">
+                        <div className="setScenarioHeader"></div>
+                        <div className="setScenarioContent">
                           <Select
                               showSearch
                               style={{ width: 200 }}
@@ -161,7 +211,9 @@ export class Simulate extends React.Component {
                                   )
                               } 
                             </Select>
-                            Or <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
+                            <span className="setPadding">Or</span> <Button type="primary" className="createButtom setPadding" onClick={this.showModal}>Create New Scenario</Button>
+                            <Button type="primary" className="createButtom setPadding" onClick={this.showManageModal}>Manage Scenarios</Button>
+                          </div>
                         </div>
                     }
                     {
@@ -182,6 +234,7 @@ export class Simulate extends React.Component {
                       visible={this.state.visible}
                       onOk={this.handleOk}
                       onCancel={this.handleCancel}
+                      className="createSc"
                     >
                       <CreateScenario 
                         handleOk={this.handleOk} 
@@ -195,7 +248,26 @@ export class Simulate extends React.Component {
                       />
                     </Modal>
 
-                {/* <Footer /> */}
+                    {
+                      this.state.manageVisible &&
+                        <Modal
+                          title="Manage Scenarios"
+                          visible={this.state.manageVisible}
+                          onOk={this.handleManageOk}
+                          onCancel={this.handleManageCancel}
+                          className="managePopup"
+                        >
+                          <Scenario 
+                            handleManageOk={this.handleManageOk} 
+                            handleManageCancel={this.handleManageCancel} 
+                            pageName="Simulator"
+                          />
+                        </Modal>
+                    }
+
+                <Footer />
+                </Layout>
+              </Layout>
               </div>
             )
           }

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
-import { Table, Typography, Button, Modal, Switch, Icon, Tabs } from 'antd';
+import { Table, Typography, Button, Modal, Switch, Icon, Tabs, Layout } from 'antd';
+import LefNav from '../common/LefNav.js';
 import { getUsers, postUser, deleteUser, getRolesList, postRole } from '../../store/user/actionCreator'
 import Loading from '../common/Loading'
 import CreateUsers from './CreateUser.js';
@@ -14,9 +15,15 @@ import { setMenu } from '../../store/auth/actionCreator'
 const { Title } = Typography;
 const { confirm } = Modal;
 const { TabPane } = Tabs;
+const { Sider } = Layout;
 
 class ManageUser extends Component {
-    state = { visible: false, usersList: [], currentActiveTab: 'users' }
+    state = { visible: false, usersList: [], currentActiveTab: 'users', collapsed: true,
+}
+
+onCollapse = collapsed => {
+    this.setState({ collapsed });
+  };
 
     componentDidMount() {
         this.props.getUsers();
@@ -139,7 +146,12 @@ class ManageUser extends Component {
         return (
             <div className="container simulatorContainer">
                 {ajaxCallsInProgress > 0 && <Loading />}
-                <Header />
+                <Header modelTitle="MANAGE USERS"  />
+                <Layout className="layout">
+                <Sider collapsible collapsed={this.state.collapsed} className="layout-aside-nav" onCollapse={this.onCollapse} width="211" collapsedWidth="50">
+                  <LefNav  />
+                </Sider>
+                <Layout className="site-layout">
                 <div className="mainContent">
                     <div className="manageContainer">
                         <div className="manageHeader">
@@ -187,7 +199,9 @@ class ManageUser extends Component {
                         />
                     </Modal>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
+                </Layout>
+              </Layout>
             </div>
         )
     }

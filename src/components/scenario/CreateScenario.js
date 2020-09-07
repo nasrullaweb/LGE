@@ -113,7 +113,6 @@ export class ScenarioForm extends React.Component {
                         })(
                             <Select
                                 showSearch
-                                style={{ width: 200 }}
                                 placeholder="Select a Model"
                                 optionFilterProp="children"
                                 onChange={this.handleBaseScenarioModal}
@@ -138,7 +137,6 @@ export class ScenarioForm extends React.Component {
                         })(
                             <Select
                                 showSearch
-                                style={{ width: 200 }}
                                 placeholder="Select a Simulator or Optimizer"
                                 optionFilterProp="children"
                                 onChange={this.handleBaseScenario}
@@ -159,7 +157,6 @@ export class ScenarioForm extends React.Component {
                         })(
                             <Select
                                 showSearch
-                                style={{ width: 200 }}
                                 placeholder="Select a Base Scenario"
                                 optionFilterProp="children"
                                 filterOption={(input, option) =>

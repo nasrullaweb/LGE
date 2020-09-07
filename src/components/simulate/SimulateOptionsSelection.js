@@ -237,13 +237,9 @@ export class SimpulateOptionsSelection extends React.Component {
         const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true)
 
             return (
+                <div>
                 <div className="topSelection">
-                    {
-                        message &&
-                        <div className="messageContainer">
-                            {message}
-                        </div>
-                    }
+                    
                     
                     <Radio.Group onChange={multiProductChange} value={multiProduct} className="radioStyle" >
                         <Radio value={true}>
@@ -253,7 +249,14 @@ export class SimpulateOptionsSelection extends React.Component {
                             Multiple Geographies, One Brand
                         </Radio>
                     </Radio.Group>
-
+                    </div>
+                    <div className="dropSelection">
+                    {
+                        message &&
+                        <div className="messageContainer">
+                            {message}
+                        </div>
+                    }
                     <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
@@ -283,6 +286,7 @@ export class SimpulateOptionsSelection extends React.Component {
                             Tactic <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
+                    </div>
 
                     {/* <Select
                         mode={multiProduct ? 'multiple' : ''}
@@ -354,61 +358,9 @@ export class SimpulateOptionsSelection extends React.Component {
                         }
                     </Select> */}
 
-                        {brandList.length > 0 &&
-                            <div className="FilterSelection">
-                                {brandList.length > 0 &&
-                                    <span>
-                                        Brand: {
-                                        brandList.map((item, index) =>
-                                        index === brandList.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                }
-                                {geographyList.length > 0 &&
-                                    <span>
-                                        Geography: {
-                                        geographyList}
-                                    </span>
-                                }
-                                {/* {subBrandValue.length > 0 &&
-                                    <span>
-                                        SubBrand: {
-                                        subBrandValue.map((item, index) =>
-                                        index === subBrandValue.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                } */}
-                                {periodValue.length > 0 &&
-                                    <span>
-                                        Time Period: {
-                                        periodValue}
-                                    </span>
-                                }
-                                {/* {tacticValue.length > 0 &&
-                                    <span>
-                                        Tactic: {
-                                        tacticValue.map((item, index) =>
-                                        index === tacticValue.length-1 ?
-                                        `${item} `
-                                        :
-                                        `${item}, `
-                                        )
-                                        }
-                                    </span>
-                                } */}
-                            </div>
-                        }       
+                              
                     
-                </div>
-                       
+                </div>  
             )
           }
 

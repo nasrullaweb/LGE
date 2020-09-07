@@ -13,8 +13,8 @@ class MainTab2Charts extends React.Component {
           options: {
             chart: {
               width: 380,
-              type: 'pie',
-              fontFamily: '"futura-pt", sans-serif',
+              type: 'donut',
+              fontFamily: '"Lato", sans-serif',
               toolbar: {
                 show: true,
                 tools: {
@@ -31,16 +31,16 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#d32f2f', '#7b1fa2', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2',
-          '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             labels: [],
             tooltip: {
               enabled: true,
               style: {
                 fontSize: '12px',
-                fontFamily: undefined,
                 background: '#fff',
-                fontFamily: '"futura-pt", sans-serif',
               },
               y: {
                 title: {
@@ -58,15 +58,15 @@ class MainTab2Charts extends React.Component {
               breakpoint: 180,
               options: {
                 chart: {
-                  width: 400
+                  width: 400,
                 },
                 
                 legend: {
                   position: 'top',
                   horizontalAlign: 'right',
                   style: {
+                    color: '#3D3D3D',
                     fontSize: '12px',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                 }
               }
@@ -79,8 +79,8 @@ class MainTab2Charts extends React.Component {
           options: {
             chart: {
               width: 380,
-              type: 'pie',
-              fontFamily: '"futura-pt", sans-serif',
+              type: 'donut',
+              fontFamily: '"Lato", sans-serif',
               toolbar: {
                 show: true,
                 tools: {
@@ -97,14 +97,15 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#388e3c', '#0097a7'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             tooltip: {
               enabled: true,
               style: {
                 fontSize: '12px',
-                fontFamily: undefined,
                 background: '#fff',
-                fontFamily: '"futura-pt", sans-serif',
               },
               y: {
                 title: {
@@ -128,8 +129,8 @@ class MainTab2Charts extends React.Component {
                 legend: {
                   position: 'bottom',
                   style: {
+                    color: '#3D3D3D',
                     fontSize: '12px',
-                    fontFamily: '"futura-pt", sans-serif',
                   },
                 }
               }
@@ -146,12 +147,15 @@ class MainTab2Charts extends React.Component {
             chart: {
               type: 'bar',
               height: 400,
-              fontFamily: '"futura-pt", sans-serif',
+              fontFamily: '"Lato", sans-serif',
             },
             grid: {
               show: false,
             },
-            colors: ['#a8dadc', '#457b90'],
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+            '#994561','#CC3A8E'],
             plotOptions: {
               bar: {
                 horizontal: false,
@@ -165,7 +169,6 @@ class MainTab2Charts extends React.Component {
               style: {
                 fontSize: '12px',
                 colors: ['#fff'],
-                fontFamily: '"futura-pt", sans-serif',
               },
               formatter: function (value) {
                 
@@ -180,23 +183,21 @@ class MainTab2Charts extends React.Component {
             yaxis: [ {
               axisBorder: {
                 show: true,
-                color: '#999'
+                color: '#8E8E8E'
               },
               labels: {
                 show: true,
                 style: {
-                    colors: '#666',
-                    fontSize: '12px',
-                    fontFamily: '"futura-pt", sans-serif',
+                    colors: '#8E8E8E',
+                    fontSize: '10px',
                 },
               },
               title: {
                 text: "ROI (€)",
                 style: {
-                  color: '#333',
-                  fontWeight:  'normal',
-                  fontSize:  '12px',
-                  fontFamily: '"futura-pt", sans-serif',
+                  color: '#DB1348',
+                  fontWeight : 'bold',
+                  fontSize : '13px',
                 }
               },
               }
@@ -210,9 +211,8 @@ class MainTab2Charts extends React.Component {
               labels: {
                 show: true,
                 style: {
-                    colors: '#666',
-                    fontSize: '12px',
-                    fontFamily: '"futura-pt", sans-serif',
+                  fontSize: '10px',
+                  color: '#373D3F',
                 },
               },
             },
@@ -262,26 +262,26 @@ class MainTab2Charts extends React.Component {
           this.props.graphData1 &&
             <div className="chartContent">
               <div className="widthHalf titleAdded">
-                <div className="chartTitle">Incremental vs Base</div>
+                <div className="chartTitle"><span className="smallLeftBorder"></span>Incremental vs Base</div>
               <Chart
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
-                        type="pie" 
+                        type="donut" 
                         height={300}
                         />
               </div>
               <div className="widthHalfRight titleAdded">
-              <div className="chartTitle">Incremental Split</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Incremental Split</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
-                        type="pie" 
+                        type="donut" 
                         height={300}
                         />
               </div>
               <div className="spaceBetween"></div>
               <div className="downChart titleAdded">
-              <div className="chartTitle">ROI YoY</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>ROI YoY</div>
                 <Chart
                         options={this.state.cart5.options}
                         series={this.state.cart5.series}
@@ -289,6 +289,7 @@ class MainTab2Charts extends React.Component {
                         height={400}
                         />
                 </div>
+                <div className="spaceBetween"></div>
             </div>
       }
       

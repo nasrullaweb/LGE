@@ -36,7 +36,6 @@ class MainTab3Charts extends React.Component {
                         style: {
                           fontSize: '12px',
                           color: '#fff',
-                          fontFamily: '"futura-pt", sans-serif',
                         },
                       },
                       axisTicks: {
@@ -65,7 +64,6 @@ class MainTab3Charts extends React.Component {
                       style: {
                         fontSize: '12px',
                         color: '#fff',
-                        fontFamily: '"futura-pt", sans-serif',
                       },
                       
                     },
@@ -73,6 +71,7 @@ class MainTab3Charts extends React.Component {
               chart: {
                 type: 'rangeBar',
                 height: 450,
+                fontFamily: '"Lato", sans-serif',
                 zoom: {
                   enabled: true
                 }
@@ -114,7 +113,6 @@ class MainTab3Charts extends React.Component {
               style: {
                 colors: ['#666'],
                 fontSize: '12px',
-                fontFamily: '"futura-pt", sans-serif',
               }
               },
               annotations: {
@@ -155,7 +153,6 @@ class MainTab3Charts extends React.Component {
                         style: {
                           fontSize: '11px',
                           color: '#fff',
-                          fontFamily: '"futura-pt", sans-serif',
                         },
                       },
                       axisTicks: {
@@ -184,7 +181,6 @@ class MainTab3Charts extends React.Component {
                       style: {
                         fontSize: '12px',
                         color: '#fff',
-                        fontFamily: '"futura-pt", sans-serif',
                       },
                       
                     },
@@ -192,6 +188,7 @@ class MainTab3Charts extends React.Component {
               chart: {
                 type: 'rangeBar',
                 height: 450,
+                fontFamily: '"Lato", sans-serif',
                 
               },
               grid: {
@@ -230,7 +227,6 @@ class MainTab3Charts extends React.Component {
               },
               style: {
                 colors: ['#333'],
-                fontFamily: '"futura-pt", sans-serif',
                 fontSize: '12px'
               }
               },
@@ -281,18 +277,18 @@ class MainTab3Charts extends React.Component {
   <div id="chart">
             <div className="chartContent">
               <div className="widthHalf titleAdded emptyChart">
-              <div className="chartTitle">Base</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Base</div>
               <div className="emptyChartdiv">
 
               </div>
               </div>
               <div className="widthHalfRight titleAdded">
-              <div className="chartTitle">Incremental</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Incremental</div>
               <Chart
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
                         type="rangeBar" 
-                        height={450}
+                        height={650}
                         />
               </div>
               <div className="spaceBetween"></div>
