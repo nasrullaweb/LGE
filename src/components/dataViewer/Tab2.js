@@ -429,7 +429,7 @@ class Tab2 extends Component {
             <div className="tabContent">
                 <div className="tabHeader">
                 {
-                    message && !var2Value &&
+                    message && !var2Value.length > 0 &&
                     <div className="messageContainer">
                         {message}
                     </div>

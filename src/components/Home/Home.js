@@ -13,6 +13,7 @@ import logoBottom from '../../images/LG_Tool_Sprite_Shadow_image.png';
 import {PageView, initGA} from '../common/Tracking';
 import copyRight from '../../images/LG_GFK_Logo.png';
 import shadow from '../../images/LG_Tool_Sprite_Shadow_image.png';
+import Loading from '../common/Loading'
 import { getModelList, getGeographyList, getModelandGeographyList } from '../../store/dataViewer/actionCreator'
 
 const CheckboxGroup = Checkbox.Group;
@@ -76,6 +77,10 @@ onGeographyChange = (e) => {
         geography
     })
     
+}
+
+logout = link => {
+  this.props.logOut()
 }
 
   setboxOption = (list, keyName, checkAllChange, onChange, multiSelect) => {
@@ -156,6 +161,7 @@ onGeographyChange = (e) => {
         );
             return (
               <div className="home-container">
+                {ajaxCallsInProgress > 0 && <Loading />}
                 <div className="home-left-container">
                   <div className="home-left-top">
                     <div className="home-lg-img"><img src={logo} /></div>

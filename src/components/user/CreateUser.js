@@ -8,11 +8,10 @@ const { Option } = Select;
 
 class CreateUser extends Component {
 
-    componentDidMount() {
-        this.props.setMenu('changePassword')
-        initGA('UA-176821185-1', sessionStorage.getItem('user'));
-      PageView();
-    }
+    // componentDidMount() {
+    //     initGA('UA-176821185-1', sessionStorage.getItem('user'));
+    //   PageView();
+    // }
 
     handleSubmit = e => {
         e.preventDefault();

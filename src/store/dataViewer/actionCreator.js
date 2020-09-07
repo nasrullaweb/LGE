@@ -1,4 +1,5 @@
 import { ajaxCallBegin, ajaxCallSuccess, ajaxCallError } from "../DVajaxStatus/actionCreators";
+import { ajaxCallBeginGB, ajaxCallErrorGB, ajaxCallSuccessGB } from "../GBajaxStatus/actionCreators";
 import { DV_GET_MODEL_LIST, DV_GET_GEOGRAPHY_LIST, DV_GET_REGION_LIST, DV_GET_BRAND_LIST, DV_GET_SUBBRAND_LIST,
   DV_GET_TACTIC_LIST, DV_GET_GRAPH_DATA, DV_GET_MODEL_LIST_ERROR, DV_GET_GEOGRAPHY_LIST_ERROR, DV_GET_REGION_LIST_ERROR,
   DV_GET_BRAND_LIST_ERROR, DV_GET_SUBBRAND_LIST_ERROR, DV_GET_TACTIC_LIST_ERROR, DV_GET_GRAPH_DATA_ERROR,
@@ -18,7 +19,7 @@ const config = {
 
 export function getModelList() {
   const action = function (dispatch) {
-    dispatch(ajaxCallBegin())
+    dispatch(ajaxCallBeginGB())
     axios.get(`${apiURL}/DMModel/GetDMModels`, config
     )
     .then(response => {
@@ -26,10 +27,10 @@ export function getModelList() {
           type: DV_GET_MODEL_LIST,
           payload: response.data,
       })
-      dispatch(ajaxCallSuccess());
+      dispatch(ajaxCallSuccessGB());
     })
     .catch(error => {
-      dispatch(ajaxCallError());
+      dispatch(ajaxCallErrorGB());
       dispatch({
         type: DV_GET_MODEL_LIST_ERROR,
       })
@@ -40,7 +41,7 @@ export function getModelList() {
 
 export function getGeographyList(modal) {
   const action = function (dispatch) {
-    dispatch(ajaxCallBegin())
+    dispatch(ajaxCallBeginGB())
     axios.get(`${apiURL}/DMGeography/GetGeography/${modal}`, config
     )
     .then(response => {
@@ -48,10 +49,10 @@ export function getGeographyList(modal) {
           type: DV_GET_GEOGRAPHY_LIST,
           payload: response.data,
       })
-      dispatch(ajaxCallSuccess());
+      dispatch(ajaxCallSuccessGB());
     })
     .catch(error => {
-      dispatch(ajaxCallError());
+      dispatch(ajaxCallErrorGB());
       dispatch({
         type: DV_GET_GEOGRAPHY_LIST_ERROR,
       })
@@ -246,6 +247,7 @@ export function getAllData() {
                                 type: DV_GET_GRAPH_DATA_ERROR,
                               })
                             })
+                            //dispatch(ajaxCallSuccess());
                           } else {
                             dispatch(ajaxCallSuccess());
                           }

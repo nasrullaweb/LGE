@@ -9,9 +9,9 @@ export default function DVajaxStatusReducer (state = initialState.DVajaxCallsInP
         case DV_AJAX_CALL_BEGIN:
             return state + 1
         case DV_AJAX_CALL_ERROR:
-            return state - 1
+            return -1
         case DV_AJAX_CALL_SUCCESS:
-            return state - 1
+            return 0
         default:
             return state
     }
