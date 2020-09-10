@@ -192,8 +192,17 @@ class MainTab1Charts extends React.Component {
       {
           this.props.graphData2 &&
             <div className="chartContent">
-                <div className="downChart titleAdded">
+                <div className="downChart titleAdded rsquareCont">
                 <div className="chartTitle"><span className="smallLeftBorder"></span>Actual vs Predicted</div>
+                {
+                this.props.RSquare.length > 0 &&
+                  <div className="rsquare">
+                    <span className="rTitle"><strong>R Square:</strong> {parseFloat(this.props.RSquare[0].rSquare).toFixed(2)} </span>
+                    <span className="rTitle"><strong>MAPE:</strong> {parseFloat(this.props.RSquare[0].mape).toFixed(2)} </span>
+                    <span className="rTitle"><strong>DW:</strong> {parseFloat(this.props.RSquare[0].dw).toFixed(2)} </span>
+                    {/* <Table columns={columns} dataSource={this.props.RSquare} pagination={false} /> */}
+                  </div>
+                }
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -201,13 +210,6 @@ class MainTab1Charts extends React.Component {
                         height={400}
                         />
                 </div>
-                <div className="spaceBetween"></div>
-                {
-                this.props.RSquare.length > 0 &&
-                  <div className="rsquare">
-                    <Table columns={columns} dataSource={this.props.RSquare} pagination={false} />
-                  </div>
-                }
                 <div className="spaceBetween"></div>
                 
                 

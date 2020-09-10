@@ -30,10 +30,10 @@ const config = {
     headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('accessToken'))}` }
 };
 
-export function getBrands(modal) {
+export function getBrands(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Brands/GetBrand/${modal}`, config
+    axios.get(`${apiURL}/Brands/GetBrands/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({

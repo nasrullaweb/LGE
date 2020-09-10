@@ -795,3 +795,88 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
 .mainContent .components-table-demo-nested.keyHighlights .ant-table-thead > tr > th.leftAlign {
   text-indent: -99999px;
 }
+
+.kyeDivide {
+  width: 2%;
+  background: url(../../images/LG_Tool_Sprite-81.png);
+  background-size: contain;
+  background-position: center;
+  height: 80px;
+  background-repeat: no-repeat;
+}
+
+.keyHi {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyCont {
+  width: 32%;
+
+  .keyHead {
+    background : linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(232, 232, 232, 1) 49.05%, rgba(255, 255, 255, 1) 100%);
+    height : 29px;
+    text-align: center;
+    font-weight : bold;
+    font-size : 13px;
+    text-transform : uppercase;
+    color : #545454;
+    line-height: 29px;
+  }
+
+  .keyContent {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .keyLeft {
+      width: 80px;
+      height: 80px;
+      background: url(../../images/LG_Tool_Sprite-78.png);
+      background-size: 100% 100%;
+      
+      &.icon1 {
+        background-image: url(../../images/LG_Tool_Sprite-79.png);
+      }
+
+      &.icon2 {
+        background-image: url(../../images/LG_Tool_Sprite-80.png);
+      }
+    }
+
+    .keyRight {
+      font-size : 12px;
+      width: 150px;
+      color : #636363;
+
+      > div {
+        padding-bottom: 3px;
+        padding-left: 5px;
+
+        span {
+          color: #000;
+
+          &.positive span {
+            color: #11A818 !important;
+
+            &.pipe {
+              color : #636363 !important;
+            }
+          }
+          
+          &.negitive span {
+            color: #EA1B1B !important;
+
+            &.pipe {
+              color : #636363 !important;
+            }
+          }
+
+          
+        }
+      }
+    }
+  }
+}

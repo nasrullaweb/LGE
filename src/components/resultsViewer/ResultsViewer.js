@@ -9,7 +9,7 @@ import Footer from '../common/Footer.js';
 import { setMenu } from '../../store/auth/actionCreator'
 import Loading from '../common/Loading'
 import { getModelList, getGeographyList, getRegionList, getTacticList, getGraphData4, setGraphChange1, clearData,
-    getAllData, getBrandList, getSubBrandList, getGraphData1, getGraphData21, getGraphData22,
+    getAllData, getBrandList, getSubBrandList, getGraphData1, getGraphData21, getGraphData22, getGraphData23,
     getGraphData2, getGraphData3, setGraphChange, getRSquare
 } from '../../store/resultsViewer/actionCreator'
 import MainTab1Charts from './MainTab1Charts'
@@ -257,6 +257,7 @@ class ResultsViewer extends Component {
             this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData21(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData22(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData23(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
         })
@@ -362,7 +363,7 @@ class ResultsViewer extends Component {
 
     render() {
         const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList, subBrandList,
-            setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData3, setGraphData1, graphData1, tacticList = [], RSquare= [], setGraphData4, graphData4 } = this.props
+            setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData23, graphData3, setGraphData1, graphData1, tacticList = [], RSquare= [], setGraphData4, graphData4 } = this.props
         const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, message, messageTac } = this.state
         //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
@@ -503,6 +504,7 @@ class ResultsViewer extends Component {
                                                 subBrandValue={subBrandValue}
                                                 graphData21={graphData21}
                                                 graphData22={graphData22}
+                                                graphData23={graphData23}
                                                   />
                                         }
                                         </ColoredScrollbars>
@@ -650,6 +652,7 @@ const mapStateToProps = (state) => {
         graphData2: state.resultsViewer.graphData2,
         graphData21: state.resultsViewer.graphData21,
         graphData22: state.resultsViewer.graphData22,
+        graphData23: state.resultsViewer.graphData23,
         graphData3: state.resultsViewer.graphData3,
         graphData4: state.resultsViewer.graphData4,
         setGraphData1: state.resultsViewer.setGraphData1,
@@ -673,6 +676,7 @@ const mapStateToProps = (state) => {
     getGraphData2,
     getGraphData21,
     getGraphData22,
+    getGraphData23,
     getGraphData3,
     setGraphChange,
     getTacticList,

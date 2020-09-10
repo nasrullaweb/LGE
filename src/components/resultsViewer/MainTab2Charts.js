@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
+import ColoredScrollbars from '../common/ColoredScrollbars';
 
 
 class MainTab2Charts extends React.Component {
@@ -159,6 +160,7 @@ class MainTab2Charts extends React.Component {
             plotOptions: {
               bar: {
                 horizontal: false,
+                columnWidth: '90%',
                 dataLabels: {
                   position: 'top',
                 },
@@ -217,13 +219,95 @@ class MainTab2Charts extends React.Component {
               },
             },
           },
+        },
+        cart6: {
+          series: [{
+            name: 'Marine Sprite',
+            data: [44, 55, 41, 37, 22, 43, 21]
+          }, {
+            name: 'Striking Calf',
+            data: [53, 32, 33, 52, 13, 43, 32]
+          }, {
+            name: 'Tank Picture',
+            data: [12, 17, 11, 9, 15, 11, 20]
+          }, {
+            name: 'Bucket Slope',
+            data: [9, 7, 5, 8, 6, 9, 4]
+          }, {
+            name: 'Reborn Kid',
+            data: [25, 12, 19, 32, 25, 24, 10]
+          }],
+          options: {
+            chart: {
+              type: 'bar',
+              height: 800,
+              fontFamily: '"Lato", sans-serif',
+              stacked: true,
+              stackedType: '100%',
+                zoom: {
+                    enabled: false
+                },
+            },
+            grid: {
+              show: false,
+            },
+            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+                '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+                '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+                '#994561','#CC3A8E'],
+            plotOptions: {
+              bar: {
+                horizontal: true,
+                columnWidth: '100%',
+              },
+            },
+            stroke: {
+              width: [4, 4, 4, 4, 4],
+              curve: 'smooth',
+            },
+            title: {
+              text: 'Fiction Books Sales'
+            },
+            xaxis: {
+              categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+              // labels: {
+              //   formatter: function (val) {
+              //     return val + "K"
+              //   }
+              // }
+            },
+            yaxis: {
+              title: {
+                text: undefined
+              },
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return val + "K"
+                }
+              }
+            },
+            fill: {
+              opacity: 1
+            },
+            legend: {
+              horizontalAlign: 'center',
+                  position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
+            }
+          },
+        
+        
         }
-          
-    };
+      }
   }
 
   static getDerivedStateFromProps(props, state) {
-    let { cart3, subBrandValue, cart4, cart5 } = state
+    let { cart3, subBrandValue, cart4, cart5, cart6 } = state
     
     if (props.graphData1 && props.graphData1.series && subBrandValue !== props.subBrandValue) {
         cart3.series = props.graphData1.series
@@ -241,11 +325,17 @@ class MainTab2Charts extends React.Component {
       cart5.options.xaxis.categories = props.graphData22.xValue
     }
 
+    if (props.graphData23 && props.graphData23.series && subBrandValue !== props.subBrandValue) {
+      cart6.series = props.graphData23.series
+      cart6.options.xaxis.categories = props.graphData23.xValue
+    }
+
 
     return {
         cart3,
         cart4,
         cart5,
+        cart6,
         subBrandValue
     }
     
@@ -282,14 +372,28 @@ class MainTab2Charts extends React.Component {
               <div className="spaceBetween"></div>
               <div className="downChart titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>ROI YoY</div>
+              <div className="scrollhor">
+                <ColoredScrollbars>
                 <Chart
                         options={this.state.cart5.options}
                         series={this.state.cart5.series}
                         type="bar" 
                         height={400}
+                        width={2500}
                         />
+                        </ColoredScrollbars>
+                        </div>
                 </div>
                 <div className="spaceBetween"></div>
+                <div className="downChart titleAdded">
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Spend</div>
+                <Chart
+                        options={this.state.cart6.options}
+                        series={this.state.cart6.series}
+                        type="bar" 
+                        height={800}
+                        />
+                </div>
             </div>
       }
       

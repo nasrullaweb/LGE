@@ -14,11 +14,11 @@ const store = configureStore()
 const rootEl = document.getElementById('root')
 
 ReactDOM.render(
-    <HttpsRedirect>
+    //<HttpsRedirect>
         <Provider store={store}>
             <App />
         </Provider>
-    </HttpsRedirect>
+    //</HttpsRedirect>
     , rootEl
 )
 

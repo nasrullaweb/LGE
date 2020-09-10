@@ -386,7 +386,7 @@ export class OptimizerDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
         const columns = [
             { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => {
@@ -671,8 +671,14 @@ export class OptimizerDetails extends React.Component {
                         <Title><Icon type="edit" className="icon" /> {scenarioName}</Title>
                         {brandList.length > 0 &&
                         <div className="FilterSelection">
+                            {Globalgeagraphy &&
+                                <span>
+                                    Geography: {Globalgeagraphy}
+                                </span>
+                            }
                             {brandList && brandList.length > 0 &&
                                 <span>
+                                    <span className="pipe">||</span>
                                     Brand: {
                                     brandList.map((item, index) =>
                                     index === brandList.length-1 ?
@@ -683,13 +689,7 @@ export class OptimizerDetails extends React.Component {
                                     }
                                 </span>
                             }
-                            {geographyList && geographyList.length > 0 &&
-                                <span>
-                                    <span className="pipe">||</span>
-                                    Geography: {
-                                    geographyList}
-                                </span>
-                            }
+                            
                             {/* {subBrandValue && subBrandValue.length > 0 &&
                                 <span>
                                     SubBrand: {
@@ -744,7 +744,7 @@ export class OptimizerDetails extends React.Component {
                     }
                 </div>
                 {
-                    brandList.length > 0 && geographyList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
+                    brandList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
                     <div className="simulatorTableData">
                         <ColoredScrollbars>
                         {

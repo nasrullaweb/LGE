@@ -2,7 +2,7 @@ import { RV_GET_MODEL_LIST, RV_GET_GEOGRAPHY_LIST, RV_GET_REGION_LIST, RV_GET_BR
     RV_GET_TACTIC_LIST, RV_GET_GRAPH_DATA1, RV_GET_GRAPH_DATA2, RV_GET_GRAPH_DATA3, RV_GET_GRAPH_DATA4, RV_GET_MODEL_LIST_ERROR, RV_GET_GEOGRAPHY_LIST_ERROR, RV_GET_REGION_LIST_ERROR,
     RV_GET_BRAND_LIST_ERROR, RV_GET_SUBBRAND_LIST_ERROR, RV_CLEAR_DATA, RV_GET_TACTIC_LIST_ERROR, RV_GET_GRAPH_DATA1_ERROR, 
     RV_GET_GRAPH_DATA2_ERROR, RV_GET_GRAPH_DATA3_ERROR, RV_GET_GRAPH_DATA4_ERROR, RV_GET_RSQUARE_ERROR, RV_GET_RSQUARE,
-    RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR
+    RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR, RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR
     } from './actionType'
 
 export const initialState = {
@@ -16,6 +16,7 @@ export const initialState = {
     graphData2: {},
     graphData21: {},
     graphData22: {},
+    graphData23: {},
     graphData3: {},
     graphData4: {},
     setGraphData1: false,
@@ -41,6 +42,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
                 graphData4: {},
                 setGraphData1: false,
@@ -61,6 +63,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_MODEL_LIST_ERROR:
@@ -76,6 +79,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_GEOGRAPHY_LIST:
@@ -90,6 +94,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_GEOGRAPHY_LIST_ERROR:
@@ -104,6 +109,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_REGION_LIST:
@@ -117,6 +123,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_REGION_LIST_ERROR:
@@ -130,6 +137,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_BRAND_LIST:
@@ -142,6 +150,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_BRAND_LIST_ERROR:
@@ -154,6 +163,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_SUBBRAND_LIST:
@@ -165,6 +175,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_SUBBRAND_LIST_ERROR:
@@ -176,6 +187,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData2: {},
                 graphData21: {},
                 graphData22: {},
+                graphData23: {},
                 graphData3: {},
             });
         case RV_GET_TACTIC_LIST:
@@ -245,6 +257,16 @@ export default function resultsViewer (state = initialState, action = {}) {
             return Object.assign({}, state, {
                 ...state,
                 graphData22: {},
+            });
+        case RV_GET_GRAPH_DATA23:
+            return Object.assign({}, state, {
+                ...state,
+                graphData23: action.payload,
+            });
+        case RV_GET_GRAPH_DATA23_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                graphData23: {},
             });
         case RV_GET_GRAPH_DATA3:
             return Object.assign({}, state, {

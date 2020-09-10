@@ -173,7 +173,7 @@ logout = link => {
                             <span className="label">Model</span>
                             <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Model <Icon type="caret-down" theme="outlined" />
+                                    {modelValue ? modelValue : "Select Model"} <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
                           </div>
@@ -184,7 +184,7 @@ logout = link => {
                             <span className="label">Geography</span>
                             <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Geography <Icon type="caret-down" theme="outlined" />
+                                    {geographyValue ? geographyValue : "Select Geography"} <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
                           </div>
@@ -264,7 +264,7 @@ logout = link => {
 const mapStateToProps = (state) => {
   console.log('state', state)
     return {
-        ajaxCallsInProgress: state.ajaxCallsInProgress,
+      ajaxCallsInProgress: state.GBajaxCallsInProgress,
         user: state.auth.user,
         currentMenu: state.auth.currentMenu,
         modelList: state.dataViewer.modelList,

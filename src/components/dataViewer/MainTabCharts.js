@@ -496,6 +496,8 @@ class MainTabCharts extends React.Component {
       const { cart1, cart2 } = this.state
       const getPercentage = Math.round(((Math.round(cart1.series[0].data[0]) - Math.round(cart1.series[0].data[1]))/Math.round(cart1.series[0].data[1]))*100)
       const getPercentage1 = Math.round(((Math.round(cart2.series[0].data[0]) - Math.round(cart2.series[0].data[1]))/Math.round(cart2.series[0].data[1]))*100)
+
+      console.log('innn', getPercentage1, isNaN(getPercentage1))
       return (
         
 
@@ -518,7 +520,7 @@ class MainTabCharts extends React.Component {
                 <div className="widthHalf titleAdded changpopCont">
                 <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.var1Value}</div>
                 <div className="changePop">
-                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage) ? 'NA' : 
+                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage) || getPercentage == "Infinity" ? 'NA' : 
                         <span className={getPercentage >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage}%</span>
                         }</strong>
                     </p></div>
@@ -541,7 +543,7 @@ class MainTabCharts extends React.Component {
                 <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.var2Value}</div>
 
                 <div className="changePop">
-                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage1) ? 'NA' : 
+                  <div className="changePopLeft"><p>% Change: <strong>{isNaN(getPercentage1) || getPercentage1 == "Infinity" ? 'NA' : 
                         <span className={getPercentage1 >= 0 ? 'positveClass' : 'negitiveClass'}>{getPercentage1}%</span>
                         }</strong>
                     </p></div>

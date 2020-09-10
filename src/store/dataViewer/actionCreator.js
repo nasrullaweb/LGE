@@ -193,6 +193,8 @@ export function getAllData() {
           if (sessionStorage.getItem('geographyValue')) { 
             const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
             const modal = JSON.parse(sessionStorage.getItem('modelValue'))
+            dispatch(getTab1AllData(modal, geography))
+              dispatch(getTab2AllData(modal, geography))
             axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
             )
             .then(response => {
@@ -200,8 +202,7 @@ export function getAllData() {
                   type: DV_GET_REGION_LIST,
                   payload: response.data,
               })
-              dispatch(getTab1AllData(modal, geography));
-              dispatch(getTab2AllData(modal, geography))
+              
               if (sessionStorage.getItem('regionValue')) { 
                 const region = JSON.parse(sessionStorage.getItem('regionValue'))
                 axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config

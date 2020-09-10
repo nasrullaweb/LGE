@@ -33,8 +33,8 @@ class App extends React.Component {
                         <PrivateRouteNew  exact path="/" component={Home} />
                         <PrivateRouteNew  path="/home" component={Home} />
                         <PrivateRouteNew  path="/scenario" component={Scenario} />
-                        <PrivateRouteNew path="/simulator/:id?/:modal?/:isSimulated?" component={Simulate} />
-                        <PrivateRouteNew  path="/optimizer/:id?/:modal?/:isSimulated?" component={Optimizer} />
+                        <PrivateRouteNew path="/simulator/:id?/:modal?/:geography?/:isSimulated?" component={Simulate} />
+                        <PrivateRouteNew  path="/optimizer/:id?/:modal?/:geography?/:isSimulated?" component={Optimizer} />
                         <PrivateRouteNew  path="/users" component={ManageUser} />
                         <PrivateRouteNew  path="/changePassword" component={ChangePassword} />
                         <PrivateRouteNew  path="/DataSnapshot" component={DataViewer} />

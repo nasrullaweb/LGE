@@ -5,6 +5,7 @@ export const initialState = {
     modelList: [],
     addedId: '',
     addedModal: '',
+    addedGeogrophay: '',
     addedIsSimulatorOptimiser: '',
     addedIsSimulated: false,
     usersList: '',
@@ -32,6 +33,7 @@ export default function scenario (state = initialState, action = {}) {
                 ...state,
                 addedId: action.newId,
                 addedModal: action.newModal,
+                addedGeogrophay: action.newGeography,
                 addedIsSimulated: action.isSimulated ? true : false,
                 addedIsSimulatorOptimiser: action.isSimulatorOptimiser,
             });
@@ -40,6 +42,7 @@ export default function scenario (state = initialState, action = {}) {
                 ...state,
                 addedId: '',
                 addedModal: '',
+                addedGeogrophay: '',
                 addedIsSimulated: false,
                 addedIsSimulatorOptimiser: ''
             });

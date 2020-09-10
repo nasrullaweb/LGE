@@ -50,7 +50,7 @@ class DataViewer extends Component {
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
         
-        if (JSON.parse(sessionStorage.getItem('regionValue'))) {
+        if (JSON.parse(sessionStorage.getItem('regionValue')) || JSON.parse(sessionStorage.getItem('regionValueTab1')) || JSON.parse(sessionStorage.getItem('regionValueTab2'))) {
             this.props.getAllData();
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
             this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));

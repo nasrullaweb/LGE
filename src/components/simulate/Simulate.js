@@ -44,6 +44,7 @@ export class Simulate extends React.Component {
     visible: false,
     scenarioName: '',
     modal: '',
+    Globalgeagraphy: '',
     isSimulated: false,
     manageVisible: false,
     url: '',
@@ -66,9 +67,10 @@ export class Simulate extends React.Component {
     if(this.props.match.params.id && this.props.match.params.modal) {
       const scenarioId = this.props.match.params.id
       const modal= this.props.match.params.modal
+      const geography= this.props.match.params.geography
       const isSimulated = this.props.match.params.isSimulated ? true : false
 
-      this.setState({url: window.location.href, scenarioId: scenarioId, modal: modal, visible: false, isSimulated: isSimulated})
+      this.setState({url: window.location.href, scenarioId: scenarioId, modal: modal, Globalgeagraphy: geography, visible: false, isSimulated: isSimulated})
     } else {
       this.setState({url: window.location.href})
     }
@@ -110,7 +112,7 @@ export class Simulate extends React.Component {
       return {scenarioId: props.saveAsId, scenarioName: props.saveAsName}
     }
     if (props.addedId && !state.scenarioId) {
-      return {scenarioId: props.addedId, visible: false, modal: props.addedModal, isSimulated: props.addedIsSimulated }
+      return {scenarioId: props.addedId, visible: false, modal: props.addedModal, Globalgeagraphy: props.addedGeogrophay, isSimulated: props.addedIsSimulated }
     }
     if (props.scenariosList && state.scenarioId && !state.scenarioName ) {
       const scenarioObj = props.scenariosList.filter((scenario) => {
@@ -119,10 +121,11 @@ export class Simulate extends React.Component {
       if(scenarioObj.length > 0) {
         const scenarioName = scenarioObj[0].scenarioName
         const modal = scenarioObj[0].model
+        const Globalgeagraphy = scenarioObj[0].geography
         if (props.brandOptions.length <=0 && !state.isSimulated) {
-          props.getBrands(modal)
+          props.getBrands(modal, Globalgeagraphy)
         }
-        return {scenarioName, modal}
+        return {scenarioName, modal, Globalgeagraphy}
       }
     }
     //return { };
@@ -132,6 +135,7 @@ export class Simulate extends React.Component {
     this.setState({
       scenarioId: value,
       modal: e.props.data_obj.model,
+      Globalgeagraphy: e.props.data_obj.geography,
       isSimulated: e.props.data_obj.isSimulated ? true : false,
     })
   }
@@ -162,7 +166,7 @@ export class Simulate extends React.Component {
 
  resetData = () => {
   this.props.clearData()
-  this.props.getBrands(this.state.modal)
+  this.props.getBrands(this.state.modal, this.state.Globalgeagraphy)
   this.setState({
     isSimulated: false,
   });
@@ -281,6 +285,7 @@ const mapStateToProps = (state) => {
       modelList: state.scenario.modelList,
       addedId: state.scenario.addedId,
       addedModal: state.scenario.addedModal,
+      addedGeogrophay: state.scenario.addedGeogrophay,
       addedIsSimulated: state.scenario.addedIsSimulated,
       brandOptions: state.simulate.brandOptions,
       saveAsId: state.simulate.saveAsId,

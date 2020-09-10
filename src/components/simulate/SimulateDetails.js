@@ -339,7 +339,7 @@ export class SimpulateDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
         const columns = [
             { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { title: 'Change Spending', dataIndex: 'changeInSpend', key: 'changeInSpend', render: (changeInSpend, record) => (
@@ -597,8 +597,14 @@ export class SimpulateDetails extends React.Component {
                     <Title><Icon type="edit" className="icon" /> {scenarioName}</Title>
                     {brandList.length > 0 &&
                             <div className="FilterSelection">
+                                {Globalgeagraphy &&
+                                    <span>
+                                        Geography: {Globalgeagraphy}
+                                    </span>
+                                }
                                 {brandList.length > 0 &&
                                     <span>
+                                        <span className="pipe">||</span>
                                         Brand: {
                                         brandList.map((item, index) =>
                                         index === brandList.length-1 ?
@@ -609,13 +615,7 @@ export class SimpulateDetails extends React.Component {
                                         }
                                     </span>
                                 }
-                                {geographyList.length > 0 &&
-                                    <span>
-                                        <span className="pipe">||</span>
-                                        Geography: {
-                                        geographyList}
-                                    </span>
-                                }
+                                
                                 {/* {subBrandValue.length > 0 &&
                                     <span>
                                         SubBrand: {
@@ -651,20 +651,131 @@ export class SimpulateDetails extends React.Component {
                         } 
                         </div>
                 {
-                    brandList.length > 0 && geographyList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
+                    brandList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
                     <div className="simulatorTableData">
                         <ColoredScrollbars>
                         {
                             keyHighlights.length > 0 &&
                             <div className="simulateHeader">
                                 <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights</h3>
-                                <div className="simulateTable">
-                                <Table
+                                <div className="simulateTable keyHi">
+                                {/* <Table
                                     className="components-table-demo-nested keyHighlights"
                                     columns={columnsKey}
                                     pagination={false}
                                     dataSource={keyHighlights}
-                                />
+                                /> */}
+                                {console.log(keyHighlights, 'kkkkk')}
+                                <div className="keyCont">
+                                    <div className="keyHead">Spend</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft">
+
+                                        </div>
+                                        <div className="keyRight">
+                                            {
+                                                keyHighlights.map((record, index) => {
+                                                    return (
+                                                        
+                                                            <div>{record.tactic}: 
+                                                                {record.tactic && record.tactic === 'Change' ?
+                                                                    record.spend >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                                                                    </span>
+                                                                :
+                                                                <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                }
+                                                            </div>
+                                                        
+                                                    )
+                                                })
+                                            }
+                                            </div>
+                                    </div>
+                                </div>
+                                <div className="kyeDivide"></div>
+                                <div className="keyCont">
+                                    <div className="keyHead">Revenue</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft icon1">
+
+                                        </div>
+                                        <div className="keyRight">
+                                        {
+                                            keyHighlights.map((record, index) => {
+                                                return (
+                                                    
+                                                        <div>{record.tactic}: 
+                                                            {record.tactic && record.tactic === 'Change' ?
+                                                                record.revenue >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                            }
+                                                        </div>
+                                                    
+                                                )
+                                            })
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="kyeDivide"></div>
+                                <div className="keyCont">
+                                    <div className="keyHead">ROI</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft icon2">
+
+                                        </div>
+                                        <div className="keyRight">
+                                        {
+                                            keyHighlights.map((record, index) => {
+                                                return (
+                                                    
+                                                    <div>{record.tactic}: 
+                                                        {record.tactic && record.tactic === 'Change' ?
+                                                            record.roi >= 0 ?
+                                                            <span className="positive">
+                                                                <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span className="pipe">||</span>
+                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                                                            </span>
+                                                            :
+                                                            <span className="negitive">
+                                                                <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span className="pipe">||</span>
+                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                                                            </span>
+                                                            :
+                                                            <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                        }
+                                                    </div>
+                                                    
+                                                )
+                                            })
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         }

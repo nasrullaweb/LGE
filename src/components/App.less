@@ -544,9 +544,9 @@ body .login-container .login-form .login_error.rest {
     margin-bottom: 5px;
 }
 
-.has-error .ant-form-explain, .has-error .ant-form-split {
-    color: #fff !important;
-}
+// .has-error .ant-form-explain, .has-error .ant-form-split {
+//     color: #fff !important;
+// }
 
 .changePasswordContainer .has-error .ant-form-explain {
     color: #f5222d !important;
@@ -666,8 +666,8 @@ body .login-container .login-form .login_error.rest {
             .MenuItems {
                 width: 100%;
                 display: inline-block;
-                padding-top: 2px;
-                padding-left: 10px;
+                // padding-top: 2px;
+                // padding-left: 10px;
 
                 .iconMenu {
                     width: 20px;
@@ -1347,4 +1347,43 @@ body .ant-modal-content  {
 
 .resultView .messageContainer {
     padding-top: 10px;
+}
+
+.downChart .rsquare {
+    display: inline-block;
+    background: linear-gradient(180deg, #f9f9f9 0%, #f9f9f9 47.72%, #f9f9f9 100%);
+    border-radius: 10px;
+    padding: 10px 30px;
+
+    span {
+        padding: 0 10px;
+    }
+
+    span:first-child {
+        padding-left: 0;
+    }
+}
+
+.rsquareCont {
+    text-align: center;
+
+    .chartTitle {
+        text-align: left;
+    }
+
+    .apexcharts-toolbar {
+        top: -84px !important;
+    }
+}
+
+body .ant-layout-sider.layout-aside-nav {
+    position: fixed;
+    left: 0px;
+    top: 60px;
+    z-index: 1;
+    height: calc(100vh - 60px)
+}
+
+body .ant-layout.ant-layout-has-sider {
+    margin-left: 50px;
 }

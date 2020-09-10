@@ -47,7 +47,11 @@ export class SimpulateMain extends React.Component {
         {
             this.props.getSimulatedSpendData(this.props.scenarioId)
         } else {
-            this.props.getBrands(this.props.modal)
+
+            if (this.props.Globalgeagraphy) {
+                this.props.getBrands(this.props.modal, this.props.Globalgeagraphy)
+            }
+            
         }
         
     }
@@ -107,7 +111,7 @@ export class SimpulateMain extends React.Component {
             })
 
             
-            this.props.getGeography(value, this.props.modal)
+            this.props.getPeriod(this.props.modal)
         //}
         
     }
@@ -136,7 +140,7 @@ export class SimpulateMain extends React.Component {
     }
 
     handleYearChange = (value) => {
-        this.props.getTactics(this.state.brandList, this.state.geographyList, this.state.subBrandValue, value, this.props.modal)
+        this.props.getTactics(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, value, this.props.modal)
         this.setState({
             periodValue: value,
             subBrandValue: ['LGE'],
@@ -145,8 +149,8 @@ export class SimpulateMain extends React.Component {
         })
     }
     handleTacticsChange = (value) => {
-        this.props.getSpendingCostData(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
-        this.props.getKeyHighLights(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
+        this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
+        this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
         this.setState({
             tacticValue: value,
             message: ''
@@ -244,18 +248,18 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSimulate = () => {
-        this.props.simulateData(this.props.modal, this.state.periodValue, this.state.geographyList, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights)
+        this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights)
     }
 
     handleSave = () => {
-        this.props.saveResults(this.props.modal, this.state.periodValue, this.state.geographyList, this.props.scenarioId, this.props.spendData)
+        this.props.saveResults(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.props.spendData)
         this.props.setisSimulated()
     }
 
     saveAsScenario = (values) => {
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []}, () => {
-            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.state.geographyList, values.scenarioname, scenarioNote, this.props.spendData)
+            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, values.scenarioname, scenarioNote, this.props.spendData)
             this.props.setisSimulated()
         })
         
@@ -266,10 +270,10 @@ export class SimpulateMain extends React.Component {
     }
 
     render() {
-      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList } = this.props
+      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
       const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange, changeShowColumns } = this
-      const url = `/simulator/${saveAsId}/${modal}/${isSimulated ? `Simulated` : ''}`  
-      console.log(isSimulated, runSimulate)
+      const url = `/simulator/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`  
+
         return (
                 <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
@@ -365,6 +369,7 @@ export class SimpulateMain extends React.Component {
                             keyHighlights={keyHighlights}
                             handleChangeSpendData={this.handleChangeSpendData}
                             scenarioName={scenarioName}
+                            Globalgeagraphy={Globalgeagraphy}
                         />
                     </div>
 

@@ -2,7 +2,8 @@ import { ajaxCallBegin, ajaxCallSuccess, ajaxCallError } from "../RVajaxStatus/a
 import { RV_GET_MODEL_LIST, RV_GET_GEOGRAPHY_LIST, RV_GET_REGION_LIST, RV_GET_BRAND_LIST, RV_GET_SUBBRAND_LIST, RV_GET_SET_GRAPH, RV_GET_SET_GRAPH1,
   RV_GET_TACTIC_LIST, RV_GET_GRAPH_DATA1, RV_GET_GRAPH_DATA2, RV_GET_GRAPH_DATA3, RV_GET_GRAPH_DATA4, RV_GET_MODEL_LIST_ERROR, RV_GET_GEOGRAPHY_LIST_ERROR, RV_GET_REGION_LIST_ERROR,
   RV_GET_BRAND_LIST_ERROR, RV_GET_SUBBRAND_LIST_ERROR, RV_CLEAR_DATA, RV_GET_TACTIC_LIST_ERROR, RV_GET_GRAPH_DATA1_ERROR, RV_GET_GRAPH_DATA2_ERROR, 
-  RV_GET_GRAPH_DATA3_ERROR, RV_GET_GRAPH_DATA4_ERROR, RV_GET_RSQUARE_ERROR, RV_GET_RSQUARE, RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR
+  RV_GET_GRAPH_DATA3_ERROR, RV_GET_GRAPH_DATA4_ERROR, RV_GET_RSQUARE_ERROR, RV_GET_RSQUARE, RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR,
+  RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR
   } from './actionType'
 import { apiURL } from '../../config/apiConfig'
 import axios from 'axios'
@@ -253,6 +254,28 @@ export function getGraphData22(modal, geography, region, brand, subBrand) {
   return action
 }
 
+export function getGraphData23(modal, geography, region, brand, subBrand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/RVCharts/GetContibutionSpendBar/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: RV_GET_GRAPH_DATA23,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: RV_GET_GRAPH_DATA23_ERROR,
+      })
+    })
+  }
+  return action
+}
+
 export function getGraphData3(modal, geography, region, brand, subBrand) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
@@ -318,7 +341,6 @@ export function getAllData() {
     //           payload: response.data,
     //       })
           if (sessionStorage.getItem('geographyValue')) { 
-            console.log('tttt111')
             const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
             const modal = JSON.parse(sessionStorage.getItem('modelValue'))
             axios.get(`${apiURL}/RVFilters/GetRegion/${modal}/${geography}`, config
@@ -398,6 +420,21 @@ export function getAllData() {
                             dispatch(ajaxCallError());
                             dispatch({
                               type: RV_GET_GRAPH_DATA22_ERROR,
+                            })
+                          })
+                          axios.get(`${apiURL}/RVCharts/GetContibutionSpendBar/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+                          )
+                          .then(response => {
+                            dispatch({
+                                type: RV_GET_GRAPH_DATA23,
+                                payload: response.data,
+                            })
+                            dispatch(ajaxCallSuccess());
+                          })
+                          .catch(error => {
+                            dispatch(ajaxCallError());
+                            dispatch({
+                              type: RV_GET_GRAPH_DATA23_ERROR,
                             })
                           })
                           axios.get(`${apiURL}/RVCharts/GetModelStat/${modal}/${geography}/${region}/${brand}/${subBrand}`, config

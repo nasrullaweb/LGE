@@ -47,6 +47,7 @@ export class ScenarioForm extends React.Component {
                 "ScenarioName" : values.scenarioname,
                 "ScenarioNotes" : values.scenarioNote,
                 "Model" : values.model,
+                "Geography": values.geography,
                 "BaseScenarioId" : values.baseScenario ? values.baseScenario : 0,
                 "isSimulatorOptimiser" : values.isSimulatorOptimiser,
                 "isShared" : 0,
@@ -81,7 +82,7 @@ export class ScenarioForm extends React.Component {
     }
     getBaseScenarios = () => {
         const { isSimulatorOptimiser, model } = this.state
-        const results = this.props.scenarios.filter(scenario => scenario.isSimulated && scenario.isSimulatorOptimiser === isSimulatorOptimiser && scenario.model === model)
+        const results = this.props.scenarios.filter(scenario => scenario.isSimulated && scenario.isSimulatorOptimiser === isSimulatorOptimiser && scenario.model === JSON.parse(sessionStorage.getItem('modelValue')))
 
         return results
     }
@@ -89,7 +90,7 @@ export class ScenarioForm extends React.Component {
     render() {
       const { scenarioList, modelList, scenarios, isSimulatorOptimiser } = this.props
       const { getFieldDecorator} = this.props.form;
-      const baseScenarioData = this.state.isSimulatorOptimiser && this.state.model ? this.getBaseScenarios() : [];
+      const baseScenarioData = this.state.isSimulatorOptimiser ? this.getBaseScenarios() : [];
             return (
               <div>
                <Form onSubmit={this.handleSubmit} className="create_scenario">
@@ -109,24 +110,23 @@ export class ScenarioForm extends React.Component {
                     <Form.Item>
                         <Text className="formLabel">Model*</Text>
                         {getFieldDecorator('model', {
+                            initialValue: JSON.parse(sessionStorage.getItem('modelValue')),
                             rules: [{ required: true, message: 'Please Select Model!' }],
                         })(
-                            <Select
-                                showSearch
-                                placeholder="Select a Model"
-                                optionFilterProp="children"
-                                onChange={this.handleBaseScenarioModal}
-                                filterOption={(input, option) =>
-                                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
-                            >
-                                {
-                                   modelList.map((model) =>
-                                   <Option key={model.id} value={model.modelName}>{model.modelName}</Option>
-                                   )
-                               } 
-                                
-                            </Select>,
+                            <Input
+                                placeholder="Model*" disabled
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        <Text className="formLabel">Geography*</Text>
+                        {getFieldDecorator('geography', {
+                            initialValue: JSON.parse(sessionStorage.getItem('geographyValue')),
+                            rules: [{ required: true, message: 'Please Select Geography!' }],
+                        })(
+                            <Input
+                                placeholder="Geography*" disabled
+                            />,
                         )}
                     </Form.Item>
                     <Form.Item>
