@@ -32,7 +32,7 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
+            colors: ['#E84518','#FF6601','#FFC000','#D1D105',
             '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
             '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
             '#994561','#CC3A8E'],
@@ -153,10 +153,7 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#DB1348','#FF9933','#E84518','#FF6601','#FFC000','#D1D105',
-            '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
-            '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
-            '#994561','#CC3A8E'],
+            colors: ['#FF9933','#FF6601'],
             plotOptions: {
               bar: {
                 horizontal: false,
@@ -187,6 +184,7 @@ class MainTab2Charts extends React.Component {
                 show: true,
                 color: '#8E8E8E'
               },
+              max: 10,
               labels: {
                 show: true,
                 style: {
@@ -218,6 +216,14 @@ class MainTab2Charts extends React.Component {
                 },
               },
             },
+            legend: {
+              horizontalAlign: 'left',
+                  position: 'bottom',
+                  style: {
+                    color: '#3D3D3D',
+                    fontSize: '12px',
+                  },
+            }
           },
         },
         cart6: {
@@ -373,7 +379,6 @@ class MainTab2Charts extends React.Component {
               <div className="downChart titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>ROI YoY</div>
               <div className="scrollhor">
-                <ColoredScrollbars>
                 <Chart
                         options={this.state.cart5.options}
                         series={this.state.cart5.series}
@@ -381,11 +386,10 @@ class MainTab2Charts extends React.Component {
                         height={400}
                         width={2500}
                         />
-                        </ColoredScrollbars>
                         </div>
                 </div>
                 <div className="spaceBetween"></div>
-                <div className="downChart titleAdded">
+                {/* <div className="downChart titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>Spend</div>
                 <Chart
                         options={this.state.cart6.options}
@@ -393,7 +397,7 @@ class MainTab2Charts extends React.Component {
                         type="bar" 
                         height={800}
                         />
-                </div>
+                </div> */}
             </div>
       }
       

@@ -372,7 +372,7 @@ class MainTab4Charts extends React.Component {
                         type="line" 
                         height={400}
                         />
-                  <p>Response curves are at overall level and will be the same across all models.</p>
+                  <p>Response curves are at overall level and will be the same across all Channel/Type.</p>
                 </div>
                 <div className="spaceBetween"></div>
                 

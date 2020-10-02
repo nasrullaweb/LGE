@@ -11,6 +11,7 @@ import { getModelList, getGeographyList, getRegionList, getAllData, clearData } 
 import MainTab from './MainTab'
 import Tab1 from './Tab1'
 import Tab2 from './Tab2'
+import Tab3 from './Tab3'
 import {PageView, initGA} from '../common/Tracking';
 import LefNav from '../common/LefNav.js';
 
@@ -50,7 +51,7 @@ class DataViewer extends Component {
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
         
-        if (JSON.parse(sessionStorage.getItem('regionValue')) || JSON.parse(sessionStorage.getItem('regionValueTab1')) || JSON.parse(sessionStorage.getItem('regionValueTab2'))) {
+        if (JSON.parse(sessionStorage.getItem('regionValue')) || JSON.parse(sessionStorage.getItem('regionValueTab1')) || JSON.parse(sessionStorage.getItem('regionValueTab2')) || JSON.parse(sessionStorage.getItem('regionValueTab3'))) {
             this.props.getAllData();
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
             this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
@@ -207,6 +208,13 @@ class DataViewer extends Component {
                                         </TabPane>
                                         <TabPane tab="Tactic Comparision" key="tab2" type="card">
                                             <Tab2
+                                                regionList = {regionList}
+                                                modelValue = {modelValue}
+                                                geographyValue = {geographyValue}
+                                            />
+                                        </TabPane>
+                                        <TabPane tab="Spends" key="tab3" type="card">
+                                            <Tab3
                                                 regionList = {regionList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}

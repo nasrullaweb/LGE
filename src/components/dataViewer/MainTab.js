@@ -40,6 +40,21 @@ class MainTab extends Component {
         message: 'Please Select Brand'
     }
 
+    componentDidMount() {
+        
+        if (JSON.parse(sessionStorage.getItem('var2Value'))) {
+            this.setState({ message: "" });
+        } else if (JSON.parse(sessionStorage.getItem('var1Value'))) {
+            this.setState({ message: "Please Select Tactic" });
+        } else if (JSON.parse(sessionStorage.getItem('subBrandValue'))) {
+            this.setState({ message: "Please Select KPI" });
+        } else if (JSON.parse(sessionStorage.getItem('brandValue'))) {
+            this.setState({ message: "Please Select Type" });
+        } else if (JSON.parse(sessionStorage.getItem('regionValue'))) {
+            this.setState({ message: "Please Select Channel" });
+        } 
+    }
+
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, var1, var2} = state
@@ -238,7 +253,7 @@ class MainTab extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 4 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 <div className="site-checkbox-all-wrapper">
                                     <Checkbox
@@ -256,7 +271,7 @@ class MainTab extends Component {
                                     onChange={onChange}
                                 />
                             </div>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">
@@ -286,7 +301,7 @@ class MainTab extends Component {
                     
                     {listOption.length > 0 ?
                             listOption.length > 5 ? 
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
@@ -294,7 +309,7 @@ class MainTab extends Component {
                                 )
                             }
                             </Radio.Group>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {

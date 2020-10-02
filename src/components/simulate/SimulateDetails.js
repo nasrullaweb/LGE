@@ -388,14 +388,14 @@ export class SimpulateDetails extends React.Component {
                     {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                         Math.round(record.newSpend) - Math.round(spend) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
@@ -442,14 +442,14 @@ export class SimpulateDetails extends React.Component {
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
@@ -466,20 +466,20 @@ export class SimpulateDetails extends React.Component {
                     {record.newROI && 
                         <div><strong>New</strong> {`$${parseFloat(record.newROI).toFixed(2)}`}</div>
                     } 
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newROI && parseFloat(record.newROI) - parseFloat(roi) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                             </div>
                         :
                         <div className="newSpend">$0.00</div>
@@ -487,19 +487,19 @@ export class SimpulateDetails extends React.Component {
                     </div>
                   );
                 return <span>
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newROI && parseFloat(record.newROI) - parseFloat(roi) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(record.newROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(record.newROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :

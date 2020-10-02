@@ -102,6 +102,7 @@
                 width: 30px;
                 height: 30px;
                 margin: 17px 15px 0 0;
+                cursor: default;
             }
 
             .ant-anchor .anticon svg {
@@ -1280,7 +1281,7 @@ body .mainContainer .header {
     }
 
     .copyRightLogo {
-        cursor: pointer;
+        cursor: default;
         width: 36px;
         height: 32px;
         display: inline-block;
@@ -1381,9 +1382,55 @@ body .ant-layout-sider.layout-aside-nav {
     left: 0px;
     top: 60px;
     z-index: 1;
-    height: calc(100vh - 60px)
+    height: calc(100vh - 60px);
+    overflow: hidden;
 }
 
 body .ant-layout.ant-layout-has-sider {
     margin-left: 50px;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #fff; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #CC1F55; 
+    border-radius: 16px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #CC1F55; 
+  }
+
+  ::-webkit-resizer {
+      height: 3px;
+  }
+
+  .modalInput {
+      .ant-input-number {
+        margin: 30px 0;
+        width: 150px;
+        border: 0;
+        height: 37px;
+      }
+
+      .modelButtons {
+          padding: 15px;
+      }
+  }
+
+  .typePopup .ant-modal-content {
+      .ant-modal-header .ant-modal-title {
+          text-align: left;
+      }
+  }

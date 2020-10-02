@@ -101,7 +101,7 @@
           }
 
           .radioStyle {
-            display: block;
+            display: inline-block;
             padding: 20px 0;
           }
 
@@ -680,10 +680,25 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
   
   .radioStyle {
     padding: 5px 0 5px 20px !important;
+    display: inline-block;
 
     label {
       font-size: 12px;
       color: #000;
+    }
+  }
+
+  .topButtons {
+    width: calc(100vw - 700px);
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: -3px;
+
+    .createButtom {
+      height: 28px;
+      font-size: 12px;
+      margin-right: 12px;
     }
   }
 
@@ -879,4 +894,118 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
       }
     }
   }
+}
+
+
+#outer-barG{
+	height:24px;
+	width:300px;
+  border:none;
+  border-radius: 20px;
+	overflow:hidden;
+	background-color:#efefef;
+  margin:auto;
+  position: absolute;
+}
+
+.bar-lineG{
+	background-color:#CC1F55;
+	float:left;
+	width:18px;
+	height:117px;
+	margin-right:23px;
+	margin-top:-27px;
+	transform:rotate(45deg);
+		-o-transform:rotate(45deg);
+		-ms-transform:rotate(45deg);
+		-webkit-transform:rotate(45deg);
+		-moz-transform:rotate(45deg);
+}
+
+
+.bar-animationG{
+	margin-left:300px;
+	width:300px;
+	animation-name:bar-animationG;
+		-o-animation-name:bar-animationG;
+		-ms-animation-name:bar-animationG;
+		-webkit-animation-name:bar-animationG;
+		-moz-animation-name:bar-animationG;
+	animation-duration:2.24s;
+		-o-animation-duration:2.24s;
+		-ms-animation-duration:2.24s;
+		-webkit-animation-duration:2.24s;
+		-moz-animation-duration:2.24s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:reverse;
+		-o-animation-direction:reverse;
+		-ms-animation-direction:reverse;
+		-webkit-animation-direction:reverse;
+		-moz-animation-direction:reverse;
+}
+
+
+
+@keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-o-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-ms-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-webkit-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-moz-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
 }

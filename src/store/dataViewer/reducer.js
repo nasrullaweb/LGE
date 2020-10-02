@@ -6,7 +6,9 @@ import { DV_GET_MODEL_LIST, DV_GET_GEOGRAPHY_LIST, DV_GET_REGION_LIST, DV_GET_BR
      DV_GET_GRAPH_DATA11_ERROR, DV_GET_GRAPH_DATA12_ERROR, DV_GET_GRAPH_DATA13_ERROR,
      DV_GET_BRAND_LIST2, DV_GET_SUBBRAND_LIST2, DV_GET_TACTIC_LIST2, DV_GET_GRAPH_DATA21, DV_GET_GRAPH_DATA22, DV_GET_GRAPH_DATA23,
      DV_GET_BRAND_LIST2_ERROR, DV_GET_SUBBRAND_LIST2_ERROR, DV_GET_TACTIC_LIST2_ERROR, DV_CLEAR_DATA,
-     DV_GET_GRAPH_DATA21_ERROR, DV_GET_GRAPH_DATA22_ERROR, DV_GET_GRAPH_DATA23_ERROR, DV_GET_SET_GRAPH, DV_GET_SET_GRAPH1, DV_GET_SET_GRAPH2
+     DV_GET_GRAPH_DATA21_ERROR, DV_GET_GRAPH_DATA22_ERROR, DV_GET_GRAPH_DATA23_ERROR, DV_GET_SET_GRAPH, DV_GET_SET_GRAPH1, DV_GET_SET_GRAPH2,
+     DV_GET_BRAND_LIST3, DV_GET_SUBBRAND_LIST3, DV_GET_GRAPH_DATA3, DV_GET_BRAND_LIST3_ERROR, DV_GET_SUBBRAND_LIST3_ERROR,
+   DV_GET_GRAPH_DATA3_ERROR, DV_GET_SET_GRAPH3, DV_GET_GRAPH_DATA31, DV_GET_GRAPH_DATA32, DV_GET_GRAPH_DATA31_ERROR, DV_GET_GRAPH_DATA32_ERROR
     } from './actionType'
 
 export const initialState = {
@@ -29,6 +31,11 @@ export const initialState = {
     graphData21: {},
     graphData22: {},
     graphData23: {},
+    brandList3: [],
+    subBrandList3: [],
+    graphData3: {},
+    graphData31: {},
+    graphData32: {},
     setGraphData: false,
     setGraphData11: false,
     setGraphData12: false,
@@ -36,6 +43,7 @@ export const initialState = {
     setGraphData21: false,
     setGraphData22: false,
     setGraphData23: false,
+    setGraphData3: false,
 }
 
 export default function dataViewer (state = initialState, action = {}) {
@@ -62,6 +70,12 @@ export default function dataViewer (state = initialState, action = {}) {
                 graphData21: {},
                 graphData22: {},
                 graphData23: {},
+                brandList3: [],
+                subBrandList3: [],
+                graphData3: {},
+                graphData31: {},
+                graphData32: {},
+                setGraphData3: false,
                 setGraphData: false,
                 setGraphData11: false,
                 setGraphData12: false,
@@ -383,7 +397,81 @@ export default function dataViewer (state = initialState, action = {}) {
                 setGraphData22: false,
                 setGraphData23: false,
             });
-            
+        case DV_GET_SET_GRAPH3:
+            return Object.assign({}, state, {
+                ...state,
+                setGraphData3: false,
+            });
+        case DV_GET_BRAND_LIST3:
+            return Object.assign({}, state, {
+                ...state,
+                brandList3: action.payload.items,
+                subBrandList3: [],
+                graphData3: {},
+                graphData31: {},
+                graphData32: {},
+            });
+        case DV_GET_BRAND_LIST3_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                brandList3: [],
+                subBrandList3: [],
+                graphData3: {},
+                graphData31: {},
+                graphData32: {},
+            });
+        case DV_GET_SUBBRAND_LIST3:
+            return Object.assign({}, state, {
+                ...state,
+                subBrandList3: action.payload.items,
+                graphData3: {},
+                graphData31: {},
+                graphData32: {},
+            });
+        case DV_GET_SUBBRAND_LIST3_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                subBrandList3: [],
+                graphData3: {},
+                graphData31: {},
+                graphData32: {},
+            });
+        case DV_GET_GRAPH_DATA3:
+            return Object.assign({}, state, {
+                ...state,
+                graphData3: action.payload,
+                setGraphData3: true,
+            });
+        case DV_GET_GRAPH_DATA3_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                graphData3: {},
+                setGraphData3: true,
+            });
+        case DV_GET_GRAPH_DATA31:
+            return Object.assign({}, state, {
+                ...state,
+                graphData31: action.payload,
+                setGraphData3: true,
+            });
+        case DV_GET_GRAPH_DATA31_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                graphData31: {},
+                setGraphData3: true,
+            });
+        case DV_GET_GRAPH_DATA32:
+            return Object.assign({}, state, {
+                ...state,
+                graphData32: action.payload,
+                setGraphData3: true,
+            });
+        case DV_GET_GRAPH_DATA32_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                graphData32: {},
+                setGraphData3: true,
+            });
         default: 
         return state
     }

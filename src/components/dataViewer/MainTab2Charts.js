@@ -85,14 +85,7 @@ class MainTab2Charts extends React.Component {
                     // max: 10,
                     type: 'numeric',
                   tickAmount: 5,
-                  title: {
-                    text: "Tactic",
-                    style: {
-                      color: '#333',
-                      fontWeight:  'normal',
-                      fontSize:  '12px',
-                    }
-                  },
+                 
                     axisTicks: {
                       show: true,
                     },
@@ -226,13 +219,7 @@ class MainTab2Charts extends React.Component {
                     // max: 10,
                     type: 'numeric',
                     tickAmount: 5,
-                    title: {
-                      text: "Tactic",
-                      style: {
-                        color: '#333',
-                        fontSize:  '12px',
-                      }
-                    },
+                    
                     axisTicks: {
                       show: true,
                     },

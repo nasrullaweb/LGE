@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, InputNumber } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, InputNumber, Button } from 'antd';
 
 const { Option } = Select;
 const CheckboxGroup = Checkbox.Group;
@@ -229,7 +229,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                             )
                                         }
                                     </Radio.Group>
-                                    {
+                                    {/* {
                                         this.state[keyName].checkedList === 'Minimize Spend' &&
                                             <div className="popUpMenu">
                                                 Revenue Target
@@ -242,7 +242,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                                 Total Spend Constraint
                                                 <InputNumber value={this.props.maximizeRevenueValue} disabled={this.props.isSimulated} onChange={(e) => this.props.handleMaximizeRevenueValue(e)} formatter={value => `${value}%`} parser={value => value.replace('%', '')} />
                                             </div>
-                                    }
+                                    } */}
                                 </div>
                                 :
                                 <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
@@ -291,12 +291,16 @@ export class OptimizerOptionsSelection extends React.Component {
                     
                     <Radio.Group onChange={multiProductChange} value={multiProduct} className="radioStyle" >
                         <Radio value={true}>
-                            Multiple Brands, One Geography
+                            One Brand / Geography
                         </Radio>
                         <Radio value={false} disabled={true}>
-                            Multiple Geographies, One Brand
+                            Multiple Brands / Geographies
                         </Radio>
                     </Radio.Group>
+                    <div className="topButtons">
+                        <Button type="primary" className="createButtom setPadding" onClick={this.props.showModal}>Create New Scenario</Button>
+                        <Button type="primary" className="createButtom setPadding" onClick={this.props.showManageModal}>Manage Scenarios</Button>
+                    </div>
                     </div>
                     <div className="dropSelection">
                     {

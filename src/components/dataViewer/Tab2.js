@@ -42,6 +42,21 @@ class Tab2 extends Component {
         message: 'Please Select Brand'
     }
 
+    componentDidMount() {
+        
+        if (JSON.parse(sessionStorage.getItem('var2ValueTab2'))) {
+            this.setState({ message: "" });
+        } else if (JSON.parse(sessionStorage.getItem('var1ValueTab2'))) {
+            this.setState({ message: "Please Select Tactic" });
+        } else if (JSON.parse(sessionStorage.getItem('subBrandValueTab2'))) {
+            this.setState({ message: "Please Select KPI" });
+        } else if (JSON.parse(sessionStorage.getItem('brandValueTab2'))) {
+            this.setState({ message: "Please Select Type" });
+        } else if (JSON.parse(sessionStorage.getItem('regionValueTab2'))) {
+            this.setState({ message: "Please Select Channel" });
+        } 
+    }
+
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, var1, var2} = state
@@ -265,7 +280,7 @@ class Tab2 extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 4 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 <div className="site-checkbox-all-wrapper">
                                     <Checkbox
@@ -283,7 +298,7 @@ class Tab2 extends Component {
                                     onChange={onChange}
                                 />
                             </div>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">
@@ -313,7 +328,7 @@ class Tab2 extends Component {
                     
                     {listOption.length > 0 ?
                             listOption.length > 5 ? 
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
@@ -321,7 +336,7 @@ class Tab2 extends Component {
                                 )
                             }
                             </Radio.Group>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
@@ -351,7 +366,7 @@ class Tab2 extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 5 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 
                                 <CheckboxGroup
@@ -360,7 +375,7 @@ class Tab2 extends Component {
                                     onChange={onChange}
                                 />
                             </div>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">

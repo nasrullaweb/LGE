@@ -107,7 +107,7 @@ export class SimpulateMain extends React.Component {
                 periodValue: [],
                 tacticValue: [],
                 subBrandValue: ['LGE'],
-                message: 'Please Select Geography'
+                message: 'Please Select Period'
             })
 
             

@@ -104,10 +104,13 @@ export class Optimizer extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
+    const { addedId, addedIsSimulatorOptimiser, addedIsSimulated, addedModal, addedGeogrophay } = props
+    const url = `/optimizer/${addedId}/${addedModal}/${addedGeogrophay}/${addedIsSimulated ? `Simulated` : ''}`
     if (props.saveAsId) {
       return {scenarioId: props.saveAsId, scenarioName: props.saveAsName}
     }
-    if (props.addedId && !state.scenarioId) {
+    if (props.addedId && state.scenarioId !== props.addedId) {
+      window.location = window.location.origin + url
       return {scenarioId: props.addedId, visible: false, modal: props.addedModal, Globalgeagraphy: props.addedGeogrophay, isSimulated: props.addedIsSimulated }
     }
     if (props.scenariosList && state.scenarioId && !state.scenarioName ) {
@@ -190,6 +193,7 @@ export class Optimizer extends React.Component {
                 </Sider>
                 <Layout className="site-layout">
                   <div className="mainContent">
+                  
                     {
                       !this.state.scenarioId &&
                       <div className="setScenario">
@@ -225,6 +229,8 @@ export class Optimizer extends React.Component {
                         resetData={this.resetData}
                         scenarios={scenariosList}
                         scenarioList={scenarioList}
+                        showManageModal={this.showManageModal}
+                        showModal={this.showModal}
                       />
                     }
                     

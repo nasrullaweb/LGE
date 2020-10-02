@@ -198,7 +198,7 @@ class MainTab1Charts extends React.Component {
                 this.props.RSquare.length > 0 &&
                   <div className="rsquare">
                     <span className="rTitle"><strong>R Square:</strong> {parseFloat(this.props.RSquare[0].rSquare).toFixed(2)} </span>
-                    <span className="rTitle"><strong>MAPE:</strong> {parseFloat(this.props.RSquare[0].mape).toFixed(2)} </span>
+                    <span className="rTitle"><strong>MAPE:</strong> {parseFloat((this.props.RSquare[0].mape)*100).toFixed(2)}% </span>
                     <span className="rTitle"><strong>DW:</strong> {parseFloat(this.props.RSquare[0].dw).toFixed(2)} </span>
                     {/* <Table columns={columns} dataSource={this.props.RSquare} pagination={false} /> */}
                   </div>

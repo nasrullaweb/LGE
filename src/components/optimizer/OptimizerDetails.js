@@ -423,14 +423,14 @@ export class OptimizerDetails extends React.Component {
                 {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                     Math.round(record.newSpend) - Math.round(spend) > 0 ?
                         <div className="newSpend positive">
-                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
                             <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                         </div>
                         :
                         <div className="newSpend negitive">
-                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
                             <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
@@ -498,14 +498,14 @@ export class OptimizerDetails extends React.Component {
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
@@ -522,20 +522,20 @@ export class OptimizerDetails extends React.Component {
                     {record.newROI && 
                         <div><strong>New</strong> {`$${parseFloat(record.newROI).toFixed(2)}`}</div>
                     } 
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newROI && parseFloat(record.newROI) - parseFloat(roi) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                             </div>
                         :
                         <div className="newSpend">$0.00</div>
@@ -543,19 +543,19 @@ export class OptimizerDetails extends React.Component {
                     </div>
                   );
                 return <span className="borderRight">
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newROI && parseFloat(record.newROI) - parseFloat(roi) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(record.newROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`$${parseFloat(record.newROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
@@ -751,14 +751,124 @@ export class OptimizerDetails extends React.Component {
                             keyHighlights.length > 0 &&
                             <div className="simulateHeader">
                                 <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights</h3>
-                                <div className="simulateTable">
-                                
-                                <Table
+                                <div className="simulateTable keyHi">
+                                {/* <Table
                                     className="components-table-demo-nested keyHighlights"
                                     columns={columnsKey}
                                     pagination={false}
                                     dataSource={keyHighlights}
-                                />
+                                /> */}
+                                {console.log(keyHighlights, 'kkkkk')}
+                                <div className="keyCont">
+                                    <div className="keyHead">Spend</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft">
+
+                                        </div>
+                                        <div className="keyRight">
+                                            {
+                                                keyHighlights.map((record, index) => {
+                                                    return (
+                                                        
+                                                            <div>{record.tactic}: 
+                                                                {record.tactic && record.tactic === 'Change' ?
+                                                                    record.spend >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                                                                    </span>
+                                                                :
+                                                                <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                }
+                                                            </div>
+                                                        
+                                                    )
+                                                })
+                                            }
+                                            </div>
+                                    </div>
+                                </div>
+                                <div className="kyeDivide"></div>
+                                <div className="keyCont">
+                                    <div className="keyHead">Revenue</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft icon1">
+
+                                        </div>
+                                        <div className="keyRight">
+                                        {
+                                            keyHighlights.map((record, index) => {
+                                                return (
+                                                    
+                                                        <div>{record.tactic}: 
+                                                            {record.tactic && record.tactic === 'Change' ?
+                                                                record.revenue >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                            }
+                                                        </div>
+                                                    
+                                                )
+                                            })
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="kyeDivide"></div>
+                                <div className="keyCont">
+                                    <div className="keyHead">ROI</div>
+                                    <div className="keyContent">
+                                        <div className="keyLeft icon2">
+
+                                        </div>
+                                        <div className="keyRight">
+                                        {
+                                            keyHighlights.map((record, index) => {
+                                                return (
+                                                    
+                                                    <div>{record.tactic}: 
+                                                        {record.tactic && record.tactic === 'Change' ?
+                                                            record.roi >= 0 ?
+                                                            <span className="positive">
+                                                                <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span className="pipe">||</span>
+                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                                                            </span>
+                                                            :
+                                                            <span className="negitive">
+                                                                <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span className="pipe">||</span>
+                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                                                            </span>
+                                                            :
+                                                            <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                        }
+                                                    </div>
+                                                    
+                                                )
+                                            })
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         }

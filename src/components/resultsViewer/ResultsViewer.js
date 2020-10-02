@@ -38,10 +38,14 @@ class ResultsViewer extends Component {
             checkedList: '',
         },
         brand: {
-            checkedList: '',
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
         },
         subBrand: {
-            checkedList: '',
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
         },
         tactic: {
             checkedList: '',
@@ -49,8 +53,8 @@ class ResultsViewer extends Component {
         modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
         geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
         regionValue: JSON.parse(sessionStorage.getItem('RregionValue')) || '',
-        brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || '',
-        subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
+        brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || [],
+        subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || [],
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
         message: 'Please Select Brand',
         messageTac: 'Please Select Tactic',
@@ -84,16 +88,22 @@ class ResultsViewer extends Component {
             }
         }
 
-        if (state.brandValue !== state.brand.checkedList) {
+        if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
-                checkedList: Array.isArray(state.brandValue) ? state.brandValue[0] : state.brandValue,
+                checkedList: state.brandValue,
+                    indeterminate: !!state.brandValue.length && state.brandValue.length < props.brandList.length,
+                    checkAll: state.brandValue.length === props.brandList.length,
             }
         }
 
         if (state.subBrandValue !== state.subBrand.checkedList && props.subBrandList.length > 0) {
-            subBrand = {
-                checkedList: Array.isArray(state.subBrandValue) ? state.subBrandValue[0] : state.subBrandValue,
-            }
+                subBrand = {
+                    checkedList: state.subBrandValue,
+                    indeterminate: !!state.subBrandValue.length && state.subBrandValue.length < props.subBrandList.length,
+                    checkAll: state.subBrandValue.length === props.subBrandList.length,
+                }
+                //checkedList: Array.isArray(state.subBrandValue) ? state.subBrandValue[0] : state.subBrandValue,
+            
         }
 
         if (state.tacticValue !== state.tactic.checkedList && props.tacticList && props.tacticList.length > 0) {
@@ -127,6 +137,17 @@ class ResultsViewer extends Component {
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
             this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
         }
+
+        if (JSON.parse(sessionStorage.getItem('RsubBrandValue'))) {
+            this.setState({ message: "" });
+        } else if (JSON.parse(sessionStorage.getItem('RbrandValue'))) {
+            this.setState({ message: "Please Select Type" });
+        } else if (JSON.parse(sessionStorage.getItem('RregionValue'))) {
+            this.setState({ message: "Please Select Channel" });
+        }
+        if (JSON.parse(sessionStorage.getItem('RtacticValue'))) {
+            this.setState({ messageTac: "" });
+        } 
     }
 
     // componentWillUnmount() {
@@ -210,11 +231,26 @@ class ResultsViewer extends Component {
         })
     }
 
-    onBrandChange = (e) => {
-        sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.value));
+    onCheckAllBrandChange = e => {
+        sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
         sessionStorage.removeItem('RsubBrandValue');
         this.setState({
-            brandValue: e.target.value,
+            brandValue: e.target.checked ? e.target.data_opt : [],
+            subBrandValue: '',
+            tacticValue: '',
+            message: 'Please Select Type'
+        }, () => {
+            const { modelValue, geographyValue } = this.state
+            const { regionValue, brandValue } =this.state
+            this.props.getSubBrandList(modelValue, geographyValue, regionValue, brandValue)
+        })
+    };
+
+    onBrandChange = (value) => {
+        sessionStorage.setItem('RbrandValue', JSON.stringify(value));
+        sessionStorage.removeItem('RsubBrandValue');
+        this.setState({
+            brandValue: value,
             subBrandValue: '',
             tacticValue: '',
             message: 'Please Select Type'
@@ -225,27 +261,31 @@ class ResultsViewer extends Component {
         })
     }
 
-    // onCheckAllSubBrandChange = e => {
-    //     sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-    //     this.setState({
-    //         subBrandValue: e.target.checked ? e.target.data_opt : [],
-    //         tacticValue: '',
-    //     }, () => {
-    //         const { modelValue, geographyValue } = this.state
-    //         const { regionValue, brandValue, subBrandValue } =this.state
-    //         this.props.setGraphChange()
-    //         this.props.getGraphData1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getRSquare(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //     })
-    // };
-
-    onSubBrandChange = (e) => {
-        sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.value));
+    onCheckAllSubBrandChange = e => {
+        sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
         this.setState({
-            subBrandValue: e.target.value,
+            subBrandValue: e.target.checked ? e.target.data_opt : [],
+            tacticValue: '',
+            message: '',
+        }, () => {
+            const { modelValue, geographyValue } = this.state
+            const { regionValue, brandValue, subBrandValue } =this.state
+            this.props.setGraphChange()
+            this.props.getGraphData1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getRSquare(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData21(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData22(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData23(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+        })
+    };
+
+    onSubBrandChange = (value) => {
+        sessionStorage.setItem('RsubBrandValue', JSON.stringify(value));
+        this.setState({
+            subBrandValue: value,
             tacticValue: '',
             message: '',
         }, () => {
@@ -287,7 +327,7 @@ class ResultsViewer extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 4 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 <div className="site-checkbox-all-wrapper">
                                     <Checkbox
@@ -305,7 +345,7 @@ class ResultsViewer extends Component {
                                     onChange={onChange}
                                 />
                             </div>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">
@@ -335,7 +375,7 @@ class ResultsViewer extends Component {
                     
                     {listOption.length > 0 ?
                             listOption.length > 5 ? 
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
@@ -343,7 +383,7 @@ class ResultsViewer extends Component {
                                 )
                             }
                             </Radio.Group>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
@@ -368,8 +408,8 @@ class ResultsViewer extends Component {
         //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
-        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
+        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
         return (
             <div className="container dataViewer tabsDesign resultView">
@@ -411,7 +451,7 @@ class ResultsViewer extends Component {
                                 </a>
                             </Dropdown>
                             {
-                                message && !subBrandValue &&
+                                message &&
                                 <div className="messageContainer">
                                     {message}
                                 </div>
@@ -437,16 +477,30 @@ class ResultsViewer extends Component {
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
-                                                {brandValue &&
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -481,16 +535,30 @@ class ResultsViewer extends Component {
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
-                                                {brandValue &&
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                 {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -528,16 +596,30 @@ class ResultsViewer extends Component {
                                                         Brand: {regionValue}
                                                     </span>
                                                 }
-                                                {brandValue &&
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                 {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -587,16 +669,30 @@ class ResultsViewer extends Component {
                                                                     Brand: {regionValue}
                                                                 </span>
                                                             }
-                                                            {brandValue &&
+                                                            {brandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
-                                                                    Channel: {brandValue}
+                                                                    Channel: {
+                                                                        brandValue.map((item, index) =>
+                                                                            index === brandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
                                                                 </span>
                                                             }
-                                                            {subBrandValue &&
+                                                             {subBrandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
-                                                                    Type: {subBrandValue}
+                                                                    Type:  {
+                                                                        subBrandValue.map((item, index) =>
+                                                                            index === subBrandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
                                                                 </span>
                                                             }
                                                             {/* {tacticValue &&

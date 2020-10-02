@@ -14,6 +14,7 @@ import  SaveAs from './SaveAs'
 import { Spin, Progress  } from 'antd';
 import Heartbeat from 'react-heartbeat';
 import ShareScenario from '../scenario/ShareScenario'
+import TypeModal from './TypeModal'
 import { getUsersList, postShareScenario } from '../../store/scenario/actionCreator'
 import { apiURL } from '../../config/apiConfig'
 
@@ -39,10 +40,14 @@ export class SimpulateMain extends React.Component {
         simulatedMsg: '',
         visibleSaveAs: false,
         shareVisible: false,
+        typeVisible: false,
         revertActive: false,
         minimizeSpendValue: 0,
         maximizeRevenueValue: 0,
         setOptimizerDefault: false,
+        revValue: '',
+        revPrice: 0,
+        revPer: 0,
     }
 
     componentDidMount() {
@@ -77,6 +82,25 @@ export class SimpulateMain extends React.Component {
         });
       };
     
+      showTypeModal = () => {
+        this.setState({
+            typeVisible: true,
+        });
+    }
+
+    handleTypeOk = data => {
+        this.setState({
+            typeVisible: false,
+        });
+      };
+    
+      handleTypeCancel = e => {
+        this.setState({
+            typeVisible: false,
+        });
+      };
+    
+
     showSaveAsModal = () => {
         this.setState({
           visibleSaveAs: true,
@@ -111,13 +135,54 @@ export class SimpulateMain extends React.Component {
                 subBrandValue: ['LGE'],
                 optimizationType: [],
                 setOptimizerDefault: false,
-                message: 'Please Select Geography'
+                message: 'Please Select Period'
             })
 
             
             this.props.getPeriod(this.props.modal)
         //}
         
+    }
+
+    revValueChange = (e) => {
+        this.setState({revValue: e.target.value})
+    }
+
+    onChangerevPrice = (e) => {
+        this.setState({revPrice: e})
+    }
+
+    onChangerevPer = (e) => {
+        this.setState({revPer: e})
+    }
+
+    onrevChangeOk = () => {
+        const { revPrice, revPer, revValue, minimizeSpendValue, maximizeRevenueValue, optimizationType } = this.state;
+        let actualVal, newMinimizeSpendValue, newmaximizeRevenueValue;
+        if (optimizationType === "Minimize Spend") {
+            actualVal = Math.round(this.props.keyHighlights[0].revenue)
+            if (revValue === "price") {
+                newMinimizeSpendValue = Math.round(((revPrice - actualVal)/actualVal)*100)
+            } else {
+                newMinimizeSpendValue = revPer
+            }
+            newmaximizeRevenueValue = 0;
+        }
+        if (optimizationType === "Maximize Revenue") {
+            actualVal = Math.round(this.props.keyHighlights[0].spend)
+            if (revValue === "price") {
+                newmaximizeRevenueValue = Math.round(((revPrice - actualVal)/actualVal)*100)
+            } else {
+                newmaximizeRevenueValue = revPer
+            }
+            newMinimizeSpendValue = 0;
+        }
+
+        this.setState({
+            typeVisible: false,
+            minimizeSpendValue: newMinimizeSpendValue,
+            maximizeRevenueValue: newmaximizeRevenueValue
+        });
     }
 
     handleChangeSpendData = (obj) => {
@@ -176,6 +241,9 @@ export class SimpulateMain extends React.Component {
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
+            typeVisible: true,
+            revPrice: 0, 
+            revPer: 0
         }, () => {
             if (optType) {
                 this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
@@ -374,6 +442,13 @@ export class SimpulateMain extends React.Component {
                             <div className="LoaderOptimize">
                                 <div className="loadOptimizeImg">
                                 </div>
+                                <div id="outer-barG">
+                                    <div id="front-barG" class="bar-animationG">
+                                        <div id="barG_1" class="bar-lineG"></div>
+                                        <div id="barG_2" class="bar-lineG"></div>
+                                        <div id="barG_3" class="bar-lineG"></div>
+                                    </div>
+                                </div>
                                 {/* <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin> */}
 
                             </div>
@@ -473,6 +548,7 @@ export class SimpulateMain extends React.Component {
                                 handleOptimizationTypeChange={handleOptimizationTypeChange}
                                 handleMinimizeSpendValue={this.handleMinimizeSpendValue}
                                 handleMaximizeRevenueValue={this.handleMaximizeRevenueValue}
+                                showTypeModal={this.showTypeModal}
                                 {...this.props}
                             />
                             <OptimizerDetails 
@@ -515,6 +591,27 @@ export class SimpulateMain extends React.Component {
                         selectedId={this.props.scenarioId}
                         selectedName={this.props.scenarioName}
                         scenarios={scenariosList}
+                      />
+                    </Modal>
+                    <Modal
+                      title={this.state.optimizationType === 'Minimize Spend' ? "Revenue Target" : "Total Spend Constraint"}
+                      visible={this.state.typeVisible}
+                      onOk={this.handleTypeOk}
+                      onCancel={this.handleTypeCancel}
+                      className="typePopup"
+                    >
+                      <TypeModal
+                        handleOk={this.handleTypeOk} 
+                        handleCancel={this.handleTypeCancel} 
+                        type={this.state.optimizationType}
+                        revValueChange={this.revValueChange}
+                        revValue={this.state.revValue}
+                        revPrice={this.state.revPrice}
+                        revPer={this.state.revPer}
+                        onChangerevPrice={this.onChangerevPrice}
+                        onChangerevPer={this.onChangerevPer}
+                        keyHighlights={keyHighlights}
+                        onrevChangeOk={this.onrevChangeOk}
                       />
                     </Modal>
                 </div>
