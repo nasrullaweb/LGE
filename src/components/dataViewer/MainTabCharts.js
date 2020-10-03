@@ -66,7 +66,7 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '10px',
+                      fontSize: '12px',
                       color: '#8E8E8E'
                     },
                   },
@@ -89,7 +89,7 @@ class MainTabCharts extends React.Component {
                   {
                     labels: {
                       style: {
-                        fontSize: '10px',
+                        fontSize: '12px',
                       color: '#373D3F',
                       },
                       formatter: function (value) {
@@ -111,13 +111,13 @@ class MainTabCharts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -193,7 +193,7 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '10px',
+                      fontSize: '12px',
                       color: '#8E8E8E'
                     },
                   },
@@ -216,7 +216,7 @@ class MainTabCharts extends React.Component {
                   {
                     labels: {
                       style: {
-                        fontSize: '10px',
+                        fontSize: '12px',
                       color: '#373D3F',
                       },
                       formatter: function (value) {
@@ -238,13 +238,13 @@ class MainTabCharts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -304,7 +304,7 @@ class MainTabCharts extends React.Component {
                   categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
                   labels: {
                     style: {
-                      fontSize: '10px',
+                      fontSize: '12px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -335,7 +335,7 @@ class MainTabCharts extends React.Component {
                     labels: {
                       style: {
                         color: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '12px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -358,7 +358,7 @@ class MainTabCharts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                     tooltip: {
@@ -381,14 +381,14 @@ class MainTabCharts extends React.Component {
                       style: {
                         color: '#FF9933',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                         
                       }
                     },
                     labels: {
                       style: {
                         color: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '12px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -422,13 +422,13 @@ class MainTabCharts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 tooltip: {
                   enabled: true,
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   y: {

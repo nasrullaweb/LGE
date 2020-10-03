@@ -29,36 +29,35 @@ class Tab1 extends Component {
         var2: {
             checkedList: '',
         },
-        regionValue: JSON.parse(sessionStorage.getItem('regionValueTab1')) || '',
+        regionValue: 'LGE',
         brandValue: JSON.parse(sessionStorage.getItem('brandValueTab1')) || [],
         subBrandValue: JSON.parse(sessionStorage.getItem('subBrandValueTab1')) || [],
         var2Value: JSON.parse(sessionStorage.getItem('var2ValueTab1')) || '',
         dataChanged: true,
-        message: 'Please Select Brand'
+        message: 'Please Select Channel'
     }
 
     componentDidMount() {
         
+        sessionStorage.setItem('regionValueTab1', 'LGE')
         if (JSON.parse(sessionStorage.getItem('var2ValueTab1'))) {
             this.setState({ message: "" });
         } else if (JSON.parse(sessionStorage.getItem('subBrandValueTab1'))) {
             this.setState({ message: "Please Select Tactic" });
         } else if (JSON.parse(sessionStorage.getItem('brandValueTab1'))) {
             this.setState({ message: "Please Select Type" });
-        } else if (JSON.parse(sessionStorage.getItem('regionValueTab1'))) {
-            this.setState({ message: "Please Select Channel" });
-        } 
+        }  
     }
 
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, var1, var2} = state
         
-        if (state.regionValue !== state.region.checkedList) {
-            region = {
-                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
-            }
-        }
+        // if (state.regionValue !== state.region.checkedList) {
+        //     region = {
+        //         checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+        //     }
+        // }
 
         if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
@@ -98,43 +97,43 @@ class Tab1 extends Component {
         //return { };
       }
 
-    onCheckAllRegionChange = e => {
-        sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('brandValueTab1');
-        sessionStorage.removeItem('subBrandValueTab1');
-        sessionStorage.removeItem('var2ValueTab1');
-        this.setState({
-            regionValue: e.target.checked ? e.target.data_opt : [],
-            brandValue: '',
-            subBrandValue: [],
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList1(modelValue, geographyValue, regionValue)
-        })
-    };
+    // onCheckAllRegionChange = e => {
+    //     sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+    //     sessionStorage.removeItem('brandValueTab1');
+    //     sessionStorage.removeItem('subBrandValueTab1');
+    //     sessionStorage.removeItem('var2ValueTab1');
+    //     this.setState({
+    //         regionValue: e.target.checked ? e.target.data_opt : [],
+    //         brandValue: '',
+    //         subBrandValue: [],
+    //         var1Value: '',
+    //         var2Value: '',
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList1(modelValue, geographyValue, regionValue)
+    //     })
+    // };
 
-    onRegionChange = (e) => {
-        sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('brandValueTab1');
-        sessionStorage.removeItem('subBrandValueTab1');
-        sessionStorage.removeItem('var2ValueTab1');
-        this.setState({
-            regionValue: e.target.value,
-            brandValue: '',
-            subBrandValue: [],
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList1(modelValue, geographyValue, regionValue)
-        })
-    }
+    // onRegionChange = (e) => {
+    //     sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('brandValueTab1');
+    //     sessionStorage.removeItem('subBrandValueTab1');
+    //     sessionStorage.removeItem('var2ValueTab1');
+    //     this.setState({
+    //         regionValue: e.target.value,
+    //         brandValue: '',
+    //         subBrandValue: [],
+    //         var1Value: '',
+    //         var2Value: '',
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList1(modelValue, geographyValue, regionValue)
+    //     })
+    // }
 
     onCheckAllBrandChange = e => {
         sessionStorage.setItem('brandValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
@@ -321,7 +320,7 @@ class Tab1 extends Component {
         const { regionList, brandList, subBrandList, tacticList, graphData1, graphData2, graphData3, geographyValue } = this.props
         const {regionValue, brandValue, subBrandValue, var2Value, message } = this.state
         //const { depedentTactics = [], inDepedentTactics = [] } = tacticList
-        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
         const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
         //const var1Menu = this.setboxOption(tacticList, 'tactic', '', this.onVar1Change, false, 'var1')
@@ -335,11 +334,11 @@ class Tab1 extends Component {
                         {message}
                     </div>
                 }
-                    <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
                     <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Channel <Icon type="caret-down" theme="outlined" />
@@ -424,7 +423,7 @@ class Tab1 extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        brandList: state.dataViewer.brandList1,
+        //brandList: state.dataViewer.brandList1,
         subBrandList: state.dataViewer.subBrandList1,
         tacticList: state.dataViewer.tacticList1,
         graphData1: state.dataViewer.graphData11,

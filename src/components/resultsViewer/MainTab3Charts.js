@@ -34,7 +34,7 @@ class MainTab3Charts extends React.Component {
                       labels: {
                         show: true,
                         style: {
-                          fontSize: '12px',
+                          fontSize: '14px',
                           color: '#fff',
                         },
                       },
@@ -62,7 +62,7 @@ class MainTab3Charts extends React.Component {
                     labels: {
                         show: false,
                       style: {
-                        fontSize: '12px',
+                        fontSize: '14px',
                         color: '#fff',
                       },
                       
@@ -112,7 +112,7 @@ class MainTab3Charts extends React.Component {
               },
               style: {
                 colors: ['#666'],
-                fontSize: '12px',
+                fontSize: '14px',
               }
               },
               annotations: {
@@ -179,7 +179,7 @@ class MainTab3Charts extends React.Component {
                     labels: {
                         show: false,
                       style: {
-                        fontSize: '12px',
+                        fontSize: '14px',
                         color: '#fff',
                       },
                       
@@ -227,7 +227,7 @@ class MainTab3Charts extends React.Component {
               },
               style: {
                 colors: ['#333'],
-                fontSize: '12px'
+                fontSize: '14px'
               }
               },
               annotations: {

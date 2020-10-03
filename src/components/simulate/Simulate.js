@@ -12,7 +12,7 @@ import Scenario from '../scenario/Scenario'
 import './Simulate.less'
 import SimpulateMain from './SimpulateMain'
 import Loading from '../common/Loading'
-import { clearData, getBrands } from '../../store/simulate/actionCreator'
+import { clearData, getBrands, getPeriod } from '../../store/simulate/actionCreator'
 import {PageView, initGA} from '../common/Tracking';
 
 const { Option } = Select;
@@ -125,8 +125,8 @@ export class Simulate extends React.Component {
         const scenarioName = scenarioObj[0].scenarioName
         const modal = scenarioObj[0].model
         const Globalgeagraphy = scenarioObj[0].geography
-        if (props.brandOptions.length <=0 && !state.isSimulated) {
-          props.getBrands(modal, Globalgeagraphy)
+        if (props.periodOptions.length <=0 && !state.isSimulated) {
+          props.getPeriod(modal)
         }
         return {scenarioName, modal, Globalgeagraphy}
       }
@@ -169,7 +169,7 @@ export class Simulate extends React.Component {
 
  resetData = () => {
   this.props.clearData()
-  this.props.getBrands(this.state.modal, this.state.Globalgeagraphy)
+  this.props.getPeriod(this.state.modal)
   this.setState({
     isSimulated: false,
   });
@@ -293,6 +293,7 @@ const mapStateToProps = (state) => {
       addedGeogrophay: state.scenario.addedGeogrophay,
       addedIsSimulated: state.scenario.addedIsSimulated,
       brandOptions: state.simulate.brandOptions,
+      periodOptions: state.simulate.periodOptions,
       saveAsId: state.simulate.saveAsId,
       saveAsName: state.simulate.saveAsName
   };
@@ -300,6 +301,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps  = dispatch => bindActionCreators({
   getBrands,
+  getPeriod,
   getScenarios,
   resetScenario,
   setMenu,

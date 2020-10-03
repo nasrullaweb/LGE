@@ -650,6 +650,7 @@ export class SimpulateDetails extends React.Component {
                             </div>
                         } 
                         </div>
+                        {console.log('tttt', brandList)}
                 {
                     brandList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
                     <div className="simulatorTableData">

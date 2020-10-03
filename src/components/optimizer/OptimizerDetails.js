@@ -758,7 +758,6 @@ export class OptimizerDetails extends React.Component {
                                     pagination={false}
                                     dataSource={keyHighlights}
                                 /> */}
-                                {console.log(keyHighlights, 'kkkkk')}
                                 <div className="keyCont">
                                     <div className="keyHead">Spend</div>
                                     <div className="keyContent">
@@ -778,14 +777,14 @@ export class OptimizerDetails extends React.Component {
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(record.spendPercentage)}%`}</span>
                                                                     </span>
-                                                                    :
+                                                                    : 
                                                                     <span className="negitive">
                                                                         <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(record.spendPercentage)}%`}</span>
                                                                     </span>
-                                                                :
-                                                                <span>{`$${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                : 
+                                                                <span> {` $${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                 }
                                                             </div>
                                                         
@@ -822,7 +821,7 @@ export class OptimizerDetails extends React.Component {
                                                                     <span>{`${Math.round(record.revenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
-                                                                <span>{`$${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                <span>{` $${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                             }
                                                         </div>
                                                     
@@ -859,7 +858,7 @@ export class OptimizerDetails extends React.Component {
                                                                 <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
                                                             </span>
                                                             :
-                                                            <span>{`$${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                            <span>{` $${parseFloat(record.roi).toFixed(2)}`}</span>
                                                         }
                                                     </div>
                                                     

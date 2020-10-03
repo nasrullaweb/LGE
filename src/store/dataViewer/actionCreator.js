@@ -199,16 +199,16 @@ export function getAllData() {
             dispatch(getTab1AllData(modal, geography))
               dispatch(getTab2AllData(modal, geography))
               dispatch(getTab3AllData(modal, geography))
-            axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
-            )
-            .then(response => {
-              dispatch({
-                  type: DV_GET_REGION_LIST,
-                  payload: response.data,
-              })
+            // axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
+            // )
+            // .then(response => {
+            //   dispatch({
+            //       type: DV_GET_REGION_LIST,
+            //       payload: response.data,
+            //   })
               
-              if (sessionStorage.getItem('regionValue')) { 
-                const region = JSON.parse(sessionStorage.getItem('regionValue'))
+             // if (sessionStorage.getItem('regionValue')) { 
+                const region = 'LGE'
                 axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
                 )
                 .then(response => {
@@ -284,16 +284,16 @@ export function getAllData() {
                   })
                 })
 
-              } else {
-                dispatch(ajaxCallSuccess());
-              }
-            })
-            .catch(error => {
-              dispatch(ajaxCallError());
-              dispatch({
-                type: DV_GET_REGION_LIST_ERROR,
-              })
-            })
+            //   } else {
+            //     dispatch(ajaxCallSuccess());
+            //   }
+            // })
+            // .catch(error => {
+            //   dispatch(ajaxCallError());
+            //   dispatch({
+            //     type: DV_GET_REGION_LIST_ERROR,
+            //   })
+            // })
           } else {
             dispatch(ajaxCallSuccess());
           }
@@ -320,8 +320,8 @@ export function getAllData() {
 
 export function getTab1AllData(modal, geography) {
   const action = function (dispatch) {
-    if (sessionStorage.getItem('regionValueTab1')) { 
-      const region = JSON.parse(sessionStorage.getItem('regionValueTab1'))
+    //if (sessionStorage.getItem('regionValueTab1')) { 
+      const region = 'LGE'
       axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
       )
       .then(response => {
@@ -410,7 +410,7 @@ export function getTab1AllData(modal, geography) {
         })
       })
 
-    }
+    //}
   }
   return action
 }
@@ -681,8 +681,8 @@ export function getGraphData23(modal, geography, region, brand, subBrand, var1, 
 
 export function getTab2AllData(modal, geography) {
   const action = function (dispatch) {
-    if (sessionStorage.getItem('regionValueTab2')) { 
-      const region = JSON.parse(sessionStorage.getItem('regionValueTab2'))
+    //if (sessionStorage.getItem('regionValueTab2')) { 
+      const region = 'LGE'
       axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
       )
       .then(response => {
@@ -773,7 +773,7 @@ export function getTab2AllData(modal, geography) {
       })
 
     }
-  }
+  //}
   return action
 }
 
@@ -975,8 +975,8 @@ export function setGraphChange3() {
 
 export function getTab3AllData(modal, geography) {
   const action = function (dispatch) {
-    if (sessionStorage.getItem('regionValueTab3')) { 
-      const region = JSON.parse(sessionStorage.getItem('regionValueTab3'))
+    //if (sessionStorage.getItem('regionValueTab3')) { 
+      const region = 'LGE'
       axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
       )
       .then(response => {
@@ -1073,7 +1073,7 @@ export function getTab3AllData(modal, geography) {
         })
       })
 
-    }
+    //}
   }
   return action
 }

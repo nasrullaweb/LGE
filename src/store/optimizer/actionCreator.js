@@ -27,7 +27,6 @@ const generateKeyHighLights = function generateKeyHighLights(oldData, NewData) {
 }
 
 export function getBrands(modal, geography) {
-  console.log('ffffffbbbb')
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
     axios.get(`${apiURL}/Brands/GetBrands/${modal}/${geography}`, config

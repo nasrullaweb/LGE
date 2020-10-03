@@ -261,11 +261,11 @@ export class SimpulateOptionsSelection extends React.Component {
                             {message}
                         </div>
                     }
-                    <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
 
                     {/* <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>

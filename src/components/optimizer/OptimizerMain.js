@@ -5,7 +5,7 @@ import { Button, Typography, Icon, Tabs, Table, Modal, message, Tooltip } from '
 import './Optimizer.less'
 import OptimizerOptionsSelection from './OptimizerOptionsSelection'
 import OptimizerDetails from './OptimizerDetails'
-import { getBrands, getGeography, getPeriod, getTactics, getSubBrands, 
+import { getGeography, getPeriod, getTactics, getSubBrands, 
     getSpendingCostData, getKeyHighLights, revertData, simulateData, getSimulatedSpendData,
     getOptimizationType, saveResults, saveAsScenario, resetSaveAsScenario, checkStatus, discardChanges
 } from '../../store/optimizer/actionCreator'
@@ -28,14 +28,14 @@ const alertMsg = (msg) => {
 export class SimpulateMain extends React.Component {
 
     state = {
-        brandList: [],
+        brandList: ['LGE'],
         geographyList: [],
         periodValue: [],
         tacticValue: [],
         subBrandValue: ['LGE'],
         optimizationType: [],
         multiProduct: true,
-        message: 'Please Select Brand',
+        message: 'Please Select Period',
         spendNewData: [],
         simulatedMsg: '',
         visibleSaveAs: false,
@@ -230,6 +230,10 @@ export class SimpulateMain extends React.Component {
             message: 'Please Select Optimization Type',
             spendNewData: [],
             setOptimizerDefault: false,
+        }, () => {
+                this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
+            this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
+
         })
     }
     handleOptimizationTypeChange = (value) => {
@@ -244,13 +248,14 @@ export class SimpulateMain extends React.Component {
             typeVisible: true,
             revPrice: 0, 
             revPer: 0
-        }, () => {
-            if (optType) {
-                this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
-            this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
-            }
-            
         })
+        // }, () => {
+        //     if (optType) {
+        //         this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
+        //     this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
+        //     }
+            
+        // })
     }
     handleMinimizeSpendValue = (value) => {
         const optValue = value
@@ -260,10 +265,11 @@ export class SimpulateMain extends React.Component {
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
-        }, () => {
-            this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
-        this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
         })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
     }
 
     handleMaximizeRevenueValue = (value) => {
@@ -274,10 +280,11 @@ export class SimpulateMain extends React.Component {
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
-        }, () => {
-            this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
-        this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
         })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
     }
 
     handleSubBrandChange = (value) => {
@@ -316,9 +323,9 @@ export class SimpulateMain extends React.Component {
             periodValue: [],
             tacticValue: [],
             subBrandValue: ['LGE'],
-            brandList: [],
+            brandList: ['LGE'],
             optimizationType: [],
-            message: 'Please Select Brands',
+            message: 'Please Select Period',
             spendNewData: [],
             simulatedMsg: '',
             setOptimizerDefault: false,
@@ -334,7 +341,7 @@ export class SimpulateMain extends React.Component {
             return {simulatedMsg: props.simulatedMsg, spendNewData: []}
         }
 
-        if ((props.isOptimized || props.isSimulated) && props.selectedBrand && state.brandList.length <= 0)
+        if ((props.isOptimized || props.isSimulated) && props.selectedPeriod && state.periodValue.length <= 0)
         {
             return {
                 brandList: props.selectedBrand,
@@ -379,9 +386,9 @@ export class SimpulateMain extends React.Component {
                     periodValue: [],
                     tacticValue: [],
                     subBrandValue: ['LGE'],
-                    brandList: [],
+                    brandList: ['LGE'],
                     optimizationType: [],
-                    message: 'Please Select Brands',
+                    message: 'Please Select Period',
                     spendNewData: [],
                     multiProduct: true,
                     simulatedMsg: '',
@@ -655,7 +662,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps  = dispatch => bindActionCreators({
-    getBrands,
     getGeography,
     getPeriod,
     getTactics,

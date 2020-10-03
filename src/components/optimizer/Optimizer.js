@@ -12,7 +12,7 @@ import Scenario from '../scenario/Scenario'
 import './Optimizer.less'
 import OptimizerMain from './OptimizerMain'
 import Loading from '../common/Loading'
-import { clearData, getBrands } from '../../store/optimizer/actionCreator'
+import { clearData, getPeriod } from '../../store/optimizer/actionCreator'
 import {PageView, initGA} from '../common/Tracking';
 
 const { Option } = Select;
@@ -123,8 +123,8 @@ export class Optimizer extends React.Component {
         const scenarioName = scenarioObj[0].scenarioName
         const modal = scenarioObj[0].model
         const Globalgeagraphy = scenarioObj[0].geography
-        if (props.brandOptions.length <=0 && !state.isSimulated) {
-          props.getBrands(modal, Globalgeagraphy)
+        if (props.periodOptions.length <=0 && !state.isSimulated) {
+          props.getPeriod(modal)
         }
         return {scenarioName, modal, Globalgeagraphy}
       }
@@ -167,7 +167,7 @@ export class Optimizer extends React.Component {
 
  resetData = () => {
   this.props.clearData()
-  this.props.getBrands(this.state.modal, this.state.Globalgeagraphy)
+  this.props.getPeriod(this.state.modal)
   this.setState({
     isSimulated: false,
   });
@@ -293,13 +293,14 @@ const mapStateToProps = (state) => {
       addedGeogrophay: state.scenario.addedGeogrophay,
       addedIsSimulated: state.scenario.addedIsSimulated,
       brandOptions: state.optimizer.brandOptions,
+      periodOptions: state.simulate.periodOptions,
       saveAsId: state.optimizer.saveAsId,
       saveAsName: state.optimizer.saveAsName
   };
 }
 
 const mapDispatchToProps  = dispatch => bindActionCreators({
-  getBrands,
+  getPeriod,
   getScenarios,
   resetScenario,
   setMenu,

@@ -40,7 +40,7 @@ class MainTab2Charts extends React.Component {
             tooltip: {
               enabled: true,
               style: {
-                fontSize: '12px',
+                fontSize: '14px',
                 background: '#fff',
               },
               y: {
@@ -67,7 +67,7 @@ class MainTab2Charts extends React.Component {
                   horizontalAlign: 'right',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 }
               }
@@ -105,7 +105,7 @@ class MainTab2Charts extends React.Component {
             tooltip: {
               enabled: true,
               style: {
-                fontSize: '12px',
+                fontSize: '14px',
                 background: '#fff',
               },
               y: {
@@ -131,7 +131,7 @@ class MainTab2Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 }
               }
@@ -166,7 +166,7 @@ class MainTab2Charts extends React.Component {
             dataLabels: {
               enabled: true,
               style: {
-                fontSize: '12px',
+                fontSize: '14px',
                 colors: ['#fff'],
               },
               formatter: function (value) {
@@ -189,7 +189,7 @@ class MainTab2Charts extends React.Component {
                 show: true,
                 style: {
                     colors: '#8E8E8E',
-                    fontSize: '10px',
+                    fontSize: '12px',
                 },
               },
               title: {
@@ -197,7 +197,7 @@ class MainTab2Charts extends React.Component {
                 style: {
                   color: '#DB1348',
                   fontWeight : 'bold',
-                  fontSize : '13px',
+                  fontSize : '14px',
                 }
               },
               }
@@ -211,7 +211,7 @@ class MainTab2Charts extends React.Component {
               labels: {
                 show: true,
                 style: {
-                  fontSize: '10px',
+                  fontSize: '12px',
                   color: '#373D3F',
                 },
               },
@@ -221,7 +221,7 @@ class MainTab2Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
             }
           },
@@ -302,7 +302,7 @@ class MainTab2Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
             }
           },

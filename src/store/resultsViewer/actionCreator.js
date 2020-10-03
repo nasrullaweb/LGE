@@ -343,15 +343,15 @@ export function getAllData() {
           if (sessionStorage.getItem('geographyValue')) { 
             const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
             const modal = JSON.parse(sessionStorage.getItem('modelValue'))
-            axios.get(`${apiURL}/RVFilters/GetRegion/${modal}/${geography}`, config
-            )
-            .then(response => {
-              dispatch({
-                  type: RV_GET_REGION_LIST,
-                  payload: response.data,
-              })
-              if (sessionStorage.getItem('RregionValue')) { 
-                const region = JSON.parse(sessionStorage.getItem('RregionValue'))
+            // axios.get(`${apiURL}/RVFilters/GetRegion/${modal}/${geography}`, config
+            // )
+            // .then(response => {
+            //   dispatch({
+            //       type: RV_GET_REGION_LIST,
+            //       payload: response.data,
+            //   })
+              //if (sessionStorage.getItem('RregionValue')) { 
+                const region = 'LGE'
                 axios.get(`${apiURL}/RVFilters/GetBrands/${modal}/${geography}/${region}`, config
                 )
                 .then(response => {
@@ -532,16 +532,16 @@ export function getAllData() {
                   })
                 })
 
-              } else {
-                dispatch(ajaxCallSuccess());
-              }
-            })
-            .catch(error => {
-              dispatch(ajaxCallError());
-              dispatch({
-                type: RV_GET_REGION_LIST_ERROR,
-              })
-            })
+            //   } else {
+            //     dispatch(ajaxCallSuccess());
+            //   }
+            // })
+            // .catch(error => {
+            //   dispatch(ajaxCallError());
+            //   dispatch({
+            //     type: RV_GET_REGION_LIST_ERROR,
+            //   })
+            // })
           } else {
             dispatch(ajaxCallSuccess());
           }

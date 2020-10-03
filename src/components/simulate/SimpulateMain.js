@@ -26,14 +26,14 @@ const alertMsg = (msg) => {
 export class SimpulateMain extends React.Component {
 
     state = {
-        brandList: [],
+        brandList: ['LGE'],
         geographyList: [],
         periodValue: [],
         tacticValue: [],
         subBrandValue: ['LGE'],
         showColumns: false,
         multiProduct: true,
-        message: 'Please Select Brand',
+        message: 'Please Select Period',
         spendNewData: [],
         simulatedMsg: '',
         visibleSaveAs: false,
@@ -49,7 +49,7 @@ export class SimpulateMain extends React.Component {
         } else {
 
             if (this.props.Globalgeagraphy) {
-                this.props.getBrands(this.props.modal, this.props.Globalgeagraphy)
+                this.props.getPeriod(this.props.modal)
             }
             
         }
@@ -189,8 +189,8 @@ export class SimpulateMain extends React.Component {
             periodValue: [],
             tacticValue: [],
             subBrandValue: ['LGE'],
-            brandList: [],
-            message: 'Please Select Brands',
+            brandList: ['LGE'],
+            message: 'Please Select Period',
             spendNewData: [],
             simulatedMsg: '',
         });
@@ -210,7 +210,7 @@ export class SimpulateMain extends React.Component {
             return {simulatedMsg: props.simulatedMsg, spendNewData: []}
         }
 
-        if (props.isSimulated && props.selectedBrand && state.brandList.length <= 0)
+        if (props.isSimulated && props.selectedPeriod && state.periodValue.length <= 0)
         {
             return {
                 brandList: props.selectedBrand,
@@ -236,8 +236,8 @@ export class SimpulateMain extends React.Component {
                     periodValue: [],
                     tacticValue: [],
                     subBrandValue: ['LGE'],
-                    brandList: [],
-                    message: 'Please Select Brands',
+                    brandList: ['LGE'],
+                    message: 'Please Select Period',
                     spendNewData: [],
                     multiProduct: true,
                     simulatedMsg: '',

@@ -25,21 +25,20 @@ class Tab3 extends Component {
             indeterminate: false,
             checkAll: false,
         },
-        regionValue: JSON.parse(sessionStorage.getItem('regionValueTab3')) || '',
+        regionValue: 'LGE',
         brandValue: JSON.parse(sessionStorage.getItem('brandValueTab3')) || [],
         subBrandValue: JSON.parse(sessionStorage.getItem('subBrandValueTab3')) || [],
         dataChanged: true,
-        message: 'Please Select Brand'
+        message: 'Please Select Channel'
     }
 
     componentDidMount() {
         
+        sessionStorage.setItem('regionValueTab3', 'LGE')
         if (JSON.parse(sessionStorage.getItem('subBrandValueTab3'))) {
             this.setState({ message: "" });
         } else if (JSON.parse(sessionStorage.getItem('brandValueTab3'))) {
             this.setState({ message: "Please Select Type" });
-        } else if (JSON.parse(sessionStorage.getItem('regionValueTab3'))) {
-            this.setState({ message: "Please Select Channel" });
         } 
     }
 
@@ -47,11 +46,11 @@ class Tab3 extends Component {
 
         let {region, brand, subBrand } = state
         
-        if (state.regionValue !== state.region.checkedList) {
-            region = {
-                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
-            }
-        }
+        // if (state.regionValue !== state.region.checkedList) {
+        //     region = {
+        //         checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+        //     }
+        // }
 
         if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
@@ -78,37 +77,37 @@ class Tab3 extends Component {
         //return { };
       }
 
-    onCheckAllRegionChange = e => {
-        sessionStorage.setItem('regionValueTab3', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('brandValueTab3');
-        sessionStorage.removeItem('subBrandValueTab3');
-        this.setState({
-            regionValue: e.target.checked ? e.target.data_opt : [],
-            brandValue: [],
-            subBrandValue: [],
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList3(modelValue, geographyValue, regionValue)
-        })
-    };
+    // onCheckAllRegionChange = e => {
+    //     sessionStorage.setItem('regionValueTab3', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+    //     sessionStorage.removeItem('brandValueTab3');
+    //     sessionStorage.removeItem('subBrandValueTab3');
+    //     this.setState({
+    //         regionValue: e.target.checked ? e.target.data_opt : [],
+    //         brandValue: [],
+    //         subBrandValue: [],
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList3(modelValue, geographyValue, regionValue)
+    //     })
+    // };
 
-    onRegionChange = (e) => {
-        sessionStorage.setItem('regionValueTab3', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('brandValueTab3');
-        sessionStorage.removeItem('subBrandValueTab3');
-        this.setState({
-            regionValue: e.target.value,
-            brandValue: [],
-            subBrandValue: [],
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList3(modelValue, geographyValue, regionValue)
-        })
-    }
+    // onRegionChange = (e) => {
+    //     sessionStorage.setItem('regionValueTab3', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('brandValueTab3');
+    //     sessionStorage.removeItem('subBrandValueTab3');
+    //     this.setState({
+    //         regionValue: e.target.value,
+    //         brandValue: [],
+    //         subBrandValue: [],
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList3(modelValue, geographyValue, regionValue)
+    //     })
+    // }
 
     onCheckAllBrandChange = e => {
         sessionStorage.setItem('brandValueTab3', JSON.stringify(e.target.checked ? e.target.data_opt : []));
@@ -266,7 +265,7 @@ class Tab3 extends Component {
     render() {
         const { regionList, brandList, subBrandList, graphData3, graphData31, graphData32, geographyValue } = this.props
         const {regionValue, brandValue, subBrandValue, message } = this.state
-        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
         const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
         return (
@@ -278,11 +277,11 @@ class Tab3 extends Component {
                         {message}
                     </div>
                 }
-                    <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
+                    </Dropdown> */}
                     <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Channel <Icon type="caret-down" theme="outlined" />

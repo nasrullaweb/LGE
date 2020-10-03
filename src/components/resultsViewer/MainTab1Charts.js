@@ -50,7 +50,7 @@ class MainTab1Charts extends React.Component {
                   },
                   labels: {
                     style: {
-                      fontSize: '10px',
+                      fontSize: '12px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -80,7 +80,7 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '12px',
                         color: '#8E8E8E'
                       },
                     },
@@ -96,7 +96,7 @@ class MainTab1Charts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                   },
@@ -117,7 +117,7 @@ class MainTab1Charts extends React.Component {
                       highlightDataSeries: false,
                   },
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   y: {
@@ -137,7 +137,7 @@ class MainTab1Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 
