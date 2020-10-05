@@ -348,7 +348,7 @@ class Tab3 extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        brandList: state.dataViewer.brandList3,
+        //brandList: state.dataViewer.brandList3,
         subBrandList: state.dataViewer.subBrandList3,
         graphData3: state.dataViewer.graphData3,
         graphData31: state.dataViewer.graphData31,

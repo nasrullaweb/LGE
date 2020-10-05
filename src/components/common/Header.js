@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Menu, Anchor, Icon, Dropdown } from 'antd';
+import { Row, Col, Menu, Anchor, Icon, Dropdown, Tooltip } from 'antd';
 import logo from '../../images/LG_LG_Logo_Tool.png';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -96,8 +96,11 @@ export class Header extends React.Component {
                     <Col xs={24} sm={8}>
                         { user &&
                             <div>
-                                <Link onClick={this.logout} className='logout logoutIcon'>
-                                </Link>
+                                <Tooltip title="Logout">
+                                    <Link onClick={this.logout} className='logout logoutIcon'>
+                                    </Link>
+                                </Tooltip>
+                                
                                 <Dropdown overlay={menuSetting} trigger={['hover']} overlayClassName='DropDownOverLay headerPopup'>
                                     <span className='logout bellIcon'>
                                         

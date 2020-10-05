@@ -94,6 +94,7 @@ export class ScenarioForm extends React.Component {
             return (
               <div>
                <Form onSubmit={this.handleSubmit} className="create_scenario">
+                   <div className="leftCreate">
                     <Form.Item>
                         <Text className="formLabel">Scenario Name*</Text>
                         {getFieldDecorator('scenarioname', {
@@ -129,6 +130,8 @@ export class ScenarioForm extends React.Component {
                             />,
                         )}
                     </Form.Item>
+                    </div>
+                    <div className="rightCreate">
                     <Form.Item>
                         <Text className="formLabel">Simulator or Optimizer*</Text>
                         {getFieldDecorator('isSimulatorOptimiser', {
@@ -171,6 +174,7 @@ export class ScenarioForm extends React.Component {
                             </Select>,
                         )}
                     </Form.Item>
+                    </div>
                     {/* <Form.Item>
                     {getFieldDecorator('shared', {
                         valuePropName: 'checked',

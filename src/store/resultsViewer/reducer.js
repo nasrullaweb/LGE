@@ -2,7 +2,8 @@ import { RV_GET_MODEL_LIST, RV_GET_GEOGRAPHY_LIST, RV_GET_REGION_LIST, RV_GET_BR
     RV_GET_TACTIC_LIST, RV_GET_GRAPH_DATA1, RV_GET_GRAPH_DATA2, RV_GET_GRAPH_DATA3, RV_GET_GRAPH_DATA4, RV_GET_MODEL_LIST_ERROR, RV_GET_GEOGRAPHY_LIST_ERROR, RV_GET_REGION_LIST_ERROR,
     RV_GET_BRAND_LIST_ERROR, RV_GET_SUBBRAND_LIST_ERROR, RV_CLEAR_DATA, RV_GET_TACTIC_LIST_ERROR, RV_GET_GRAPH_DATA1_ERROR, 
     RV_GET_GRAPH_DATA2_ERROR, RV_GET_GRAPH_DATA3_ERROR, RV_GET_GRAPH_DATA4_ERROR, RV_GET_RSQUARE_ERROR, RV_GET_RSQUARE,
-    RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR, RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR
+    RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR, RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR,
+    RV_GET_GRAPH_DATA5, RV_GET_GRAPH_DATA5_ERROR, RV_GET_TACTIC_LIST1, RV_GET_TACTIC_LIST1_ERROR
     } from './actionType'
 
 export const initialState = {
@@ -12,6 +13,7 @@ export const initialState = {
     brandList: [],
     subBrandList: [],
     tacticList: [],
+    tacticList1: [],
     graphData1: {},
     graphData2: {},
     graphData21: {},
@@ -19,11 +21,13 @@ export const initialState = {
     graphData23: {},
     graphData3: {},
     graphData4: {},
+    graphData5: {},
     setGraphData1: false,
     setGraphData2: false,
     setGraphData21: false,
     setGraphData3: false,
     setGraphData4: false,
+    setGraphData5: false,
     RSquare: [],
 }
 
@@ -38,6 +42,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -45,6 +50,8 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData23: {},
                 graphData3: {},
                 graphData4: {},
+                graphData5: {},
+                setGraphData5: false,
                 setGraphData1: false,
                 setGraphData2: false,
                 setGraphData3: false,
@@ -59,6 +66,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -75,6 +83,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -90,6 +99,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -105,6 +115,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -119,6 +130,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -133,6 +145,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -146,6 +159,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: action.payload.items,
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -159,6 +173,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 brandList: [],
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -171,6 +186,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 ...state,
                 subBrandList: action.payload.items,
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -183,6 +199,7 @@ export default function resultsViewer (state = initialState, action = {}) {
                 ...state,
                 subBrandList: [],
                 tacticList: [],
+                tacticList1: [],
                 graphData1: {},
                 graphData2: {},
                 graphData21: {},
@@ -201,6 +218,18 @@ export default function resultsViewer (state = initialState, action = {}) {
                 ...state,
                 tacticList: [],
                 graphData4: {},
+            });
+        case RV_GET_TACTIC_LIST1:
+            return Object.assign({}, state, {
+                ...state,
+                tacticList1: action.payload.items,
+                graphData5: {},
+            });
+        case RV_GET_TACTIC_LIST1_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                tacticList1: [],
+                graphData5: {},
             });
         case RV_GET_RSQUARE:
             return Object.assign({}, state, {
@@ -292,6 +321,18 @@ export default function resultsViewer (state = initialState, action = {}) {
                 graphData4: {},
                 setGraphData4: true
             });
+        case RV_GET_GRAPH_DATA5:
+            return Object.assign({}, state, {
+                ...state,
+                graphData5: action.payload,
+                setGraphData5: true
+            });
+        case RV_GET_GRAPH_DATA5_ERROR:
+            return Object.assign({}, state, {
+                ...state,
+                graphData5: {},
+                setGraphData5: true
+            });
         case RV_GET_SET_GRAPH1:
             return Object.assign({}, state, {
                 ...state,
@@ -303,6 +344,8 @@ export default function resultsViewer (state = initialState, action = {}) {
                 setGraphData1: false,
                 setGraphData2: false,
                 setGraphData3: false,
+                setGraphData4: false,
+                setGraphData5: false,
             });
             
         default: 

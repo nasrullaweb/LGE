@@ -3,7 +3,7 @@ import { RV_GET_MODEL_LIST, RV_GET_GEOGRAPHY_LIST, RV_GET_REGION_LIST, RV_GET_BR
   RV_GET_TACTIC_LIST, RV_GET_GRAPH_DATA1, RV_GET_GRAPH_DATA2, RV_GET_GRAPH_DATA3, RV_GET_GRAPH_DATA4, RV_GET_MODEL_LIST_ERROR, RV_GET_GEOGRAPHY_LIST_ERROR, RV_GET_REGION_LIST_ERROR,
   RV_GET_BRAND_LIST_ERROR, RV_GET_SUBBRAND_LIST_ERROR, RV_CLEAR_DATA, RV_GET_TACTIC_LIST_ERROR, RV_GET_GRAPH_DATA1_ERROR, RV_GET_GRAPH_DATA2_ERROR, 
   RV_GET_GRAPH_DATA3_ERROR, RV_GET_GRAPH_DATA4_ERROR, RV_GET_RSQUARE_ERROR, RV_GET_RSQUARE, RV_GET_GRAPH_DATA21, RV_GET_GRAPH_DATA21_ERROR, RV_GET_GRAPH_DATA22, RV_GET_GRAPH_DATA22_ERROR,
-  RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR
+  RV_GET_GRAPH_DATA23, RV_GET_GRAPH_DATA23_ERROR, RV_GET_GRAPH_DATA5, RV_GET_GRAPH_DATA5_ERROR, RV_GET_TACTIC_LIST1, RV_GET_TACTIC_LIST1_ERROR
   } from './actionType'
 import { apiURL } from '../../config/apiConfig'
 import axios from 'axios'
@@ -138,6 +138,28 @@ export function getTacticList(modal, geography, region, brand, subBrand) {
       dispatch(ajaxCallError());
       dispatch({
         type: RV_GET_TACTIC_LIST_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function getTacticList1(modal, geography, region, brand, subBrand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/RVFilters/GetSynergyTactics/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: RV_GET_TACTIC_LIST1,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: RV_GET_TACTIC_LIST1_ERROR,
       })
     })
   }
@@ -320,6 +342,28 @@ export function getGraphData4(modal, geography, region, brand, subBrand, tactic)
   return action
 }
 
+export function getGraphData5(modal, geography, region, brand, subBrand, tactic) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}/${tactic}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: RV_GET_GRAPH_DATA5,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: RV_GET_GRAPH_DATA5_ERROR,
+      })
+    })
+  }
+  return action
+}
+
 export function getAllData() {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
@@ -376,6 +420,21 @@ export function getAllData() {
                           dispatch({
                               type: RV_GET_TACTIC_LIST,
                               payload: response.data,
+                          })
+                          axios.get(`${apiURL}/RVFilters/GetSynergyTactics/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+                          )
+                          .then(response => {
+                            dispatch({
+                                type: RV_GET_TACTIC_LIST1,
+                                payload: response.data,
+                            })
+                            dispatch(ajaxCallSuccess());
+                          })
+                          .catch(error => {
+                            dispatch(ajaxCallError());
+                            dispatch({
+                              type: RV_GET_TACTIC_LIST1_ERROR,
+                            })
                           })
                           axios.get(`${apiURL}/RVCharts/GetContibution/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
                           )
@@ -504,6 +563,26 @@ export function getAllData() {
                           } else {
                             dispatch(ajaxCallSuccess());
                           }
+                          if (sessionStorage.getItem('RtacticValue1')) {
+                            const tactic = JSON.parse(sessionStorage.getItem('RtacticValue1'))
+                            axios.get(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}/${tactic}`, config
+                            )
+                            .then(response => {
+                              dispatch({
+                                  type: RV_GET_GRAPH_DATA5,
+                                  payload: response.data,
+                              })
+                              dispatch(ajaxCallSuccess());
+                            })
+                            .catch(error => {
+                              dispatch(ajaxCallError());
+                              dispatch({
+                                type: RV_GET_GRAPH_DATA5_ERROR,
+                              })
+                            })
+                          } else {
+                            dispatch(ajaxCallSuccess());
+                          }
                         })
                         .catch(error => {
                           dispatch(ajaxCallError());
@@ -511,6 +590,7 @@ export function getAllData() {
                             type: RV_GET_TACTIC_LIST_ERROR,
                           })
                         })
+                        
                       } else {
                         dispatch(ajaxCallSuccess());
                       }

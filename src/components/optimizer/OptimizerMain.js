@@ -48,6 +48,7 @@ export class SimpulateMain extends React.Component {
         revValue: '',
         revPrice: 0,
         revPer: 0,
+        methodValue: ''
     }
 
     componentDidMount() {
@@ -148,6 +149,10 @@ export class SimpulateMain extends React.Component {
         this.setState({revValue: e.target.value})
     }
 
+    methodValueChange = (e) => {
+        this.setState({methodValue: e.target.value})
+    }
+
     onChangerevPrice = (e) => {
         this.setState({revPrice: e})
     }
@@ -223,13 +228,17 @@ export class SimpulateMain extends React.Component {
         })
     }
     handleTacticsChange = (value) => {
-        this.props.getOptimizationType()
         this.setState({
             tacticValue: value,
             optimizationType: [],
-            message: 'Please Select Optimization Type',
             spendNewData: [],
             setOptimizerDefault: false,
+        })
+    }
+    handleTacticsOkChange = () => {
+        this.props.getOptimizationType()
+        this.setState({
+            message: 'Please Select Optimization Type',
         }, () => {
                 this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
             this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
@@ -280,6 +289,16 @@ export class SimpulateMain extends React.Component {
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
+        })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
+    }
+
+    optionsValue = (value) => {
+        this.setState({
+            optionsValue: value,
         })
         // }, () => {
         //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
@@ -403,7 +422,7 @@ export class SimpulateMain extends React.Component {
         if (this.state.optimizationType) {
             const spendData = this.state.spendNewData
             this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
-            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue)
+            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue)
         }
     }
 
@@ -435,7 +454,7 @@ export class SimpulateMain extends React.Component {
 
     render() {
       const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange,  handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange } = this
+      const { multiProductChange, handleProductChange, handleCompanyChange,  handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange } = this
       const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
             return (
                 <div className="simulateContainer simulateNew">
@@ -449,13 +468,15 @@ export class SimpulateMain extends React.Component {
                             <div className="LoaderOptimize">
                                 <div className="loadOptimizeImg">
                                 </div>
-                                <div id="outer-barG">
+                                <div className="loadOptimizeAnimation">
+                                </div>
+                                {/* <div id="outer-barG">
                                     <div id="front-barG" class="bar-animationG">
                                         <div id="barG_1" class="bar-lineG"></div>
                                         <div id="barG_2" class="bar-lineG"></div>
                                         <div id="barG_3" class="bar-lineG"></div>
                                     </div>
-                                </div>
+                                </div> */}
                                 {/* <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin> */}
 
                             </div>
@@ -550,6 +571,7 @@ export class SimpulateMain extends React.Component {
                                 handleCompanyChange={handleCompanyChange}
                                 handleYearChange={handleYearChange}
                                 handleTacticsChange={handleTacticsChange}
+                                handleTacticsOkChange={handleTacticsOkChange}
                                 handleSubBrandChange={handleSubBrandChange}
                                 multiProductChange={multiProductChange}
                                 handleOptimizationTypeChange={handleOptimizationTypeChange}
@@ -565,6 +587,7 @@ export class SimpulateMain extends React.Component {
                                 handleChangeSpendData={this.handleChangeSpendData}
                                 scenarioName={scenarioName}
                                 Globalgeagraphy={Globalgeagraphy}
+                                handleSimulate={this.handleSimulate}
                             />
                         </div>
 
@@ -612,6 +635,8 @@ export class SimpulateMain extends React.Component {
                         handleCancel={this.handleTypeCancel} 
                         type={this.state.optimizationType}
                         revValueChange={this.revValueChange}
+                        methodValue={this.state.methodValue}
+                        methodValueChange={this.methodValueChange}
                         revValue={this.state.revValue}
                         revPrice={this.state.revPrice}
                         revPer={this.state.revPer}

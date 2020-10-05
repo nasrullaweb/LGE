@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Select, Input, Button, Checkbox, Typography, Radio, InputNumber } from 'antd';
+import { Form, Select, Table, Input, Button, Checkbox, Typography, Radio, InputNumber } from 'antd';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -28,12 +28,45 @@ export class TypeModal extends React.Component {
 
 
     render() {
-        const { revValueChange, revValue, revPer, revPrice, onChangerevPrice, onChangerevPer, keyHighlights, onrevChangeOk } = this.props
+        const { revValueChange, revValue, methodValueChange, methodValue, revPer, revPrice, onChangerevPrice, onChangerevPer, keyHighlights, onrevChangeOk } = this.props
+        const columnsKey = [
+           
+            { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
+                <span className="borderRight">
+                    {record.tactic && record.tactic === 'Original Plan' &&
+                        <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                    }
+                </span>
+             )},
+            { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
+                <span className="borderRight">
+                    {record.tactic && record.tactic === 'Original Plan' &&
+                        <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                    }
+                </span>
+             )},
+            { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
+                <span>
+                    {record.tactic && record.tactic === 'Original Plan' &&
+                        <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                    }
+                </span>
+             )},
+        ];
             return (
               <div>
                   {
                       keyHighlights &&
                       <div>
+                          <div className="leftTypeModal">
+                          <div className="tableDataKey">
+                          <Table
+                                    className="components-table-demo-nested keyHighlights"
+                                    columns={columnsKey}
+                                    pagination={false}
+                                    dataSource={keyHighlights}
+                                />
+                                </div>
                           <Radio.Group onChange={revValueChange} value={revValue} >
                             <Radio value="price">
                                 €
@@ -61,6 +94,26 @@ export class TypeModal extends React.Component {
                             }
                             
                         </div>
+                    </div>
+                    <div className="rightTypeModal">
+                        <div className="head">Method</div>
+
+                        <Radio.Group onChange={methodValueChange} value={methodValue} >
+                            <Radio value="Historical">
+                            Historical
+                            </Radio>
+                            <Radio value="ROI Based">
+                            ROI Based
+                            </Radio>
+                            <Radio value="No A Priori">
+                            No A Priori
+                            </Radio>
+                            <Radio value="Custom">
+                            Custom
+                            </Radio>
+                        </Radio.Group>
+                        </div>
+                        <div className="clear"></div>
                     </div>
                   }
                

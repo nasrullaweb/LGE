@@ -370,6 +370,7 @@ export class SimpulateMain extends React.Component {
                             handleChangeSpendData={this.handleChangeSpendData}
                             scenarioName={scenarioName}
                             Globalgeagraphy={Globalgeagraphy}
+                            handleSimulate={this.handleSimulate}
                         />
                     </div>
 

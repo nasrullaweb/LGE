@@ -15,7 +15,6 @@
     height: 100vh;
     z-index: 100;
     background: rgba(0,0,0,0.7);
-    padding-left: 72px;
   }
 
   .LoaderOptimize .ant-spin-nested-loading > div {
@@ -285,5 +284,66 @@
         height: 66px;
         position: relative;
         top: -60px;
+        left: 190px;
 }
 
+.loadOptimizeAnimation {
+  background: url(../../images/Progress_Bar.gif);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 250px;
+        height: 25px;
+        position: relative;
+}
+
+.tableDataKey {
+  padding-bottom: 20px;
+}
+
+.leftTypeModal {
+  float: left;
+  width: 320px;
+  padding-right: 30px;
+  border-right: 1px solid #ccc;
+}
+.rightTypeModal {
+  float: left;
+  width: 320px;
+  padding-left: 30px;
+
+  .head {
+    font-weight: bold;
+    padding-bottom: 15px;
+    font-size: 14px;
+  }
+
+  .ant-radio-wrapper {
+    display: block;
+    padding-bottom: 8px;
+  }
+}
+.clear {
+  clear: both;
+}
+
+.keyHeading .simButton {
+  float: right;
+
+  .createButtom {
+    background: url(../../images/LG_Tool_Sprite_Optimize_icon.png) transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 28px;
+    height: 28px;
+    text-indent: -999999px;
+    background-color: transparent !important;
+    border: 0 !important;
+    position: relative;
+    top: -6px;
+
+    &[disabled] { 
+      background-image: url("../../images/LG_Tool_Sprite_icon_03_disabled.png");
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover  } from 'antd';
+import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover, Tooltip, Button  } from 'antd';
 import { InfoCircleFilled } from '@ant-design/icons';
 import ColoredScrollbars from '../common/ColoredScrollbars';
 
@@ -886,6 +886,18 @@ export class OptimizerDetails extends React.Component {
                                         optimizationType == 'Maximize Revenue' && 
                                         <p className="selectedOptions">Spend Constraint: {Math.round(maximizeRevenueValue)+100}%</p>
                                     } */}
+                                    <div className="simButton">
+                                    { !(!this.props.revertActive  && !this.props.setOptimizerDefault) ?
+                                        <Tooltip title="Optimize">
+                                            <Button type="primary" className="createButtom optimize" disabled={!this.props.revertActive  && !this.props.setOptimizerDefault} onClick={this.props.handleSimulate} >Optimize</Button>
+                                        </Tooltip>
+                                        :
+                                        <Tooltip title="Optimize">
+                                            <div className="createButtom optimize" disabled={true}>
+                                            </div>
+                                        </Tooltip>
+                                    }
+                                    </div>
                                 </h3>
                                 <div className="simulateTable">
                                 <Table

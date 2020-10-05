@@ -31,6 +31,8 @@ export class Home extends React.Component {
     geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
     message: 'Please Select Model',
     collapsed: true,
+    visible: false,
+    visible1: false,
 }
 
   componentDidMount() {
@@ -61,9 +63,18 @@ export class Home extends React.Component {
         modelValue: e.target.value,
         modelName,
         geographyValue: '',
+        visible: false,
         message: 'Please Select Geography',
         geography
     })
+}
+
+handleVisibleChange = (flag) => {
+  this.setState({ visible: flag });
+}
+
+handleVisible1Change = (flag) => {
+  this.setState({ visible1: flag });
 }
 
 onGeographyChange = (e) => {
@@ -74,6 +85,7 @@ onGeographyChange = (e) => {
     this.setState({
         geographyValue: e.target.value,
         message: '',
+        visible1: false,
         geography
     })
     
@@ -171,7 +183,7 @@ logout = link => {
                           <div className="left-icon"></div>
                           <div className="right-drop">
                             <span className="label">Model</span>
-                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisibleChange} visible={this.state.visible}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     {modelValue ? modelValue : "Select Model"} <Icon type="caret-down" theme="outlined" />
                                 </a>
@@ -182,7 +194,7 @@ logout = link => {
                           <div className="left-icon1"></div>
                           <div className="right-drop">
                             <span className="label">Geography</span>
-                            <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change} visible={this.state.visible1}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     {geographyValue ? geographyValue : "Select Geography"} <Icon type="caret-down" theme="outlined" />
                                 </a>

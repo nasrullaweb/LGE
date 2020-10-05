@@ -237,11 +237,12 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue) {
+export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue) {
   const params = spendData;
+  const methodValueData = methodValue ? methodValue : 'NA'
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}`, params, config
+    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}`, params, config
     )
     .then(response => {
       dispatch({

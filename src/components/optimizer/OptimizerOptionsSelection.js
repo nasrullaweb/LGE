@@ -36,8 +36,26 @@ export class OptimizerOptionsSelection extends React.Component {
         optimizationType : {
             checkedList: [],
         },
+        visible: false,
+        visible1: false,
+        visible2: false,
     };
-
+    
+      handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+    
+      handleVisibleChange = (flag) => {
+        this.setState({ visible: flag });
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
     static getDerivedStateFromProps(props, state) {
 
         let {brand, geography, subBrand, period, tactic, optimizationType} = state
@@ -161,6 +179,7 @@ export class OptimizerOptionsSelection extends React.Component {
     };
 
     onPeriodChange = e => {
+        this.setState({ visible2: false });
         this.props.handleYearChange(e.target.value)
     };
 
@@ -168,7 +187,13 @@ export class OptimizerOptionsSelection extends React.Component {
         this.props.handleTacticsChange(checkedList)
     };
 
+    onTacticOkChange = () => {
+        this.setState({ visible1: false });
+        this.props.handleTacticsOkChange()
+    };
+
     onOptimizationTypeChange = e => {
+        this.setState({ visible: false });
         this.props.handleOptimizationTypeChange(e.target.value)
     };
 
@@ -176,7 +201,7 @@ export class OptimizerOptionsSelection extends React.Component {
         this.props.handleTacticsChange(e.target.checked ? e.target.data_opt : [])
     };
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect) => {
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -205,6 +230,11 @@ export class OptimizerOptionsSelection extends React.Component {
                                 onChange={onChange}
                                 disabled={this.props.isSimulated}
                             />
+                            <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                         </div>
                         :
                         <Empty />
@@ -281,7 +311,7 @@ export class OptimizerOptionsSelection extends React.Component {
 
         const periodMenu = this.setboxOption(periodOptions, 'period', '', this.onPeriodChange, false)
 
-        const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true)
+        const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true, this.onTacticOkChange)
 
         const optimizationTypeMenu = this.setboxOption(optimizationTypeOptions, 'optimizationType', '', this.onOptimizationTypeChange, false)
             
@@ -327,19 +357,22 @@ export class OptimizerOptionsSelection extends React.Component {
                         </a>
                     </Dropdown> */}
 
-                    <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible2Change}
+        visible={this.state.visible2}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Period <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
 
-                    <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change}
+        visible={this.state.visible1}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Tactic <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
 
-                    <Dropdown overlay={optimizationTypeMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={optimizationTypeMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisibleChange}
+        visible={this.state.visible}>
                         <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                             OptimizationType <Icon type="caret-down" theme="outlined" />
                         </a>

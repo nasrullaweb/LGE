@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover  } from 'antd';
+import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover, Tooltip, Button  } from 'antd';
 import { InfoCircleFilled } from '@ant-design/icons';
 import './Simulate.less'
 import ColoredScrollbars from '../common/ColoredScrollbars';
@@ -787,6 +787,18 @@ export class SimpulateDetails extends React.Component {
                                 <span className="smallLeftBorder"></span> Spending Input Table
                                     {/* <p className="selectedOptions">Geography: {geographyList}</p>
                                     <p className="selectedOptions">Time Period: {periodValue}</p> */}
+                                     <div className="simButton">
+                                    {  this.props.spendNewData.length != 0 ?
+                                        <Tooltip title="Simulate">
+                                            <Button type="primary" className="createButtom optimize" disabled={this.props.spendNewData.length === 0} onClick={this.props.handleSimulate} >Simulate</Button>
+                                        </Tooltip>
+                                        :
+                                        <Tooltip title="Simulate">
+                                            <div className="createButtom optimize" disabled={true}>
+                                            </div>
+                                        </Tooltip>
+                                    }
+                                    </div>
                                     <span className="showColumns"> <Switch checked={showColumns} onChange={changeShowColumns} /> Cost & Response</span>
                                 </h3>
                                 <div className="simulateTable">

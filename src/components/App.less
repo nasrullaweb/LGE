@@ -312,7 +312,7 @@
     height: 100vh;
     z-index: 100;
     background: rgba(0,0,0,0.5);
-    background-image: url('../images/Spinner-1.6s-190px.gif');
+    background-image: url('../images/Loader.svg');
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -1430,7 +1430,20 @@ body .ant-layout.ant-layout-has-sider {
   }
 
   .typePopup .ant-modal-content {
+      width: 690px;
       .ant-modal-header .ant-modal-title {
           text-align: left;
       }
+  }
+
+  .ant-dropdown-menu .checkOk {
+    text-align: right;
+    padding: 10px 0;
+
+    .ant-btn-primary {
+        height: 25px;
+        border-radius: 3px;
+        font-size: 12px;
+        color: #FFFFFF;
+    }
   }
