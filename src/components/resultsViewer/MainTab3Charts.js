@@ -277,10 +277,13 @@ class MainTab3Charts extends React.Component {
   <div id="chart">
             <div className="chartContent">
               <div className="widthHalf titleAdded emptyChart">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Base</div>
-              <div className="emptyChartdiv">
-
-              </div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Base - Competitors</div>
+              <Chart
+                        options={this.state.cart3.options}
+                        series={this.state.cart3.series}
+                        type="rangeBar" 
+                        height={650}
+                        />
               </div>
               <div className="widthHalfRight titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>Incremental</div>

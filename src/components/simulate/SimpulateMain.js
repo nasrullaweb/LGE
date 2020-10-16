@@ -149,13 +149,20 @@ export class SimpulateMain extends React.Component {
         })
     }
     handleTacticsChange = (value) => {
-        this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
-        this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
         this.setState({
             tacticValue: value,
-            message: ''
         })
     }
+
+    handleTacticsOkChange = () => {
+        this.setState({
+            message: ''
+        }, () => {
+            this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal)
+            this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal)
+        })
+    }
+
     handleSubBrandChange = (value) => {
         this.props.getPeriod(this.props.modal)
         this.setState({
@@ -271,7 +278,7 @@ export class SimpulateMain extends React.Component {
 
     render() {
       const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange, changeShowColumns } = this
+      const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange, changeShowColumns, handleTacticsOkChange } = this
       const url = `/simulator/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`  
 
         return (
@@ -359,6 +366,7 @@ export class SimpulateMain extends React.Component {
                             handleTacticsChange={handleTacticsChange}
                             handleSubBrandChange={handleSubBrandChange}
                             multiProductChange={multiProductChange}
+                            handleTacticsOkChange={handleTacticsOkChange}
                             {...this.props}
                         />
                         

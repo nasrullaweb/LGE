@@ -164,7 +164,7 @@ export class SimpulateMain extends React.Component {
     onrevChangeOk = () => {
         const { revPrice, revPer, revValue, minimizeSpendValue, maximizeRevenueValue, optimizationType } = this.state;
         let actualVal, newMinimizeSpendValue, newmaximizeRevenueValue;
-        if (optimizationType === "Minimize Spend") {
+        if (optimizationType === "Revenue Target") {
             actualVal = Math.round(this.props.keyHighlights[0].revenue)
             if (revValue === "price") {
                 newMinimizeSpendValue = Math.round(((revPrice - actualVal)/actualVal)*100)
@@ -173,7 +173,7 @@ export class SimpulateMain extends React.Component {
             }
             newmaximizeRevenueValue = 0;
         }
-        if (optimizationType === "Maximize Revenue") {
+        if (optimizationType === "Spending") {
             actualVal = Math.round(this.props.keyHighlights[0].spend)
             if (revValue === "price") {
                 newmaximizeRevenueValue = Math.round(((revPrice - actualVal)/actualVal)*100)
@@ -247,7 +247,7 @@ export class SimpulateMain extends React.Component {
     }
     handleOptimizationTypeChange = (value) => {
         const optType = value;
-        const typeValue = value === 'Minimize Spend' ? this.state.minimizeSpendValue : this.state.maximizeRevenueValue;
+        const typeValue = value === 'Revenue Target' ? this.state.minimizeSpendValue : this.state.maximizeRevenueValue;
         
         this.setState({
             optimizationType: value,
@@ -270,7 +270,7 @@ export class SimpulateMain extends React.Component {
         const optValue = value
         this.setState({
             minimizeSpendValue: value,
-            optimizationType: 'Minimize Spend',
+            optimizationType: 'Revenue Target',
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
@@ -285,7 +285,7 @@ export class SimpulateMain extends React.Component {
         const optValue = value
         this.setState({
             maximizeRevenueValue: value,
-            optimizationType: 'Maximize Revenue',
+            optimizationType: 'Spending',
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
@@ -624,7 +624,7 @@ export class SimpulateMain extends React.Component {
                       />
                     </Modal>
                     <Modal
-                      title={this.state.optimizationType === 'Minimize Spend' ? "Revenue Target" : "Total Spend Constraint"}
+                      title={this.state.optimizationType === 'Revenue Target' ? "Revenue Target" : "Total Spend Constraint"}
                       visible={this.state.typeVisible}
                       onOk={this.handleTypeOk}
                       onCancel={this.handleTypeCancel}

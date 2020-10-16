@@ -118,7 +118,6 @@ export class Optimizer extends React.Component {
         return scenario.id == state.scenarioId
       })
       if(scenarioObj.length > 0) {
-        console.log('test', scenarioObj)
 
         const scenarioName = scenarioObj[0].scenarioName
         const modal = scenarioObj[0].model

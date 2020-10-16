@@ -29,26 +29,30 @@ export class TypeModal extends React.Component {
 
     render() {
         const { revValueChange, revValue, methodValueChange, methodValue, revPer, revPrice, onChangerevPrice, onChangerevPer, keyHighlights, onrevChangeOk } = this.props
+
+        let keyHighlightsNew = []
+
+        keyHighlights.length > 0 && keyHighlightsNew.push(keyHighlights[0])
         const columnsKey = [
            
             { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
                 <span className="borderRight">
                     {record.tactic && record.tactic === 'Original Plan' &&
-                        <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                        <span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
                 <span className="borderRight">
                     {record.tactic && record.tactic === 'Original Plan' &&
-                        <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                        <span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
                 <span>
                     {record.tactic && record.tactic === 'Original Plan' &&
-                        <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
+                        <span>{`€${parseFloat(roi).toFixed(2)}`}</span>
                     }
                 </span>
              )},
@@ -56,23 +60,23 @@ export class TypeModal extends React.Component {
             return (
               <div>
                   {
-                      keyHighlights &&
-                      <div>
+                      keyHighlightsNew &&
+                      <div className="typeContainer">
                           <div className="leftTypeModal">
                           <div className="tableDataKey">
                           <Table
                                     className="components-table-demo-nested keyHighlights"
                                     columns={columnsKey}
                                     pagination={false}
-                                    dataSource={keyHighlights}
+                                    dataSource={keyHighlightsNew}
                                 />
                                 </div>
-                          <Radio.Group onChange={revValueChange} value={revValue} >
+                          <Radio.Group className="radioHead" onChange={revValueChange} value={revValue} >
                             <Radio value="price">
                                 €
                             </Radio>
                             <Radio value="per">
-                                %
+                                % (Increase / Decrease)
                             </Radio>
                         </Radio.Group>
                         <div className="modalInput" >
@@ -85,7 +89,34 @@ export class TypeModal extends React.Component {
                                 <InputNumber value={revPer} onChange={e => onChangerevPer(e)} formatter={value => `${value} %`}/>
                             }
                         </div>
-                        <div className="modelButtons">
+                        
+                    </div>
+                    <div className="rightTypeModal">
+                        <div className="head">Method</div>
+
+                        <Radio.Group onChange={methodValueChange} value={methodValue} >
+                            <div className="radioText"><Radio value="Historical">
+                            Historical
+                            </Radio>
+                            <Radio value="ROI Based">
+                            ROI Based
+                            </Radio>
+                            </div>
+                            <div className="radioText">
+                            <Radio value="No A Priori">
+                            No A Priori
+                            </Radio>
+                            <Radio value="Custom" disabled>
+                            Custom
+                            </Radio>
+                            </div>
+                        </Radio.Group>
+                        </div>
+                        <div className="clear"></div>
+                        
+                    </div>
+                  }
+                  <div className="modelButtons">
                             {
                                 revValue &&
                                 <Button type="primary" htmlType="submit" className="login-form-button" onClick={e => onrevChangeOk()}>
@@ -94,28 +125,6 @@ export class TypeModal extends React.Component {
                             }
                             
                         </div>
-                    </div>
-                    <div className="rightTypeModal">
-                        <div className="head">Method</div>
-
-                        <Radio.Group onChange={methodValueChange} value={methodValue} >
-                            <Radio value="Historical">
-                            Historical
-                            </Radio>
-                            <Radio value="ROI Based">
-                            ROI Based
-                            </Radio>
-                            <Radio value="No A Priori">
-                            No A Priori
-                            </Radio>
-                            <Radio value="Custom">
-                            Custom
-                            </Radio>
-                        </Radio.Group>
-                        </div>
-                        <div className="clear"></div>
-                    </div>
-                  }
                
               </div>
             )

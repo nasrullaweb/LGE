@@ -252,7 +252,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                     <Radio.Group onChange={onChange} value={this.state[keyName].checkedList}>
                                         {
                                             listOption.map((option) =>
-                                                option === 'Minimize Spend' ?
+                                                option === 'Revenue Target' ?
                                                     <Radio value={option} disabled={this.props.isSimulated} >{option} </Radio>
                                                     :
                                                     <Radio value={option} disabled={this.props.isSimulated} >{option}  </Radio>

@@ -54,7 +54,7 @@ class MainTab2Charts extends React.Component {
                   },
                   style: {
                     colors: ['#333'],
-                    fontSize: '8px',
+                    fontSize: '13px',
                   },
                 },
                 stroke: {
@@ -74,7 +74,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   }
@@ -110,7 +110,7 @@ class MainTab2Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '12px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -188,7 +188,7 @@ class MainTab2Charts extends React.Component {
                   },
                   style: {
                     colors: ['#333'],
-                    fontSize: '9px',
+                    fontSize: '13px',
                   },
                 },
                 stroke: {
@@ -208,7 +208,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   }
@@ -244,7 +244,7 @@ class MainTab2Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '12px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -322,7 +322,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     hideOverlappingLabels: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -351,7 +351,7 @@ class MainTab2Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '14px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -394,7 +394,7 @@ class MainTab2Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;

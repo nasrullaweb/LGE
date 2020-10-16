@@ -367,7 +367,6 @@ export function getGraphData5(modal, geography, region, brand, subBrand, tactic)
 export function getAllData() {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    console.log('test')
     // axios.get(`${apiURL}/RVFilters/GetModels`, config
     // )
     // .then(response => {

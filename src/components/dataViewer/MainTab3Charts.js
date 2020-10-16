@@ -39,7 +39,7 @@ class MainTab3Charts extends React.Component {
               dataLabels: {
                 enabled: true,
                 style: {
-                  fontSize: '14px',
+                  fontSize: '13px',
                   colors: ['#fff'],
                 },
                 formatter: function (value) {
@@ -87,7 +87,7 @@ class MainTab3Charts extends React.Component {
                   },
                   style: {
                       colors: '#8E8E8E',
-                      fontSize: '12px',
+                      fontSize: '13px',
                   },
                 },
                 title: {
@@ -109,7 +109,7 @@ class MainTab3Charts extends React.Component {
                 labels: {
                   show: true,
                   style: {
-                    fontSize: '12px',
+                    fontSize: '13px',
                     color: '#373D3F',
                   },
                 },
@@ -157,7 +157,7 @@ class MainTab3Charts extends React.Component {
               dataLabels: {
                 enabled: true,
                 style: {
-                  fontSize: '14px',
+                  fontSize: '13px',
                   colors: ['#fff'],
                 },
               },
@@ -179,7 +179,7 @@ class MainTab3Charts extends React.Component {
                   },
                   style: {
                       colors: '#8E8E8E',
-                      fontSize: '12px',
+                      fontSize: '13px',
                   },
                 },
                 }
@@ -194,7 +194,7 @@ class MainTab3Charts extends React.Component {
                   show: true,
                  
                   style: {
-                    fontSize: '12px',
+                    fontSize: '13px',
                     color: '#373D3F',
                   },
                 },
@@ -207,6 +207,135 @@ class MainTab3Charts extends React.Component {
                       fontSize: '14px',
                     },
               }
+            },
+          },
+          cart3: {
+            series: [],
+            options: {
+              chart: {
+                width: 380,
+                type: 'donut',
+                fontFamily: '"Lato", sans-serif',
+                toolbar: {
+                  show: true,
+                  tools: {
+                    download: true,
+                    selection: true,
+                    zoom: true,
+                    zoomin: true,
+                    zoomout: true,
+                    pan: true,
+                    customIcons: []
+                  },
+                }
+              },
+              grid: {
+                show: false,
+              },
+              colors: ['#E84518','#FF6601','#FFC000','#D1D105',
+              '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+              '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+              '#994561','#CC3A8E'],
+              labels: [],
+              tooltip: {
+                enabled: true,
+                style: {
+                  fontSize: '14px',
+                  background: '#fff',
+                },
+                y: {
+                  title: {
+                    formatter: (seriesName) => seriesName,
+                  },
+                  formatter: function (value) {
+                    let val = value;
+                      val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    return val;
+                  },
+                },
+              },
+              responsive: [{
+                breakpoint: 180,
+                options: {
+                  chart: {
+                    width: 400,
+                  },
+                  
+                  legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    style: {
+                      color: '#3D3D3D',
+                      fontSize: '14px',
+                    },
+                  }
+                }
+              }]
+            },
+          },
+          cart4: {
+            series: [],
+            
+            options: {
+              chart: {
+                width: 380,
+                type: 'donut',
+                fontFamily: '"Lato", sans-serif',
+                toolbar: {
+                  show: true,
+                  tools: {
+                    download: true,
+                    selection: true,
+                    zoom: true,
+                    zoomin: true,
+                    zoomout: true,
+                    pan: true,
+                    customIcons: []
+                  },
+                }
+              },
+              grid: {
+                show: false,
+              },
+              colors: ['#E84518','#FF6601','#FFC000','#D1D105',
+              '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
+              '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
+              '#994561','#CC3A8E'],
+              tooltip: {
+                enabled: true,
+                style: {
+                  fontSize: '14px',
+                  background: '#fff',
+                },
+                y: {
+                  title: {
+                    formatter: (seriesName) => seriesName,
+                  },
+                  formatter: function (value) {
+                    let val = value;
+                      val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    return val;
+                  },
+                },
+              },
+              labels: [],
+              responsive: [{
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  legend: {
+                    position: 'bottom',
+                    style: {
+                      color: '#3D3D3D',
+                      fontSize: '14px',
+                    },
+                  }
+                }
+              }]
             },
           },
     }
@@ -231,7 +360,8 @@ class MainTab3Charts extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    let { cart1, cart2 } = state
+    console.log(props.graphData31, 'tttt')
+    let { cart1, cart2, cart3, cart4 } = state
     
     if (props.graphData3 && props.graphData3.series) {
 
@@ -240,16 +370,27 @@ class MainTab3Charts extends React.Component {
         
     }
 
-    if (props.graphData31 && props.graphData31.series) {
+  //   if (props.graphData31 && props.graphData31.series) {
 
-      cart2.series = props.graphData31.series
-      cart2.options.xaxis.categories = props.graphData31.xValue
+  //     cart2.series = props.graphData31.series
+  //     cart2.options.xaxis.categories = props.graphData31.xValue
       
-  }
+  // }
+
+  if (props.graphData31 && props.graphData31.currentYear) {
+    cart3.series = props.graphData31.previousYear.series1
+    cart3.options.labels = props.graphData31.previousYear.labels1
+    cart4.series = props.graphData31.currentYear.series2
+  cart4.options.labels = props.graphData31.currentYear.labels2
+
+}
+
 
     return {
         cart1,
-        cart2
+        cart2,
+        cart3,
+        cart4
     }
     
     //return { };
@@ -278,15 +419,25 @@ class MainTab3Charts extends React.Component {
                         </div>
                 </div>
                 <div className="spaceBetween"></div>
-                <div className="downChart titleAdded">
-                <div className="chartTitle"><span className="smallLeftBorder"></span>YoY Spends Split</div>
-                  <Chart
-                          options={this.state.cart2.options}
-                          series={this.state.cart2.series}
-                          type="bar" 
-                          height={400}
-                          />
-                  </div>
+                <div className="widthHalf titleAdded">
+                <div className="chartTitle"><span className="smallLeftBorder"></span>2018</div>
+              <Chart
+                        options={this.state.cart3.options}
+                        series={this.state.cart3.series}
+                        type="donut" 
+                        height={300}
+                        />
+              </div>
+              <div className="widthHalfRight titleAdded">
+              <div className="chartTitle"><span className="smallLeftBorder"></span>2019</div>
+                <Chart
+                        options={this.state.cart4.options}
+                        series={this.state.cart4.series}
+                        type="donut" 
+                        height={300}
+                        />
+              </div>
+              <div className="spaceBetween"></div>
             </div>
       }
       {

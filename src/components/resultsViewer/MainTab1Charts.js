@@ -50,7 +50,7 @@ class MainTab1Charts extends React.Component {
                   },
                   labels: {
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -80,7 +80,7 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '12px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },

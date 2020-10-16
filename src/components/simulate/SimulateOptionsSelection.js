@@ -32,7 +32,21 @@ export class SimpulateOptionsSelection extends React.Component {
             indeterminate: false,
             checkAll: false,
         },
+        visible1: false,
+        visible2: false,
     };
+
+    handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
 
     static getDerivedStateFromProps(props, state) {
 
@@ -147,6 +161,7 @@ export class SimpulateOptionsSelection extends React.Component {
     };
 
     onPeriodChange = e => {
+        this.setState({ visible2: false });
         this.props.handleYearChange(e.target.value)
     };
 
@@ -154,11 +169,16 @@ export class SimpulateOptionsSelection extends React.Component {
         this.props.handleTacticsChange(checkedList)
     };
 
+    onTacticOkChange = () => {
+        this.setState({ visible1: false });
+        this.props.handleTacticsOkChange()
+    };
+
     onCheckAllTacticChange = e => {
         this.props.handleTacticsChange(e.target.checked ? e.target.data_opt : [])
     };
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect) => {
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -187,6 +207,11 @@ export class SimpulateOptionsSelection extends React.Component {
                                 onChange={onChange}
                                 disabled={this.props.isSimulated}
                             />
+                            <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                         </div>
                         :
                         <Empty />
@@ -219,7 +244,6 @@ export class SimpulateOptionsSelection extends React.Component {
         const { brandOptions, geographyOptions, periodOptions, tacticsOptions, subBrandOptions } = this.props
         const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange } = this.props
         const { brandList, geographyList = [], periodValue = [], multiProduct, message, tacticValue, subBrandValue } = this.props
-        console.log('ffffff', geographyList)
         const brandMenu = multiProduct ?
             this.setboxOption(brandOptions, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true)
             :
@@ -234,7 +258,7 @@ export class SimpulateOptionsSelection extends React.Component {
 
         const periodMenu = this.setboxOption(periodOptions, 'period', '', this.onPeriodChange, false)
 
-        const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true)
+        const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true, this.onTacticOkChange)
 
             return (
                 <div>
@@ -279,13 +303,15 @@ export class SimpulateOptionsSelection extends React.Component {
                         </a>
                     </Dropdown> */}
 
-                    <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={periodMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible2Change}
+        visible={this.state.visible2}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Period <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
 
-                    <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change}
+        visible={this.state.visible1}>
                         <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                             Tactic <Icon type="caret-down" theme="outlined" />
                         </a>

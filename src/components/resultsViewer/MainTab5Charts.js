@@ -130,14 +130,41 @@ class MainTab5Charts extends React.Component {
                 grid: {
                   show: false,
                 },
-                colors: ['#DB1348', '#FF9933', '#303f9f', '#0288d1', '#00796b', '#689f38', '#afb42b', '#ffa000', '#e64a19', '#c2185b', '#512da8', '#1976d2', '#0097a7', '#5d4037', '#388e3c', '#fbc02d', '#616161', '#f57c00', '#455a64'],
+                colors: ['#DB1348'],
                 dataLabels: {
-                  enabled: false
+                  enabled: true,
+                  style: {
+                    colors: ['#333']
+                  },
+                  formatter: function (value) {
+                    let val = value;
+                      val = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    
+                    return isNaN(val) ? "" :`${Math.round(val*100)}%`;
+                  },
                 },
                 stroke: {
                   width: [4, 2, 2, 2, 2],
                   curve: 'smooth',
                 },
+                yaxis: [
+                  {
+                    axisTicks: {
+                      show: true,
+                    },
+                    axisBorder: {
+                      show: true,
+                      color: '#8E8E8E'
+                    },
+                    labels: {
+                      style: {
+                        colors: '#8E8E8E',
+                        fontSize: '13px',
+                      },
+                      
+                    },
+                  },
+                ],
                 xaxis: {
                   
                   axisTicks: {
@@ -145,19 +172,18 @@ class MainTab5Charts extends React.Component {
                   },
                   axisBorder: {
                     show: true,
-                    color: '#999'
-                  },
+                    color: '#999999',
+                    height: 2,
+                    offsetY: 1
+                },
                   tooltip: {
                     enabled: false
                   },
                   
                   labels: {
                     show: true,
-                    rotate: -90,
-                    rotateAlways: true,
-                    hideOverlappingLabels: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     offsetX: 0,
@@ -175,10 +201,10 @@ class MainTab5Charts extends React.Component {
                       show: true,
                       format: 'dd MMM',
                       formatter: function (value) {
-                        let val = value;
-                          val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        // let val = value;
+                        //   val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         
-                        return val;
+                        return value;
                       },
                   },
                   y: {
@@ -189,7 +215,7 @@ class MainTab5Charts extends React.Component {
                         let val = value;
                           val = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         
-                        return val;
+                          return isNaN(val) ? "" :`${Math.round(val*100)}%`;
                       },
                   },
                   
@@ -200,7 +226,6 @@ class MainTab5Charts extends React.Component {
                 legend: {
                   horizontalAlign: 'center',
                   position: 'bottom',
-                  offsetY: 10,
                   style: {
                     color: '#3D3D3D',
                     fontSize: '14px',
@@ -241,14 +266,14 @@ class MainTab5Charts extends React.Component {
           this.props.graphData5 &&
             <div className="chartContent">
                 <div className="downChart titleAdded">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Sufficiency & Efficiency: {this.props.tacticValue}</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Synergy Impact</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
                         type="heatmap" 
                         height={400}
                         />
-                  <p>Response curves are at overall level and will be the same across all Channel/Type.</p>
+                  <p>Synergy Effect is at overall level and will be the same across all Channel/Type.</p>
                 </div>
                 <div className="spaceBetween"></div>
                 

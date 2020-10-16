@@ -1,7 +1,6 @@
 import ReactGA from "react-ga";
 
 export const initGA = (trackingID, pageName) => {  
-    console.log('tttt')         
     ReactGA.initialize([
         {
           trackingId: trackingID,

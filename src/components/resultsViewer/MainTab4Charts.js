@@ -8,78 +8,6 @@ class MainTab4Charts extends React.Component {
 
       this.state = {
         subBrandValue: '',
-        // cart1: {
-        //     series: [{
-        //         data: []
-        //       }],
-        //       options: {
-        //         chart: {
-        //           type: 'bar',
-        //           height: 250
-        //         },
-        //         colors: ['#c55b11', '#FEB019', '#3366ff', '#99ffcc', '#00ccff', '#00ffcc'],
-        //         plotOptions: {
-        //           bar: {
-        //             horizontal: false,
-        //             columnWidth: '90%',
-        //           }
-                  
-        //         },
-        //         dataLabels: {
-        //           enabled: true
-        //         },
-        //         stroke: {
-        //             show: true,
-        //             width: 15,
-        //             colors: ['transparent']
-        //           },
-        //         xaxis: {
-        //           categories: [],
-        //         },
-        //         legend: {
-        //             horizontalAlign: 'center',
-        //             position: 'top',
-        //             showForSingleSeries: true,
-        //             offsetX: 40
-        //           }
-        //       },
-        // },
-      
-        // cart2: {
-        //     series: [{
-        //         data: []
-        //       }],
-        //       options: {
-        //         chart: {
-        //           type: 'bar',
-        //           height: 250
-        //         },
-        //         colors: ['#c55b11', '#FEB019', '#3366ff', '#99ffcc', '#00ccff', '#00ffcc'],
-        //         plotOptions: {
-        //           bar: {
-        //             horizontal: false,
-        //             columnWidth: '90%',
-        //           }
-        //         },
-        //         dataLabels: {
-        //           enabled: true
-        //         },
-        //         stroke: {
-        //             show: true,
-        //             width: 15,
-        //             colors: ['transparent']
-        //           },
-        //         xaxis: {
-        //           categories: [],
-        //         },
-        //         legend: {
-        //             horizontalAlign: 'center',
-        //             showForSingleSeries: true,
-        //             position: 'top',
-        //             offsetX: 40
-        //           }
-        //       },
-        // },
 
         cart3: {
             series: [{
@@ -114,8 +42,8 @@ class MainTab4Charts extends React.Component {
                 },
                 xaxis: {
                   type: 'numeric',
-                  tickAmount: 30,
-                  categories: [1, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500],
+                  tickAmount: 5,
+                  categories: [1, 1000, 5000, 10000, 50000, 100000, 5000000, 10000000],
                   axisTicks: {
                     show: true,
                   },
@@ -136,12 +64,27 @@ class MainTab4Charts extends React.Component {
                   },
                   labels: {
                     show: true,
-                    rotate: -90,
-                    rotateAlways: true,
-                    hideOverlappingLabels: true,
+                    // rotate: -90,
+                    // rotateAlways: true,
+                    // hideOverlappingLabels: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
+                    },
+                    formatter: function (value) {
+                      let val = value;
+                      if(val < 999 && val > -1000) {
+                        val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      }
+
+                      if(val < -1000) {
+                        val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                      }
+                    
+                      if(val > 1000) {
+                        val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                      }
+                      return val;
                     },
                     offsetX: 0,
                     offsetY: 0,
@@ -159,7 +102,7 @@ class MainTab4Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -224,7 +167,7 @@ class MainTab4Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         return parseFloat(value).toFixed(2);

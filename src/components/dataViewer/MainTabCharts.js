@@ -29,6 +29,9 @@ class MainTabCharts extends React.Component {
                 },
                 dataLabels: {
                   enabled: true,
+                  style: {
+                    fontSize: '13px',
+                  },
                   formatter: function (value) {
                     let val = value;
                     if(val < 999 && val > -1000) {
@@ -66,7 +69,7 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#8E8E8E'
                     },
                   },
@@ -89,7 +92,7 @@ class MainTabCharts extends React.Component {
                   {
                     labels: {
                       style: {
-                        fontSize: '12px',
+                        fontSize: '13px',
                       color: '#373D3F',
                       },
                       formatter: function (value) {
@@ -156,6 +159,9 @@ class MainTabCharts extends React.Component {
                 },
                 dataLabels: {
                   enabled: true,
+                  style: {
+                    fontSize: '13px',
+                  },
                   formatter: function (value) {
                     let val = value;
                     if(val < 999 && val > -1000) {
@@ -193,7 +199,7 @@ class MainTabCharts extends React.Component {
                       return val;
                     },
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#8E8E8E'
                     },
                   },
@@ -216,7 +222,7 @@ class MainTabCharts extends React.Component {
                   {
                     labels: {
                       style: {
-                        fontSize: '12px',
+                        fontSize: '13px',
                       color: '#373D3F',
                       },
                       formatter: function (value) {
@@ -304,7 +310,7 @@ class MainTabCharts extends React.Component {
                   categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
                   labels: {
                     style: {
-                      fontSize: '12px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -335,7 +341,7 @@ class MainTabCharts extends React.Component {
                     labels: {
                       style: {
                         color: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -388,7 +394,7 @@ class MainTabCharts extends React.Component {
                     labels: {
                       style: {
                         color: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -497,7 +503,6 @@ class MainTabCharts extends React.Component {
       const getPercentage = Math.round(((Math.round(cart1.series[0].data[0]) - Math.round(cart1.series[0].data[1]))/Math.round(cart1.series[0].data[1]))*100)
       const getPercentage1 = Math.round(((Math.round(cart2.series[0].data[0]) - Math.round(cart2.series[0].data[1]))/Math.round(cart2.series[0].data[1]))*100)
 
-      console.log('innn', getPercentage1, isNaN(getPercentage1))
       return (
         
 

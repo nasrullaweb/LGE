@@ -1038,7 +1038,6 @@ export function getTab3AllData(modal, geography) {
                   axios.get(`${apiURL}/DMCharts/GetYOY/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
                   )
                   .then(response => {
-                    console.log("g", response.data.dmSpends)
                     dispatch({
                         type: DV_GET_GRAPH_DATA32,
                         payload: response.data.dmSpends,

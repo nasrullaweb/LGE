@@ -106,8 +106,9 @@ export class Header extends React.Component {
                                         
                                     </span>
                                 </Dropdown>
-                                <Link to="/home"  className='logout homeIcon'>
-                                </Link>
+                                <Tooltip title="Home">
+                                    <Link to="/home"  className='logout homeIcon'></Link>
+                                </Tooltip>
                                 <span className='logout homeLogo'>
                                 </span>
                             </div>

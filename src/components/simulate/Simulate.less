@@ -117,7 +117,7 @@
 
           .showColumns {
             position: absolute;
-            right: 50px;
+            right: 125px;
             top: 8px;
             z-index: 1;
             color: #333;
@@ -693,12 +693,15 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
     display: inline-block;
     text-align: center;
     position: relative;
-    top: -3px;
+    top: -1px;
 
     .createButtom {
       height: 28px;
       font-size: 14px;
       margin-right: 12px;
+      background: #fff;
+      color: #CC1F55;
+      border: 1px Solid #d3d3d3;
     }
   }
 
@@ -773,6 +776,11 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
 
         .simulateTable {
           padding: 10px 10px 0 10px;
+
+          .ant-table-wrapper.components-table-demo-nested {
+            width: 100%;
+            overflow: auto;
+          }
         }
       }
     }
@@ -794,6 +802,11 @@ body .ant-modal-mask {
 
 .createSc.ant-modal {
   top: 30px;
+  width: 650px !important;
+
+  .ant-modal-content {
+    width: 650px;
+  }
 }
 
 body .ant-pagination-item-active:focus, body .ant-pagination-item-active:hover {
@@ -827,7 +840,7 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
 }
 
 .keyCont {
-  width: 32%;
+  width: 20%;
 
   .keyHead {
     background : linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(232, 232, 232, 1) 49.05%, rgba(255, 255, 255, 1) 100%);
@@ -1008,4 +1021,66 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
 		margin-left:-125px;
 		margin-top:-18px;
 	}
+}
+
+.linkToCharts {
+  cursor: pointer;
+  font-size: 17px;
+    color: #CC1F55 !important;
+    padding-left: 5px;
+}
+
+.simPopup {
+  width: 1200px !important;
+
+  .apexcharts-toolbar {
+    top: 0 !important;
+  }
+}
+
+.cirPopup {
+  width: 1200px !important;
+
+  .spaceBetween {
+    clear: both;
+    width: 100%;
+    height: 20px;
+  }
+
+  .apexcharts-toolbar {
+    top: 0 !important;
+  }
+
+  .circleChart {
+    width: 370px;
+    padding: 10px;
+    border: 1px Solid rgba(198, 198, 198, 0.5);
+    border-radius: 8px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: 20px;
+    padding-top: 50px;
+
+    &.bigCircle {
+      width: 566px;
+    }
+
+    &.lastCircle {
+      margin-right: 0;
+    }
+
+    .chartTitle {
+      padding: 10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 47.72%, #e3e3e3 100%);
+      height: 36px;
+      border-radius: 8px 8px 0px 0px;
+      border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
+      width: 100%;
+      font-size: 14px;
+      color: #3D3D3D;
+  }
+}
 }

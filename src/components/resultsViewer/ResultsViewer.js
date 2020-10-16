@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout, Button } from 'antd';
 import LefNav from '../common/LefNav.js';
 import './ResultsViewer.less'
 import { connect } from 'react-redux';
@@ -67,7 +67,29 @@ class ResultsViewer extends Component {
         messageTac: 'Please Select Tactic',
         messageTac1: 'Please Select Tactic',
         collapsed: true,
+        visible1: false,
+        visible2: false,
+        visible3: false,
+        visible4: false,
     }
+
+    handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
+      handleVisible3Change = (flag) => {
+        this.setState({ visible3: flag });
+      }
+      handleVisible4Change = (flag) => {
+        this.setState({ visible4: flag });
+      }
 
     onCollapse = collapsed => {
         this.setState({ collapsed });
@@ -151,7 +173,6 @@ class ResultsViewer extends Component {
       PageView();
       sessionStorage.setItem('RregionValue', 'LGE');
         if (JSON.parse(sessionStorage.getItem('RbrandValue'))) {
-            console.log('test')
             this.props.getAllData();
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
             this.props.getBrandList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')), 'LGE');
@@ -254,28 +275,21 @@ class ResultsViewer extends Component {
     // }
 
     onCheckAllBrandChange = e => {
-        sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('RsubBrandValue');
+        // sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        // sessionStorage.removeItem('RsubBrandValue');
         this.setState({
             brandValue: e.target.checked ? e.target.data_opt : [],
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Type'
-        }, () => {
-            const { modelValue, geographyValue } = this.state
-            const { regionValue, brandValue } =this.state
-            this.props.getSubBrandList(modelValue, geographyValue, regionValue, brandValue)
         })
     };
 
-    onBrandChange = (value) => {
-        sessionStorage.setItem('RbrandValue', JSON.stringify(value));
+    handleBrandOkChange = () => {
+        sessionStorage.setItem('RbrandValue', JSON.stringify(this.state.brandValue));
         sessionStorage.removeItem('RsubBrandValue');
         this.setState({
-            brandValue: value,
             subBrandValue: '',
             tacticValue: '',
-            message: 'Please Select Type'
+            message: 'Please Select Type',
+            visible1: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue } =this.state
@@ -283,12 +297,32 @@ class ResultsViewer extends Component {
         })
     }
 
-    onCheckAllSubBrandChange = e => {
-        sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+    onBrandChange = (value) => {
+        // sessionStorage.setItem('RbrandValue', JSON.stringify(value));
+        // sessionStorage.removeItem('RsubBrandValue');
         this.setState({
-            subBrandValue: e.target.checked ? e.target.data_opt : [],
+            brandValue: value,
+        })
+    }
+
+    onCheckAllSubBrandChange = e => {
+        //sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        this.setState({
+            subBrandValue: e.target.checked ? e.target.data_opt : []
+        })
+    };
+
+    handleSubBrandOkChange = () => {
+        sessionStorage.setItem('RsubBrandValue', JSON.stringify(this.state.subBrandValue));
+        sessionStorage.removeItem('RtacticValue');
+        sessionStorage.removeItem('RtacticValue1');
+        this.setState({
             tacticValue: '',
+            tacticValue1: '',
             message: '',
+            messageTac: 'Please Select Tactic',
+            messageTac1: 'Please Select Tactic',
+            visible2: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue } =this.state
@@ -303,27 +337,12 @@ class ResultsViewer extends Component {
             this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getTacticList1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
         })
-    };
+    }
 
     onSubBrandChange = (value) => {
-        sessionStorage.setItem('RsubBrandValue', JSON.stringify(value));
+        //sessionStorage.setItem('RsubBrandValue', JSON.stringify(value));
         this.setState({
             subBrandValue: value,
-            tacticValue: '',
-            message: '',
-        }, () => {
-            const { modelValue, geographyValue } = this.state
-            const { regionValue, brandValue, subBrandValue } =this.state
-            this.props.setGraphChange()
-            this.props.getGraphData1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getRSquare(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData21(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData22(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData23(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getTacticList1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
         })
     }
 
@@ -332,6 +351,7 @@ class ResultsViewer extends Component {
         this.setState({
             tacticValue: e.target.value,
             messageTac: '',
+            visible3: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue, tacticValue } =this.state
@@ -340,24 +360,21 @@ class ResultsViewer extends Component {
         })
     }
 
+    
+
     onCheckAllTactic1Change = e => {
-        sessionStorage.setItem('RtacticValue1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        //sessionStorage.setItem('RtacticValue1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
         this.setState({
             tacticValue1: e.target.checked ? e.target.data_opt : [],
             messageTac1: '',
-        }, () => {
-            const { modelValue, geographyValue } = this.state
-            const { regionValue, brandValue, subBrandValue, tacticValue1 } =this.state
-            this.props.setGraphChange1()
-            this.props.getGraphData5(modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue1)
         })
     };
 
-    onTactic1Change = (value) => {
-        sessionStorage.setItem('RtacticValue1', JSON.stringify(value));
+    handleTactic1OkChange = () => {
+        sessionStorage.setItem('RtacticValue1', JSON.stringify(this.state.tacticValue1));
         this.setState({
-            tacticValue1: value,
             messageTac1: '',
+            visible4: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue, tacticValue1 } =this.state
@@ -366,7 +383,14 @@ class ResultsViewer extends Component {
         })
     }
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane) => {
+    onTactic1Change = (value) => {
+        //sessionStorage.setItem('RtacticValue1', JSON.stringify(value));
+        this.setState({
+            tacticValue1: value,
+        })
+    }
+
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -394,6 +418,11 @@ class ResultsViewer extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                             //</ColoredScrollbars>
                             :
@@ -413,6 +442,11 @@ class ResultsViewer extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                         :
                         <Empty />
@@ -458,10 +492,10 @@ class ResultsViewer extends Component {
         //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
         //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
-        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand', this.handleBrandOkChange)
+        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand', this.handleSubBrandOkChange)
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
-        const tacticMenu1 = this.setboxOption(tacticList1, 'tactic', this.onCheckAllTactic1Change, this.onTactic1Change, true, 'tactic1')
+        const tacticMenu1 = this.setboxOption(tacticList1, 'tactic', this.onCheckAllTactic1Change, this.onTactic1Change, true, 'tactic1', this.handleTactic1OkChange)
         return (
             <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
@@ -491,12 +525,14 @@ class ResultsViewer extends Component {
                                     Brand <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown> */}
-                            <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change}
+        visible={this.state.visible1}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Channel <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                            <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible2Change}
+        visible={this.state.visible2}>
                                 <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                                     Type <Icon type="caret-down" theme="outlined" />
                                 </a>
@@ -522,12 +558,12 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
+                                                } */}
                                                 {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
@@ -580,12 +616,12 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
+                                                } */}
                                                 {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
@@ -641,12 +677,12 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
+                                                } */}
                                                 {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
@@ -700,7 +736,8 @@ class ResultsViewer extends Component {
                                                             {messageTac}
                                                         </div>
                                                     }
-                                                        <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                                                        <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'onVisibleChange={this.handleVisible3Change}
+        visible={this.state.visible3}>
                                                             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                                                 Tactic <Icon type="caret-down" theme="outlined" />
                                                             </a>
@@ -714,12 +751,12 @@ class ResultsViewer extends Component {
                                                                     Geography: {geographyValue}
                                                                 </span>
                                                             }
-                                                            {regionValue &&
+                                                            {/* {regionValue &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
                                                                     Brand: {regionValue}
                                                                 </span>
-                                                            }
+                                                            } */}
                                                             {brandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
@@ -782,7 +819,8 @@ class ResultsViewer extends Component {
                                                             {messageTac1}
                                                         </div>
                                                     }
-                                                        <Dropdown overlay={tacticMenu1} trigger={['click']} overlayClassName='DropDownOverLay'>
+                                                        <Dropdown overlay={tacticMenu1} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible4Change}
+        visible={this.state.visible4}>
                                                             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                                                 Tactic <Icon type="caret-down" theme="outlined" />
                                                             </a>
@@ -796,12 +834,12 @@ class ResultsViewer extends Component {
                                                                     Geography: {geographyValue}
                                                                 </span>
                                                             }
-                                                            {regionValue &&
+                                                            {/* {regionValue &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
                                                                     Brand: {regionValue}
                                                                 </span>
-                                                            }
+                                                            } */}
                                                             {brandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>

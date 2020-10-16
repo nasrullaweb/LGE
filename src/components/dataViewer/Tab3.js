@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Button } from 'antd';
 import './DataViewer.less'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -29,8 +29,23 @@ class Tab3 extends Component {
         brandValue: JSON.parse(sessionStorage.getItem('brandValueTab3')) || [],
         subBrandValue: JSON.parse(sessionStorage.getItem('subBrandValueTab3')) || [],
         dataChanged: true,
-        message: 'Please Select Channel'
+        message: 'Please Select Channel',
+        visible1: false,
+        visible2: false,
     }
+
+    handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
+
 
     componentDidMount() {
         
@@ -110,60 +125,43 @@ class Tab3 extends Component {
     // }
 
     onCheckAllBrandChange = e => {
-        sessionStorage.setItem('brandValueTab3', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('subBrandValueTab3');
         this.setState({
             brandValue: e.target.checked ? e.target.data_opt : [],
+        })
+    };
+
+    onBrandOkChange = () => {
+        sessionStorage.setItem('brandValueTab3', JSON.stringify(this.state.brandValue));
+        sessionStorage.removeItem('subBrandValueTab3');
+        this.setState({
             subBrandValue: [],
-            message: 'Please Select Type'
+            message: 'Please Select Type',
+            visible1: false
         }, () => {
             const { modelValue, geographyValue } = this.props
             const { regionValue, brandValue } =this.state
             this.props.getSubBrandList3(modelValue, geographyValue, regionValue, brandValue)
         })
-    };
+    }
 
     onBrandChange = (value) => {
-        sessionStorage.setItem('brandValueTab3', JSON.stringify(value));
-        sessionStorage.removeItem('subBrandValueTab3');
         this.setState({
             brandValue: value,
-            subBrandValue: [],
-            message: 'Please Select Type'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue, brandValue } =this.state
-            this.props.getSubBrandList3(modelValue, geographyValue, regionValue, brandValue)
         })
     }
 
     onCheckAllSubBrandChange = e => {
-        const self = this
-        sessionStorage.setItem('subBrandValueTab3', JSON.stringify(e.target.checked ? e.target.data_opt : []));
         this.setState({
             subBrandValue: e.target.checked ? e.target.data_opt : [],
-            message: ''
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue, brandValue, subBrandValue } =this.state
-            this.props.setGraphChange3()
-            this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData31(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            this.props.getGraphData32(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-            setTimeout(function(){
-                self.setState({
-                dataChanged: true,
-                message: ''
-            })}, 1000)
         })
     };
 
-    onSubBrandChange = (value) => {
+    onSubBrandOkChange = (value) => {
         const self = this
-        sessionStorage.setItem('subBrandValueTab3', JSON.stringify(value));
+        sessionStorage.setItem('subBrandValueTab3', JSON.stringify(this.state.subBrandValue));
         this.setState({
-            subBrandValue: value,
-            message: ''
+            message: '',
+            visible2: false
         }, () => {
             const { modelValue, geographyValue } = this.props
             const { regionValue, brandValue, subBrandValue } =this.state
@@ -178,7 +176,13 @@ class Tab3 extends Component {
             })}, 1000)
         })
     }
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane) => {
+
+    onSubBrandChange = (value) => {
+        this.setState({
+            subBrandValue: value,
+        })
+    }
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -206,6 +210,11 @@ class Tab3 extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                             //</ColoredScrollbars>
                             :
@@ -225,6 +234,11 @@ class Tab3 extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                         :
                         <Empty />
@@ -266,8 +280,8 @@ class Tab3 extends Component {
         const { regionList, brandList, subBrandList, graphData3, graphData31, graphData32, geographyValue } = this.props
         const {regionValue, brandValue, subBrandValue, message } = this.state
         //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
-        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand', this.onBrandOkChange)
+        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand', this.onSubBrandOkChange)
         return (
             <div className="tabContent">
                 <div className="tabHeader">
@@ -282,12 +296,16 @@ class Tab3 extends Component {
                             Brand <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown> */}
-                    <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'
+                    onVisibleChange={this.handleVisible1Change}
+                    visible={this.state.visible1}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Channel <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
-                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'
+                    onVisibleChange={this.handleVisible2Change}
+                    visible={this.state.visible2}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Type <Icon type="caret-down" theme="outlined" />
                         </a>
@@ -301,17 +319,24 @@ class Tab3 extends Component {
                             Geography: {geographyValue}
                         </span>
                     }
-                    {regionValue &&
+                    {/* {regionValue &&
                         <span>
                             <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
-                    }
+                    } */}
                     {brandValue.length > 0 &&
                         <span>
                             <span className="pipe">||</span>
-                            Channel: {brandValue}
+                            Channel: {
+                            brandValue.map((item, index) =>
+                                index === brandValue.length-1 ?
+                                `${item} `
+                                :
+                                `${item}, `
+                            )
+                            }
                         </span>
                     }
                     {subBrandValue.length > 0 &&
@@ -332,7 +357,7 @@ class Tab3 extends Component {
                 <div className="chartContent">
                 <ColoredScrollbars>
                     {
-                        this.props.setGraphData3 && graphData3.series && graphData31.series &&
+                        this.props.setGraphData3 && graphData3.series && graphData31.currentYear &&
                         <MainTab3Charts 
                         graphData3={graphData3}
                         graphData31={graphData31}

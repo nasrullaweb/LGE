@@ -17,15 +17,15 @@ export class SpendTable extends React.Component {
           render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
-            title: '2018',
+            title: '2018 (€)',
             dataIndex: 'previous',
-            render: (text, record) => <span className="borderRight">{text}</span>,
+            render: (text, record) => <span className="borderRight">{Math.round(text)}</span>,
           },
         {
-          title: '2019',
+          title: '2019 (€)',
           dataIndex: 'current',
           key: 'current',
-          render: (text, record) => <span className="borderRight">{text}</span>,
+          render: (text, record) => <span className="borderRight">{Math.round(text)}</span>,
         },
         {
             title: 'YoY Growth',

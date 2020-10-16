@@ -19,8 +19,12 @@ const generateKeyHighLights = function generateKeyHighLights(oldData, NewData) {
       "profitPercentage": Math.round(((NewData[0]["profit"] - oldData[0]["profit"])/oldData[0]["profit"])*100),
       "revenue": NewData[0]["revenue"] - oldData[0]["revenue"],
       "revenuePercentage": Math.round(((NewData[0]["revenue"] - oldData[0]["revenue"])/oldData[0]["revenue"])*100),
+      "ltRevenue": NewData[0]["ltRevenue"] - oldData[0]["ltRevenue"],
+      "ltRevenuePercentage": Math.round(((NewData[0]["ltRevenue"] - oldData[0]["ltRevenue"])/oldData[0]["ltRevenue"])*100),
       "roi": NewData[0]["roi"] - oldData[0]["roi"],
-      "roiPercentage": parseFloat(((NewData[0]["roi"] - oldData[0]["roi"])/oldData[0]["roi"])*100).toFixed(2)
+      "roiPercentage": parseFloat(((NewData[0]["roi"] - oldData[0]["roi"])/oldData[0]["roi"])*100).toFixed(2),
+      "ltroi": NewData[0]["ltroi"] - oldData[0]["ltroi"],
+      "ltroiPercentage": parseFloat(((NewData[0]["ltroi"] - oldData[0]["ltroi"])/oldData[0]["ltroi"])*100).toFixed(2)
     }
     newKeyHighlights.push(changeObj)
     return newKeyHighlights;

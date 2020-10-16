@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Layout } from 'antd';
+import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Layout, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { setMenu, logOut } from '../../store/auth/actionCreator'
@@ -262,8 +262,10 @@ logout = link => {
                                         
                                     </span>
                                 </Dropdown>
-                                <Link onClick={this.logout} className='logout logoutIcon'>
-                                </Link>
+                                <Tooltip title="Logout">
+                                  <Link onClick={this.logout} className='logout logoutIcon'></Link>
+                                </Tooltip>
+                                
                                 
                             </div>
                         }
@@ -274,7 +276,6 @@ logout = link => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state)
     return {
       ajaxCallsInProgress: state.GBajaxCallsInProgress,
         user: state.auth.user,
