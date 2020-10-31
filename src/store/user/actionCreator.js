@@ -8,21 +8,21 @@ const config = {
 };
 
 export function getUsers() {
-    const action = function (dispatch) {
-        dispatch(ajaxCallBegin);
-        axios.get(`${apiURL}/Users/GetUsers`, config)
-            .then(response => {
-                dispatch({
-                    type: GET_USERS,
-                    payload: response.data
-                })
-                dispatch(ajaxCallSuccess());
-            })
-            .catch(error => {
-                dispatch(ajaxCallError());
-            })
-    }
-    return action;
+    // const action = function (dispatch) {
+    //     dispatch(ajaxCallBegin());
+    //     axios.get(`${apiURL}/Users/GetUsers`, config)
+    //         .then(response => {
+    //             dispatch({
+    //                 type: GET_USERS,
+    //                 payload: response.data
+    //             })
+    //             dispatch(ajaxCallSuccess());
+    //         })
+    //         .catch(error => {
+    //             dispatch(ajaxCallError());
+    //         })
+    // }
+    // return action;
 }
 
 

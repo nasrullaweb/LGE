@@ -173,7 +173,7 @@ export class SimpulateMain extends React.Component {
             }
             newmaximizeRevenueValue = 0;
         }
-        if (optimizationType === "Spending") {
+        if (optimizationType === "Spending Target") {
             actualVal = Math.round(this.props.keyHighlights[0].spend)
             if (revValue === "price") {
                 newmaximizeRevenueValue = Math.round(((revPrice - actualVal)/actualVal)*100)
@@ -285,7 +285,7 @@ export class SimpulateMain extends React.Component {
         const optValue = value
         this.setState({
             maximizeRevenueValue: value,
-            optimizationType: 'Spending',
+            optimizationType: 'Spending Target',
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,

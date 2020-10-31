@@ -37,21 +37,21 @@ export class TypeModal extends React.Component {
            
             { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
                 <span className="borderRight">
-                    {record.tactic && record.tactic === 'Original Plan' &&
+                    {record.tactic && record.tactic === '2019 Plan' &&
                         <span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
                 <span className="borderRight">
-                    {record.tactic && record.tactic === 'Original Plan' &&
+                    {record.tactic && record.tactic === '2019 Plan' &&
                         <span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
                 <span>
-                    {record.tactic && record.tactic === 'Original Plan' &&
+                    {record.tactic && record.tactic === '2019 Plan' &&
                         <span>{`€${parseFloat(roi).toFixed(2)}`}</span>
                     }
                 </span>

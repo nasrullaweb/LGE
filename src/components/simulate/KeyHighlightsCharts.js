@@ -737,7 +737,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>ST Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Inc Revenue (€)</div>
                     <Chart
                         options={this.state.cart2.options}
                         series={this.state.cart2.series}
@@ -746,7 +746,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart lastCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>LT Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand Revenue (€)</div>
                     <Chart
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
@@ -756,7 +756,7 @@ class KeyHighlightsCharts extends React.Component {
                       </div>
                       <div className="spaceBetween"></div>
                       <div className="circleChart bigCircle ">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>ST ROI (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Inc ROI (€)</div>
                     <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -765,7 +765,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart bigCircle lastCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>LT ROI (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand ROI (€)</div>
                     <Chart
                         options={this.state.cart5.options}
                         series={this.state.cart5.series}

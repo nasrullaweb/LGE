@@ -93,6 +93,7 @@ export function getPeriod(modal) {
       //     loginError: error.response.data.error_description,
       //   })
       dispatch(ajaxCallError());
+      console.log('ajax0')
     })
   }
   return action
@@ -271,6 +272,7 @@ export function getSimulatedSpendData(scenarioID, modal) {
     )
     .then(response => {
       if(response.data.result[0].isOptimisationCompleted === 1) {
+        dispatch(ajaxCallBegin())
         const isSaved = response.data.result[0].isSaved ? true : false
         axios.get(`${apiURL}/optimiser/GetOptimisedSpendValues/${scenarioID}`, config
         )

@@ -527,7 +527,7 @@ export class SimpulateDetails extends React.Component {
                     </span>
                 }
             },
-            { title: <span>ST Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuModal} /></span>, dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
+            { title: <span>Inc Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuModal} /></span>, dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
                 const content = (
                     <div className="spenTooltip">
                         <div>{record.newRevenue && <strong>Old</strong> } {`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
@@ -579,7 +579,7 @@ export class SimpulateDetails extends React.Component {
                     }
                 </span>
             }},
-            { title: <span>LT Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
+            { title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
                 const content = (
                     <div className="spenTooltip">
                         <div>{record.newLTRevenue && <strong>Old</strong> } {`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
@@ -631,7 +631,7 @@ export class SimpulateDetails extends React.Component {
                     }
                 </span>
             }},
-            { title: <span>ST ROI <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
+            { title: <span>Inc ROI <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
                 const content = (
                     <div className="spenTooltip">
                         <div>{record.newROI && <strong>Old</strong> } {`€${parseFloat(roi).toFixed(2)}`}</div>
@@ -679,7 +679,7 @@ export class SimpulateDetails extends React.Component {
                     }
                 </span>
             }},
-            { title: <span>LT ROI <BarChartOutlined className="linkToCharts" onClick={this.showROILTModal} /></span>, dataIndex: 'oldLTROI', key: 'oldLTROI', render: (oldLTROI, record) => {
+            { title: <span>Brand ROI <BarChartOutlined className="linkToCharts" onClick={this.showROILTModal} /></span>, dataIndex: 'oldLTROI', key: 'oldLTROI', render: (oldLTROI, record) => {
                 const content = (
                     <div className="spenTooltip">
                         <div>{record.newLTROI && <strong>Old</strong> } {`€${parseFloat(oldLTROI).toFixed(2)}`}</div>
@@ -932,7 +932,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.spendVisible && spendSeries.length > 0 &&
                         <Modal
-                          title="Spend"
+                          title="Spend (€)"
                           visible={this.state.spendVisible}
                           onOk={this.handleSpendOk}
                           onCancel={this.handleSpendCancel}
@@ -949,7 +949,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.revenuVisible && revenuSeries.length > 0 &&
                         <Modal
-                          title="Revenue"
+                          title="Revenue (€)"
                           visible={this.state.revenuVisible}
                           onOk={this.handleRevenuOk}
                           onCancel={this.handleRevenuCancel}
@@ -966,7 +966,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.revenuLTVisible && revenuLTSeries.length > 0 &&
                         <Modal
-                          title="LT Revenue (€)"
+                          title="Brand Revenue (€)"
                           visible={this.state.revenuLTVisible}
                           onOk={this.handleRevenuLTOk}
                           onCancel={this.handleRevenuLTCancel}
@@ -983,7 +983,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.roiVisible && roiSeries.length > 0 &&
                         <Modal
-                          title="ROI"
+                          title="Inc ROI (€)"
                           visible={this.state.roiVisible}
                           onOk={this.handleROIOk}
                           onCancel={this.handleROICancel}
@@ -1000,7 +1000,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.roiLTVisible && roiLTSeries.length > 0 &&
                         <Modal
-                          title="LT ROI (€)"
+                          title="Brand ROI (€)"
                           visible={this.state.roiLTVisible}
                           onOk={this.handleROILTOk}
                           onCancel={this.handleROILTCancel}
@@ -1124,7 +1124,7 @@ export class SimpulateDetails extends React.Component {
                                 </div>
                                 <div className="kyeDivide"></div>
                                 <div className="keyCont">
-                                    <div className="keyHead">ST Revenue</div>
+                                    <div className="keyHead">Inc Revenue </div>
                                     <div className="keyContent">
                                         <div className="keyLeft icon1">
 
@@ -1134,7 +1134,11 @@ export class SimpulateDetails extends React.Component {
                                             keyHighlights.map((record, index) => {
                                                 return (
                                                     
-                                                        <div>{record.tactic}: 
+                                                        <div>
+                                                            {record.tactic === "2019 Plan" &&
+                                                            <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                                                            }
+                                                            {record.tactic}: 
                                                             {record.tactic && record.tactic === 'Change' ?
                                                                 record.revenue >= 0 ?
                                                                 <span className="positive">
@@ -1161,7 +1165,7 @@ export class SimpulateDetails extends React.Component {
                                 </div>
                                 <div className="kyeDivide"></div>
                                 <div className="keyCont">
-                                    <div className="keyHead">LT Revenue</div>
+                                    <div className="keyHead">Brand Revenue</div>
                                     <div className="keyContent">
                                         <div className="keyLeft icon1">
 
@@ -1171,7 +1175,11 @@ export class SimpulateDetails extends React.Component {
                                             keyHighlights.map((record, index) => {
                                                 return (
                                                     
-                                                        <div>{record.tactic}: 
+                                                        <div>
+                                                            {record.tactic === "2019 Plan" &&
+                                                            <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                                                            }
+                                                            {record.tactic}: 
                                                             {record.tactic && record.tactic === 'Change' ?
                                                                 record.ltRevenue >= 0 ?
                                                                 <span className="positive">
@@ -1199,7 +1207,7 @@ export class SimpulateDetails extends React.Component {
                                 <div className="kyeDivide"></div>
 
                                 <div className="keyCont">
-                                    <div className="keyHead">ST ROI</div>
+                                    <div className="keyHead">Inc ROI</div>
                                     <div className="keyContent">
                                         <div className="keyLeft icon2">
 
@@ -1235,7 +1243,7 @@ export class SimpulateDetails extends React.Component {
                                     </div>
                                 </div>
                                 <div className="keyCont">
-                                    <div className="keyHead">LT ROI</div>
+                                    <div className="keyHead">Brand ROI</div>
                                     <div className="keyContent">
                                         <div className="keyLeft icon2">
 
