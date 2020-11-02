@@ -67,6 +67,8 @@
             margin: 20px 0;
             background: #fff;
             box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+            clear: both;
+            
         }
 
         .card-container > .ant-tabs-card > .ant-tabs-content {
@@ -773,6 +775,146 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
           color: #3D3D3D;
           text-align: left;
         }
+        
+        &.keyContainer {
+          background: transparent;
+          box-shadow: unset;
+
+          .keyHeading {
+            background: none;
+            border: 0;
+            text-align: center;
+            padding-top: 0;
+          }
+
+          .keyHiCont {
+            width: 100%;
+            .spendCont {
+              width: calc(22% - 10px);
+              background : linear-gradient(130deg, rgba(25, 230, 217, 1) 0%, rgba(42, 204, 221, 1) 28.7%, rgba(84, 138, 231, 1) 89.76%, rgba(92, 126, 233, 1) 100%);
+              float: left;
+              margin-right: 15px;
+              border-radius : 8px;
+
+              .baseData {
+                visibility: hidden;
+              }
+
+              .spendContent .leftData{
+                width: 100%;
+                border: 0;
+              }
+            }
+            .spendCont1 {
+              width: calc(39% - 10px);
+              background : linear-gradient(130deg, rgba(245, 80, 159, 1) 0%, rgba(251, 103, 133, 1) 66.07%, rgba(254, 116, 118, 1) 100%);
+              float: left;
+              margin-right: 15px;
+              border-radius : 8px;
+            }
+            .spendCont2 {
+              width: calc(39% - 10px);
+              background : linear-gradient(130deg, rgba(255, 216, 65, 1) 0%, rgba(255, 190, 72, 1) 35.92%, rgba(255, 135, 86, 1) 100%);
+              float: left;
+              border-radius : 8px;
+
+              .baseData {
+                visibility: hidden;
+              }
+            }
+
+            .spendHead {
+              font-weight : bold;
+              font-size : 13px;
+              text-transform : uppercase;
+              color : #FFFFFF;
+              border-bottom: 1px solid #ddd;
+              padding: 5px 15px;
+
+              .leftHead {
+                display: inline-block;
+                width: 50%;
+                padding-right: 15px;
+                border-right: 1px dotted #fff;
+              }
+              .rightHead {
+                display: inline-block;
+                width: 50%;
+                padding-left: 15px;
+              }
+            }
+
+            .spendContent {
+              padding: 5px 15px;
+              text-align: center;
+              background-image: url('../../images/LG_Tool_Sprite-83.png');
+              background-position: center right;
+              background-repeat: no-repeat;
+              background-size: contain;
+
+              .baseData {
+                background : linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 46.82%, rgba(255, 255, 255, 0) 100%);
+                width: auto;
+                margin: 0 auto;
+                display: inline-block;
+                padding: 2px 20px;
+                color: #fff;
+              }
+              .planCont {
+                display: block;
+                width: 100%;
+                padding: 10px 0;
+              }
+
+              .leftData, .rightData {
+                width: 100%;
+                text-align: left;
+              }
+
+              .leftData {
+                display: inline-block;
+                width: 50%;
+                padding-right: 15px;
+                border-right: 1px dotted #fff;
+              }
+              .rightData {
+                display: inline-block;
+                width: 50%;
+                padding-left: 15px;
+              }
+
+              .oldPlan {
+                padding-right: 7px;
+              }
+              .newPlan {
+                padding-left: 7px;
+              }
+
+              .changePlan {
+                color: #fff;
+                font-size: 11px;
+                padding: 8px 0;
+
+                span, .positive, .pipe, .negitive {
+                  color: #fff !important;
+                }
+              }
+
+              .oldPlan, .newPlan {
+                width: 50%;
+                display: inline-block;
+                color: #fff;
+
+                .planTitle {
+                  font-size: 10px;
+                }
+
+                
+              }
+            }
+
+          }
+        }
 
         .simulateTable {
           padding: 10px 10px 0 10px;
@@ -1083,4 +1225,8 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
       color: #3D3D3D;
   }
 }
+}
+
+.clearClass {
+  clear: both;
 }

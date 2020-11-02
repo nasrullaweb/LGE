@@ -128,6 +128,7 @@ class KeyHighlightsCharts extends React.Component {
                 },
               ],
               legend: {
+                show: false,
                   horizontalAlign: 'center',
                   position: 'bottom',
                   style: {
@@ -274,6 +275,7 @@ class KeyHighlightsCharts extends React.Component {
                 },
               ],
               legend: {
+                show: false,
                   horizontalAlign: 'center',
                   position: 'bottom',
                   style: {
@@ -420,6 +422,7 @@ class KeyHighlightsCharts extends React.Component {
                   },
                 ],
                 legend: {
+                  show: false,
                     horizontalAlign: 'center',
                     position: 'bottom',
                     style: {
@@ -542,6 +545,7 @@ class KeyHighlightsCharts extends React.Component {
                 },
               ],
               legend: {
+                show: false,
                   horizontalAlign: 'center',
                   position: 'bottom',
                   style: {
@@ -662,6 +666,7 @@ class KeyHighlightsCharts extends React.Component {
                   },
                 ],
                 legend: {
+                  show: false,
                     horizontalAlign: 'center',
                     position: 'bottom',
                     style: {

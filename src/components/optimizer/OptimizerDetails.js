@@ -771,93 +771,93 @@ export class OptimizerDetails extends React.Component {
         const tableData = spendData
         const spendSeries = [];
         const oldSpendSeries = {
-            name: 'Original Spend',
+            name: '2019 Plan',
             data: []
         }
         const newSpendSeries = {
-            name: 'New Spend',
+            name: 'New Plan',
             data: []
         }
         const revenuSeries = [];
         const oldRevenuSeries = {
-            name: 'Original Revenue',
+            name: '2019 Plan',
             data: []
         }
         const newRevenuSeries = {
-            name: 'New Revenue',
+            name: 'New Plan',
             data: []
         }
         const roiSeries = [];
         const oldroiSeries = {
-            name: 'Original ROI',
+            name: '2019 Plan',
             data: []
         }
         const newroiSeries = {
-            name: 'New ROI',
+            name: 'New Plan',
             data: []
         }
         const revenuLTSeries = [];
         const oldRevenuLTSeries = {
-            name: 'Original Longterm Revenue',
+            name: '2019 Plan',
             data: []
         }
         const newRevenuLTSeries = {
-            name: 'New Longterm Revenue',
+            name: 'New Plan',
             data: []
         }
         const roiLTSeries = [];
         const oldroiLTSeries = {
-            name: 'Original Longterm ROI',
+            name: '2019 Plan',
             data: []
         }
         const newroiLTSeries = {
-            name: 'New Longterm ROI',
+            name: 'New Plan',
             data: []
         }
         const keySpendSeries = []
         const keyoldSpendSeries = {
-            name: 'Original Spend',
+            name: '2019 Plan',
             data: []
         }
         const keynewSpendSeries = {
-            name: 'New Spend',
+            name: 'New Plan',
             data: []
         }
         const keySpendLabels = []
         const keyRevenueSeries = []
         const keyoldRevenuSeries = {
-            name: 'Original Revenue',
+            name: '2019 Plan',
             data: []
         }
         const keynewRevenuSeries = {
-            name: 'New Revenue',
+            name: 'New Plan',
             data: []
         }
         const keyRevenueLTSeries = []
         const keyoldRevenuLTSeries = {
-            name: 'Original Revenue',
+            name: '2019 Plan',
             data: []
         }
         const keynewRevenuLTSeries = {
-            name: 'New Revenue',
+            name: 'New Plan',
             data: []
         }
         const keyROISeries = []
         const keyoldroiSeries = {
-            name: 'Original ROI',
+            name: '2019 Plan',
             data: []
         }
         const keynewroiSeries = {
-            name: 'New ROI',
+            name: 'New Plan',
             data: []
         }
         const keyROILTSeries = []
         const keyoldroiLTSeries = {
-            name: 'Original ROI',
+            name: '2019 Plan',
             data: []
         }
         const keynewroiLTSeries = {
-            name: 'New ROI',
+            name: 'New Plan',
             data: []
         }
         const categories = []
@@ -1134,210 +1134,388 @@ export class OptimizerDetails extends React.Component {
                         <ColoredScrollbars>
                         {
                             keyHighlights.length > 0 &&
-                            <div className="simulateHeader">
-                                <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights <span onClick={this.showKeyModal}><BarChartOutlined className="linkToCharts"  /></span></h3>
-                                <div className="simulateTable keyHi">
-                                {/* <Table
-                                    className="components-table-demo-nested keyHighlights"
-                                    columns={columnsKey}
-                                    pagination={false}
-                                    dataSource={keyHighlights}
-                                /> */}
-                                <div className="keyCont">
-                                    <div className="keyHead">Spend</div>
-                                    <div className="keyContent">
-                                        <div className="keyLeft">
-
-                                        </div>
-                                        <div className="keyRight">
-                                            {
-                                                keyHighlights.map((record, index) => {
-                                                    return (
-                                                        
-                                                            <div>{record.tactic}: 
-                                                                {record.tactic && record.tactic === 'Change' ?
-                                                                    record.spend >= 0 ?
-                                                                    <span className="positive">
-                                                                        <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                                                        <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
-                                                                    </span>
-                                                                    : 
-                                                                    <span className="negitive">
-                                                                        <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                                                        <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(record.spendPercentage)}%`}</span>
-                                                                    </span>
-                                                                : 
-                                                                <span> {` €${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                                                }
-                                                            </div>
-                                                        
-                                                    )
-                                                })
-                                            }
+                            <div className="simulateHeader keyContainer">
+                                <h3 className="keyHeading"> Key Highlights <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></h3>
+                                <div className="keyHiCont">
+                                    <div className="spendCont">
+                                        <h5 className="spendHead">Spend</h5>
+                                        <div className="spendContent">
+                                            <div className="baseData">Base</div>
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            Change: 
+                                                            {keyHighlights[2].spend >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].spendPercentage)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].spendPercentage)}%`}</span>
+                                                                </span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
                                             </div>
-                                    </div>
-                                </div>
-                                <div className="kyeDivide"></div>
-                                <div className="keyCont">
-                                    <div className="keyHead">Inc Revenue</div>
-                                    <div className="keyContent">
-                                        <div className="keyLeft icon1">
-
                                         </div>
-                                        <div className="keyRight">
-                                        {
-                                            keyHighlights.map((record, index) => {
-                                                return (
-                                                    
-                                                        <div>
-                                                            {record.tactic === "2019 Plan" &&
-                                                            <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
-                                                            }
-                                                            {record.tactic}: 
-                                                            {record.tactic && record.tactic === 'Change' ?
-                                                                record.revenue >= 0 ?
+
+                                    </div>
+                                    <div className="spendCont1">
+                                        <h5 className="spendHead">
+                                            <span className="leftHead">Inc Revenue</span>
+                                            <span className="rightHead">Brand Revenue</span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            <div className="baseData">Base<span>{` €${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            Change: 
+                                                            {keyHighlights[2].revenue >= 0 ?
                                                                 <span className="positive">
-                                                                    <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
-                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].revenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
                                                                 <span className="negitive">
-                                                                    <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
-                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].revenuePercentage)}%`}</span>
                                                                 </span>
-                                                                :
-                                                                <span>{` €${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                             }
                                                         </div>
-                                                    
-                                                )
-                                            })
-                                        }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="kyeDivide"></div>
-                                <div className="keyCont">
-                                    <div className="keyHead">Brand Revenue</div>
-                                    <div className="keyContent">
-                                        <div className="keyLeft icon1">
-
-                                        </div>
-                                        <div className="keyRight">
-                                        {
-                                            keyHighlights.map((record, index) => {
-                                                return (
-                                                    
-                                                        <div>
-                                                            {record.tactic === "2019 Plan" &&
-                                                            <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
-                                                            }
-                                                            {record.tactic}: 
-                                                            {record.tactic && record.tactic === 'Change' ?
-                                                                record.ltRevenue >= 0 ?
+                                                    }
+                                                </div>
+                                                <div className="rightData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            Change: 
+                                                            {keyHighlights[2].ltRevenue >= 0 ?
                                                                 <span className="positive">
-                                                                    <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                                                    {/* <span className="pipe">||</span>
-                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span> */}
+                                                                    <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
                                                                 <span className="negitive">
-                                                                    <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                                                    {/* <span className="pipe">||</span>
-                                                                    <span>{`${Math.round(record.revenuePercentage)}%`}</span> */}
+                                                                    <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage)}%`}</span>
                                                                 </span>
-                                                                :
-                                                                <span>{` €${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                             }
                                                         </div>
-                                                    
-                                                )
-                                            })
-                                        }
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
+                                        
                                     </div>
-                                </div>
-
-                                <div className="kyeDivide"></div>
-                                <div className="keyCont">
-                                    <div className="keyHead">Inc ROI</div>
-                                    <div className="keyContent">
-                                        <div className="keyLeft icon2">
-
-                                        </div>
-                                        <div className="keyRight">
-                                        {
-                                            keyHighlights.map((record, index) => {
-                                                return (
-                                                    
-                                                    <div>{record.tactic}: 
-                                                        {record.tactic && record.tactic === 'Change' ?
-                                                            record.roi >= 0 ?
-                                                            <span className="positive">
-                                                                <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
-                                                                <span className="pipe">||</span>
-                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
-                                                            </span>
-                                                            :
-                                                            <span className="negitive">
-                                                                <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
-                                                                <span className="pipe">||</span>
-                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
-                                                            </span>
-                                                            :
-                                                            <span>{` €${parseFloat(record.roi).toFixed(2)}`}</span>
-                                                        }
+                                    <div className="spendCont2">
+                                        <h5 className="spendHead">
+                                            <span className="leftHead">Inc ROI</span>
+                                            <span className="rightHead">Brand ROI</span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            <div className="baseData">Base</div>
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${parseFloat(keyHighlights[0].roi).toFixed(2)}`}</div>
                                                     </div>
-                                                    
-                                                )
-                                            })
-                                        }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="kyeDivide"></div>
-                                <div className="keyCont">
-                                    <div className="keyHead">Brand ROI</div>
-                                    <div className="keyContent">
-                                        <div className="keyLeft icon2">
-
-                                        </div>
-                                        <div className="keyRight">
-                                        {
-                                            keyHighlights.map((record, index) => {
-                                                return (
-                                                    
-                                                    <div>{record.tactic}: 
-                                                        {record.tactic && record.tactic === 'Change' ?
-                                                            record.ltroi >= 0 ?
-                                                            <span className="positive">
-                                                                <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
-                                                                {/* <span className="pipe">||</span>
-                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span> */}
-                                                            </span>
-                                                            :
-                                                            <span className="negitive">
-                                                                <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
-                                                                {/* <span className="pipe">||</span>
-                                                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span> */}
-                                                            </span>
-                                                            :
-                                                            <span>{` €${parseFloat(record.ltroi).toFixed(2)}`}</span>
-                                                        }
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${parseFloat(keyHighlights[1].roi).toFixed(2)}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            Change: 
+                                                            {keyHighlights[2].roi >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`€${parseFloat(keyHighlights[2].roi).toFixed(2)}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${parseFloat(keyHighlights[2].roiPercentage).toFixed(2)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`€${parseFloat(keyHighlights[2].roi).toFixed(2)}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${parseFloat(keyHighlights[2].roiPercentage).toFixed(2)}%`}</span>
+                                                                </span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className="rightData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${parseFloat(keyHighlights[0].ltroi).toFixed(2)}`}</div>
                                                     </div>
-                                                    
-                                                )
-                                            })
-                                        }
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${parseFloat(keyHighlights[1].ltroi).toFixed(2)}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            Change: 
+                                                            {keyHighlights[2].ltroi >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`€${parseFloat(keyHighlights[2].ltroi).toFixed(2)}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${parseFloat(keyHighlights[2].ltroiPercentage).toFixed(2)}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`€${parseFloat(keyHighlights[2].ltroi).toFixed(2)}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${parseFloat(keyHighlights[2].ltroiPercentage).toFixed(2)}%`}</span>
+                                                                </span>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="clearClass"></div>
                                 </div>
                             </div>
+                            // <div className="simulateHeader">
+                            //     <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights <span onClick={this.showKeyModal}><BarChartOutlined className="linkToCharts"  /></span></h3>
+                            //     <div className="simulateTable keyHi">
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Spend</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //                 {
+                            //                     keyHighlights.map((record, index) => {
+                            //                         return (
+                                                        
+                            //                                 <div>{record.tactic}: 
+                            //                                     {record.tactic && record.tactic === 'Change' ?
+                            //                                         record.spend >= 0 ?
+                            //                                         <span className="positive">
+                            //                                             <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                             <span className="pipe">||</span>
+                            //                                             <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                            //                                         </span>
+                            //                                         : 
+                            //                                         <span className="negitive">
+                            //                                             <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                             <span className="pipe">||</span>
+                            //                                             <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                            //                                         </span>
+                            //                                     : 
+                            //                                     <span> {` €${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                     }
+                            //                                 </div>
+                                                        
+                            //                         )
+                            //                     })
+                            //                 }
+                            //                 </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Inc Revenue</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon1">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                             <div>
+                            //                                 {record.tactic === "2019 Plan" &&
+                            //                                 <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                            //                                 }
+                            //                                 {record.tactic}: 
+                            //                                 {record.tactic && record.tactic === 'Change' ?
+                            //                                     record.revenue >= 0 ?
+                            //                                     <span className="positive">
+                            //                                         <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                         <span className="pipe">||</span>
+                            //                                         <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span className="negitive">
+                            //                                         <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                         <span className="pipe">||</span>
+                            //                                         <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span>{` €${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                 }
+                            //                             </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Brand Revenue</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon1">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                             <div>
+                            //                                 {record.tactic === "2019 Plan" &&
+                            //                                 <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                            //                                 }
+                            //                                 {record.tactic}: 
+                            //                                 {record.tactic && record.tactic === 'Change' ?
+                            //                                     record.ltRevenue >= 0 ?
+                            //                                     <span className="positive">
+                            //                                         <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span className="negitive">
+                            //                                         <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                   
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span>{` €${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                 }
+                            //                             </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Inc ROI</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon2">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                         <div>{record.tactic}: 
+                            //                             {record.tactic && record.tactic === 'Change' ?
+                            //                                 record.roi >= 0 ?
+                            //                                 <span className="positive">
+                            //                                     <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                                     <span className="pipe">||</span>
+                            //                                     <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span className="negitive">
+                            //                                     <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                                     <span className="pipe">||</span>
+                            //                                     <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span>{` €${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                             }
+                            //                         </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Brand ROI</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon2">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                         <div>{record.tactic}: 
+                            //                             {record.tactic && record.tactic === 'Change' ?
+                            //                                 record.ltroi >= 0 ?
+                            //                                 <span className="positive">
+                            //                                     <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                               
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span className="negitive">
+                            //                                     <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                               
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span>{` €${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                            //                             }
+                            //                         </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     </div>
+                            // </div>
                         }
                         {
                             tableData && tableData.length > 0 &&

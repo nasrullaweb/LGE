@@ -624,7 +624,7 @@ export class SimpulateMain extends React.Component {
                       />
                     </Modal>
                     <Modal
-                      title={this.state.optimizationType === 'Revenue Target' ? "Revenue Target" : "Total Spend Constraint"}
+                      title={this.state.optimizationType === 'Revenue Target' ? "Revenue Goal" : "Spend Constraint"}
                       visible={this.state.typeVisible}
                       onOk={this.handleTypeOk}
                       onCancel={this.handleTypeCancel}
