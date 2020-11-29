@@ -110,6 +110,13 @@
                 border-radius : 8px;
                 background-color: #fff;
 
+                &.setHeight {
+                    height: 700px;
+                    width: calc(33% - 10px);
+                }
+
+                
+
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
@@ -136,6 +143,23 @@
                 border: 1px Solid rgba(198, 198, 198, 0.5);
                 border-radius : 8px;
                 background-color: #fff;
+                position: relative;
+
+                &.setWidth {
+                    height: 700px;
+                    width: calc(67% - 10px);
+
+                    .chartSub {
+                        width: calc(50% - 10px);
+                        padding-right: 10px;
+                        float: left;
+                        overflow: hidden;
+
+                        &.fullWidth {
+                            width: 100%;
+                        }
+                    }
+                }
 
                 .chartTitle {
                     padding: 10px;
@@ -341,4 +365,37 @@
 
 .container.dataViewer.resultView .ant-tabs-ink-bar {
     display: none;
+}
+
+.chartSub {
+    position: relative;
+
+    .chartTitleSub, .chartTitleSub1, .chartTitleSub2, .chartTitleSub4, .chartTitleSub5 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #9BBB59;
+        padding: 2px 5px;
+        min-width: 100px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .chartTitleSub1 {
+        background-color: #F79646;
+    }
+    .chartTitleSub2 {
+        background-color: #4BACC6;
+    }
+    .chartTitleSub4 {
+        background-color: #186609;
+    }
+    .chartTitleSub5 {
+        background-color: #C0504D;
+    }
+}
+
+.arrow_box {
+    padding: 10px;
+    background: linear-gradient(180deg, #f9f9f9 0%, #f9f9f9 47.72%, #f9f9f9 100%);
+    color: #333;
 }

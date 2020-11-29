@@ -56,7 +56,12 @@ class MainTabCharts extends React.Component {
                     formatter: function (value) {
                       let val = value;
                       if(val < 999 && val > -1000) {
-                        val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if(val < 10) {
+                          val = Math.round(val *100)/100
+                        }
+                        else {
+                          val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
                       }
 
                       if(val < -1000) {
@@ -186,7 +191,12 @@ class MainTabCharts extends React.Component {
                     formatter: function (value) {
                       let val = value;
                       if(val < 999 && val > -1000) {
-                        val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if(val < 10) {
+                          val = Math.round(val *100)/100
+                        }
+                        else {
+                          val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
                       }
 
                       if(val < -1000) {

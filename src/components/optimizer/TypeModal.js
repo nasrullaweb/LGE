@@ -95,15 +95,15 @@ export class TypeModal extends React.Component {
                         <div className="head">Method</div>
 
                         <Radio.Group onChange={methodValueChange} value={methodValue} >
-                            <div className="radioText"><Radio value="Historical">
+                            <div className="radioText"><Radio value="Historical" disabled>
                             Historical
                             </Radio>
-                            <Radio value="ROI Based">
+                            <Radio value="ROI Based" disabled>
                             ROI Based
                             </Radio>
                             </div>
                             <div className="radioText">
-                            <Radio value="No A Priori">
+                            <Radio value="No A Priori" disabled>
                             No A Priori
                             </Radio>
                             <Radio value="Custom" disabled>

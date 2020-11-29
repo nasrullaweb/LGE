@@ -38,6 +38,7 @@ export class SimpulateMain extends React.Component {
         simulatedMsg: '',
         visibleSaveAs: false,
         shareVisible: false,
+        baseValue: ""
     }
 
     componentDidMount() {
@@ -91,6 +92,14 @@ export class SimpulateMain extends React.Component {
         this.setState({
           visibleSaveAs: false,
         });
+    }
+
+    onChangeBase = (value) => {
+        const spenData = this.state.spendNewData.length === 0 ? this.props.spendData : this.state.spendNewData
+        this.setState({
+            baseValue: value,
+            spendNewData: spenData
+          });
     }
     
     handleProductChange = (value) => {
@@ -255,18 +264,37 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSimulate = () => {
-        this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights)
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+
+        baseValueData = Math.round(baseValueData * 1000)
+        this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights, baseValueData)
     }
 
     handleSave = () => {
-        this.props.saveResults(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.props.spendData)
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+        baseValueData = Math.round(baseValueData * 1000)
+        this.props.saveResults(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.props.spendData, baseValueData)
         this.props.setisSimulated()
     }
 
     saveAsScenario = (values) => {
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+        baseValueData = Math.round(baseValueData * 1000)
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []}, () => {
-            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, values.scenarioname, scenarioNote, this.props.spendData)
+            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, values.scenarioname, scenarioNote, this.props.spendData, baseValueData)
             this.props.setisSimulated()
         })
         
@@ -379,6 +407,7 @@ export class SimpulateMain extends React.Component {
                             scenarioName={scenarioName}
                             Globalgeagraphy={Globalgeagraphy}
                             handleSimulate={this.handleSimulate}
+                            onChangeBase={this.onChangeBase}
                         />
                     </div>
 

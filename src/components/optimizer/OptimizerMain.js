@@ -48,7 +48,8 @@ export class SimpulateMain extends React.Component {
         revValue: '',
         revPrice: 0,
         revPer: 0,
-        methodValue: ''
+        methodValue: '',
+        baseValue: ""
     }
 
     componentDidMount() {
@@ -120,6 +121,13 @@ export class SimpulateMain extends React.Component {
         });
     }
 
+    onChangeBase = (value) => {
+        this.setState({
+            baseValue: value,
+            setOptimizerDefault: true,
+          });
+    }
+
     handleProductChange = (value) => {
     //     if (value.length > 2) {
     //         alert("Don't select more than 2 Brand")
@@ -167,7 +175,7 @@ export class SimpulateMain extends React.Component {
         if (optimizationType === "Revenue Target") {
             actualVal = Math.round(this.props.keyHighlights[0].revenue)
             if (revValue === "price") {
-                newMinimizeSpendValue = Math.round(((revPrice - actualVal)/actualVal)*100)
+                newMinimizeSpendValue = ((revPrice - actualVal)/actualVal)*100
             } else {
                 newMinimizeSpendValue = revPer
             }
@@ -176,7 +184,7 @@ export class SimpulateMain extends React.Component {
         if (optimizationType === "Spending Target") {
             actualVal = Math.round(this.props.keyHighlights[0].spend)
             if (revValue === "price") {
-                newmaximizeRevenueValue = Math.round(((revPrice - actualVal)/actualVal)*100)
+                newmaximizeRevenueValue = ((revPrice - actualVal)/actualVal)*100
             } else {
                 newmaximizeRevenueValue = revPer
             }
@@ -186,7 +194,9 @@ export class SimpulateMain extends React.Component {
         this.setState({
             typeVisible: false,
             minimizeSpendValue: newMinimizeSpendValue,
-            maximizeRevenueValue: newmaximizeRevenueValue
+            maximizeRevenueValue: newmaximizeRevenueValue,
+            spendNewData: [],
+            setOptimizerDefault: true,
         });
     }
 
@@ -243,6 +253,13 @@ export class SimpulateMain extends React.Component {
                 this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
             this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
 
+        })
+    }
+
+    openPopupType = () => {
+       
+        this.setState({
+            typeVisible: true,
         })
     }
     handleOptimizationTypeChange = (value) => {
@@ -422,7 +439,13 @@ export class SimpulateMain extends React.Component {
         if (this.state.optimizationType) {
             const spendData = this.state.spendNewData
             this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
-            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue)
+            let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+            baseValueData = Math.round(baseValueData * 1000)
+            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue, baseValueData)
         }
     }
 
@@ -454,8 +477,10 @@ export class SimpulateMain extends React.Component {
 
     render() {
       const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange,  handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange } = this
+      const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange } = this
       const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
+      const optType = Array.isArray(this.state.optimizationType) ? this.state.optimizationType.toString() : this.state.optimizationType;
+      
             return (
                 <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
@@ -522,9 +547,9 @@ export class SimpulateMain extends React.Component {
                                     </div>
                                 </Tooltip>
                             }
-                            { !(!this.state.revertActive  && !this.state.setOptimizerDefault) ?
+                            { (!(!this.state.revertActive  && !this.state.setOptimizerDefault)) && optType.length != 0 ?
                                 <Tooltip title="Optimize">
-                                    <Button type="primary" className="createButtom optimize" disabled={!this.state.revertActive  && !this.state.setOptimizerDefault} onClick={this.handleSimulate} >Optimize</Button>
+                                    <Button type="primary" className="createButtom optimize" disabled={!this.state.revertActive  && !this.state.setOptimizerDefault && optType.length === 0} onClick={this.handleSimulate} >Optimize</Button>
                                 </Tooltip>
                                 :
                                 <Tooltip title="Optimize">
@@ -575,6 +600,7 @@ export class SimpulateMain extends React.Component {
                                 handleSubBrandChange={handleSubBrandChange}
                                 multiProductChange={multiProductChange}
                                 handleOptimizationTypeChange={handleOptimizationTypeChange}
+                                openPopupType={openPopupType}
                                 handleMinimizeSpendValue={this.handleMinimizeSpendValue}
                                 handleMaximizeRevenueValue={this.handleMaximizeRevenueValue}
                                 showTypeModal={this.showTypeModal}
@@ -588,6 +614,8 @@ export class SimpulateMain extends React.Component {
                                 scenarioName={scenarioName}
                                 Globalgeagraphy={Globalgeagraphy}
                                 handleSimulate={this.handleSimulate}
+                                optType={optType}
+                                onChangeBase={this.onChangeBase}
                             />
                         </div>
 

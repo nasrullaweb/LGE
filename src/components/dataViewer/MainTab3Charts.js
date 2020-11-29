@@ -243,17 +243,26 @@ class MainTab3Charts extends React.Component {
                   fontSize: '14px',
                   background: '#fff',
                 },
-                y: {
-                  title: {
-                    formatter: (seriesName) => seriesName,
-                  },
-                  formatter: function (value) {
-                    let val = value;
-                      val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                // y: {
+                //   title: {
+                //     formatter: (seriesName) => seriesName,
+                //   },
+                //   formatter: function (value) {
+                //     let val = value;
+                //       val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     
-                    return val;
-                  },
-                },
+                //     return val;
+                //   },
+                // },
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                  let Total = 0;
+                  for (let i = 0; i<= series.length -1; i++) {
+                    Total += series[i];
+                  }
+                  return '<div class="arrow_box">' +
+                    '<span><strong>' + w.config.labels[seriesIndex] + ":</strong> " + Math.round(series[seriesIndex]/Total *1000) /10 + "%" + '</span>' +
+                    '</div>'
+                }
               },
               responsive: [{
                 breakpoint: 180,
@@ -308,17 +317,26 @@ class MainTab3Charts extends React.Component {
                   fontSize: '14px',
                   background: '#fff',
                 },
-                y: {
-                  title: {
-                    formatter: (seriesName) => seriesName,
-                  },
-                  formatter: function (value) {
-                    let val = value;
-                      val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                // y: {
+                //   title: {
+                //     formatter: (seriesName) => seriesName,
+                //   },
+                //   formatter: function (value) {
+                //     let val = value;
+                //       val = Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     
-                    return val;
-                  },
-                },
+                //     return val;
+                //   },
+                // },
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                  let Total = 0;
+                  for (let i = 0; i<= series.length -1; i++) {
+                    Total += series[i];
+                  }
+                  return '<div class="arrow_box">' +
+                    '<span><strong>' + w.config.labels[seriesIndex] + ":</strong> " + Math.round(series[seriesIndex]/Total *1000) /10 + "%" + '</span>' +
+                    '</div>'
+                }
               },
               labels: [],
               responsive: [{

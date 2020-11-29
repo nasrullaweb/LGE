@@ -167,6 +167,7 @@ class MainTab2Charts extends React.Component {
                   bar: {
                     horizontal: false,
                     columnWidth: '70%',
+                    barHeight: '80%',
                   }
                 },
                 dataLabels: {

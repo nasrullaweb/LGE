@@ -653,7 +653,7 @@ class ResultsViewer extends Component {
                                         <div className="chartContent">
                                         <ColoredScrollbars>
                                         {
-                                            graphData1.series && setGraphData1 && graphData21.series && graphData22 &&
+                                            graphData1 && setGraphData1 && graphData21.series && graphData22 &&
                                             <MainTab2Charts 
                                                 graphData1={graphData1}
                                                 subBrandValue={subBrandValue}

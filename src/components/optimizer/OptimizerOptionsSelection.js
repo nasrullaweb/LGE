@@ -197,11 +197,16 @@ export class OptimizerOptionsSelection extends React.Component {
         this.props.handleOptimizationTypeChange(e.target.value)
     };
 
+    openPopup = () => {
+        this.setState({ visible: false });
+        this.props.openPopupType()
+    };
+
     onCheckAllTacticChange = e => {
         this.props.handleTacticsChange(e.target.checked ? e.target.data_opt : [])
     };
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, okClick) => {
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, okClick, TypePop) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -253,9 +258,9 @@ export class OptimizerOptionsSelection extends React.Component {
                                         {
                                             listOption.map((option) =>
                                                 option === 'Revenue Target' ?
-                                                    <Radio value={option} disabled={this.props.isSimulated} >{option} </Radio>
+                                                    <span onClick={ TypePop}><Radio value={option} >{option} </Radio></span>
                                                     :
-                                                    <Radio value={option} disabled={this.props.isSimulated} >{option}  </Radio>
+                                                    <span onClick={TypePop}><Radio value={option}>{option}  </Radio></span>
                                             )
                                         }
                                     </Radio.Group>
@@ -313,7 +318,7 @@ export class OptimizerOptionsSelection extends React.Component {
 
         const tacticMenu = this.setboxOption(tacticsOptions, 'tactic', this.onCheckAllTacticChange, this.onTacticChange, true, this.onTacticOkChange)
 
-        const optimizationTypeMenu = this.setboxOption(optimizationTypeOptions, 'optimizationType', '', this.onOptimizationTypeChange, false)
+        const optimizationTypeMenu = this.setboxOption(optimizationTypeOptions, 'optimizationType', '', this.onOptimizationTypeChange, false, "", this.openPopup)
             
             return (
                 <div>
