@@ -14,13 +14,19 @@ const generateKeyHighLights = function generateKeyHighLights(oldData, NewData) {
     const changeObj = {
       "tactic": "Change",
       "spend": NewData[0]["spend"] - oldData[0]["spend"],
-      "spendPercentage": Math.round(((NewData[0]["spend"] - oldData[0]["spend"])/oldData[0]["spend"])*100),
+      "spendPercentage": Math.round(((NewData[0]["spend"] - oldData[0]["spend"])/oldData[0]["spend"])*1000)/10,
       "profit": NewData[0]["profit"] - oldData[0]["profit"],
-      "profitPercentage": Math.round(((NewData[0]["profit"] - oldData[0]["profit"])/oldData[0]["profit"])*100),
+      "profitPercentage": Math.round(((NewData[0]["profit"] - oldData[0]["profit"])/oldData[0]["profit"])*1000)/10,
       "revenue": NewData[0]["revenue"] - oldData[0]["revenue"],
-      "revenuePercentage": Math.round(((NewData[0]["revenue"] - oldData[0]["revenue"])/oldData[0]["revenue"])*100),
+      "revenuePercentage": Math.round(((NewData[0]["revenue"] - oldData[0]["revenue"])/oldData[0]["revenue"])*1000)/10,
+      "ltRevenue": NewData[0]["ltRevenue"] - oldData[0]["ltRevenue"],
+      "ltRevenuePercentage": Math.round(((NewData[0]["ltRevenue"] - oldData[0]["ltRevenue"])/oldData[0]["ltRevenue"])*1000)/10,
       "roi": NewData[0]["roi"] - oldData[0]["roi"],
-      "roiPercentage": parseFloat(((NewData[0]["roi"] - oldData[0]["roi"])/oldData[0]["roi"])*100).toFixed(2)
+      "roiPercentage": Math.round(((NewData[0]["roi"] - oldData[0]["roi"])/oldData[0]["roi"])*10000)/100,
+      "ltroi": NewData[0]["ltroi"] - oldData[0]["ltroi"],
+      "ltroiPercentage": Math.round(((NewData[0]["ltroi"] - oldData[0]["ltroi"])/oldData[0]["ltroi"])*10000)/100,
+      "baseRevenue": NewData[0]["baseRevenue"] - oldData[0]["baseRevenue"],
+      "baseRevenuePercentage": Math.round(((NewData[0]["baseRevenue"] - oldData[0]["baseRevenue"])/oldData[0]["baseRevenue"])*1000)/10
     }
     newKeyHighlights.push(changeObj)
     return newKeyHighlights;
@@ -30,10 +36,10 @@ const config = {
     headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('accessToken'))}` }
 };
 
-export function getBrands(modal) {
+export function getBrands(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Brands/GetBrand/${modal}`, config
+    axios.get(`${apiURL}/Brands/GetBrands/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -250,11 +256,11 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights) {
+export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights, BaseFactor) {
   const params = spendData;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}`, params, config
+    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
     )
     .then(response => {
       
@@ -302,11 +308,11 @@ export function getSimulatedSpendData(scenarioID) {
   return action
 }
 
-export function saveResults(modal, period, geography, scenarioID, spendData) {
+export function saveResults(modal, period, geography, scenarioID, spendData, BaseFactor) {
   const params = spendData;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}`, params, config
+    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
     )
     .then(response => {
       dispatch({
@@ -327,11 +333,11 @@ export function saveResults(modal, period, geography, scenarioID, spendData) {
   return action
 }
 
-export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData) {
+export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData, BaseFactor) {
   const params = spendData;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}`, params, config
+    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}/${BaseFactor}`, params, config
     )
     .then(response => {
       dispatch(ajaxCallSuccess());

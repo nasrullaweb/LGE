@@ -8,7 +8,10 @@ import { DV_GET_MODEL_LIST, DV_GET_GEOGRAPHY_LIST, DV_GET_REGION_LIST, DV_GET_BR
    DV_GET_GRAPH_DATA11_ERROR, DV_GET_GRAPH_DATA12_ERROR, DV_GET_GRAPH_DATA13_ERROR,
    DV_GET_BRAND_LIST2, DV_GET_SUBBRAND_LIST2, DV_GET_TACTIC_LIST2, DV_GET_GRAPH_DATA21, DV_GET_GRAPH_DATA22, DV_GET_GRAPH_DATA23,
    DV_GET_BRAND_LIST2_ERROR, DV_GET_SUBBRAND_LIST2_ERROR, DV_GET_TACTIC_LIST2_ERROR, DV_CLEAR_DATA,
-   DV_GET_GRAPH_DATA21_ERROR, DV_GET_GRAPH_DATA22_ERROR, DV_GET_GRAPH_DATA23_ERROR, DV_GET_SET_GRAPH, DV_GET_SET_GRAPH1, DV_GET_SET_GRAPH2
+   DV_GET_GRAPH_DATA21_ERROR, DV_GET_GRAPH_DATA22_ERROR, DV_GET_GRAPH_DATA23_ERROR, DV_GET_SET_GRAPH, DV_GET_SET_GRAPH1, DV_GET_SET_GRAPH2,
+   DV_GET_BRAND_LIST3, DV_GET_SUBBRAND_LIST3, DV_GET_GRAPH_DATA3, DV_GET_BRAND_LIST3_ERROR, DV_GET_SUBBRAND_LIST3_ERROR,
+   DV_GET_GRAPH_DATA3_ERROR, DV_GET_SET_GRAPH3, DV_GET_GRAPH_DATA31, DV_GET_GRAPH_DATA32, DV_GET_GRAPH_DATA31_ERROR, DV_GET_GRAPH_DATA32_ERROR
+  
   } from './actionType'
 import { apiURL } from '../../config/apiConfig'
 import axios from 'axios'
@@ -193,17 +196,19 @@ export function getAllData() {
           if (sessionStorage.getItem('geographyValue')) { 
             const geography = JSON.parse(sessionStorage.getItem('geographyValue'))
             const modal = JSON.parse(sessionStorage.getItem('modelValue'))
-            axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
-            )
-            .then(response => {
-              dispatch({
-                  type: DV_GET_REGION_LIST,
-                  payload: response.data,
-              })
-              dispatch(getTab1AllData(modal, geography));
+            dispatch(getTab1AllData(modal, geography))
               dispatch(getTab2AllData(modal, geography))
-              if (sessionStorage.getItem('regionValue')) { 
-                const region = JSON.parse(sessionStorage.getItem('regionValue'))
+              dispatch(getTab3AllData(modal, geography))
+            // axios.get(`${apiURL}/DMRegion/GetRegion/${modal}/${geography}`, config
+            // )
+            // .then(response => {
+            //   dispatch({
+            //       type: DV_GET_REGION_LIST,
+            //       payload: response.data,
+            //   })
+              
+             // if (sessionStorage.getItem('regionValue')) { 
+                const region = 'LGE'
                 axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
                 )
                 .then(response => {
@@ -279,16 +284,16 @@ export function getAllData() {
                   })
                 })
 
-              } else {
-                dispatch(ajaxCallSuccess());
-              }
-            })
-            .catch(error => {
-              dispatch(ajaxCallError());
-              dispatch({
-                type: DV_GET_REGION_LIST_ERROR,
-              })
-            })
+            //   } else {
+            //     dispatch(ajaxCallSuccess());
+            //   }
+            // })
+            // .catch(error => {
+            //   dispatch(ajaxCallError());
+            //   dispatch({
+            //     type: DV_GET_REGION_LIST_ERROR,
+            //   })
+            // })
           } else {
             dispatch(ajaxCallSuccess());
           }
@@ -315,8 +320,8 @@ export function getAllData() {
 
 export function getTab1AllData(modal, geography) {
   const action = function (dispatch) {
-    if (sessionStorage.getItem('regionValueTab1')) { 
-      const region = JSON.parse(sessionStorage.getItem('regionValueTab1'))
+    //if (sessionStorage.getItem('regionValueTab1')) { 
+      const region = 'LGE'
       axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
       )
       .then(response => {
@@ -405,7 +410,7 @@ export function getTab1AllData(modal, geography) {
         })
       })
 
-    }
+    //}
   }
   return action
 }
@@ -676,8 +681,8 @@ export function getGraphData23(modal, geography, region, brand, subBrand, var1, 
 
 export function getTab2AllData(modal, geography) {
   const action = function (dispatch) {
-    if (sessionStorage.getItem('regionValueTab2')) { 
-      const region = JSON.parse(sessionStorage.getItem('regionValueTab2'))
+    //if (sessionStorage.getItem('regionValueTab2')) { 
+      const region = 'LGE'
       axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
       )
       .then(response => {
@@ -768,7 +773,7 @@ export function getTab2AllData(modal, geography) {
       })
 
     }
-  }
+  //}
   return action
 }
 
@@ -845,6 +850,229 @@ export function getModelandGeographyList() {
         type: DV_GET_MODEL_LIST_ERROR,
       })
     })
+  }
+  return action
+}
+
+export function getBrandList3(modal, geography, region) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_BRAND_LIST3,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_BRAND_LIST3_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function getSubBrandList3(modal, geography, region, brand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMSubBrands/GetSubBrands/${modal}/${geography}/${region}/${brand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_SUBBRAND_LIST3,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_SUBBRAND_LIST3_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function getGraphData3(modal, geography, region, brand, subBrand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMCharts/GetSpendBar/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_GRAPH_DATA3,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_GRAPH_DATA3_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function getGraphData31(modal, geography, region, brand, subBrand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMCharts/GetSpendTactics/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_GRAPH_DATA31,
+          payload: response.data,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_GRAPH_DATA31_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function getGraphData32(modal, geography, region, brand, subBrand) {
+  const action = function (dispatch) {
+    dispatch(ajaxCallBegin())
+    axios.get(`${apiURL}/DMCharts/GetYOY/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+    )
+    .then(response => {
+      dispatch({
+          type: DV_GET_GRAPH_DATA32,
+          payload: response.data.dmSpends,
+      })
+      dispatch(ajaxCallSuccess());
+    })
+    .catch(error => {
+      dispatch(ajaxCallError());
+      dispatch({
+        type: DV_GET_GRAPH_DATA32_ERROR,
+      })
+    })
+  }
+  return action
+}
+
+export function setGraphChange3() {
+  const action = function (dispatch) {
+    dispatch({
+      type: DV_GET_SET_GRAPH3,
+  })
+  }
+  return action
+}
+
+export function getTab3AllData(modal, geography) {
+  const action = function (dispatch) {
+    //if (sessionStorage.getItem('regionValueTab3')) { 
+      const region = 'LGE'
+      axios.get(`${apiURL}/DMBrands/GetBrands/${modal}/${geography}/${region}`, config
+      )
+      .then(response => {
+        dispatch({
+            type: DV_GET_BRAND_LIST3,
+            payload: response.data,
+        })
+        if (sessionStorage.getItem('brandValueTab3')) { 
+          const brand = JSON.parse(sessionStorage.getItem('brandValueTab3'))
+          axios.get(`${apiURL}/DMSubBrands/GetSubBrands/${modal}/${geography}/${region}/${brand}`, config
+          )
+          .then(response => {
+            dispatch({
+                type: DV_GET_SUBBRAND_LIST3,
+                payload: response.data,
+            })
+            if (sessionStorage.getItem('subBrandValueTab3')) { 
+              const subBrand = JSON.parse(sessionStorage.getItem('subBrandValueTab3'))
+              // axios.get(`${apiURL}/InDepTactic/GetTactics/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+              // )
+              // .then(response => {
+              //   dispatch({
+              //       type: DV_GET_TACTIC_LIST2,
+              //       payload: response.data,
+              //   })
+                // if (sessionStorage.getItem('var2ValueTab2')) {
+                //   const var1 = JSON.parse(sessionStorage.getItem('var1ValueTab2'))
+                //   const var2 = JSON.parse(sessionStorage.getItem('var2ValueTab2'))
+                  axios.get(`${apiURL}/DMCharts/GetSpendBar/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+                  )
+                  .then(response => {
+                    dispatch({
+                        type: DV_GET_GRAPH_DATA3,
+                        payload: response.data,
+                    })
+                  })
+                  .catch(error => {
+                    dispatch({
+                      type: DV_GET_GRAPH_DATA3_ERROR,
+                    })
+                  })
+
+                  axios.get(`${apiURL}/DMCharts/GetSpendTactics/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+                  )
+                  .then(response => {
+                    dispatch({
+                        type: DV_GET_GRAPH_DATA31,
+                        payload: response.data,
+                    })
+                    dispatch(ajaxCallSuccess());
+                  })
+                  .catch(error => {
+                    dispatch(ajaxCallError());
+                    dispatch({
+                      type: DV_GET_GRAPH_DATA31_ERROR,
+                    })
+                  })
+
+                  axios.get(`${apiURL}/DMCharts/GetYOY/${modal}/${geography}/${region}/${brand}/${subBrand}`, config
+                  )
+                  .then(response => {
+                    dispatch({
+                        type: DV_GET_GRAPH_DATA32,
+                        payload: response.data.dmSpends,
+                    })
+                    dispatch(ajaxCallSuccess());
+                  })
+                  .catch(error => {
+                    dispatch(ajaxCallError());
+                    dispatch({
+                      type: DV_GET_GRAPH_DATA32_ERROR,
+                    })
+                  })
+              //   }
+              // })
+              // .catch(error => {
+              //   dispatch({
+              //     type: DV_GET_TACTIC_LIST2_ERROR,
+              //   })
+              // })
+            }
+          })
+          .catch(error => {
+            dispatch({
+              type: DV_GET_SUBBRAND_LIST3_ERROR,
+            })
+          })
+        }
+      })
+      .catch(error => {
+        dispatch({
+          type: DV_GET_BRAND_LIST3_ERROR,
+        })
+      })
+
+    //}
   }
   return action
 }

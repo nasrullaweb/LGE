@@ -58,6 +58,7 @@ export function getScenarios() {
           type: POST_SCENARIO,
           newId: response.data.result.scenarioId,
           newModal: response.data.result.modelName,
+          newGeography: data.Geography,
           isSimulated: response.data.result.isSimulated,
           isSimulatorOptimiser: data.isSimulatorOptimiser,
         })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Layout } from 'antd';
+import { Button, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Layout, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { setMenu, logOut } from '../../store/auth/actionCreator'
@@ -31,6 +31,8 @@ export class Home extends React.Component {
     geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
     message: 'Please Select Model',
     collapsed: true,
+    visible: false,
+    visible1: false,
 }
 
   componentDidMount() {
@@ -61,9 +63,18 @@ export class Home extends React.Component {
         modelValue: e.target.value,
         modelName,
         geographyValue: '',
+        visible: false,
         message: 'Please Select Geography',
         geography
     })
+}
+
+handleVisibleChange = (flag) => {
+  this.setState({ visible: flag });
+}
+
+handleVisible1Change = (flag) => {
+  this.setState({ visible1: flag });
 }
 
 onGeographyChange = (e) => {
@@ -74,6 +85,7 @@ onGeographyChange = (e) => {
     this.setState({
         geographyValue: e.target.value,
         message: '',
+        visible1: false,
         geography
     })
     
@@ -171,9 +183,9 @@ logout = link => {
                           <div className="left-icon"></div>
                           <div className="right-drop">
                             <span className="label">Model</span>
-                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={modelMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisibleChange} visible={this.state.visible}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Model <Icon type="caret-down" theme="outlined" />
+                                    {modelValue ? modelValue : "Select Model"} <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
                           </div>
@@ -182,9 +194,9 @@ logout = link => {
                           <div className="left-icon1"></div>
                           <div className="right-drop">
                             <span className="label">Geography</span>
-                            <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={geographyMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change} visible={this.state.visible1}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                    Select Geography <Icon type="caret-down" theme="outlined" />
+                                    {geographyValue ? geographyValue : "Select Geography"} <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
                           </div>
@@ -250,8 +262,10 @@ logout = link => {
                                         
                                     </span>
                                 </Dropdown>
-                                <Link onClick={this.logout} className='logout logoutIcon'>
-                                </Link>
+                                <Tooltip title="Logout">
+                                  <Link onClick={this.logout} className='logout logoutIcon'></Link>
+                                </Tooltip>
+                                
                                 
                             </div>
                         }
@@ -262,9 +276,8 @@ logout = link => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state)
     return {
-        ajaxCallsInProgress: state.ajaxCallsInProgress,
+      ajaxCallsInProgress: state.GBajaxCallsInProgress,
         user: state.auth.user,
         currentMenu: state.auth.currentMenu,
         modelList: state.dataViewer.modelList,

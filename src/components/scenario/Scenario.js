@@ -166,22 +166,22 @@ export class Scenario extends React.Component {
           dataIndex: 'scenarioName',
           key: 'scenarioName',
           //defaultSortOrder: 'descend',
-          render: (text, record) => <Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.isSimulated ? `Simulated` : ''}`}>{text}</Link>,
+          render: (text, record) => <span className="borderRight"><Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.geography}/${record.isSimulated ? `Simulated` : ''}`}>{text}</Link></span>,
           sorter: (a, b) => a.scenarioName.length - b.scenarioName.length,
         },
-        {
-          title: 'Simulator/Optimizer',
-          dataIndex: 'isSimulatorOptimiser',
-          key: 'isSimulatorOptimiser',
-          render: (text, record) => <span className="borderRight">{text}</span>,
-          //defaultSortOrder: 'descend',
-          //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
-        },
+        // {
+        //   title: 'Simulator/Optimizer',
+        //   dataIndex: 'isSimulatorOptimiser',
+        //   key: 'isSimulatorOptimiser',
+        //   render: (text, record) => <span className="borderRight">{text}</span>,
+        //   //defaultSortOrder: 'descend',
+        //   //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
+        // },
         {
           title: 'Scenario Notes',
           dataIndex: 'scenarioNotes',
           key: 'scenarioNotes',
-          render: (text, record) => <span className="borderRight">{text}</span>,
+          render: (text, record) => <span className="borderRight moreWidth">{text}</span>,
           //defaultSortOrder: 'descend',
           //sorter: (a, b) => a.scenarioNotes.length - b.scenarioNotes.length,
         },
@@ -189,6 +189,12 @@ export class Scenario extends React.Component {
           title: 'Model',
           dataIndex: 'model',
           sorter: (a, b) => a.model.length - b.model.length,
+          render: (text, record) => <span className="borderRight">{text}</span>,
+        },
+        {
+          title: 'Geography',
+          dataIndex: 'geography',
+          sorter: (a, b) => a.geography.length - b.geography.length,
           render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
@@ -220,7 +226,7 @@ export class Scenario extends React.Component {
           render: (text, record) => (
             record.isShared ? 
               <div>
-                  <Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.isSimulated ? `Simulated` : ''}`}>
+                  <Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.geography}/${record.isSimulated ? `Simulated` : ''}`}>
                     <Tooltip title="Edit">
                       <Icon type="edit" className="tableActionsIcons" />
                     </Tooltip>
@@ -230,7 +236,7 @@ export class Scenario extends React.Component {
                 </div>
               :
               <div>
-                <Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.isSimulated ? `Simulated` : ''}`}>
+                <Link to={`/${record.isSimulatorOptimiser === 'Optimizer' ? 'optimizer' : 'simulator'}/${record.id}/${record.model}/${record.geography}/${record.isSimulated ? `Simulated` : ''}`}>
                   <Tooltip title="Edit">
                     <Icon type="edit" className="tableActionsIcons" />
                   </Tooltip>

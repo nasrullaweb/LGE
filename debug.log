@@ -32,3 +32,10 @@
 [0607/220445.846:ERROR:process_info.cc(556)] ReadMemoryInfo failed
 [0607/220445.846:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
 [0607/220445.847:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1004/230316.655:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1004/230316.685:ERROR:exception_snapshot_win.cc(99)] thread ID 22144 not found in process
+[1004/230316.748:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1004/230316.748:ERROR:exception_snapshot_win.cc(99)] thread ID 9224 not found in process
+[1004/230316.823:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1004/230316.824:ERROR:exception_snapshot_win.cc(99)] thread ID 19648 not found in process
+[1117/190722.930:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

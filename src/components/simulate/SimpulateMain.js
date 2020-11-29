@@ -26,18 +26,19 @@ const alertMsg = (msg) => {
 export class SimpulateMain extends React.Component {
 
     state = {
-        brandList: [],
+        brandList: ['LGE'],
         geographyList: [],
         periodValue: [],
         tacticValue: [],
         subBrandValue: ['LGE'],
         showColumns: false,
         multiProduct: true,
-        message: 'Please Select Brand',
+        message: 'Please Select Period',
         spendNewData: [],
         simulatedMsg: '',
         visibleSaveAs: false,
         shareVisible: false,
+        baseValue: ""
     }
 
     componentDidMount() {
@@ -47,7 +48,11 @@ export class SimpulateMain extends React.Component {
         {
             this.props.getSimulatedSpendData(this.props.scenarioId)
         } else {
-            this.props.getBrands(this.props.modal)
+
+            if (this.props.Globalgeagraphy) {
+                this.props.getPeriod(this.props.modal)
+            }
+            
         }
         
     }
@@ -88,6 +93,14 @@ export class SimpulateMain extends React.Component {
           visibleSaveAs: false,
         });
     }
+
+    onChangeBase = (value) => {
+        const spenData = this.state.spendNewData.length === 0 ? this.props.spendData : this.state.spendNewData
+        this.setState({
+            baseValue: value,
+            spendNewData: spenData
+          });
+    }
     
     handleProductChange = (value) => {
     //     if (value.length > 2) {
@@ -103,11 +116,11 @@ export class SimpulateMain extends React.Component {
                 periodValue: [],
                 tacticValue: [],
                 subBrandValue: ['LGE'],
-                message: 'Please Select Geography'
+                message: 'Please Select Period'
             })
 
             
-            this.props.getGeography(value, this.props.modal)
+            this.props.getPeriod(this.props.modal)
         //}
         
     }
@@ -136,7 +149,7 @@ export class SimpulateMain extends React.Component {
     }
 
     handleYearChange = (value) => {
-        this.props.getTactics(this.state.brandList, this.state.geographyList, this.state.subBrandValue, value, this.props.modal)
+        this.props.getTactics(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, value, this.props.modal)
         this.setState({
             periodValue: value,
             subBrandValue: ['LGE'],
@@ -145,13 +158,20 @@ export class SimpulateMain extends React.Component {
         })
     }
     handleTacticsChange = (value) => {
-        this.props.getSpendingCostData(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
-        this.props.getKeyHighLights(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, value, this.props.modal)
         this.setState({
             tacticValue: value,
-            message: ''
         })
     }
+
+    handleTacticsOkChange = () => {
+        this.setState({
+            message: ''
+        }, () => {
+            this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal)
+            this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal)
+        })
+    }
+
     handleSubBrandChange = (value) => {
         this.props.getPeriod(this.props.modal)
         this.setState({
@@ -185,8 +205,8 @@ export class SimpulateMain extends React.Component {
             periodValue: [],
             tacticValue: [],
             subBrandValue: ['LGE'],
-            brandList: [],
-            message: 'Please Select Brands',
+            brandList: ['LGE'],
+            message: 'Please Select Period',
             spendNewData: [],
             simulatedMsg: '',
         });
@@ -206,7 +226,7 @@ export class SimpulateMain extends React.Component {
             return {simulatedMsg: props.simulatedMsg, spendNewData: []}
         }
 
-        if (props.isSimulated && props.selectedBrand && state.brandList.length <= 0)
+        if (props.isSimulated && props.selectedPeriod && state.periodValue.length <= 0)
         {
             return {
                 brandList: props.selectedBrand,
@@ -232,8 +252,8 @@ export class SimpulateMain extends React.Component {
                     periodValue: [],
                     tacticValue: [],
                     subBrandValue: ['LGE'],
-                    brandList: [],
-                    message: 'Please Select Brands',
+                    brandList: ['LGE'],
+                    message: 'Please Select Period',
                     spendNewData: [],
                     multiProduct: true,
                     simulatedMsg: '',
@@ -244,18 +264,37 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSimulate = () => {
-        this.props.simulateData(this.props.modal, this.state.periodValue, this.state.geographyList, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights)
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+
+        baseValueData = Math.round(baseValueData * 1000)
+        this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights, baseValueData)
     }
 
     handleSave = () => {
-        this.props.saveResults(this.props.modal, this.state.periodValue, this.state.geographyList, this.props.scenarioId, this.props.spendData)
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+        baseValueData = Math.round(baseValueData * 1000)
+        this.props.saveResults(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.props.spendData, baseValueData)
         this.props.setisSimulated()
     }
 
     saveAsScenario = (values) => {
+        let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+        baseValueData = Math.round(baseValueData * 1000)
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []}, () => {
-            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.state.geographyList, values.scenarioname, scenarioNote, this.props.spendData)
+            this.props.saveAsScenario(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, values.scenarioname, scenarioNote, this.props.spendData, baseValueData)
             this.props.setisSimulated()
         })
         
@@ -266,10 +305,10 @@ export class SimpulateMain extends React.Component {
     }
 
     render() {
-      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange, changeShowColumns } = this
-      const url = `/simulator/${saveAsId}/${modal}/${isSimulated ? `Simulated` : ''}`  
-      console.log(isSimulated, runSimulate)
+      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
+      const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange, changeShowColumns, handleTacticsOkChange } = this
+      const url = `/simulator/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`  
+
         return (
                 <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
@@ -355,6 +394,7 @@ export class SimpulateMain extends React.Component {
                             handleTacticsChange={handleTacticsChange}
                             handleSubBrandChange={handleSubBrandChange}
                             multiProductChange={multiProductChange}
+                            handleTacticsOkChange={handleTacticsOkChange}
                             {...this.props}
                         />
                         
@@ -365,6 +405,9 @@ export class SimpulateMain extends React.Component {
                             keyHighlights={keyHighlights}
                             handleChangeSpendData={this.handleChangeSpendData}
                             scenarioName={scenarioName}
+                            Globalgeagraphy={Globalgeagraphy}
+                            handleSimulate={this.handleSimulate}
+                            onChangeBase={this.onChangeBase}
                         />
                     </div>
 

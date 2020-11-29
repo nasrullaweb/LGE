@@ -79,7 +79,7 @@
           border: 0;
           border-radius : 3px;
           box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
-          font-size : 12px;
+          font-size : 14px;
           color : #424242;
 
           &.noMarginRight {
@@ -129,7 +129,6 @@
           }
 
           .radioStyle {
-            display: block;
             padding: 20px 0;
           }
 
@@ -171,6 +170,7 @@
   .components-table-demo-nested {
     .ant-table-thead > tr > th {
       text-align: center;
+      white-space: nowrap;
     }
     .ant-table-tbody > tr > td {
       text-align: center;
@@ -278,12 +278,115 @@
 }
 .loadOptimizeImg {
  
-  background: url(../../images/LG_Tool_Sprite-68.png);
+  background: url(../../images/LG_Tool_Sprite-bg.png);
         background-size: 100% 100%;
         cursor: pointer;
-        width: 405px;
-        height: 99px;
+        width: 155px;
+        height: 66px;
         position: relative;
-        top: -30px;
+        top: -60px;
+        left: 190px;
 }
 
+.loadOptimizeAnimation {
+  background: url(../../images/Progress_Bar.gif);
+        background-size: 100% 100%;
+        cursor: pointer;
+        width: 250px;
+        height: 25px;
+        position: relative;
+}
+
+.tableDataKey {
+  padding-bottom: 20px;
+}
+
+.leftTypeModal {
+  float: left;
+  width: 320px;
+  padding-right: 30px;
+  border-right: 1px dashed #ccc;
+
+  .radioHead {
+    background: linear-gradient(90deg, #ffffff 0%, #e8e8e8 49.05%, #ffffff 100%);
+    height: 29px;
+    text-align: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #545454;
+    line-height: 29px;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+.rightTypeModal {
+  float: left;
+  width: 320px;
+  padding-left: 30px;
+
+  .head {
+    padding-bottom: 15px;
+    background: linear-gradient(90deg, #ffffff 0%, #e8e8e8 49.05%, #ffffff 100%);
+    height: 29px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #545454;
+    line-height: 29px;
+    margin-bottom: 15px;
+  }
+
+  .radioText {
+    padding: 15px;
+    float: left;
+  }
+
+  .ant-radio-wrapper {
+    display: block;
+    padding-bottom: 15px;
+  }
+}
+.clear {
+  clear: both;
+}
+
+.keyHeading .simButton {
+  float: right;
+
+  .createButtom {
+
+    height: 26px;
+    padding-left: 30px;
+    position: relative;
+    top: -5px;
+
+    span.icon {
+      background: url(../../images/LG_Tool_Sprite_Optimize_icon.png) transparent;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      width: 20px;
+      height: 20px;
+      text-indent: -999999px;
+      background-color: transparent !important;
+      border: 0 !important;
+      position: absolute;
+      left: 5px;
+      top: 2px
+    }
+    
+
+    &.disabled { 
+      background: #999;
+    color: #ccc;
+      span.icon {
+      background-image: url("../../images/LG_Tool_Sprite_icon_03_disabled.png");
+      }
+    }
+  }
+}
+
+.tooltipContent {
+  width: 200px;
+}

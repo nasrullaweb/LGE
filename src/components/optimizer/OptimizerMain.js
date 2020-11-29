@@ -5,7 +5,7 @@ import { Button, Typography, Icon, Tabs, Table, Modal, message, Tooltip } from '
 import './Optimizer.less'
 import OptimizerOptionsSelection from './OptimizerOptionsSelection'
 import OptimizerDetails from './OptimizerDetails'
-import { getBrands, getGeography, getPeriod, getTactics, getSubBrands, 
+import { getGeography, getPeriod, getTactics, getSubBrands, 
     getSpendingCostData, getKeyHighLights, revertData, simulateData, getSimulatedSpendData,
     getOptimizationType, saveResults, saveAsScenario, resetSaveAsScenario, checkStatus, discardChanges
 } from '../../store/optimizer/actionCreator'
@@ -14,6 +14,7 @@ import  SaveAs from './SaveAs'
 import { Spin, Progress  } from 'antd';
 import Heartbeat from 'react-heartbeat';
 import ShareScenario from '../scenario/ShareScenario'
+import TypeModal from './TypeModal'
 import { getUsersList, postShareScenario } from '../../store/scenario/actionCreator'
 import { apiURL } from '../../config/apiConfig'
 
@@ -27,22 +28,28 @@ const alertMsg = (msg) => {
 export class SimpulateMain extends React.Component {
 
     state = {
-        brandList: [],
+        brandList: ['LGE'],
         geographyList: [],
         periodValue: [],
         tacticValue: [],
         subBrandValue: ['LGE'],
         optimizationType: [],
         multiProduct: true,
-        message: 'Please Select Brand',
+        message: 'Please Select Period',
         spendNewData: [],
         simulatedMsg: '',
         visibleSaveAs: false,
         shareVisible: false,
+        typeVisible: false,
         revertActive: false,
         minimizeSpendValue: 0,
         maximizeRevenueValue: 0,
         setOptimizerDefault: false,
+        revValue: '',
+        revPrice: 0,
+        revPer: 0,
+        methodValue: '',
+        baseValue: ""
     }
 
     componentDidMount() {
@@ -77,6 +84,25 @@ export class SimpulateMain extends React.Component {
         });
       };
     
+      showTypeModal = () => {
+        this.setState({
+            typeVisible: true,
+        });
+    }
+
+    handleTypeOk = data => {
+        this.setState({
+            typeVisible: false,
+        });
+      };
+    
+      handleTypeCancel = e => {
+        this.setState({
+            typeVisible: false,
+        });
+      };
+    
+
     showSaveAsModal = () => {
         this.setState({
           visibleSaveAs: true,
@@ -95,6 +121,13 @@ export class SimpulateMain extends React.Component {
         });
     }
 
+    onChangeBase = (value) => {
+        this.setState({
+            baseValue: value,
+            setOptimizerDefault: true,
+          });
+    }
+
     handleProductChange = (value) => {
     //     if (value.length > 2) {
     //         alert("Don't select more than 2 Brand")
@@ -111,13 +144,60 @@ export class SimpulateMain extends React.Component {
                 subBrandValue: ['LGE'],
                 optimizationType: [],
                 setOptimizerDefault: false,
-                message: 'Please Select Geography'
+                message: 'Please Select Period'
             })
 
             
-            this.props.getGeography(value, this.props.modal)
+            this.props.getPeriod(this.props.modal)
         //}
         
+    }
+
+    revValueChange = (e) => {
+        this.setState({revValue: e.target.value})
+    }
+
+    methodValueChange = (e) => {
+        this.setState({methodValue: e.target.value})
+    }
+
+    onChangerevPrice = (e) => {
+        this.setState({revPrice: e})
+    }
+
+    onChangerevPer = (e) => {
+        this.setState({revPer: e})
+    }
+
+    onrevChangeOk = () => {
+        const { revPrice, revPer, revValue, minimizeSpendValue, maximizeRevenueValue, optimizationType } = this.state;
+        let actualVal, newMinimizeSpendValue, newmaximizeRevenueValue;
+        if (optimizationType === "Revenue Target") {
+            actualVal = Math.round(this.props.keyHighlights[0].revenue)
+            if (revValue === "price") {
+                newMinimizeSpendValue = ((revPrice - actualVal)/actualVal)*100
+            } else {
+                newMinimizeSpendValue = revPer
+            }
+            newmaximizeRevenueValue = 0;
+        }
+        if (optimizationType === "Spending Target") {
+            actualVal = Math.round(this.props.keyHighlights[0].spend)
+            if (revValue === "price") {
+                newmaximizeRevenueValue = ((revPrice - actualVal)/actualVal)*100
+            } else {
+                newmaximizeRevenueValue = revPer
+            }
+            newMinimizeSpendValue = 0;
+        }
+
+        this.setState({
+            typeVisible: false,
+            minimizeSpendValue: newMinimizeSpendValue,
+            maximizeRevenueValue: newmaximizeRevenueValue,
+            spendNewData: [],
+            setOptimizerDefault: true,
+        });
     }
 
     handleChangeSpendData = (obj) => {
@@ -147,7 +227,7 @@ export class SimpulateMain extends React.Component {
     }
 
     handleYearChange = (value) => {
-        this.props.getTactics(this.state.brandList, this.state.geographyList, this.state.subBrandValue, value, this.props.modal)
+        this.props.getTactics(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, value, this.props.modal)
         this.setState({
             periodValue: value,
             tacticValue: [],
@@ -158,48 +238,89 @@ export class SimpulateMain extends React.Component {
         })
     }
     handleTacticsChange = (value) => {
-        this.props.getOptimizationType()
         this.setState({
             tacticValue: value,
             optimizationType: [],
-            message: 'Please Select Optimization Type',
             spendNewData: [],
             setOptimizerDefault: false,
         })
     }
+    handleTacticsOkChange = () => {
+        this.props.getOptimizationType()
+        this.setState({
+            message: 'Please Select Optimization Type',
+        }, () => {
+                this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
+            this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, 'default', 0)
+
+        })
+    }
+
+    openPopupType = () => {
+       
+        this.setState({
+            typeVisible: true,
+        })
+    }
     handleOptimizationTypeChange = (value) => {
-        const typeValue = value === 'Minimize Spend' ? this.state.minimizeSpendValue : this.state.maximizeRevenueValue;
-        this.props.getSpendingCostData(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, value, typeValue)
-        this.props.getKeyHighLights(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, value, typeValue)
+        const optType = value;
+        const typeValue = value === 'Revenue Target' ? this.state.minimizeSpendValue : this.state.maximizeRevenueValue;
+        
         this.setState({
             optimizationType: value,
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
+            typeVisible: true,
+            revPrice: 0, 
+            revPer: 0
         })
+        // }, () => {
+        //     if (optType) {
+        //         this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
+        //     this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, optType, typeValue)
+        //     }
+            
+        // })
     }
     handleMinimizeSpendValue = (value) => {
-        this.props.getSpendingCostData(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, value)
-        this.props.getKeyHighLights(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, value)
+        const optValue = value
         this.setState({
             minimizeSpendValue: value,
-            optimizationType: 'Minimize Spend',
+            optimizationType: 'Revenue Target',
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
         })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
     }
 
     handleMaximizeRevenueValue = (value) => {
-        this.props.getSpendingCostData(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, value)
-        this.props.getKeyHighLights(this.state.brandList, this.state.geographyList, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, value)
+        const optValue = value
         this.setState({
             maximizeRevenueValue: value,
-            optimizationType: 'Maximize Revenue',
+            optimizationType: 'Spending Target',
             message: '',
             spendNewData: [],
             setOptimizerDefault: true,
         })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
+    }
+
+    optionsValue = (value) => {
+        this.setState({
+            optionsValue: value,
+        })
+        // }, () => {
+        //     this.props.getSpendingCostData(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // this.props.getKeyHighLights(this.state.brandList, this.props.Globalgeagraphy, this.state.subBrandValue, this.state.periodValue, this.state.tacticValue, this.props.modal, this.state.optimizationType, optValue)
+        // })
     }
 
     handleSubBrandChange = (value) => {
@@ -238,9 +359,9 @@ export class SimpulateMain extends React.Component {
             periodValue: [],
             tacticValue: [],
             subBrandValue: ['LGE'],
-            brandList: [],
+            brandList: ['LGE'],
             optimizationType: [],
-            message: 'Please Select Brands',
+            message: 'Please Select Period',
             spendNewData: [],
             simulatedMsg: '',
             setOptimizerDefault: false,
@@ -256,7 +377,7 @@ export class SimpulateMain extends React.Component {
             return {simulatedMsg: props.simulatedMsg, spendNewData: []}
         }
 
-        if ((props.isOptimized || props.isSimulated) && props.selectedBrand && state.brandList.length <= 0)
+        if ((props.isOptimized || props.isSimulated) && props.selectedPeriod && state.periodValue.length <= 0)
         {
             return {
                 brandList: props.selectedBrand,
@@ -301,9 +422,9 @@ export class SimpulateMain extends React.Component {
                     periodValue: [],
                     tacticValue: [],
                     subBrandValue: ['LGE'],
-                    brandList: [],
+                    brandList: ['LGE'],
                     optimizationType: [],
-                    message: 'Please Select Brands',
+                    message: 'Please Select Period',
                     spendNewData: [],
                     multiProduct: true,
                     simulatedMsg: '',
@@ -315,9 +436,17 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSimulate = () => {
-        const spendData = this.state.spendNewData
-        this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
-        this.props.simulateData(this.props.modal, this.state.periodValue, this.state.geographyList, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue)
+        if (this.state.optimizationType) {
+            const spendData = this.state.spendNewData
+            this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
+            let baseValueData = this.state.baseValue 
+                                    ? this.state.baseValue 
+                                    : this.props.keyHighlights.length >= 2 
+                                        ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                                        : "0.538"
+            baseValueData = Math.round(baseValueData * 1000)
+            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue, baseValueData)
+        }
     }
 
     handleDiscard = () => {
@@ -347,9 +476,11 @@ export class SimpulateMain extends React.Component {
         
 
     render() {
-      const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange,  handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange } = this
-      const url = `/optimizer/${saveAsId}/${modal}/${isSimulated ? `Simulated` : ''}`
+      const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
+      const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange } = this
+      const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
+      const optType = Array.isArray(this.state.optimizationType) ? this.state.optimizationType.toString() : this.state.optimizationType;
+      
             return (
                 <div className="simulateContainer simulateNew">
                     { saveAsId && <Redirect to={url} /> }
@@ -362,6 +493,15 @@ export class SimpulateMain extends React.Component {
                             <div className="LoaderOptimize">
                                 <div className="loadOptimizeImg">
                                 </div>
+                                <div className="loadOptimizeAnimation">
+                                </div>
+                                {/* <div id="outer-barG">
+                                    <div id="front-barG" class="bar-animationG">
+                                        <div id="barG_1" class="bar-lineG"></div>
+                                        <div id="barG_2" class="bar-lineG"></div>
+                                        <div id="barG_3" class="bar-lineG"></div>
+                                    </div>
+                                </div> */}
                                 {/* <Spin tip="Optimization in Progress..." className="mainLoader" > </Spin> */}
 
                             </div>
@@ -407,9 +547,9 @@ export class SimpulateMain extends React.Component {
                                     </div>
                                 </Tooltip>
                             }
-                            { !(!this.state.revertActive  && !this.state.setOptimizerDefault) ?
+                            { (!(!this.state.revertActive  && !this.state.setOptimizerDefault)) && optType.length != 0 ?
                                 <Tooltip title="Optimize">
-                                    <Button type="primary" className="createButtom optimize" disabled={!this.state.revertActive  && !this.state.setOptimizerDefault} onClick={this.handleSimulate} >Optimize</Button>
+                                    <Button type="primary" className="createButtom optimize" disabled={!this.state.revertActive  && !this.state.setOptimizerDefault && optType.length === 0} onClick={this.handleSimulate} >Optimize</Button>
                                 </Tooltip>
                                 :
                                 <Tooltip title="Optimize">
@@ -456,11 +596,14 @@ export class SimpulateMain extends React.Component {
                                 handleCompanyChange={handleCompanyChange}
                                 handleYearChange={handleYearChange}
                                 handleTacticsChange={handleTacticsChange}
+                                handleTacticsOkChange={handleTacticsOkChange}
                                 handleSubBrandChange={handleSubBrandChange}
                                 multiProductChange={multiProductChange}
                                 handleOptimizationTypeChange={handleOptimizationTypeChange}
+                                openPopupType={openPopupType}
                                 handleMinimizeSpendValue={this.handleMinimizeSpendValue}
                                 handleMaximizeRevenueValue={this.handleMaximizeRevenueValue}
+                                showTypeModal={this.showTypeModal}
                                 {...this.props}
                             />
                             <OptimizerDetails 
@@ -469,6 +612,10 @@ export class SimpulateMain extends React.Component {
                                 keyHighlights={keyHighlights}
                                 handleChangeSpendData={this.handleChangeSpendData}
                                 scenarioName={scenarioName}
+                                Globalgeagraphy={Globalgeagraphy}
+                                handleSimulate={this.handleSimulate}
+                                optType={optType}
+                                onChangeBase={this.onChangeBase}
                             />
                         </div>
 
@@ -502,6 +649,29 @@ export class SimpulateMain extends React.Component {
                         selectedId={this.props.scenarioId}
                         selectedName={this.props.scenarioName}
                         scenarios={scenariosList}
+                      />
+                    </Modal>
+                    <Modal
+                      title={this.state.optimizationType === 'Revenue Target' ? "Revenue Goal" : "Spend Constraint"}
+                      visible={this.state.typeVisible}
+                      onOk={this.handleTypeOk}
+                      onCancel={this.handleTypeCancel}
+                      className="typePopup"
+                    >
+                      <TypeModal
+                        handleOk={this.handleTypeOk} 
+                        handleCancel={this.handleTypeCancel} 
+                        type={this.state.optimizationType}
+                        revValueChange={this.revValueChange}
+                        methodValue={this.state.methodValue}
+                        methodValueChange={this.methodValueChange}
+                        revValue={this.state.revValue}
+                        revPrice={this.state.revPrice}
+                        revPer={this.state.revPer}
+                        onChangerevPrice={this.onChangerevPrice}
+                        onChangerevPer={this.onChangerevPer}
+                        keyHighlights={keyHighlights}
+                        onrevChangeOk={this.onrevChangeOk}
                       />
                     </Modal>
                 </div>
@@ -545,7 +715,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps  = dispatch => bindActionCreators({
-    getBrands,
     getGeography,
     getPeriod,
     getTactics,

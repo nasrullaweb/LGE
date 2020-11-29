@@ -21,7 +21,6 @@ class CreateUser extends Component {
             data.ConfirmPassword = data.password;
             data.JobTitle = '';
             data.Status = 1;
-            console.log(data);
             if (!err) {
                 this.props.postUser(data);
                 this.props.handleOk();

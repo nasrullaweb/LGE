@@ -1,12 +1,134 @@
 import React, {Fragment} from 'react'
-import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover  } from 'antd';
-import { InfoCircleFilled } from '@ant-design/icons';
+import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover, Tooltip, Button, Modal  } from 'antd';
+import { InfoCircleFilled, BarChartOutlined } from '@ant-design/icons';
 import ColoredScrollbars from '../common/ColoredScrollbars';
+import SpendCharts from './SpendCharts'
+import KeyHighlightsCharts from './KeyHighlightsCharts'
+import ROICharts from './ROICharts'
 
 const { TabPane } = Tabs;
 const { Title } = Typography;
 
 export class OptimizerDetails extends React.Component {
+
+    state = {
+        spendVisible: false,
+        revenuVisible: false,
+        roiVisible: false,
+        revenuLTVisible: false,
+        roiLTVisible: false,
+        keyVisible: false,
+    }
+
+    showKeyModal = () => {
+        this.setState({
+            keyVisible: true,
+        });
+      };
+    
+      handleKeyOk = e => {
+        this.setState({
+            keyVisible: false,
+        });
+      };
+    
+      handleKeyCancel = e => {
+        this.setState({
+            keyVisible: false,
+        });
+      }
+
+
+    showSpendModal = () => {
+        this.setState({
+            spendVisible: true,
+        });
+      };
+    
+      handleSpendOk = e => {
+        this.setState({
+            spendVisible: false,
+        });
+      };
+    
+      handleSpendCancel = e => {
+        this.setState({
+            spendVisible: false,
+        });
+      }
+
+      showRevenuModal = () => {
+        this.setState({
+            revenuVisible: true,
+        });
+      };
+    
+      handleRevenuOk = e => {
+        this.setState({
+            revenuVisible: false,
+        });
+      };
+    
+      handleRevenuCancel = e => {
+        this.setState({
+            revenuVisible: false,
+        });
+      }
+
+      showROIModal = () => {
+        this.setState({
+            roiVisible: true,
+        });
+      };
+    
+      handleROIOk = e => {
+        this.setState({
+            roiVisible: false,
+        });
+      };
+    
+      handleROICancel = e => {
+        this.setState({
+            roiVisible: false,
+        });
+      }
+
+      showRevenuLTModal = () => {
+        this.setState({
+            revenuLTVisible: true,
+        });
+      };
+    
+      handleRevenuLTOk = e => {
+        this.setState({
+            revenuLTVisible: false,
+        });
+      };
+    
+      handleRevenuLTCancel = e => {
+        this.setState({
+            revenuLTVisible: false,
+        });
+      }
+
+      showROILTModal = () => {
+        this.setState({
+            roiLTVisible: true,
+        });
+      };
+    
+      handleROILTOk = e => {
+        this.setState({
+            roiLTVisible: false,
+        });
+      };
+    
+      handleROILTCancel = e => {
+        this.setState({
+            roiLTVisible: false,
+        });
+      }
+
 
     getChangePercentage = (change, oldValue) => {
         return ((change/oldValue)*100)-100
@@ -118,7 +240,6 @@ export class OptimizerDetails extends React.Component {
 
         const minSpend = document.getElementById('minspend_'+id[1]).value
 
-        console.log('cha', parseInt(changePercentage*spend-minSpend) == 0, parseInt(changePercentage*spend-minSpend))
         if (parseInt(minSpend-changePercentage*spend) == 0) {
             alert("Maximum Spending should be >= Minimum Spending")
         }
@@ -386,34 +507,34 @@ export class OptimizerDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
         const columns = [
-            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
-            { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => {
+            { width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
+            { width: 200, title: <span>Spend <BarChartOutlined className="linkToCharts" onClick={this.showSpendModal} /></span>, dataIndex: 'spend', key: 'spend', render: (spend, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newSpend && <strong>Old</strong> } {`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newSpend && <strong>Old</strong> } {`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         
                         {record.newSpend && 
-                            <div><strong>New</strong> {`$${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                            <div><strong>New</strong> {`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         }            
                         {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                             Math.round(record.newSpend) - Math.round(spend) > 0 ?
                                 <div className="newSpend positive">
                                     <span className="title">Change</span>
-                                    <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                                 :
                                 <div className="newSpend negitive">
                                     <span className="title">Change</span>
-                                    <span>${Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                             :
-                            <div className="newSpend">$0</div>
+                            <div className="newSpend">€0</div>
                         }
                     </div>
                   );
@@ -423,65 +544,44 @@ export class OptimizerDetails extends React.Component {
                 {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                     Math.round(record.newSpend) - Math.round(spend) > 0 ?
                         <div className="newSpend positive">
-                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
                             <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                         </div>
                         :
                         <div className="newSpend negitive">
-                            <span className="oldSpend">{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                             <span className="pipe">||</span>
                             <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                             <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                         </div>
                     :
-                    <div className="newSpend"><span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                    <div className="newSpend"><span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                 }
                 
                 </span>
             }},
-            // { title: 'Profit', dataIndex: 'profit', key: 'profit', render: (profit, record) => (
-            //    <span>
-            //        <div>{record.newProfit && <strong>Old</strong> } {`$${Math.round(profit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-            //         {record.newProfit && 
-            //             <div><strong>New</strong> {`$${Math.round(record.newProfit).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-            //         }    
-            //        {record.newProfit && Math.round(record.newProfit) - Math.round(profit) != 0 ?
-            //             Math.round(record.newProfit) - Math.round(profit) > 0 ?
-            //                 <div className="newSpend positive">
-            //                     <div>${Math.round(Math.round(record.newProfit) - Math.round(profit)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-            //                     <div>{Math.round((Math.round(Math.round(record.newProfit) - Math.round(profit))*100)/Math.round(profit))}%</div>
-            //                 </div>
-            //                 :
-            //                 <div className="newSpend negitive">
-            //                     <div>${Math.round(Math.round(record.newProfit) - Math.round(profit)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-            //                     <div>{Math.round((Math.round(Math.round(record.newProfit) - Math.round(profit))*100)/Math.round(profit))}%</div>
-            //                 </div>
-            //             :
-            //             <div className="newSpend">$0</div>
-            //         }
-            //     </span>
-            // )},
-            { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
+            
+            { width: 200, title: <span>Inc Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuModal} /></span>, dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newRevenue && <strong>Old</strong> } {`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     {record.newRevenue && 
-                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div><strong>New</strong> {`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     } 
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>${Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
@@ -491,188 +591,579 @@ export class OptimizerDetails extends React.Component {
                     </div>
                   );
                 return <span className="borderRight">
-                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    {record.newRevenue && 
-                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    }  */}
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span className="oldSpend">{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                        <div className="newSpend"><span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                 </span>
             }},
-            { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => {
+            { width: 200, title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newROI && <strong>Old</strong> } {`$${parseFloat(roi).toFixed(2)}`}</div>
-                    {record.newROI && 
-                        <div><strong>New</strong> {`$${parseFloat(record.newROI).toFixed(2)}`}</div>
+                        <div>{record.newLTRevenue && <strong>Old</strong> } {`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newLTRevenue && 
+                        <div><strong>New</strong> {`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     } 
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>${parseFloat(parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2)).toFixed(2)}</span>
+                                    <span>${Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
                             </div>
                         :
-                        <div className="newSpend">$0.00</div>
+                        <div className="newSpend">$0</div>
                     }
                     </div>
                   );
                 return <span className="borderRight">
-                    {record.newROI && parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) != 0 ?
-                        parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2) > 0 ?
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`$${parseFloat(roi).toFixed(2)}`}</span>
+                               <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI).toFixed(2) - parseFloat(roi).toFixed(2))/parseFloat(roi).toFixed(2))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`$${parseFloat(roi).toFixed(2)}`}</span></div>
+                        <div className="newSpend"><span>{`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                 </span>
             }},
-             { title: 'Minimum Spending', className: 'maxTdSpend', dataIndex: 'changeInMinSpend', key: 'changeInMinSpend', render: (changeInMinSpend, record) => (
-                <span className="borderRight">
-                    <InputNumber disabled={record.spend <=0}  max={Math.round(record.changeInMaxSpend)} value={`${Math.round(changeInMinSpend)}`} onBlur={(e) => this.handleChangeInMinSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpend(e)} id={`minspend_${record.key}`} />
-                    <InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={-100} max={record.changeInMaxSpendPercentage} value={`${parseFloat(record.changeInMinSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMinSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpendPercentage(e)} id={`minpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} />
+            { width: 200, title: <span>Inc ROI <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newROI && <strong>Old</strong> } {`€${parseFloat(roi).toFixed(2)}`}</div>
+                    {record.newROI && 
+                        <div><strong>New</strong> {`€${parseFloat(record.newROI).toFixed(2)}`}</div>
+                    } 
+                    {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">€0.00</div>
+                    }
+                    </div>
+                  );
+                return <span className="borderRight">
+                    {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
+                        parseFloat(record.newROI) - parseFloat(roi) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                        :
+                        <div className="newSpend"><span>{`€${parseFloat(roi).toFixed(2)}`}</span></div>
+                    }
                 </span>
-            )},
-            { title: 'Maximum Spending', className: 'maxTdSpend', dataIndex: 'changeInMaxSpend', key: 'changeInMaxSpend', render: (changeInMaxSpend, record) => (
-                <span>
-                    <InputNumber disabled={record.spend <=0} min={Math.round(record.changeInMinSpend)} value={`${Math.round(changeInMaxSpend)}`} onBlur={(e) => this.handleChangeInMaxSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpend(e)} id={`maxspend_${record.key}`} />
-                    <InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={record.changeInMinSpendPercentage} value={`${parseFloat(record.changeInMaxSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMaxSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpendPercentage(e)} id={`maxpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} />
+            }},
+            { width: 200, title: <span>Brand ROI <BarChartOutlined className="linkToCharts" onClick={this.showROILTModal} /></span>, dataIndex: 'oldLTROI', key: 'oldLTROI', render: (oldLTROI, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newLTROI && <strong>Old</strong> } {`€${parseFloat(oldLTROI).toFixed(2)}`}</div>
+                    {record.newLTROI && 
+                        <div><strong>New</strong> {`€${parseFloat(record.newLTROI).toFixed(2)}`}</div>
+                    } 
+                    {record.newLTROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
+                        parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">€0.00</div>
+                    }
+                    </div>
+                  );
+                return <span className="borderRight">
+                    {record.newROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
+                        parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                        :
+                        <div className="newSpend"><span>{`€${parseFloat(oldLTROI).toFixed(2)}`}</span></div>
+                    }
                 </span>
-            )},
+            }},
+             { width: 200, title: 'Minimum Spending', className: 'maxTdSpend', dataIndex: 'changeInMinSpend', key: 'changeInMinSpend', render: (changeInMinSpend, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                       <div className="optSpend"><strong>optimalSpend1: </strong> €{Math.round(record.optimalSpend1)} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>optimalSpend2: </strong> €{Math.round(record.optimalSpend2)} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                    </div>
+                  );
+                return <span className="borderRight">
+                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0}  max={Math.round(record.changeInMaxSpend)} value={`${Math.round(changeInMinSpend)}`} onBlur={(e) => this.handleChangeInMinSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpend(e)} id={`minspend_${record.key}`} /></Popover>
+                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={-100} max={record.changeInMaxSpendPercentage} value={`${parseFloat(record.changeInMinSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMinSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpendPercentage(e)} id={`minpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                </span>
+             }
+            },
+            { width: 200, title: 'Maximum Spending', className: 'maxTdSpend', dataIndex: 'changeInMaxSpend', key: 'changeInMaxSpend', render: (changeInMaxSpend, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                       <div className="optSpend"><strong>optimalSpend1: </strong> €{Math.round(record.optimalSpend1)} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>optimalSpend2: </strong> €{Math.round(record.optimalSpend2)} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                    </div>
+                  );
+                return <span>
+                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0} min={Math.round(record.changeInMinSpend)} value={`${Math.round(changeInMaxSpend)}`} onBlur={(e) => this.handleChangeInMaxSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpend(e)} id={`maxspend_${record.key}`} /></Popover>
+                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={record.changeInMinSpendPercentage} value={`${parseFloat(record.changeInMaxSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMaxSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpendPercentage(e)} id={`maxpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                </span>
+            }},
         ];
         const tableData = spendData
-        const columnsKey = [
-            { title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
-            { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
-                <span className="borderRight">
-                    {record.tactic && record.tactic === 'Change' ?
-                            spend >= 0 ?
-                            <span className="positive">
-                                <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${Math.round(record.spendPercentage)}%`}</span>
-                            </span>
-                            :
-                            <span className="negitive">
-                                <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${Math.round(record.spendPercentage)}%`}</span>
-                            </span>
-                        :
-                        <span>{`$${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+        const spendSeries = [];
+        const oldSpendSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const newSpendSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const revenuSeries = [];
+        const oldRevenuSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const newRevenuSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const roiSeries = [];
+        const oldroiSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const newroiSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const revenuLTSeries = [];
+        const oldRevenuLTSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const newRevenuLTSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const roiLTSeries = [];
+        const oldroiLTSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const newroiLTSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keySpendSeries = []
+        const keyoldSpendSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewSpendSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keySpendLabels = []
+        const keyRevenueSeries = []
+        const keyoldRevenuSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewRevenuSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keyBaseRevenueSeries = []
+        const keyoldBaseRevenuSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewBaseRevenuSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keyTotalRevenueSeries = []
+        const keyoldTotalRevenuSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewTotalRevenuSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keyRevenueLTSeries = []
+        const keyoldRevenuLTSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewRevenuLTSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keyROISeries = []
+        const keyoldroiSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewroiSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const keyROILTSeries = []
+        const keyoldroiLTSeries = {
+            name: '2019 Plan',
+            data: []
+        }
+        const keynewroiLTSeries = {
+            name: 'New Plan',
+            data: []
+        }
+        const categories = []
+        if (tableData && tableData.length > 0) {
+            tableData.forEach(element => {
+                oldSpendSeries.data.push(element.spend)
+                oldRevenuSeries.data.push(element.revenue)
+                oldroiSeries.data.push(element.roi)
+                oldRevenuLTSeries.data.push(element.oldLTRevenue)
+                oldroiLTSeries.data.push(element.oldLTROI)
+                categories.push(element.tactic)
+                if (element.newSpend) {
+                    newSpendSeries.data.push(element.newSpend)
+                    newRevenuSeries.data.push(element.newRevenue)
+                    newroiSeries.data.push(element.newROI)
+                    newRevenuLTSeries.data.push(element.newLTRevenue)
+                    newroiLTSeries.data.push(element.newLTROI)
+                }
+            });
+        }
+        if (keyHighlights && keyHighlights.length > 0) {
+
+            if (keyHighlights.length === 1) {
+                for (let i = 0; i < keyHighlights.length; i++) {
+
+                    if (i === 0) {
+                        keyoldSpendSeries.data.push(keyHighlights[i].spend)
+                        keyoldRevenuSeries.data.push(keyHighlights[i].revenue)
+                        keyoldBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
+                        keyoldTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
+                        keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        keyoldRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
+                        keyoldroiLTSeries.data.push(keyHighlights[i].ltroi)
+                    } 
+                    if (i === 1) {
+                        keynewSpendSeries.data.push(keyHighlights[i].spend)
+                        keynewRevenuSeries.data.push(keyHighlights[i].revenue)
+                        keynewBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
+                        keynewTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
+                        keynewroiSeries.data.push(keyHighlights[i].roi)
+                        keynewRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
+                        keynewroiLTSeries.data.push(keyHighlights[i].ltroi)
                     }
-                </span>
-             )},
-            { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
-                <span className="borderRight">
-                    {record.tactic && record.tactic === 'Change' ?
-                            revenue >= 0 ?
-                            <span className="positive">
-                                <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${Math.round(record.revenuePercentage)}%`}</span>
-                            </span>
-                            :
-                            <span className="negitive">
-                                <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${Math.round(record.revenuePercentage)}%`}</span>
-                            </span>
-                        :
-                        <span>{`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                    keySpendLabels.push(keyHighlights[i].tactic)
+                  }
+            } else {
+                for (let i = 0; i < keyHighlights.length-1; i++) {
+
+                    if (i === 0) {
+                        keyoldSpendSeries.data.push(keyHighlights[i].spend)
+                        keyoldRevenuSeries.data.push(keyHighlights[i].revenue)
+                        keyoldBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
+                        keyoldTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
+                        keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        keyoldRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
+                        keyoldroiLTSeries.data.push(keyHighlights[i].ltroi)
+                    } 
+                    if (i === 1) {
+                        keynewSpendSeries.data.push(keyHighlights[i].spend)
+                        keynewRevenuSeries.data.push(keyHighlights[i].revenue)
+                        keynewBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
+                        keynewTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
+                        keynewroiSeries.data.push(keyHighlights[i].roi)
+                        keynewRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
+                        keynewroiLTSeries.data.push(keyHighlights[i].ltroi)
                     }
-                </span>
-             )},
-            { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
-                <span>
-                    {record.tactic && record.tactic === 'Change' ?
-                            roi >= 0 ?
-                            <span className="positive">
-                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
-                            </span>
-                            :
-                            <span className="negitive">
-                                <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
-                            </span>
-                        :
-                        <span>{`$${parseFloat(roi).toFixed(2)}`}</span>
-                    }
-                </span>
-             )},
-            //  { title: 'Minimum Spending', className: 'maxTD', dataIndex: 'minimumSpending', key: 'minimumSpending', render: (minimumSpending, record) => (
-            //     <span>
-            //         {record.tactic && record.tactic === 'Change' ?
-            //                 minimumSpending >= 0 ?
-            //                 <span className="positive">{`${parseFloat(minimumSpending).toFixed(2)}`}</span>
-            //                 :
-            //                 <span className="negitive">{`${parseFloat(minimumSpending).toFixed(2)}`}</span>
-            //             :
-            //             <span>{`${parseFloat(minimumSpending).toFixed(2)}`}</span>
-            //         }
-            //     </span>
-            //  )},
-            //  { title: 'Maximum Spending', className: 'maxTD', dataIndex: 'maximumSpending', key: 'maximumSpending', render: (maximumSpending, record) => (
-            //     <span>
-            //         {record.tactic && record.tactic === 'Change' ?
-            //                 maximumSpending >= 0 ?
-            //                 <span className="positive">{`${parseFloat(maximumSpending).toFixed(2)}`}</span>
-            //                 :
-            //                 <span className="negitive">{`${parseFloat(maximumSpending).toFixed(2)}`}</span>
-            //             :
-            //             <span>{`${parseFloat(maximumSpending).toFixed(2)}`}</span>
-            //         }
-            //     </span>
-            //  )},
-        ];
+                    keySpendLabels.push(keyHighlights[i].tactic)
+                  }
+
+            }
+        }
+        
+        oldSpendSeries.data.length > 0 && spendSeries.push(oldSpendSeries)
+        newSpendSeries.data.length > 0 && spendSeries.push(newSpendSeries)
+        oldRevenuSeries.data.length > 0 && revenuSeries.push(oldRevenuSeries)
+        newRevenuSeries.data.length > 0 && revenuSeries.push(newRevenuSeries)
+        oldroiSeries.data.length > 0 && roiSeries.push(oldroiSeries)
+        newroiSeries.data.length > 0 && roiSeries.push(newroiSeries)
+        oldRevenuLTSeries.data.length > 0 && revenuLTSeries.push(oldRevenuLTSeries)
+        newRevenuLTSeries.data.length > 0 && revenuLTSeries.push(newRevenuLTSeries)
+        oldroiLTSeries.data.length > 0 && roiLTSeries.push(oldroiLTSeries)
+        newroiLTSeries.data.length > 0 && roiLTSeries.push(newroiLTSeries)
+        keyoldSpendSeries.data.length > 0 && keySpendSeries.push(keyoldSpendSeries)
+        keynewSpendSeries.data.length > 0 && keySpendSeries.push(keynewSpendSeries)
+        keyoldRevenuSeries.data.length > 0 && keyRevenueSeries.push(keyoldRevenuSeries)
+        keynewRevenuSeries.data.length > 0 && keyRevenueSeries.push(keynewRevenuSeries)
+        keyoldBaseRevenuSeries.data.length > 0 && keyBaseRevenueSeries.push(keyoldBaseRevenuSeries)
+        keynewBaseRevenuSeries.data.length > 0 && keyBaseRevenueSeries.push(keynewBaseRevenuSeries)
+        keyoldTotalRevenuSeries.data.length > 0 && keyTotalRevenueSeries.push(keyoldTotalRevenuSeries)
+        keynewTotalRevenuSeries.data.length > 0 && keyTotalRevenueSeries.push(keynewTotalRevenuSeries)
+        keyoldroiSeries.data.length > 0 && keyROISeries.push(keyoldroiSeries)
+        keynewroiSeries.data.length > 0 && keyROISeries.push(keynewroiSeries)
+        keyoldRevenuLTSeries.data.length > 0 && keyRevenueLTSeries.push(keyoldRevenuLTSeries)
+        keynewRevenuLTSeries.data.length > 0 && keyRevenueLTSeries.push(keynewRevenuLTSeries)
+        keyoldroiLTSeries.data.length > 0 && keyROILTSeries.push(keyoldroiLTSeries)
+        keynewroiLTSeries.data.length > 0 && keyROILTSeries.push(keynewroiLTSeries)
+
+        const baseValueData = 
+            this.props.baseValue 
+            ? this.props.baseValue 
+            : keyHighlights.length >= 2 
+                ? Math.round(keyHighlights[2].baseRevenuePercentage * 1000) / 1000
+                : "0.538"
+        const contentBase = (
+            <div className="spenTooltip">
+                <div><strong>Base Trend Factor</strong></div>
+                <InputNumber value={baseValueData} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onChange={this.props.onChangeBase}  />
+           
+            </div>
+          );
+        
+          const spendcontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Marketing Spends</p>
+            </div>
+          );
+
+          const basecontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>The baseline is any sales achieved independent of marketing activities. They are influenced by various factors like brand value, seasonality and other non-marketing factors like GDP, growth rate, consumer sentiment, etc. </p>
+            </div>
+          );
+
+          const IncRevenuecontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Incremental Revenue is the additional revenue generated by marketing efforts. A baseline revenue is established and it is measured against this baseline revenue</p>
+            </div>
+          );
+
+          const totalcontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Total Revenue is the sum of Baseline Revenue and Incremental Revenue</p>
+            </div>
+          );
+
+          const BrandRevenuecontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Long term revenue is the brand value accumulated over a certain time period due to long-term impact of marketing activities. Impact of long term revenue will be seen in baseline sales over a period of time</p>
+            </div>
+          );
+
+          const IncROIcontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Incremental Revenue/Marketing Spend</p>
+            </div>
+          );
+
+          const brandROIcontent = (
+            <div className="spenTooltip tooltipContent">
+              <p>Long Term Revenue/Marketing Spend</p>
+            </div>
+          );
     
             return (
                 <div className="simulateDetails">
+                    {
+                        this.state.keyVisible && keySpendSeries.length > 0 &&
+                            <Modal
+                                title="Key Highlights"
+                                visible={true}
+                                onOk={this.handleKeyOk}
+                                onCancel={this.handleKeyCancel}
+                                className="cirPopup"
+                                >
+                                <KeyHighlightsCharts 
+                                handleManageOk={this.handleKeyOk} 
+                                handleManageCancel={this.handleKeyCancel} 
+                                keySpendSeries={keySpendSeries}
+                                keySpendLabels={keySpendLabels}
+                                keyRevenueSeries={keyRevenueSeries}
+                                keyBaseRevenueSeries={keyBaseRevenueSeries}
+                                keyTotalRevenueSeries={keyTotalRevenueSeries}
+                                keyROISeries={keyROISeries}
+                                keyRevenueLTSeries={keyRevenueLTSeries}
+                                keyROILTSeries={keyROILTSeries}
+                            />
+                            </Modal>
+                        }
+                    {
+                      this.state.spendVisible && spendSeries.length > 0 &&
+                        <Modal
+                          title="Spend (€)"
+                          visible={this.state.spendVisible}
+                          onOk={this.handleSpendOk}
+                          onCancel={this.handleSpendCancel}
+                          className="simPopup"
+                        >
+                          <SpendCharts 
+                            handleManageOk={this.handleSpendOk} 
+                            handleManageCancel={this.handleSpendCancel} 
+                            spendSeries={spendSeries}
+                            categories={categories}
+                          />
+                        </Modal>
+                    }
+                    {
+                      this.state.revenuVisible && revenuSeries.length > 0 &&
+                        <Modal
+                          title="Inc Revenue (€)"
+                          visible={this.state.revenuVisible}
+                          onOk={this.handleRevenuOk}
+                          onCancel={this.handleRevenuCancel}
+                          className="simPopup"
+                        >
+                          <SpendCharts 
+                            handleManageOk={this.handleRevenuOk} 
+                            handleManageCancel={this.handleRevenuCancel} 
+                            spendSeries={revenuSeries}
+                            categories={categories}
+                          />
+                        </Modal>
+                    }
+                    {
+                      this.state.revenuLTVisible && revenuLTSeries.length > 0 &&
+                        <Modal
+                          title="Brand Revenue (€)"
+                          visible={this.state.revenuLTVisible}
+                          onOk={this.handleRevenuLTOk}
+                          onCancel={this.handleRevenuLTCancel}
+                          className="simPopup"
+                        >
+                          <SpendCharts 
+                            handleManageOk={this.handleRevenuLTOk} 
+                            handleManageCancel={this.handleRevenuLTCancel} 
+                            spendSeries={revenuLTSeries}
+                            categories={categories}
+                          />
+                        </Modal>
+                    }
+                    {
+                      this.state.roiVisible && roiSeries.length > 0 &&
+                        <Modal
+                          title="Inc ROI (€)"
+                          visible={this.state.roiVisible}
+                          onOk={this.handleROIOk}
+                          onCancel={this.handleROICancel}
+                          className="simPopup"
+                        >
+                          <ROICharts 
+                            handleManageOk={this.handleROIOk} 
+                            handleManageCancel={this.handleROICancel} 
+                            spendSeries={roiSeries}
+                            categories={categories}
+                          />
+                        </Modal>
+                    }
+                    {
+                      this.state.roiLTVisible && roiLTSeries.length > 0 &&
+                        <Modal
+                          title="Brand ROI (€)"
+                          visible={this.state.roiLTVisible}
+                          onOk={this.handleROILTOk}
+                          onCancel={this.handleROILTCancel}
+                          className="simPopup"
+                        >
+                          <ROICharts 
+                            handleManageOk={this.handleROILTOk} 
+                            handleManageCancel={this.handleROILTCancel} 
+                            spendSeries={roiLTSeries}
+                            categories={categories}
+                          />
+                        </Modal>
+                    }
                     <div className="detailsHead">
                         <Title><Icon type="edit" className="icon" /> {scenarioName}</Title>
                         {brandList.length > 0 &&
                         <div className="FilterSelection">
-                            {brandList && brandList.length > 0 &&
+                            {Globalgeagraphy &&
                                 <span>
+                                    Geography: {Globalgeagraphy}
+                                </span>
+                            }
+                            {/* {brandList && brandList.length > 0 &&
+                                <span>
+                                    <span className="pipe">||</span>
                                     Brand: {
                                     brandList.map((item, index) =>
                                     index === brandList.length-1 ?
@@ -682,14 +1173,8 @@ export class OptimizerDetails extends React.Component {
                                     )
                                     }
                                 </span>
-                            }
-                            {geographyList && geographyList.length > 0 &&
-                                <span>
-                                    <span className="pipe">||</span>
-                                    Geography: {
-                                    geographyList}
-                                </span>
-                            }
+                            } */}
+                            
                             {/* {subBrandValue && subBrandValue.length > 0 &&
                                 <span>
                                     SubBrand: {
@@ -728,13 +1213,13 @@ export class OptimizerDetails extends React.Component {
                                     optimizationType}
                                 </span>
                             }
-                            {optimizationType && optimizationType.length > 0 && optimizationType == 'Minimize Spend' &&
+                            {optimizationType && optimizationType.length > 0 && optimizationType == 'Revenue Target' &&
                                 <span>
                                     <span className="pipe">||</span>
                                     Revenue Goal: {Math.round(minimizeSpendValue)+100}%
                                 </span>
                             }
-                            {optimizationType && optimizationType.length > 0 && optimizationType == 'Maximize Revenue' &&
+                            {optimizationType && optimizationType.length > 0 && optimizationType == 'Spending Target' &&
                                 <span>
                                     <span className="pipe">||</span>
                                     Spend Constraint: {Math.round(maximizeRevenueValue)+100}%
@@ -744,23 +1229,474 @@ export class OptimizerDetails extends React.Component {
                     }
                 </div>
                 {
-                    brandList.length > 0 && geographyList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
+                    brandList.length > 0 && periodValue.length > 0 && tacticValue.length > 0 && subBrandValue.length > 0 &&
                     <div className="simulatorTableData">
                         <ColoredScrollbars>
                         {
                             keyHighlights.length > 0 &&
-                            <div className="simulateHeader">
-                                <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights</h3>
-                                <div className="simulateTable">
-                                
-                                <Table
-                                    className="components-table-demo-nested keyHighlights"
-                                    columns={columnsKey}
-                                    pagination={false}
-                                    dataSource={keyHighlights}
-                                />
+                            <div className="simulateHeader keyContainer">
+                                {/* <h3 className="keyHeading"> Key Highlights <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></h3> */}
+                                <div className="keyHiCont">
+                                    <div className="spendCont">
+                                        <h5 className="spendHead">
+                                            <span className="spendTopHead setTop1"><span><Popover content={spendcontent}>Spend</Popover></span></span>
+                                            
+                                            </h5>
+                                        <div className="spendContent">
+                                            {/* <div className="baseData">Base</div> */}
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change: </div>
+                                                            <div className="planData">
+                                                                {keyHighlights[2].spend >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].spendPercentage *10)/10}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].spendPercentage *10)/10}%`}</span>
+                                                                </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div className="spendCont1">
+                                        <h5 className="spendHead">
+                                            <span className="leftHeadTop">Short Term Revenue <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></span>
+                                            <span className="rightHeadTop">-</span>
+                                            <span className="leftHead_rev"><Popover content={IncRevenuecontent}>Inc Revenue</Popover></span>
+                                            <span className="rightHead_rev"><Popover content={basecontent}>Base</Popover> <Popover content={contentBase} className="toolPop" trigger="click" ><InfoCircleFilled /></Popover></span>
+                                            <span className="rightHead_rev"><Popover content={totalcontent}>Total</Popover></span>
+                                            <span className="rightHead_rev setTop"><span><Popover content={BrandRevenuecontent}>Brand Revenue</Popover></span></span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            {/* <div className="baseData">Base<span>{` €${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div> */}
+                                            <div className="planCont">
+                                                <div className="leftData_rev">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {keyHighlights[2].revenue >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].revenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].revenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className="rightData_rev">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {keyHighlights[2].baseRevenue >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].baseRevenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].baseRevenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className="rightData_rev">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].revenue + keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].revenue + keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {(keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue) >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round((((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue))/(keyHighlights[0].revenue + keyHighlights[0].baseRevenue))*1000)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round((((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue))/(keyHighlights[0].revenue + keyHighlights[0].baseRevenue))*1000)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className="rightData_rev">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {keyHighlights[2].ltRevenue >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage * 10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="spendCont2">
+                                        <h5 className="spendHead">
+                                            <span className="leftHead setTop1"><span><Popover content={IncROIcontent}>Inc ROI</Popover></span></span>
+                                            <span className="rightHead setTop1"><span><Popover content={brandROIcontent}>Brand ROI</Popover></span></span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            {/* <div className="baseData">Base</div> */}
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].roi *10)/10}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].roi *10)/10}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {keyHighlights[2].roi >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].roi *10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage *10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].roi *10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage *10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div className="rightData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].ltroi *10)/10}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].ltroi *10)/10}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div>
+                                                            <div className="planData">
+                                                                {keyHighlights[2].ltroi >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].ltroi *10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltroiPercentage *10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].ltroi *10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltroiPercentage *10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="clearClass"></div>
                                 </div>
                             </div>
+                            // <div className="simulateHeader">
+                            //     <h3 className="keyHeading"><span className="smallLeftBorder"></span> Key Highlights <span onClick={this.showKeyModal}><BarChartOutlined className="linkToCharts"  /></span></h3>
+                            //     <div className="simulateTable keyHi">
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Spend</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //                 {
+                            //                     keyHighlights.map((record, index) => {
+                            //                         return (
+                                                        
+                            //                                 <div>{record.tactic}: 
+                            //                                     {record.tactic && record.tactic === 'Change' ?
+                            //                                         record.spend >= 0 ?
+                            //                                         <span className="positive">
+                            //                                             <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                             <span className="pipe">||</span>
+                            //                                             <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                            //                                         </span>
+                            //                                         : 
+                            //                                         <span className="negitive">
+                            //                                             <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                             <span className="pipe">||</span>
+                            //                                             <span>{`${Math.round(record.spendPercentage)}%`}</span>
+                            //                                         </span>
+                            //                                     : 
+                            //                                     <span> {` €${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                     }
+                            //                                 </div>
+                                                        
+                            //                         )
+                            //                     })
+                            //                 }
+                            //                 </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Inc Revenue</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon1">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                             <div>
+                            //                                 {record.tactic === "2019 Plan" &&
+                            //                                 <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                            //                                 }
+                            //                                 {record.tactic}: 
+                            //                                 {record.tactic && record.tactic === 'Change' ?
+                            //                                     record.revenue >= 0 ?
+                            //                                     <span className="positive">
+                            //                                         <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                         <span className="pipe">||</span>
+                            //                                         <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span className="negitive">
+                            //                                         <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                         <span className="pipe">||</span>
+                            //                                         <span>{`${Math.round(record.revenuePercentage)}%`}</span>
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span>{` €${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                 }
+                            //                             </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Brand Revenue</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon1">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                             <div>
+                            //                                 {record.tactic === "2019 Plan" &&
+                            //                                 <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                            //                                 }
+                            //                                 {record.tactic}: 
+                            //                                 {record.tactic && record.tactic === 'Change' ?
+                            //                                     record.ltRevenue >= 0 ?
+                            //                                     <span className="positive">
+                            //                                         <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span className="negitive">
+                            //                                         <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                   
+                            //                                     </span>
+                            //                                     :
+                            //                                     <span>{` €${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                            //                                 }
+                            //                             </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Inc ROI</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon2">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                         <div>{record.tactic}: 
+                            //                             {record.tactic && record.tactic === 'Change' ?
+                            //                                 record.roi >= 0 ?
+                            //                                 <span className="positive">
+                            //                                     <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                                     <span className="pipe">||</span>
+                            //                                     <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span className="negitive">
+                            //                                     <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                                     <span className="pipe">||</span>
+                            //                                     <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span>{` €${parseFloat(record.roi).toFixed(2)}`}</span>
+                            //                             }
+                            //                         </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     <div className="kyeDivide"></div>
+                            //     <div className="keyCont">
+                            //         <div className="keyHead">Brand ROI</div>
+                            //         <div className="keyContent">
+                            //             <div className="keyLeft icon2">
+
+                            //             </div>
+                            //             <div className="keyRight">
+                            //             {
+                            //                 keyHighlights.map((record, index) => {
+                            //                     return (
+                                                    
+                            //                         <div>{record.tactic}: 
+                            //                             {record.tactic && record.tactic === 'Change' ?
+                            //                                 record.ltroi >= 0 ?
+                            //                                 <span className="positive">
+                            //                                     <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                               
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span className="negitive">
+                            //                                     <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                               
+                            //                                 </span>
+                            //                                 :
+                            //                                 <span>{` €${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                            //                             }
+                            //                         </div>
+                                                    
+                            //                     )
+                            //                 })
+                            //             }
+                            //             </div>
+                            //         </div>
+                            //     </div>
+                            //     </div>
+                            // </div>
                         }
                         {
                             tableData && tableData.length > 0 &&
@@ -777,6 +1713,23 @@ export class OptimizerDetails extends React.Component {
                                         optimizationType == 'Maximize Revenue' && 
                                         <p className="selectedOptions">Spend Constraint: {Math.round(maximizeRevenueValue)+100}%</p>
                                     } */}
+                                    <div className="simButton">
+                                    { (!(!this.props.revertActive  && !this.props.setOptimizerDefault)) && this.props.optType.length != 0 ?
+                                        <Tooltip title="Optimize">
+                                            <Button type="primary" className="createButtom optimize" disabled={!this.props.revertActive  && !this.props.setOptimizerDefault && this.props.optType.length === 0} onClick={this.props.handleSimulate} >
+                                            <span className="icon"></span>
+                                            Optimize
+                                            </Button>
+                                        </Tooltip>
+                                        :
+                                        <Tooltip title="Optimize">
+                                            <Button type="primary" className="createButtom optimize disabled"  >
+                                            <span className="icon"></span>
+                                            Optimize
+                                            </Button>
+                                        </Tooltip>
+                                    }
+                                    </div>
                                 </h3>
                                 <div className="simulateTable">
                                 <Table
@@ -784,6 +1737,7 @@ export class OptimizerDetails extends React.Component {
                                     columns={columns}
                                     dataSource={tableData}
                                     pagination={false}
+                                    scroll={{ y: 'calc(100vh - 345px)', x: 'calc(100vw - 140px)' }}
                                 />
                                 </div>
                             </div>

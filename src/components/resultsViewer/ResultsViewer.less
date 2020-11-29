@@ -110,6 +110,13 @@
                 border-radius : 8px;
                 background-color: #fff;
 
+                &.setHeight {
+                    height: 700px;
+                    width: calc(33% - 10px);
+                }
+
+                
+
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
@@ -120,8 +127,10 @@
                     border-radius : 8px 8px 0px 0px;
                     border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size : 13px;
+                    font-size : 14px;
                     color : #3D3D3D;
+
+                    
                 }
                 
                 &.titleAdded {
@@ -134,6 +143,23 @@
                 border: 1px Solid rgba(198, 198, 198, 0.5);
                 border-radius : 8px;
                 background-color: #fff;
+                position: relative;
+
+                &.setWidth {
+                    height: 700px;
+                    width: calc(67% - 10px);
+
+                    .chartSub {
+                        width: calc(50% - 10px);
+                        padding-right: 10px;
+                        float: left;
+                        overflow: hidden;
+
+                        &.fullWidth {
+                            width: 100%;
+                        }
+                    }
+                }
 
                 .chartTitle {
                     padding: 10px;
@@ -145,7 +171,7 @@
                     border-radius : 8px 8px 0px 0px;
                     border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size : 13px;
+                    font-size : 14px;
                     color : #3D3D3D;
                 }
                 
@@ -159,7 +185,17 @@
                 border: 1px Solid rgba(198, 198, 198, 0.5);
                 border-radius : 8px;
                 background-color: #fff;
+                position: relative;
 
+                .scrollhor {
+                    width: 100%;
+                    height: 450px;
+                    overflow: auto;
+
+                    .apexcharts-toolbar {
+                        top: 0px !important;
+                    }
+                }
                 .chartTitle {
                     padding: 10px;
                     position: absolute;
@@ -170,8 +206,29 @@
                     border-radius : 8px 8px 0px 0px;
                     border-bottom : 1px Solid rgba(178, 178, 178, 0.5);
                     width: 100%;
-                    font-size : 13px;
+                    font-size : 14px;
                     color : #3D3D3D;
+
+                    .createButtom {
+                        position: absolute;
+                        top: 8px;
+                        font-size: 14px;
+                        right: 0;
+                        margin-right: 10px;
+                        background: transparent;
+                        border: 0;
+                        padding: 0;
+                        height: auto;
+                        color: #333;
+                        text-shadow: unset;
+                        box-shadow: unset;
+                        border-radius: 0;
+                        border-bottom: 3px solid #CC1F55;
+
+                        &:hover {
+                            color: #CC1F55
+                        }
+                    }
                 }
                 
                 &.titleAdded {
@@ -231,7 +288,7 @@
 
         border-bottom : 1px solid rgba(219, 219, 219, 0.5);
         padding: 13px 15px;
-        font-size : 12px;
+        font-size : 14px;
         color : #1A1B1C;
 
     p {
@@ -276,7 +333,7 @@
       margin: 0 auto;
       left: 0;
       right: 0;
-      width: 475px;
+      width: 620px;
       background : #F9F9F9;
       height : 33px;
       border-radius : 17px;
@@ -288,7 +345,7 @@
 .container.dataViewer.resultView .manageContainer .ant-tabs-nav .ant-tabs-tab {
     height: 33px;
     line-height: 9px;
-    font-size : 13px;
+    font-size : 14px;
     color : #383838;
     text-transform: unset;
 }
@@ -296,7 +353,7 @@
 .container.dataViewer.resultView .manageContainer .ant-tabs-nav .ant-tabs-tab-active {
   height: 33px;
   line-height: 9px;
-  font-size : 13px;
+  font-size : 14px;
   background: #cc1f55 ;
   box-shadow: unset;
   color: #fff;
@@ -308,4 +365,37 @@
 
 .container.dataViewer.resultView .ant-tabs-ink-bar {
     display: none;
+}
+
+.chartSub {
+    position: relative;
+
+    .chartTitleSub, .chartTitleSub1, .chartTitleSub2, .chartTitleSub4, .chartTitleSub5 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #9BBB59;
+        padding: 2px 5px;
+        min-width: 100px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .chartTitleSub1 {
+        background-color: #F79646;
+    }
+    .chartTitleSub2 {
+        background-color: #4BACC6;
+    }
+    .chartTitleSub4 {
+        background-color: #186609;
+    }
+    .chartTitleSub5 {
+        background-color: #C0504D;
+    }
+}
+
+.arrow_box {
+    padding: 10px;
+    background: linear-gradient(180deg, #f9f9f9 0%, #f9f9f9 47.72%, #f9f9f9 100%);
+    color: #333;
 }

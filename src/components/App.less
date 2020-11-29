@@ -102,6 +102,7 @@
                 width: 30px;
                 height: 30px;
                 margin: 17px 15px 0 0;
+                cursor: default;
             }
 
             .ant-anchor .anticon svg {
@@ -231,9 +232,9 @@
                     input {
                         background-color: #fff !important;
                         border: 1px Solid rgba(119, 119, 119, 0.5);
-                        height: 30px;
+                        height: 36px;
                         border-radius: 15px;
-                        font-size : 11px;
+                        font-size : 14px;
                         color : #424242;
                         margin-top: 12px;
                     }
@@ -242,11 +243,11 @@
 
             .login-form-button {
                 background : #CC1F55;
-                width : 104px;
+                width : 120px;
                 height : 32px;
                 border-radius : 15px;
                 box-shadow: 1px 4px 5px 0px rgba(0,0,0,0.15);
-                font-size : 12px;
+                font-size : 14px;
                 text-transform : uppercase;
                 color : #FFFFFF;
 
@@ -262,10 +263,10 @@
 
             .login-checkbox {
                 text-align: center;
-                padding-top: 15px;
+                padding-top: 25px;
 
                 .ant-checkbox-wrapper {
-                    font-size : 10px;
+                    font-size : 13px;
                     color : #424242;
                 }
             }
@@ -281,12 +282,12 @@
                         width: 100%;
                         display: inline-block;
                         position: absolute;
-                        top: -24px;
+                        top: -17px;
                         left: 0;
                         text-align: center;
         
                         a {
-                            font-size : 10px;
+                            font-size : 13px;
                             color : #CC1F55;
                         }
                     }
@@ -310,8 +311,8 @@
     width: 100vw;
     height: 100vh;
     z-index: 100;
-    background: rgba(0,0,0,0.5);
-    background-image: url('../images/Spinner-1.6s-190px.gif');
+    background: rgba(255,255,255,0.7);
+    background-image: url('../images/Loader.png');
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -442,7 +443,7 @@
 }
 
 .login-container .ant-checkbox-wrapper span {
-    font-size: 10px;
+    font-size: 13px;
    
 }
 
@@ -470,7 +471,7 @@
             border: 0;
     border-radius: 0;
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
 
             &:hover {
@@ -486,7 +487,7 @@
     border-radius: 0;
     margin: 0;
     color : #CC1F55;
-    font-size: 13px;
+    font-size: 14px;
     text-transform: uppercase;
     &::before {
         display: none;
@@ -544,9 +545,9 @@ body .login-container .login-form .login_error.rest {
     margin-bottom: 5px;
 }
 
-.has-error .ant-form-explain, .has-error .ant-form-split {
-    color: #fff !important;
-}
+// .has-error .ant-form-explain, .has-error .ant-form-split {
+//     color: #fff !important;
+// }
 
 .changePasswordContainer .has-error .ant-form-explain {
     color: #f5222d !important;
@@ -568,14 +569,22 @@ body .login-container .login-form .login_error.rest {
             padding: 0;
         }
     }
+
+    .borderRight {
+        border: 0;
+    }
+
+    .ant-table-tbody > tr > td {
+        font-size: 13px;
+    }
 }
 
 .resetBack  {
     a {
-        font-size : 12px;
+        font-size : 14px;
         color : #424242;
     position: relative;
-    top: 6px;
+    top: 10px;
 
     &:hover {
         color: #333;
@@ -666,8 +675,8 @@ body .login-container .login-form .login_error.rest {
             .MenuItems {
                 width: 100%;
                 display: inline-block;
-                padding-top: 2px;
-                padding-left: 10px;
+                // padding-top: 2px;
+                // padding-left: 10px;
 
                 .iconMenu {
                     width: 20px;
@@ -919,15 +928,15 @@ body .mainContainer .header {
 }
 
 .headerPopup {
-    width : 133px;
+    width : 160px;
   border-radius : 3px;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
   min-width: 133px;
-    max-width: 400px;
+    max-width: 500px;
 
   .ant-dropdown-menu {
       padding: 0;
-      font-size : 12px;
+      font-size : 14px;
       
 
       .ant-dropdown-menu-item {
@@ -938,12 +947,12 @@ body .mainContainer .header {
 
             a {
                 color : #CC1F55 !important;
-                font-size : 12px;
+                font-size : 14px;
             }
         }
 
         a {
-            font-size : 12px;
+            font-size : 14px;
         }
       }
       
@@ -1111,7 +1120,7 @@ body .mainContainer .header {
                             height : 43px;
                             border-radius : 4px;
                             box-shadow : 0px 0px 5px rgba(0, 0, 0, 0.19);
-                            font-size : 13px;
+                            font-size : 15px;
                             color : #8E8E8E;
                             line-height: 23px;
                             padding: 10px;
@@ -1280,7 +1289,7 @@ body .mainContainer .header {
     }
 
     .copyRightLogo {
-        cursor: pointer;
+        cursor: default;
         width: 36px;
         height: 32px;
         display: inline-block;
@@ -1297,7 +1306,7 @@ body .mainContainer .header {
 
 body .ant-modal-content  {
     .formLabel {
-        font-size : 12px;
+        font-size : 14px;
         color : #000000;
     }
 
@@ -1305,14 +1314,14 @@ body .ant-modal-content  {
         background : #FFFFFF;
         height : 37px;  border-radius : 3px;
         box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
-        font-size : 12px;
+        font-size : 14px;
 
     }
     .ant-select-selection--single {
         background : #FFFFFF;
         height : 37px;  border-radius : 3px;
         box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
-        font-size : 12px;
+        font-size : 14px;
         width: 100% !important;
     }
 
@@ -1330,7 +1339,7 @@ body .ant-modal-content  {
             background : #C4C4C4;
             height : 25px;
             border-radius : 3px;
-            font-size : 12px;
+            font-size : 14px;
             color : #FFFFFF;
 
             &.ant-btn-primary {
@@ -1348,3 +1357,134 @@ body .ant-modal-content  {
 .resultView .messageContainer {
     padding-top: 10px;
 }
+
+.downChart .rsquare {
+    display: inline-block;
+    background: linear-gradient(180deg, #f9f9f9 0%, #f9f9f9 47.72%, #f9f9f9 100%);
+    border-radius: 10px;
+    padding: 10px 30px;
+
+    span {
+        padding: 0 10px;
+    }
+
+    span:first-child {
+        padding-left: 0;
+    }
+}
+
+.rsquareCont {
+    text-align: center;
+
+    .chartTitle {
+        text-align: left;
+    }
+
+    .apexcharts-toolbar {
+        top: -84px !important;
+    }
+}
+
+body .ant-layout-sider.layout-aside-nav {
+    position: fixed;
+    left: 0px;
+    top: 60px;
+    z-index: 1;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+}
+
+body .ant-layout.ant-layout-has-sider {
+    margin-left: 50px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #fff; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #aaa; 
+    border-radius: 16px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ccc; 
+  }
+
+  ::-webkit-resizer {
+      height: 3px;
+  }
+
+  .modalInput {
+      text-align: center;
+
+      .ant-input-number {
+        margin: 30px 0;
+        width: 150px;
+        border: 0;
+        height: 37px;
+      }
+
+      .modelButtons {
+          padding: 15px;
+      }
+  }
+
+  .typePopup .ant-modal-content {
+      width: 690px;
+      .ant-modal-header .ant-modal-title {
+          text-align: left;
+      }
+  }
+
+  .typePopup .ant-modal-body {
+      padding: 0;
+
+      .typeContainer {
+          padding: 24px 24px 14px;
+      }
+  }
+
+  body .typePopup .ant-modal-content .modelButtons {
+      border-top: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+
+      .ant-btn.ant-btn-primary {
+        height: 25px;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid #cc1f55;
+        border-radius: 10px;
+        background: #fff;
+        color: #333;
+    }
+  }
+
+  .ant-dropdown-menu .checkOk {
+    text-align: right;
+    padding: 10px 0;
+
+    .ant-btn-primary {
+        height: 25px;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid #cc1f55;
+    border-radius: 10px;
+    background: #fff;
+    color: #333;
+    }
+  }
+
+  body .ant-modal-content {
+      width: 100%;
+  }

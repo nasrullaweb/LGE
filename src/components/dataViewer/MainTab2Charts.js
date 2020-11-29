@@ -54,7 +54,7 @@ class MainTab2Charts extends React.Component {
                   },
                   style: {
                     colors: ['#333'],
-                    fontSize: '8px',
+                    fontSize: '13px',
                   },
                 },
                 stroke: {
@@ -74,7 +74,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   }
@@ -85,14 +85,7 @@ class MainTab2Charts extends React.Component {
                     // max: 10,
                     type: 'numeric',
                   tickAmount: 5,
-                  title: {
-                    text: "Tactic",
-                    style: {
-                      color: '#333',
-                      fontWeight:  'normal',
-                      fontSize:  '12px',
-                    }
-                  },
+                 
                     axisTicks: {
                       show: true,
                     },
@@ -117,7 +110,7 @@ class MainTab2Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -128,13 +121,13 @@ class MainTab2Charts extends React.Component {
                     position: 'bottom',
                     style: {
                       color: '#3D3D3D',
-                      fontSize: '12px',
+                      fontSize: '14px',
                     },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -174,6 +167,7 @@ class MainTab2Charts extends React.Component {
                   bar: {
                     horizontal: false,
                     columnWidth: '70%',
+                    barHeight: '80%',
                   }
                 },
                 dataLabels: {
@@ -195,7 +189,7 @@ class MainTab2Charts extends React.Component {
                   },
                   style: {
                     colors: ['#333'],
-                    fontSize: '9px',
+                    fontSize: '13px',
                   },
                 },
                 stroke: {
@@ -215,7 +209,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   }
@@ -226,13 +220,7 @@ class MainTab2Charts extends React.Component {
                     // max: 10,
                     type: 'numeric',
                     tickAmount: 5,
-                    title: {
-                      text: "Tactic",
-                      style: {
-                        color: '#333',
-                        fontSize:  '12px',
-                      }
-                    },
+                    
                     axisTicks: {
                       show: true,
                     },
@@ -257,7 +245,7 @@ class MainTab2Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -268,13 +256,13 @@ class MainTab2Charts extends React.Component {
                     position: 'bottom',
                     style: {
                       color: '#3D3D3D',
-                      fontSize: '12px',
+                      fontSize: '14px',
                     },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -335,7 +323,7 @@ class MainTab2Charts extends React.Component {
                   labels: {
                     hideOverlappingLabels: true,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -358,13 +346,13 @@ class MainTab2Charts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '12px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -401,13 +389,13 @@ class MainTab2Charts extends React.Component {
                       style: {
                         color: '#FF9933',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -442,13 +430,13 @@ class MainTab2Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 tooltip: {
                   enabled: true,
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   y: {

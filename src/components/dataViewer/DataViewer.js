@@ -7,10 +7,11 @@ import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
 import { setMenu } from '../../store/auth/actionCreator'
 import Loading from '../common/Loading'
-import { getModelList, getGeographyList, getRegionList, getAllData, clearData } from '../../store/dataViewer/actionCreator'
+import { getModelList, getGeographyList, getRegionList, getAllData, clearData, getBrandList } from '../../store/dataViewer/actionCreator'
 import MainTab from './MainTab'
 import Tab1 from './Tab1'
 import Tab2 from './Tab2'
+import Tab3 from './Tab3'
 import {PageView, initGA} from '../common/Tracking';
 import LefNav from '../common/LefNav.js';
 
@@ -50,10 +51,10 @@ class DataViewer extends Component {
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
         
-        if (JSON.parse(sessionStorage.getItem('regionValue'))) {
+        if (JSON.parse(sessionStorage.getItem('brandValue')) || JSON.parse(sessionStorage.getItem('brandValueTab1')) || JSON.parse(sessionStorage.getItem('brandValueTab2')) || JSON.parse(sessionStorage.getItem('brandValueTab3'))) {
             this.props.getAllData();
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
-            this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
+            this.props.getBrandList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')), 'LGE');
         }
     }
 
@@ -153,7 +154,7 @@ class DataViewer extends Component {
     }
 
     render() {
-        const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList } = this.props
+        const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList } = this.props
         const {modelValue, geographyValue, message} = this.state
         //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
@@ -188,26 +189,33 @@ class DataViewer extends Component {
                             </Dropdown>
                             </div> */}
                             {
-                                modelValue && geographyValue && regionList.length > 0 &&
+                                modelValue && geographyValue && brandList.length > 0 &&
                                 <div className="manageTable">
                                     <Tabs defaultActiveKey="1" onChange={this.activateTab}>
                                         <TabPane tab="KPI vs Tactic" key="main" type="card">
                                             <MainTab
-                                                regionList = {regionList}
+                                                brandList = {brandList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
                                         </TabPane>
                                         <TabPane tab="Brand Comparison" key="tab1" type="card">
                                             <Tab1
-                                                regionList = {regionList}
+                                                brandList = {brandList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
                                         </TabPane>
                                         <TabPane tab="Tactic Comparision" key="tab2" type="card">
                                             <Tab2
-                                                regionList = {regionList}
+                                                brandList = {brandList}
+                                                modelValue = {modelValue}
+                                                geographyValue = {geographyValue}
+                                            />
+                                        </TabPane>
+                                        <TabPane tab="Spends" key="tab3" type="card">
+                                            <Tab3
+                                                brandList = {brandList}
                                                 modelValue = {modelValue}
                                                 geographyValue = {geographyValue}
                                             />
@@ -233,6 +241,7 @@ const mapStateToProps = (state) => {
         modelList: state.dataViewer.modelList,
         geographyList: state.dataViewer.geographyList,
         regionList: state.dataViewer.regionList,
+        brandList: state.dataViewer.brandList,
         
     };
   }
@@ -244,6 +253,7 @@ const mapStateToProps = (state) => {
     getRegionList,
     getAllData,
     clearData,
+    getBrandList,
   }, dispatch)
   
   export default connect(mapStateToProps, mapDispatchToProps)(DataViewer)

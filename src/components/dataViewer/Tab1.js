@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Button } from 'antd';
 import './DataViewer.less'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -29,23 +29,53 @@ class Tab1 extends Component {
         var2: {
             checkedList: '',
         },
-        regionValue: JSON.parse(sessionStorage.getItem('regionValueTab1')) || '',
+        regionValue: 'LGE',
         brandValue: JSON.parse(sessionStorage.getItem('brandValueTab1')) || [],
         subBrandValue: JSON.parse(sessionStorage.getItem('subBrandValueTab1')) || [],
         var2Value: JSON.parse(sessionStorage.getItem('var2ValueTab1')) || '',
         dataChanged: true,
-        message: 'Please Select Brand'
+        message: 'Please Select Channel',
+        visible1: false,
+        visible2: false,
+        visible3: false,
+    }
+
+    handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
+      handleVisible3Change = (flag) => {
+        this.setState({ visible3: flag });
+      }
+
+    componentDidMount() {
+        
+        sessionStorage.setItem('regionValueTab1', 'LGE')
+        if (JSON.parse(sessionStorage.getItem('var2ValueTab1'))) {
+            this.setState({ message: "" });
+        } else if (JSON.parse(sessionStorage.getItem('subBrandValueTab1'))) {
+            this.setState({ message: "Please Select Tactic" });
+        } else if (JSON.parse(sessionStorage.getItem('brandValueTab1'))) {
+            this.setState({ message: "Please Select Type" });
+        }  
     }
 
     static getDerivedStateFromProps(props, state) {
 
         let {region, brand, subBrand, var1, var2} = state
         
-        if (state.regionValue !== state.region.checkedList) {
-            region = {
-                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
-            }
-        }
+        // if (state.regionValue !== state.region.checkedList) {
+        //     region = {
+        //         checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+        //     }
+        // }
 
         if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
@@ -85,105 +115,97 @@ class Tab1 extends Component {
         //return { };
       }
 
-    onCheckAllRegionChange = e => {
-        sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('brandValueTab1');
-        sessionStorage.removeItem('subBrandValueTab1');
-        sessionStorage.removeItem('var2ValueTab1');
+    // onCheckAllRegionChange = e => {
+    //     sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+    //     sessionStorage.removeItem('brandValueTab1');
+    //     sessionStorage.removeItem('subBrandValueTab1');
+    //     sessionStorage.removeItem('var2ValueTab1');
+    //     this.setState({
+    //         regionValue: e.target.checked ? e.target.data_opt : [],
+    //         brandValue: '',
+    //         subBrandValue: [],
+    //         var1Value: '',
+    //         var2Value: '',
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList1(modelValue, geographyValue, regionValue)
+    //     })
+    // };
+
+    // onRegionChange = (e) => {
+    //     sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('brandValueTab1');
+    //     sessionStorage.removeItem('subBrandValueTab1');
+    //     sessionStorage.removeItem('var2ValueTab1');
+    //     this.setState({
+    //         regionValue: e.target.value,
+    //         brandValue: '',
+    //         subBrandValue: [],
+    //         var1Value: '',
+    //         var2Value: '',
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.props
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList1(modelValue, geographyValue, regionValue)
+    //     })
+    // }
+
+    onCheckAllBrandChange = e => {
         this.setState({
-            regionValue: e.target.checked ? e.target.data_opt : [],
-            brandValue: '',
-            subBrandValue: [],
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList1(modelValue, geographyValue, regionValue)
+            brandValue: e.target.checked ? e.target.data_opt : [],
         })
     };
 
-    onRegionChange = (e) => {
-        sessionStorage.setItem('regionValueTab1', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('brandValueTab1');
+    onBrandOkChange = () => {
+        sessionStorage.setItem('brandValueTab1', JSON.stringify(this.state.brandValue));
         sessionStorage.removeItem('subBrandValueTab1');
         sessionStorage.removeItem('var2ValueTab1');
         this.setState({
-            regionValue: e.target.value,
-            brandValue: '',
             subBrandValue: [],
             var1Value: '',
             var2Value: '',
-            message: 'Please Select Channel'
+            message: 'Please Select Type',
+            visible1: false
         }, () => {
             const { modelValue, geographyValue } = this.props
-            const { regionValue } =this.state
-            this.props.getBrandList1(modelValue, geographyValue, regionValue)
+            const { regionValue, brandValue } =this.state
+            this.props.getSubBrandList1(modelValue, geographyValue, regionValue, brandValue)
         })
     }
 
-    onCheckAllBrandChange = e => {
-        sessionStorage.setItem('brandValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('subBrandValueTab1');
-        sessionStorage.removeItem('var2ValueTab1');
-        this.setState({
-            brandValue: e.target.checked ? e.target.data_opt : [],
-            subBrandValue: [],
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Type'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue, brandValue } =this.state
-            this.props.getSubBrandList1(modelValue, geographyValue, regionValue, brandValue)
-        })
-    };
-
     onBrandChange = (value) => {
-        sessionStorage.setItem('brandValueTab1', JSON.stringify(value));
-        sessionStorage.removeItem('subBrandValueTab1');
-        sessionStorage.removeItem('var2ValueTab1');
         this.setState({
             brandValue: value,
-            subBrandValue: [],
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Type'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue, brandValue } =this.state
-            this.props.getSubBrandList1(modelValue, geographyValue, regionValue, brandValue)
         })
     }
 
     onCheckAllSubBrandChange = e => {
-        sessionStorage.setItem('subBrandValueTab1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-        sessionStorage.removeItem('var2ValueTab1');
         this.setState({
             subBrandValue: e.target.checked ? e.target.data_opt : [],
+        })
+    };
+
+    onSubBrandOkChange = () => {
+        sessionStorage.setItem('subBrandValueTab1', JSON.stringify(this.state.subBrandValue));
+        sessionStorage.removeItem('var2ValueTab1');
+        this.setState({
             var1Value: '',
             var2Value: '',
-            message: 'Please Select Tactic'
+            message: 'Please Select Tactic',
+            visible2: false
         }, () => {
             const { modelValue, geographyValue } = this.props
             const { regionValue, brandValue, subBrandValue } =this.state
             this.props.getTacticList1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
         })
-    };
+    }
 
     onSubBrandChange = (value) => {
-        sessionStorage.setItem('subBrandValueTab1', JSON.stringify(value));
-        sessionStorage.removeItem('var2ValueTab1');
         this.setState({
             subBrandValue: value,
-            var1Value: '',
-            var2Value: '',
-            message: 'Please Select Tactic'
-        }, () => {
-            const { modelValue, geographyValue } = this.props
-            const { regionValue, brandValue, subBrandValue } =this.state
-            this.props.getTacticList1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
         })
     }
 
@@ -203,7 +225,8 @@ class Tab1 extends Component {
         this.setState({
             var2Value: e.target.value,
             dataChanged: false,
-            message: ''
+            message: '',
+            visible3: false
         }, () => {
             const { modelValue, geographyValue } = this.props
             const { regionValue, brandValue, subBrandValue, var2Value } =this.state
@@ -218,7 +241,7 @@ class Tab1 extends Component {
         })
     }
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane) => {
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -229,7 +252,7 @@ class Tab1 extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 4 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 <div className="site-checkbox-all-wrapper">
                                     <Checkbox
@@ -246,8 +269,13 @@ class Tab1 extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
                             </div>
-                            </ColoredScrollbars>
+                            </div>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">
@@ -265,6 +293,11 @@ class Tab1 extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                         :
                         <Empty />
@@ -277,7 +310,7 @@ class Tab1 extends Component {
                     
                     {listOption.length > 0 ?
                             listOption.length > 5 ? 
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
@@ -285,7 +318,7 @@ class Tab1 extends Component {
                                 )
                             }
                             </Radio.Group>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
@@ -308,9 +341,9 @@ class Tab1 extends Component {
         const { regionList, brandList, subBrandList, tacticList, graphData1, graphData2, graphData3, geographyValue } = this.props
         const {regionValue, brandValue, subBrandValue, var2Value, message } = this.state
         //const { depedentTactics = [], inDepedentTactics = [] } = tacticList
-        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand')
-        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand')
+        //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand', this.onBrandOkChange)
+        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand', this.onSubBrandOkChange)
         //const var1Menu = this.setboxOption(tacticList, 'tactic', '', this.onVar1Change, false, 'var1')
         const var2Menu = this.setboxOption(tacticList, 'tactic', '', this.onVar2Change, false, 'var2')
         return (
@@ -322,22 +355,28 @@ class Tab1 extends Component {
                         {message}
                     </div>
                 }
-                    <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Brand <Icon type="caret-down" theme="outlined" />
                         </a>
-                    </Dropdown>
-                    <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    </Dropdown> */}
+                    <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'
+                    onVisibleChange={this.handleVisible1Change}
+                    visible={this.state.visible1}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Channel <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
-                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'
+                    onVisibleChange={this.handleVisible2Change}
+                    visible={this.state.visible2}>
                         <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                             Type <Icon type="caret-down" theme="outlined" />
                         </a>
                     </Dropdown>
-                    <Dropdown overlay={var2Menu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                    <Dropdown overlay={var2Menu} trigger={['click']} overlayClassName='DropDownOverLay'
+                    onVisibleChange={this.handleVisible3Change}
+                    visible={this.state.visible3}>
                         <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                             Tactic <Icon type="caret-down" theme="outlined" />
                         </a>
@@ -351,13 +390,13 @@ class Tab1 extends Component {
                             Geography: {geographyValue}
                         </span>
                     }
-                    {regionValue &&
+                    {/* {regionValue &&
                         <span>
                             <span className="pipe">||</span>
                             Brand: {
                             regionValue}
                         </span>
-                    }
+                    } */}
                     {brandValue.length > 0 &&
                         <span>
                             <span className="pipe">||</span>
@@ -411,7 +450,7 @@ class Tab1 extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        brandList: state.dataViewer.brandList1,
+        //brandList: state.dataViewer.brandList1,
         subBrandList: state.dataViewer.subBrandList1,
         tacticList: state.dataViewer.tacticList1,
         graphData1: state.dataViewer.graphData11,

@@ -8,78 +8,6 @@ class MainTab4Charts extends React.Component {
 
       this.state = {
         subBrandValue: '',
-        // cart1: {
-        //     series: [{
-        //         data: []
-        //       }],
-        //       options: {
-        //         chart: {
-        //           type: 'bar',
-        //           height: 250
-        //         },
-        //         colors: ['#c55b11', '#FEB019', '#3366ff', '#99ffcc', '#00ccff', '#00ffcc'],
-        //         plotOptions: {
-        //           bar: {
-        //             horizontal: false,
-        //             columnWidth: '90%',
-        //           }
-                  
-        //         },
-        //         dataLabels: {
-        //           enabled: true
-        //         },
-        //         stroke: {
-        //             show: true,
-        //             width: 15,
-        //             colors: ['transparent']
-        //           },
-        //         xaxis: {
-        //           categories: [],
-        //         },
-        //         legend: {
-        //             horizontalAlign: 'center',
-        //             position: 'top',
-        //             showForSingleSeries: true,
-        //             offsetX: 40
-        //           }
-        //       },
-        // },
-      
-        // cart2: {
-        //     series: [{
-        //         data: []
-        //       }],
-        //       options: {
-        //         chart: {
-        //           type: 'bar',
-        //           height: 250
-        //         },
-        //         colors: ['#c55b11', '#FEB019', '#3366ff', '#99ffcc', '#00ccff', '#00ffcc'],
-        //         plotOptions: {
-        //           bar: {
-        //             horizontal: false,
-        //             columnWidth: '90%',
-        //           }
-        //         },
-        //         dataLabels: {
-        //           enabled: true
-        //         },
-        //         stroke: {
-        //             show: true,
-        //             width: 15,
-        //             colors: ['transparent']
-        //           },
-        //         xaxis: {
-        //           categories: [],
-        //         },
-        //         legend: {
-        //             horizontalAlign: 'center',
-        //             showForSingleSeries: true,
-        //             position: 'top',
-        //             offsetX: 40
-        //           }
-        //       },
-        // },
 
         cart3: {
             series: [{
@@ -109,13 +37,13 @@ class MainTab4Charts extends React.Component {
                   enabled: false
                 },
                 stroke: {
-                  width: [2, 2, 2, 2, 2],
+                  width: [4, 2, 2, 2, 2],
                   curve: 'smooth',
                 },
                 xaxis: {
                   type: 'numeric',
-                  tickAmount: 30,
-                  categories: [1, 50, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500],
+                  tickAmount: 5,
+                  categories: [1, 1000, 5000, 10000, 50000, 100000, 5000000, 10000000],
                   axisTicks: {
                     show: true,
                   },
@@ -131,17 +59,32 @@ class MainTab4Charts extends React.Component {
                     offsetY: 8,
                     style: {
                       color: '#333',
-                      fontSize:  '12px',
+                      fontSize:  '14px',
                     }
                   },
                   labels: {
                     show: true,
-                    rotate: -90,
-                    rotateAlways: true,
-                    hideOverlappingLabels: true,
+                    // rotate: -90,
+                    // rotateAlways: true,
+                    // hideOverlappingLabels: true,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
+                    },
+                    formatter: function (value) {
+                      let val = value;
+                      if(val < 999 && val > -1000) {
+                        val = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      }
+
+                      if(val < -1000) {
+                        val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                      }
+                    
+                      if(val > 1000) {
+                        val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                      }
+                      return val;
                     },
                     offsetX: 0,
                     offsetY: 0,
@@ -159,7 +102,7 @@ class MainTab4Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -191,7 +134,7 @@ class MainTab4Charts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                   },
@@ -212,7 +155,7 @@ class MainTab4Charts extends React.Component {
                       style: {
                         color: '#FF9933',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                     // title: {
@@ -224,7 +167,7 @@ class MainTab4Charts extends React.Component {
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         return parseFloat(value).toFixed(2);
@@ -239,7 +182,7 @@ class MainTab4Charts extends React.Component {
                 tooltip: {
                   enabled: true,
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   x: {
@@ -278,7 +221,7 @@ class MainTab4Charts extends React.Component {
                   offsetY: 10,
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 annotations: {
@@ -294,7 +237,7 @@ class MainTab4Charts extends React.Component {
                         position: 'top',
                         offsetX: 5,
                         style: {
-                          fontSize: '10px',
+                          fontSize: '12px',
                           color: '#333',
                           background: '#B3F7CA',
                         },
@@ -318,7 +261,7 @@ class MainTab4Charts extends React.Component {
                         style: {
                           color: '#fff',
                           background: '#FF4560',
-                          fontSize: '10px',
+                          fontSize: '12px',
                         },
                         text: 'Current Spend',
                         
@@ -372,7 +315,7 @@ class MainTab4Charts extends React.Component {
                         type="line" 
                         height={400}
                         />
-                  <p>Response curves are at overall level and will be the same across all models.</p>
+                  <p>Response curves are at overall level and will be the same across all Channel/Type.</p>
                 </div>
                 <div className="spaceBetween"></div>
                 

@@ -67,6 +67,8 @@
             margin: 20px 0;
             background: #fff;
             box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+            clear: both;
+            
         }
 
         .card-container > .ant-tabs-card > .ant-tabs-content {
@@ -101,7 +103,7 @@
           }
 
           .radioStyle {
-            display: block;
+            display: inline-block;
             padding: 20px 0;
           }
 
@@ -117,7 +119,7 @@
 
           .showColumns {
             position: absolute;
-            right: 18px;
+            right: 125px;
             top: 8px;
             z-index: 1;
             color: #333;
@@ -161,7 +163,7 @@
       width : 80px;
       height : 25px;
       border-radius : 2px;
-      font-size: 12px;
+      font-size: 14px;
 
       .ant-input-number-input {
         height : 25px;
@@ -212,7 +214,7 @@
     label {
       padding: 5px 0;
       display: block;
-      font-size : 12px;
+      font-size : 14px;
       color : #444444;
 
       &:hover {
@@ -481,7 +483,7 @@
     height : 37px;
     border-radius : 3px;
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.10);
-    font-size : 12px;
+    font-size : 14px;
   color : #636363;
   }
 
@@ -501,7 +503,7 @@
     height : 37px;
     border-radius : 3px;
     box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.10);
-    font-size : 13px;
+    font-size : 14px;
     color : #FFFFFF;
   }
 }
@@ -533,7 +535,7 @@ body .ant-modal-header {
 
     .ant-modal-title {
       font-weight : bold;
-      font-size : 17px;
+      font-size : 19px;
       color : #CC1F55;
       text-align: center;
     }
@@ -572,7 +574,7 @@ body .ant-modal-header {
       width : 189px;
       height : 29px;
       border-radius : 3px;
-      font-size : 10px;
+      font-size : 14px;
   color : #444444;
   position: relative;
     top: -5px;
@@ -629,7 +631,7 @@ body .ant-table-thead > tr > th {
   border-top: 0 !important;
   background : linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%);
 border-top : 1px Solid rgba(219, 219, 219, 0.5);
-font-size : 12px;
+font-size : 14px;
 color : #4C4C4C;
 padding: 8px 15px;
 font-weight: bold;
@@ -637,7 +639,7 @@ font-weight: bold;
 
 body .ant-table-tbody > tr > td { 
   border-bottom : 1px dashed rgba(188, 188, 188, 0.5);
-  font-size : 12px;
+  font-size : 14px;
 color : #333333;
 padding: 10px 15px;
 white-space: nowrap;
@@ -661,8 +663,18 @@ body .ant-pagination-item-active a {
   border-radius: 8px;
   padding: 10px;
   text-align: right;
-  font-size : 11px;
+  font-size : 13px;
   color : #4C4C4C;
+
+  .optSpend {
+    text-align: left;
+    padding-bottom: 5px;
+  }
+
+  &.tooltipContent {
+    max-width: 220px;
+    text-align: center;
+  }
 }
 
 .borderRight {
@@ -680,10 +692,28 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
   
   .radioStyle {
     padding: 5px 0 5px 20px !important;
+    display: inline-block;
 
     label {
-      font-size: 12px;
+      font-size: 14px;
       color: #000;
+    }
+  }
+
+  .topButtons {
+    width: calc(100vw - 750px);
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    top: -1px;
+
+    .createButtom {
+      height: 28px;
+      font-size: 14px;
+      margin-right: 12px;
+      background: #fff;
+      color: #CC1F55;
+      border: 1px Solid #d3d3d3;
     }
   }
 
@@ -710,7 +740,7 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
     .detailsHead {
       border-bottom: 1px solid rgba(219, 219, 219, 0.5);
       padding: 10px 15px;
-      font-size: 12px;
+      font-size: 14px;
       position: relative;
       color: #1A1B1C;
 
@@ -751,13 +781,233 @@ border-right: 1px solid rgba(188, 188, 188, 0.5);
           border-radius: 8px 8px 0px 0px;
           border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
           width: 100%;
-          font-size: 13px;
+          font-size: 15px;
           color: #3D3D3D;
           text-align: left;
+        }
+        
+        &.keyContainer {
+          background: transparent;
+          box-shadow: unset;
+
+          .keyHeading {
+            background: none;
+            border: 0;
+            text-align: center;
+            padding-top: 0;
+          }
+
+          .keyHiCont {
+            width: 100%;
+            .spendCont {
+              width: calc(17% - 10px);
+              background : linear-gradient(130deg, rgba(25, 230, 217, 1) 0%, rgba(42, 204, 221, 1) 28.7%, rgba(84, 138, 231, 1) 89.76%, rgba(92, 126, 233, 1) 100%);
+              float: left;
+              margin-right: 15px;
+              border-radius : 8px;
+
+              .baseData {
+                visibility: hidden;
+              }
+
+              .spendContent .leftData{
+                width: 100%;
+                border: 0;
+              }
+            }
+            .spendCont1 {
+              width: calc(55% - 10px);
+              background : linear-gradient(130deg, rgba(245, 80, 159, 1) 0%, rgba(251, 103, 133, 1) 66.07%, rgba(254, 116, 118, 1) 100%);
+              float: left;
+              margin-right: 15px;
+              border-radius : 8px;
+            }
+            .spendCont2 {
+              width: calc(28% - 10px);
+              background : linear-gradient(130deg, rgba(255, 216, 65, 1) 0%, rgba(255, 190, 72, 1) 35.92%, rgba(255, 135, 86, 1) 100%);
+              float: left;
+              border-radius : 8px;
+
+              .baseData {
+                visibility: hidden;
+              }
+            }
+
+            .spendHead {
+              font-weight : bold;
+              font-size : 13px;
+              text-transform : uppercase;
+              color : #FFFFFF;
+              border-bottom: 1px solid #ddd;
+              padding: 5px 15px;
+
+              .setTop span {
+                position: relative;
+                top: -8px;
+              }
+              .setTop1 span {
+                position: relative;
+                top: 18px;
+              }
+
+              .leftHead {
+                display: inline-block;
+                width: 50%;
+                padding-right: 15px;
+                border-right: 1px dotted #fff;
+                height: 50px;
+              }
+              .rightHead {
+                display: inline-block;
+                width: 50%;
+                padding-left: 15px;
+                height: 50px;
+              }
+
+              .spendTopHead {
+                display: inline-block;
+                width: 100%;
+                height: 50px;
+              }
+
+              .leftHead_rev {
+                display: inline-block;
+                width: 25%;
+                padding-right: 15px;
+                
+              }
+              .rightHead_rev {
+                display: inline-block;
+                width: 25%;
+                padding-left: 15px;
+                border-left: 1px dotted #fff;
+              }
+
+              .leftHeadTop {
+                display: inline-block;
+                width: 75%;
+                padding-right: 15px;
+               
+                text-align: center;
+                padding: 8px 0 10px 0;
+
+                .linkToCharts {
+                  color: #fff !important;
+                }
+              }
+              .rightHeadTop {
+                display: inline-block;
+                width: 25%;
+                padding-left: 15px;
+                border-left: 1px dotted #fff;
+                padding: 8px 0 10px 0;
+                text-indent: -999999px;
+              }
+
+              .topSpaceDiv {
+                padding: 8px 0 10px 0;
+                text-indent: -999999px;
+                display: block;
+              }
+            }
+
+            .spendContent {
+              padding: 5px 15px;
+              text-align: center;
+              background-image: url('../../images/LG_Tool_Sprite-83.png');
+              background-position: center right;
+              background-repeat: no-repeat;
+              background-size: contain;
+
+              .baseData {
+                background : linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.28) 46.82%, rgba(255, 255, 255, 0) 100%);
+                width: auto;
+                margin: 0 auto;
+                display: inline-block;
+                padding: 2px 20px;
+                color: #fff;
+              }
+              .planCont {
+                display: block;
+                width: 100%;
+                padding: 10px 0;
+              }
+
+              .leftData, .rightData {
+                width: 100%;
+                text-align: left;
+              }
+
+              .leftData {
+                display: inline-block;
+                width: 50%;
+                padding-right: 15px;
+                border-right: 1px dotted #fff;
+              }
+              .rightData {
+                display: inline-block;
+                width: 50%;
+                padding-left: 15px;
+              }
+
+              .leftData_rev {
+                display: inline-block;
+                width: 25%;
+                padding-right: 15px;
+                text-align: left;
+                
+              }
+              .rightData_rev {
+                display: inline-block;
+                width: 25%;
+                padding-left: 15px;
+                border-left: 1px dotted #fff;
+                text-align: left;
+              }
+
+              .oldPlan {
+                padding-right: 7px;
+              }
+              .newPlan {
+                padding-right: 7px;
+                padding-top: 7px;
+              }
+
+              .changePlan {
+                color: #fff;
+                font-size: 11px;
+                padding: 7px 0;
+
+                span, .positive, .pipe, .negitive {
+                  color: #fff !important;
+                }
+              }
+
+              .oldPlan, .newPlan, .changePlan {
+                display: block;
+                color: #fff;
+
+                .planTitle {
+                  font-size: 10px;
+                }
+
+                .planData {
+                  font-size: 14px;
+                }
+                
+              }
+            }
+
+          }
         }
 
         .simulateTable {
           padding: 10px 10px 0 10px;
+
+          .ant-table-wrapper.components-table-demo-nested {
+            width: 100%;
+            overflow: auto;
+          }
         }
       }
     }
@@ -779,6 +1029,11 @@ body .ant-modal-mask {
 
 .createSc.ant-modal {
   top: 30px;
+  width: 650px !important;
+
+  .ant-modal-content {
+    width: 650px;
+  }
 }
 
 body .ant-pagination-item-active:focus, body .ant-pagination-item-active:hover {
@@ -794,4 +1049,269 @@ body .ant-input-search.ant-input-affix-wrapper .ant-input-suffix {
 
 .mainContent .components-table-demo-nested.keyHighlights .ant-table-thead > tr > th.leftAlign {
   text-indent: -99999px;
+}
+
+.kyeDivide {
+  width: 2%;
+  background: url(../../images/LG_Tool_Sprite-81.png);
+  background-size: contain;
+  background-position: center;
+  height: 80px;
+  background-repeat: no-repeat;
+}
+
+.keyHi {
+  display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyCont {
+  width: 20%;
+
+  .keyHead {
+    background : linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(232, 232, 232, 1) 49.05%, rgba(255, 255, 255, 1) 100%);
+    height : 29px;
+    text-align: center;
+    font-weight : bold;
+    font-size : 15px;
+    text-transform : uppercase;
+    color : #545454;
+    line-height: 29px;
+  }
+
+  .keyContent {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .keyLeft {
+      width: 80px;
+      height: 80px;
+      background: url(../../images/LG_Tool_Sprite-78.png);
+      background-size: 100% 100%;
+      
+      &.icon1 {
+        background-image: url(../../images/LG_Tool_Sprite-79.png);
+      }
+
+      &.icon2 {
+        background-image: url(../../images/LG_Tool_Sprite-80.png);
+      }
+    }
+
+    .keyRight {
+      font-size : 14px;
+      width: 180px;
+      color : #636363;
+
+      > div {
+        padding-bottom: 3px;
+        padding-left: 5px;
+
+        span {
+          color: #000;
+
+          &.positive span {
+            color: #11A818 !important;
+
+            &.pipe {
+              color : #636363 !important;
+            }
+          }
+          
+          &.negitive span {
+            color: #EA1B1B !important;
+
+            &.pipe {
+              color : #636363 !important;
+            }
+          }
+
+          
+        }
+      }
+    }
+  }
+}
+
+
+#outer-barG{
+	height:24px;
+	width:300px;
+  border:none;
+  border-radius: 20px;
+	overflow:hidden;
+	background-color:#efefef;
+  margin:auto;
+  position: absolute;
+}
+
+.bar-lineG{
+	background-color:#CC1F55;
+	float:left;
+	width:18px;
+	height:117px;
+	margin-right:23px;
+	margin-top:-27px;
+	transform:rotate(45deg);
+		-o-transform:rotate(45deg);
+		-ms-transform:rotate(45deg);
+		-webkit-transform:rotate(45deg);
+		-moz-transform:rotate(45deg);
+}
+
+
+.bar-animationG{
+	margin-left:300px;
+	width:300px;
+	animation-name:bar-animationG;
+		-o-animation-name:bar-animationG;
+		-ms-animation-name:bar-animationG;
+		-webkit-animation-name:bar-animationG;
+		-moz-animation-name:bar-animationG;
+	animation-duration:2.24s;
+		-o-animation-duration:2.24s;
+		-ms-animation-duration:2.24s;
+		-webkit-animation-duration:2.24s;
+		-moz-animation-duration:2.24s;
+	animation-iteration-count:infinite;
+		-o-animation-iteration-count:infinite;
+		-ms-animation-iteration-count:infinite;
+		-webkit-animation-iteration-count:infinite;
+		-moz-animation-iteration-count:infinite;
+	animation-direction:reverse;
+		-o-animation-direction:reverse;
+		-ms-animation-direction:reverse;
+		-webkit-animation-direction:reverse;
+		-moz-animation-direction:reverse;
+}
+
+
+
+@keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-o-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-ms-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-webkit-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+@-moz-keyframes bar-animationG{
+	0%{
+		margin-left:251px;
+		margin-top:-18px;
+	}
+
+	100%{
+		margin-left:-125px;
+		margin-top:-18px;
+	}
+}
+
+.linkToCharts {
+  cursor: pointer;
+  font-size: 17px;
+    color: #CC1F55 !important;
+    padding-left: 5px;
+}
+
+.simPopup {
+  width: 1200px !important;
+
+  .apexcharts-toolbar {
+    top: 0 !important;
+  }
+}
+
+.cirPopup {
+  width: 1200px !important;
+
+  .spaceBetween {
+    clear: both;
+    width: 100%;
+    height: 20px;
+  }
+
+  .apexcharts-toolbar {
+    top: 0 !important;
+  }
+
+  .circleChart {
+    width: 370px;
+    padding: 10px;
+    border: 1px Solid rgba(198, 198, 198, 0.5);
+    border-radius: 8px;
+    background-color: #fff;
+    display: inline-block;
+    margin-right: 20px;
+    padding-top: 50px;
+
+    &.bigCircle {
+      width: 566px;
+    }
+
+    &.lastCircle {
+      margin-right: 0;
+    }
+
+    .chartTitle {
+      padding: 10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 47.72%, #e3e3e3 100%);
+      height: 36px;
+      border-radius: 8px 8px 0px 0px;
+      border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
+      width: 100%;
+      font-size: 14px;
+      color: #3D3D3D;
+  }
+}
+}
+
+.clearClass {
+  clear: both;
 }

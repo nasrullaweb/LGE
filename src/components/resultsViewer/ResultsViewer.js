@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout } from 'antd';
+import { Select, Radio, Menu, Dropdown, Checkbox, Empty, Icon, Typography, Tabs, Layout, Button } from 'antd';
 import LefNav from '../common/LefNav.js';
 import './ResultsViewer.less'
 import { connect } from 'react-redux';
@@ -8,14 +8,15 @@ import Header from '../common/Header.js';
 import Footer from '../common/Footer.js';
 import { setMenu } from '../../store/auth/actionCreator'
 import Loading from '../common/Loading'
-import { getModelList, getGeographyList, getRegionList, getTacticList, getGraphData4, setGraphChange1, clearData,
-    getAllData, getBrandList, getSubBrandList, getGraphData1, getGraphData21, getGraphData22,
-    getGraphData2, getGraphData3, setGraphChange, getRSquare
+import { getModelList, getGeographyList, getRegionList, getTacticList, getTacticList1, getGraphData4, setGraphChange1, clearData,
+    getAllData, getBrandList, getSubBrandList, getGraphData1, getGraphData21, getGraphData22, getGraphData23,
+    getGraphData2, getGraphData3, setGraphChange, getRSquare, getGraphData5
 } from '../../store/resultsViewer/actionCreator'
 import MainTab1Charts from './MainTab1Charts'
 import MainTab2Charts from './MainTab2Charts'
 import MainTab4Charts from './MainTab4Charts'
 import MainTab3Charts from './MainTab3Charts'
+import MainTab5Charts from './MainTab5Charts'
 import {PageView, initGA} from '../common/Tracking';
 import ColoredScrollbars from '../common/ColoredScrollbars';
 
@@ -38,24 +39,57 @@ class ResultsViewer extends Component {
             checkedList: '',
         },
         brand: {
-            checkedList: '',
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
         },
         subBrand: {
-            checkedList: '',
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
         },
         tactic: {
             checkedList: '',
         },
+        tactic1: {
+            checkedList: [],
+            indeterminate: false,
+            checkAll: false,
+        },
         modelValue: JSON.parse(sessionStorage.getItem('modelValue')) || '',
         geographyValue: JSON.parse(sessionStorage.getItem('geographyValue')) || '',
-        regionValue: JSON.parse(sessionStorage.getItem('RregionValue')) || '',
-        brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || '',
-        subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || '',
+        regionValue: 'LGE',
+        brandValue: JSON.parse(sessionStorage.getItem('RbrandValue')) || [],
+        subBrandValue: JSON.parse(sessionStorage.getItem('RsubBrandValue')) || [],
         tacticValue: JSON.parse(sessionStorage.getItem('RtacticValue')) || '',
-        message: 'Please Select Brand',
+        tacticValue1: JSON.parse(sessionStorage.getItem('RtacticValue1')) || [],
+        message: 'Please Select Channel',
         messageTac: 'Please Select Tactic',
+        messageTac1: 'Please Select Tactic',
         collapsed: true,
+        visible1: false,
+        visible2: false,
+        visible3: false,
+        visible4: false,
     }
+
+    handleMenuClick = (e) => {
+        if (e.key === '3') {
+          this.setState({ visible: false });
+        }
+      }
+      handleVisible1Change = (flag) => {
+        this.setState({ visible1: flag });
+      }
+      handleVisible2Change = (flag) => {
+        this.setState({ visible2: flag });
+      }
+      handleVisible3Change = (flag) => {
+        this.setState({ visible3: flag });
+      }
+      handleVisible4Change = (flag) => {
+        this.setState({ visible4: flag });
+      }
 
     onCollapse = collapsed => {
         this.setState({ collapsed });
@@ -64,7 +98,7 @@ class ResultsViewer extends Component {
 
     static getDerivedStateFromProps(props, state) {
 
-        let {region, brand, subBrand, modelName, geography, tactic} = state
+        let {region, brand, subBrand, modelName, geography, tactic, tactic1} = state
 
         // if (state.modelValue !== state.modelName.checkedList) {
         //     modelName = {
@@ -78,22 +112,28 @@ class ResultsViewer extends Component {
         //     }
         // }
         
-        if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
-            region = {
-                checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
-            }
-        }
+        // if (state.regionValue !== state.region.checkedList && props.regionList.length > 0) {
+        //     region = {
+        //         checkedList: Array.isArray(state.regionValue) ? state.regionValue[0] : state.regionValue,
+        //     }
+        // }
 
-        if (state.brandValue !== state.brand.checkedList) {
+        if (state.brandValue !== state.brand.checkedList && props.brandList.length > 0) {
             brand = {
-                checkedList: Array.isArray(state.brandValue) ? state.brandValue[0] : state.brandValue,
+                checkedList: state.brandValue,
+                    indeterminate: !!state.brandValue.length && state.brandValue.length < props.brandList.length,
+                    checkAll: state.brandValue.length === props.brandList.length,
             }
         }
 
         if (state.subBrandValue !== state.subBrand.checkedList && props.subBrandList.length > 0) {
-            subBrand = {
-                checkedList: Array.isArray(state.subBrandValue) ? state.subBrandValue[0] : state.subBrandValue,
-            }
+                subBrand = {
+                    checkedList: state.subBrandValue,
+                    indeterminate: !!state.subBrandValue.length && state.subBrandValue.length < props.subBrandList.length,
+                    checkAll: state.subBrandValue.length === props.subBrandList.length,
+                }
+                //checkedList: Array.isArray(state.subBrandValue) ? state.subBrandValue[0] : state.subBrandValue,
+            
         }
 
         if (state.tacticValue !== state.tactic.checkedList && props.tacticList && props.tacticList.length > 0) {
@@ -102,13 +142,24 @@ class ResultsViewer extends Component {
             }
         }
 
+        if (state.tacticValue1 !== state.tactic1.checkedList && props.tacticList1 && props.tacticList1.length > 0) {
+            tactic1 = {
+                checkedList: state.tacticValue1,
+                indeterminate: !!state.tacticValue1.length && state.tacticValue1.length < props.tacticList1.length,
+                checkAll: state.tacticValue1.length === props.tacticList1.length,
+            }
+            //checkedList: Array.isArray(state.subBrandValue) ? state.subBrandValue[0] : state.subBrandValue,
+        
+    }
+
         return {
             region,
             brand,
             subBrand,
             modelName,
             geography,
-            tactic
+            tactic,
+            tactic1
         }
         
         //return { };
@@ -120,13 +171,26 @@ class ResultsViewer extends Component {
         this.props.history.push('/MarketingROI')
         initGA('UA-176821185-1', sessionStorage.getItem('user'));
       PageView();
-        
-        if (JSON.parse(sessionStorage.getItem('RregionValue'))) {
-            console.log('test')
+      sessionStorage.setItem('RregionValue', 'LGE');
+        if (JSON.parse(sessionStorage.getItem('RbrandValue'))) {
             this.props.getAllData();
         } else if (JSON.parse(sessionStorage.getItem('geographyValue'))) {
-            this.props.getRegionList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')));
+            this.props.getBrandList(JSON.parse(sessionStorage.getItem('modelValue')), JSON.parse(sessionStorage.getItem('geographyValue')), 'LGE');
         }
+
+        if (JSON.parse(sessionStorage.getItem('RsubBrandValue'))) {
+            this.setState({ message: "" });
+        } else if (JSON.parse(sessionStorage.getItem('RbrandValue'))) {
+            this.setState({ message: "Please Select Type" });
+        } 
+        
+        if (JSON.parse(sessionStorage.getItem('RtacticValue'))) {
+            this.setState({ messageTac: "" });
+        } 
+
+        if (JSON.parse(sessionStorage.getItem('RtacticValue1'))) {
+            this.setState({ messageTac1: "" });
+        } 
     }
 
     // componentWillUnmount() {
@@ -193,31 +257,39 @@ class ResultsViewer extends Component {
     //     })
     // };
 
-    onRegionChange = (e) => {
-        sessionStorage.setItem('RregionValue', JSON.stringify(e.target.value));
-        sessionStorage.removeItem('RbrandValue');
-        sessionStorage.removeItem('RsubBrandValue');
-        this.setState({
-            regionValue: e.target.value,
-            brandValue: '',
-            subBrandValue: '',
-            tacticValue: '',
-            message: 'Please Select Channel'
-        }, () => {
-            const { modelValue, geographyValue } = this.state
-            const { regionValue } =this.state
-            this.props.getBrandList(modelValue, geographyValue, regionValue)
-        })
-    }
+    // onRegionChange = (e) => {
+    //     sessionStorage.setItem('RregionValue', JSON.stringify(e.target.value));
+    //     sessionStorage.removeItem('RbrandValue');
+    //     sessionStorage.removeItem('RsubBrandValue');
+    //     this.setState({
+    //         regionValue: e.target.value,
+    //         brandValue: '',
+    //         subBrandValue: '',
+    //         tacticValue: '',
+    //         message: 'Please Select Channel'
+    //     }, () => {
+    //         const { modelValue, geographyValue } = this.state
+    //         const { regionValue } =this.state
+    //         this.props.getBrandList(modelValue, geographyValue, regionValue)
+    //     })
+    // }
 
-    onBrandChange = (e) => {
-        sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.value));
+    onCheckAllBrandChange = e => {
+        // sessionStorage.setItem('RbrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        // sessionStorage.removeItem('RsubBrandValue');
+        this.setState({
+            brandValue: e.target.checked ? e.target.data_opt : [],
+        })
+    };
+
+    handleBrandOkChange = () => {
+        sessionStorage.setItem('RbrandValue', JSON.stringify(this.state.brandValue));
         sessionStorage.removeItem('RsubBrandValue');
         this.setState({
-            brandValue: e.target.value,
             subBrandValue: '',
             tacticValue: '',
-            message: 'Please Select Type'
+            message: 'Please Select Type',
+            visible1: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue } =this.state
@@ -225,29 +297,32 @@ class ResultsViewer extends Component {
         })
     }
 
-    // onCheckAllSubBrandChange = e => {
-    //     sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
-    //     this.setState({
-    //         subBrandValue: e.target.checked ? e.target.data_opt : [],
-    //         tacticValue: '',
-    //     }, () => {
-    //         const { modelValue, geographyValue } = this.state
-    //         const { regionValue, brandValue, subBrandValue } =this.state
-    //         this.props.setGraphChange()
-    //         this.props.getGraphData1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getRSquare(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //         this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
-    //     })
-    // };
-
-    onSubBrandChange = (e) => {
-        sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.value));
+    onBrandChange = (value) => {
+        // sessionStorage.setItem('RbrandValue', JSON.stringify(value));
+        // sessionStorage.removeItem('RsubBrandValue');
         this.setState({
-            subBrandValue: e.target.value,
+            brandValue: value,
+        })
+    }
+
+    onCheckAllSubBrandChange = e => {
+        //sessionStorage.setItem('RsubBrandValue', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        this.setState({
+            subBrandValue: e.target.checked ? e.target.data_opt : []
+        })
+    };
+
+    handleSubBrandOkChange = () => {
+        sessionStorage.setItem('RsubBrandValue', JSON.stringify(this.state.subBrandValue));
+        sessionStorage.removeItem('RtacticValue');
+        sessionStorage.removeItem('RtacticValue1');
+        this.setState({
             tacticValue: '',
+            tacticValue1: '',
             message: '',
+            messageTac: 'Please Select Tactic',
+            messageTac1: 'Please Select Tactic',
+            visible2: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue } =this.state
@@ -257,8 +332,17 @@ class ResultsViewer extends Component {
             this.props.getGraphData2(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData21(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData22(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getGraphData23(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getGraphData3(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
             this.props.getTacticList(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+            this.props.getTacticList1(modelValue, geographyValue, regionValue, brandValue, subBrandValue)
+        })
+    }
+
+    onSubBrandChange = (value) => {
+        //sessionStorage.setItem('RsubBrandValue', JSON.stringify(value));
+        this.setState({
+            subBrandValue: value,
         })
     }
 
@@ -267,6 +351,7 @@ class ResultsViewer extends Component {
         this.setState({
             tacticValue: e.target.value,
             messageTac: '',
+            visible3: false
         }, () => {
             const { modelValue, geographyValue } = this.state
             const { regionValue, brandValue, subBrandValue, tacticValue } =this.state
@@ -275,7 +360,37 @@ class ResultsViewer extends Component {
         })
     }
 
-    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane) => {
+    
+
+    onCheckAllTactic1Change = e => {
+        //sessionStorage.setItem('RtacticValue1', JSON.stringify(e.target.checked ? e.target.data_opt : []));
+        this.setState({
+            tacticValue1: e.target.checked ? e.target.data_opt : [],
+            messageTac1: '',
+        })
+    };
+
+    handleTactic1OkChange = () => {
+        sessionStorage.setItem('RtacticValue1', JSON.stringify(this.state.tacticValue1));
+        this.setState({
+            messageTac1: '',
+            visible4: false
+        }, () => {
+            const { modelValue, geographyValue } = this.state
+            const { regionValue, brandValue, subBrandValue, tacticValue1 } =this.state
+            this.props.setGraphChange1()
+            this.props.getGraphData5(modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue1)
+        })
+    }
+
+    onTactic1Change = (value) => {
+        //sessionStorage.setItem('RtacticValue1', JSON.stringify(value));
+        this.setState({
+            tacticValue1: value,
+        })
+    }
+
+    setboxOption = (list, keyName, checkAllChange, onChange, multiSelect, stateNane, okClick) => {
 
         const listOption = []
         list.forEach(function(value, key) {
@@ -286,7 +401,7 @@ class ResultsViewer extends Component {
                 <Menu className="data_viewer">
                     {listOption.length > 0 ?
                         listOption.length > 4 ?
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <div>
                                 <div className="site-checkbox-all-wrapper">
                                     <Checkbox
@@ -303,8 +418,13 @@ class ResultsViewer extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
                             </div>
-                            </ColoredScrollbars>
+                            </div>
+                            //</ColoredScrollbars>
                             :
                             <div>
                                 <div className="site-checkbox-all-wrapper">
@@ -322,6 +442,11 @@ class ResultsViewer extends Component {
                                     value={this.state[stateNane].checkedList}
                                     onChange={onChange}
                                 />
+                                <div className="checkOk">
+                            <Button type="primary" htmlType="submit" className="login-form-button" onClick={okClick}>
+                                Ok
+                            </Button>
+                            </div>
                             </div>
                         :
                         <Empty />
@@ -334,7 +459,7 @@ class ResultsViewer extends Component {
                     
                     {listOption.length > 0 ?
                             listOption.length > 5 ? 
-                            <ColoredScrollbars style={{height: 150 }}>
+                            //<ColoredScrollbars style={{height: 150 }}>
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
                                 listOption.map((option) =>
@@ -342,7 +467,7 @@ class ResultsViewer extends Component {
                                 )
                             }
                             </Radio.Group>
-                            </ColoredScrollbars>
+                            //</ColoredScrollbars>
                             :
                             <Radio.Group onChange={onChange} value={this.state[stateNane].checkedList}>
                             {
@@ -362,14 +487,15 @@ class ResultsViewer extends Component {
 
     render() {
         const { ajaxCallsInProgress, modelList = [], geographyList = [], regionList, brandList, subBrandList,
-            setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData3, setGraphData1, graphData1, tacticList = [], RSquare= [], setGraphData4, graphData4 } = this.props
-        const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, message, messageTac } = this.state
+            setGraphData2, graphData2, setGraphData21, setGraphData3, graphData21, graphData22, graphData23, graphData3, setGraphData1, graphData1, tacticList = [], tacticList1 = [], RSquare= [], setGraphData4, graphData4, graphData5, setGraphData5 } = this.props
+        const {modelValue, geographyValue, regionValue, brandValue, subBrandValue, tacticValue, tacticValue1, message, messageTac, messageTac1 } = this.state
         //const modelMenu = this.setboxOption(modelList, 'modelName', '', this.onModelChange, false)
         //const geographyMenu = this.setboxOption(geographyList, 'geography', '', this.onGeographyChange, false)
-        const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
-        const brandMenu = this.setboxOption(brandList, 'brand', '', this.onBrandChange, false, 'brand')
-        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', '', this.onSubBrandChange, false, 'subBrand')
+        //const regionMenu = this.setboxOption(regionList, 'region', '', this.onRegionChange, false, 'region')
+        const brandMenu = this.setboxOption(brandList, 'brand', this.onCheckAllBrandChange, this.onBrandChange, true, 'brand', this.handleBrandOkChange)
+        const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand', this.handleSubBrandOkChange)
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
+        const tacticMenu1 = this.setboxOption(tacticList1, 'tactic', this.onCheckAllTactic1Change, this.onTactic1Change, true, 'tactic1', this.handleTactic1OkChange)
         return (
             <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
@@ -394,23 +520,25 @@ class ResultsViewer extends Component {
                                     Geography <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown> */}
-                            <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            {/* <Dropdown overlay={regionMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Brand <Icon type="caret-down" theme="outlined" />
                                 </a>
-                            </Dropdown>
-                            <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            </Dropdown> */}
+                            <Dropdown overlay={brandMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible1Change}
+        visible={this.state.visible1}>
                                 <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     Channel <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
-                            <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                            <Dropdown overlay={subBrandMenu} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible2Change}
+        visible={this.state.visible2}>
                                 <a className="ant-dropdown-link noMarginRight" onClick={e => e.preventDefault()}>
                                     Type <Icon type="caret-down" theme="outlined" />
                                 </a>
                             </Dropdown>
                             {
-                                message && !subBrandValue &&
+                                message &&
                                 <div className="messageContainer">
                                     {message}
                                 </div>
@@ -430,22 +558,36 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
-                                                {brandValue &&
+                                                } */}
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -474,22 +616,36 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
-                                                {brandValue &&
+                                                } */}
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                 {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -497,12 +653,13 @@ class ResultsViewer extends Component {
                                         <div className="chartContent">
                                         <ColoredScrollbars>
                                         {
-                                            graphData1.series && setGraphData1 && graphData21.series && graphData22 &&
+                                            graphData1 && setGraphData1 && graphData21.series && graphData22 &&
                                             <MainTab2Charts 
                                                 graphData1={graphData1}
                                                 subBrandValue={subBrandValue}
                                                 graphData21={graphData21}
                                                 graphData22={graphData22}
+                                                graphData23={graphData23}
                                                   />
                                         }
                                         </ColoredScrollbars>
@@ -520,22 +677,36 @@ class ResultsViewer extends Component {
                                                         Geography: {geographyValue}
                                                     </span>
                                                 }
-                                                {regionValue &&
+                                                {/* {regionValue &&
                                                     <span>
                                                         <span className="pipe">||</span>
                                                         Brand: {regionValue}
                                                     </span>
-                                                }
-                                                {brandValue &&
+                                                } */}
+                                                {brandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Channel: {brandValue}
+                                                        Channel: {
+                                                            brandValue.map((item, index) =>
+                                                                index === brandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
-                                                {subBrandValue &&
+                                                 {subBrandValue.length > 0 &&
                                                     <span>
                                                         <span className="pipe">||</span>
-                                                        Type: {subBrandValue}
+                                                        Type:  {
+                                                            subBrandValue.map((item, index) =>
+                                                                index === subBrandValue.length-1 ?
+                                                                `${item} `
+                                                                :
+                                                                `${item}, `
+                                                            )
+                                                            }
                                                     </span>
                                                 }
                                             </div>
@@ -565,7 +736,8 @@ class ResultsViewer extends Component {
                                                             {messageTac}
                                                         </div>
                                                     }
-                                                        <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'>
+                                                        <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'onVisibleChange={this.handleVisible3Change}
+        visible={this.state.visible3}>
                                                             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                                                 Tactic <Icon type="caret-down" theme="outlined" />
                                                             </a>
@@ -579,22 +751,36 @@ class ResultsViewer extends Component {
                                                                     Geography: {geographyValue}
                                                                 </span>
                                                             }
-                                                            {regionValue &&
+                                                            {/* {regionValue &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
                                                                     Brand: {regionValue}
                                                                 </span>
-                                                            }
-                                                            {brandValue &&
+                                                            } */}
+                                                            {brandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
-                                                                    Channel: {brandValue}
+                                                                    Channel: {
+                                                                        brandValue.map((item, index) =>
+                                                                            index === brandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
                                                                 </span>
                                                             }
-                                                            {subBrandValue &&
+                                                             {subBrandValue.length > 0 &&
                                                                 <span>
                                                                     <span className="pipe">||</span>
-                                                                    Type: {subBrandValue}
+                                                                    Type:  {
+                                                                        subBrandValue.map((item, index) =>
+                                                                            index === subBrandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
                                                                 </span>
                                                             }
                                                             {/* {tacticValue &&
@@ -614,6 +800,89 @@ class ResultsViewer extends Component {
                                                             graphData4={graphData4}
                                                             subBrandValue={subBrandValue}
                                                             tacticValue={tacticValue} />
+                                                    }
+                                                    
+                                                    </ColoredScrollbars>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </TabPane>
+                                        <TabPane tab="Synergy Effect" key="tab5" type="card">
+                                            {
+                                                tacticList1.length > 0 &&
+                                                <div className="tabContent">
+                                                    <div className="tabHeader withAbsolut">
+                                                    {
+                                                        messageTac1 &&
+                                                        <div className="messageContainer">
+                                                            {messageTac1}
+                                                        </div>
+                                                    }
+                                                        <Dropdown overlay={tacticMenu1} trigger={['click']} overlayClassName='DropDownOverLay' onVisibleChange={this.handleVisible4Change}
+        visible={this.state.visible4}>
+                                                            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                                                Tactic <Icon type="caret-down" theme="outlined" />
+                                                            </a>
+                                                        </Dropdown>
+                                                    </div>
+                                                    <div className="graphContent">
+                                                    {geographyValue &&
+                                                        <div className="FilterSelection">
+                                                            {geographyValue &&
+                                                                <span>
+                                                                    Geography: {geographyValue}
+                                                                </span>
+                                                            }
+                                                            {/* {regionValue &&
+                                                                <span>
+                                                                    <span className="pipe">||</span>
+                                                                    Brand: {regionValue}
+                                                                </span>
+                                                            } */}
+                                                            {brandValue.length > 0 &&
+                                                                <span>
+                                                                    <span className="pipe">||</span>
+                                                                    Channel: {
+                                                                        brandValue.map((item, index) =>
+                                                                            index === brandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
+                                                                </span>
+                                                            }
+                                                             {subBrandValue.length > 0 &&
+                                                                <span>
+                                                                    <span className="pipe">||</span>
+                                                                    Type:  {
+                                                                        subBrandValue.map((item, index) =>
+                                                                            index === subBrandValue.length-1 ?
+                                                                            `${item} `
+                                                                            :
+                                                                            `${item}, `
+                                                                        )
+                                                                        }
+                                                                </span>
+                                                            }
+                                                            {/* {tacticValue &&
+                                                                <span>
+                                                                    Tactic: {tacticValue}
+                                                                </span>
+                                                            } */}
+
+                                                            
+                                                        </div>
+                                                    }
+                                                    <div className="chartContent">
+                                                    <ColoredScrollbars>
+                                                    {
+                                                        graphData5.series && setGraphData5 &&
+                                                        <MainTab5Charts 
+                                                            graphData5={graphData5}
+                                                            subBrandValue={subBrandValue}
+                                                            tacticValue={tacticValue1} />
                                                     }
                                                     
                                                     </ColoredScrollbars>
@@ -646,17 +915,21 @@ const mapStateToProps = (state) => {
         brandList: state.resultsViewer.brandList,
         subBrandList: state.resultsViewer.subBrandList,
         tacticList: state.resultsViewer.tacticList || [],
+        tacticList1: state.resultsViewer.tacticList1 || [],
         graphData1: state.resultsViewer.graphData1,
         graphData2: state.resultsViewer.graphData2,
         graphData21: state.resultsViewer.graphData21,
         graphData22: state.resultsViewer.graphData22,
+        graphData23: state.resultsViewer.graphData23,
         graphData3: state.resultsViewer.graphData3,
         graphData4: state.resultsViewer.graphData4,
+        graphData5: state.resultsViewer.graphData5,
         setGraphData1: state.resultsViewer.setGraphData1,
         setGraphData2: state.resultsViewer.setGraphData2,
         setGraphData21: state.resultsViewer.setGraphData21,
         setGraphData3: state.resultsViewer.setGraphData3,
         setGraphData4: state.resultsViewer.setGraphData4,
+        setGraphData5: state.resultsViewer.setGraphData5,
         RSquare: state.resultsViewer.RSquare
     };
   }
@@ -673,10 +946,13 @@ const mapStateToProps = (state) => {
     getGraphData2,
     getGraphData21,
     getGraphData22,
+    getGraphData23,
     getGraphData3,
     setGraphChange,
     getTacticList,
+    getTacticList1,
     getGraphData4,
+    getGraphData5,
     setGraphChange1,
     clearData,
     getRSquare,

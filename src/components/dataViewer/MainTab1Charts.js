@@ -53,7 +53,7 @@ class MainTab1Charts extends React.Component {
                   },
                   style: {
                     colors: ['#333'],
-                    fontSize: '9px',
+                    fontSize: '13px',
                   },
                 },
                 stroke: {
@@ -66,7 +66,7 @@ class MainTab1Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   },
@@ -81,7 +81,7 @@ class MainTab1Charts extends React.Component {
                     text: "Sales Value (USD)",
                     style: {
                       color: '#333',
-                      fontSize:  '12px',
+                      fontSize:  '14px',
                     }
                   },
                 },
@@ -113,7 +113,7 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -124,13 +124,13 @@ class MainTab1Charts extends React.Component {
                     position: 'bottom',
                     style: {
                       color: '#3D3D3D',
-                      fontSize: '12px',
+                      fontSize: '14px',
                     },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -176,7 +176,7 @@ class MainTab1Charts extends React.Component {
                   enabled: true,
                   style: {
                     colors: ['#333'],
-                    fontSize: '9px',
+                    fontSize: '13px',
                   },
                   formatter: function (value) {
                     let val = value;
@@ -204,7 +204,7 @@ class MainTab1Charts extends React.Component {
                   labels: {
                     show: false,
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                   },
@@ -219,7 +219,7 @@ class MainTab1Charts extends React.Component {
                     text: "Sales Value (USD)",
                     style: {
                       color: '#333',
-                      fontSize:  '12px',
+                      fontSize:  '14px',
                     }
                   },
                 },
@@ -251,7 +251,7 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '13px',
                         color: '#8E8E8E',
                       },
                     },
@@ -262,13 +262,13 @@ class MainTab1Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                   },
                   tooltip: {
                     enabled: true,
                     style: {
-                      fontSize: '12px',
+                      fontSize: '14px',
                       background: '#fff',
                     },
                     y: {
@@ -320,7 +320,7 @@ class MainTab1Charts extends React.Component {
                   tickAmount: 30,
                   labels: {
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -353,13 +353,13 @@ class MainTab1Charts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                     labels: {
                       style: {
                         colors: '#8E8E8E',
-                        fontSize: '10px',
+                        fontSize: '13px',
                       },
                       formatter: function (value) {
                         let val = value;
@@ -368,11 +368,11 @@ class MainTab1Charts extends React.Component {
                         }
 
                         if(val < -1000) {
-                          val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                          val = parseFloat(value/1000).toFixed(1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
                         }
                       
                         if(val > 1000) {
-                          val = Math.round(value/1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
+                          val = parseFloat(value/1000).toFixed(1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "K";
                         }
                         return val;
                       },
@@ -424,13 +424,13 @@ class MainTab1Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 tooltip: {
                   enabled: true,
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   y: {

@@ -208,7 +208,6 @@ onCollapse = collapsed => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         ajaxCallsInProgress: state.ajaxCallsInProgress,
         accessToken: state.auth.accessToken,

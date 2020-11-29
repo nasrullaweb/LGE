@@ -50,7 +50,7 @@ class MainTab1Charts extends React.Component {
                   },
                   labels: {
                     style: {
-                      fontSize: '10px',
+                      fontSize: '13px',
                       color: '#373D3F',
                     },
                     formatter: function(val) {
@@ -80,7 +80,7 @@ class MainTab1Charts extends React.Component {
                         return val;
                       },
                       style: {
-                        fontSize: '10px',
+                        fontSize: '13px',
                         color: '#8E8E8E'
                       },
                     },
@@ -96,7 +96,7 @@ class MainTab1Charts extends React.Component {
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
-                        fontSize : '13px',
+                        fontSize : '14px',
                       }
                     },
                   },
@@ -117,7 +117,7 @@ class MainTab1Charts extends React.Component {
                       highlightDataSeries: false,
                   },
                   style: {
-                    fontSize: '12px',
+                    fontSize: '14px',
                     background: '#fff',
                   },
                   y: {
@@ -137,7 +137,7 @@ class MainTab1Charts extends React.Component {
                   position: 'bottom',
                   style: {
                     color: '#3D3D3D',
-                    fontSize: '12px',
+                    fontSize: '14px',
                   },
                 },
                 
@@ -192,8 +192,17 @@ class MainTab1Charts extends React.Component {
       {
           this.props.graphData2 &&
             <div className="chartContent">
-                <div className="downChart titleAdded">
+                <div className="downChart titleAdded rsquareCont">
                 <div className="chartTitle"><span className="smallLeftBorder"></span>Actual vs Predicted</div>
+                {
+                this.props.RSquare.length > 0 &&
+                  <div className="rsquare">
+                    <span className="rTitle"><strong>R Square:</strong> {parseFloat(this.props.RSquare[0].rSquare).toFixed(2)} </span>
+                    <span className="rTitle"><strong>MAPE:</strong> {parseFloat((this.props.RSquare[0].mape)*100).toFixed(2)}% </span>
+                    <span className="rTitle"><strong>DW:</strong> {parseFloat(this.props.RSquare[0].dw).toFixed(2)} </span>
+                    {/* <Table columns={columns} dataSource={this.props.RSquare} pagination={false} /> */}
+                  </div>
+                }
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -201,13 +210,6 @@ class MainTab1Charts extends React.Component {
                         height={400}
                         />
                 </div>
-                <div className="spaceBetween"></div>
-                {
-                this.props.RSquare.length > 0 &&
-                  <div className="rsquare">
-                    <Table columns={columns} dataSource={this.props.RSquare} pagination={false} />
-                  </div>
-                }
                 <div className="spaceBetween"></div>
                 
                 

@@ -9,7 +9,7 @@ const config = {
 
 export function getUsers() {
     const action = function (dispatch) {
-        dispatch(ajaxCallBegin);
+        dispatch(ajaxCallBegin());
         axios.get(`${apiURL}/Users/GetUsers`, config)
             .then(response => {
                 dispatch({

@@ -29,14 +29,14 @@ export default function optimizer (state = initialState, action = {}) {
             return Object.assign({}, state, {
                 ...state,
                 brandOptions: action.payload.items,
-                geographyOptions: [],
-                periodOptions: [],
-                tacticsOptions: [],
-                subBrandOptions: [],
-                selectedBrand: [],
-                runSimulate: false,
-                isOptimized: false,
-                isSaved: false,
+                // geographyOptions: [],
+                // periodOptions: [],
+                // tacticsOptions: [],
+                // subBrandOptions: [],
+                // selectedBrand: [],
+                // runSimulate: false,
+                // isOptimized: false,
+                // isSaved: false,
             });
         case GET_GEOGRAPHY:
             return Object.assign({}, state, {

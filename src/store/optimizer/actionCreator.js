@@ -26,10 +26,10 @@ const generateKeyHighLights = function generateKeyHighLights(oldData, NewData) {
   return newKeyHighlights;
 }
 
-export function getBrands(modal) {
+export function getBrands(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Brands/GetBrand/${modal}`, config
+    axios.get(`${apiURL}/Brands/GetBrands/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -93,6 +93,7 @@ export function getPeriod(modal) {
       //     loginError: error.response.data.error_description,
       //   })
       dispatch(ajaxCallError());
+      console.log('ajax0')
     })
   }
   return action
@@ -237,11 +238,12 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue) {
+export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue, BaseFactor) {
   const params = spendData;
+  const methodValueData = methodValue ? methodValue : 'NA'
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}`, params, config
+    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}/${BaseFactor}`, params, config
     )
     .then(response => {
       dispatch({
@@ -270,6 +272,7 @@ export function getSimulatedSpendData(scenarioID, modal) {
     )
     .then(response => {
       if(response.data.result[0].isOptimisationCompleted === 1) {
+        dispatch(ajaxCallBegin())
         const isSaved = response.data.result[0].isSaved ? true : false
         axios.get(`${apiURL}/optimiser/GetOptimisedSpendValues/${scenarioID}`, config
         )
