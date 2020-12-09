@@ -728,7 +728,7 @@ class ResultsViewer extends Component {
                                         <TabPane tab="Response Curve" key="tab4" type="card">
                                             {
                                                 tacticList.length > 0 &&
-                                                <div className="tabContent">
+                                                <div className="tabContent respTab">
                                                     <div className="tabHeader withAbsolut">
                                                     {
                                                         messageTac && !tacticValue &&

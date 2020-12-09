@@ -76,6 +76,11 @@
         .tabContent {
             padding: 10px;
             position: relative;
+
+            &.respTab .tabHeader.withAbsolut {
+                top: 80px;
+                z-index: 10;
+            }
         }
 
         .tabHeader.withAbsolut {
@@ -96,6 +101,12 @@
             }
 
             
+        }
+
+        .respTab {
+           #chart .chartContent {
+                width: calc(100% - 320px);
+            }
         }
 
         .chartContent {

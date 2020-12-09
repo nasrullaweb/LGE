@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import moment from 'moment';
 import SpendTable from './SpendTable'
 import { Button, Modal } from 'antd';
+import { priceSymbol } from '../../config/apiConfig'
 
 
 class MainTab3Charts extends React.Component {

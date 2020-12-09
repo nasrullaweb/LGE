@@ -509,7 +509,7 @@ export class OptimizerDetails extends React.Component {
     render() {
         const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
         const columns = [
-            { width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
+            { fixed: 'left', width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { width: 200, title: <span>Spend <BarChartOutlined className="linkToCharts" onClick={this.showSpendModal} /></span>, dataIndex: 'spend', key: 'spend', render: (spend, record) => {
                 const content = (
                     <div className="spenTooltip">
@@ -755,11 +755,11 @@ export class OptimizerDetails extends React.Component {
                     }
                 </span>
             }},
-             { width: 200, title: 'Minimum Spending', className: 'maxTdSpend', dataIndex: 'changeInMinSpend', key: 'changeInMinSpend', render: (changeInMinSpend, record) => {
+             {width: 200, title: 'Minimum Spending', className: 'maxTdSpend', dataIndex: 'changeInMinSpend', key: 'changeInMinSpend', render: (changeInMinSpend, record) => {
                 const content = (
                     <div className="spenTooltip">
-                       <div className="optSpend"><strong>optimalSpend1: </strong> €{Math.round(record.optimalSpend1)} ({Math.round(record.optimalSpend1Percentage)} %)</div>
-                       <div className="optSpend"><strong>optimalSpend2: </strong> €{Math.round(record.optimalSpend2)} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max ROI: </strong> €{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max Marginal: </strong> €{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
                     </div>
                   );
                 return <span className="borderRight">
@@ -768,11 +768,11 @@ export class OptimizerDetails extends React.Component {
                 </span>
              }
             },
-            { width: 200, title: 'Maximum Spending', className: 'maxTdSpend', dataIndex: 'changeInMaxSpend', key: 'changeInMaxSpend', render: (changeInMaxSpend, record) => {
+            {width: 200, title: 'Maximum Spending', className: 'maxTdSpend', dataIndex: 'changeInMaxSpend', key: 'changeInMaxSpend', render: (changeInMaxSpend, record) => {
                 const content = (
                     <div className="spenTooltip">
-                       <div className="optSpend"><strong>optimalSpend1: </strong> €{Math.round(record.optimalSpend1)} ({Math.round(record.optimalSpend1Percentage)} %)</div>
-                       <div className="optSpend"><strong>optimalSpend2: </strong> €{Math.round(record.optimalSpend2)} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max ROI: </strong> €{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max Marginal: </strong> €{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
                     </div>
                   );
                 return <span>
@@ -1238,10 +1238,10 @@ export class OptimizerDetails extends React.Component {
                                 {/* <h3 className="keyHeading"> Key Highlights <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></h3> */}
                                 <div className="keyHiCont">
                                     <div className="spendCont">
-                                        <h5 className="spendHead">
-                                            <span className="spendTopHead setTop1"><span><Popover content={spendcontent}>Spend</Popover></span></span>
-                                            
-                                            </h5>
+                                    <h5 className="spendHead">
+                                            <span className="leftHeadTop"><Popover content={spendcontent}>Spend</Popover></span>
+                                            <span className="spendTopHead"><span></span></span>
+                                        </h5>
                                         <div className="spendContent">
                                             {/* <div className="baseData">Base</div> */}
                                             <div className="planCont">
@@ -1282,13 +1282,13 @@ export class OptimizerDetails extends React.Component {
 
                                     </div>
                                     <div className="spendCont1">
-                                        <h5 className="spendHead">
-                                            <span className="leftHeadTop">Short Term Revenue <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></span>
-                                            <span className="rightHeadTop">-</span>
+                                    <h5 className="spendHead">
+                                            <span className="leftHeadTop"><Popover content={IncRevenuecontent}>Short Term</Popover> <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></span>
+                                            {/* <span className="rightHeadTop">-</span> */}
                                             <span className="leftHead_rev"><Popover content={IncRevenuecontent}>Inc Revenue</Popover></span>
                                             <span className="rightHead_rev"><Popover content={basecontent}>Base</Popover> <Popover content={contentBase} className="toolPop" trigger="click" ><InfoCircleFilled /></Popover></span>
                                             <span className="rightHead_rev"><Popover content={totalcontent}>Total</Popover></span>
-                                            <span className="rightHead_rev setTop"><span><Popover content={BrandRevenuecontent}>Brand Revenue</Popover></span></span>
+                                            <span className="rightHead_rev"><span><Popover content={IncROIcontent}>Inc ROI</Popover></span></span>
                                         </h5>
                                         <div className="spendContent">
                                             {/* <div className="baseData">Base<span>{` €${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div> */}
@@ -1390,6 +1390,51 @@ export class OptimizerDetails extends React.Component {
                                                     }
                                                 </div>
                                                 <div className="rightData_rev">
+                                                <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`€${Math.round(keyHighlights[0].roi*10)/10}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`€${Math.round(keyHighlights[1].roi *10)/10}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change:</div> 
+                                                            <div className="planData">
+                                                                {keyHighlights[2].roi >= 0 ?
+                                                                    <span className="positive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].roi*10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage*10)/10}%`}</span>
+                                                                    </span>
+                                                                    :
+                                                                    <span className="negitive">
+                                                                        <span>{`€${Math.round(keyHighlights[2].roi*10)/10}`}</span>
+                                                                        <span className="pipe">||</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage*10)/10}%`}</span>
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="spendCont2">
+                                        <h5 className="spendHead">
+                                            <span className="leftHeadTop"><Popover content={BrandRevenuecontent}>Long Term</Popover></span>
+                                            <span className="leftHead"><span><Popover content={BrandRevenuecontent}>Brand Revenue</Popover></span></span>
+                                            <span className="rightHead"><span><Popover content={brandROIcontent}>Brand ROI</Popover></span></span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            {/* <div className="baseData">Base</div> */}
+                                            <div className="planCont">
+                                                <div className="leftData">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
                                                         <div className="planData">{`€${Math.round(keyHighlights[0].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
@@ -1408,57 +1453,13 @@ export class OptimizerDetails extends React.Component {
                                                                     <span className="positive">
                                                                         <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage * 10)/10}%`}</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
                                                                         <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage * 10)/10}%`}</span>
-                                                                    </span>
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div className="spendCont2">
-                                        <h5 className="spendHead">
-                                            <span className="leftHead setTop1"><span><Popover content={IncROIcontent}>Inc ROI</Popover></span></span>
-                                            <span className="rightHead setTop1"><span><Popover content={brandROIcontent}>Brand ROI</Popover></span></span>
-                                        </h5>
-                                        <div className="spendContent">
-                                            {/* <div className="baseData">Base</div> */}
-                                            <div className="planCont">
-                                                <div className="leftData">
-                                                    <div className="oldPlan">
-                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].roi *10)/10}`}</div>
-                                                    </div>
-                                                    {keyHighlights.length > 1 && 
-                                                        <div className="newPlan">
-                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].roi *10)/10}`}</div>
-                                                        </div>
-                                                    }
-                                                    {keyHighlights.length > 2 && 
-                                                        <div className="changePlan">
-                                                            <div className="planTitle">Change:</div> 
-                                                            <div className="planData">
-                                                                {keyHighlights[2].roi >= 0 ?
-                                                                    <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].roi *10)/10}`}</span>
-                                                                        <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage *10)/10}%`}</span>
-                                                                    </span>
-                                                                    :
-                                                                    <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].roi *10)/10}`}</span>
-                                                                        <span className="pipe">||</span>
-                                                                        <span>{`${Math.round(keyHighlights[2].roiPercentage *10)/10}%`}</span>
+                                                                        <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
                                                                 }
                                                             </div>
