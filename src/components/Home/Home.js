@@ -82,6 +82,12 @@ onGeographyChange = (e) => {
     const geography = {}
     geography.checkedList = e.target.value
     sessionStorage.setItem('geographyValue', JSON.stringify(e.target.value));
+    if (e.target.value === "FRANCE") {
+      sessionStorage.setItem('symbolVal', '€');
+    }
+    if (e.target.value === "SPAIN") {
+      sessionStorage.setItem('symbolVal', '$');
+    }
     this.setState({
         geographyValue: e.target.value,
         message: '',

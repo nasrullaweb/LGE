@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import ColoredScrollbars from '../common/ColoredScrollbars';
 
-
 class MainTab2Charts extends React.Component {
     constructor(props) {
       super(props);
@@ -918,7 +917,7 @@ class MainTab2Charts extends React.Component {
                 },
               },
               title: {
-                text: "ROI (€)",
+                text: `ROI (${sessionStorage.getItem('symbolVal')})`,
                 style: {
                   color: '#DB1348',
                   fontWeight : 'bold',

@@ -17,6 +17,7 @@ export const initialState = {
     simulatedMsg: '',
     runSimulate: false,
     saveAsId: '',
+    profitROI: 0,
 }
 
 export default function simulate (state = initialState, action = {}) {
@@ -113,6 +114,7 @@ export default function simulate (state = initialState, action = {}) {
                 selectedSubBrand: action.payload.selectedSubBrands,
                 simulatedMsg: '',
                 runSimulate: false,
+                profitROI: action.payload.profitROI
             });
         case CLEAR_DATA:
             return Object.assign({}, state, {

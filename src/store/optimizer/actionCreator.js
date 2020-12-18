@@ -74,10 +74,10 @@ export function getGeography(brand, modal) {
   return action
 }
 
-export function getPeriod(modal) {
+export function getPeriod(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Period/GetPeriod/${modal}`, config
+    axios.get(`${apiURL}/Period/GetPeriod/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -238,12 +238,13 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue, BaseFactor) {
+export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue, BaseFactor, profitFactor) {
   const params = spendData;
   const methodValueData = methodValue ? methodValue : 'NA'
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch({

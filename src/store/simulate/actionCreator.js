@@ -84,10 +84,10 @@ export function getGeography(brand, modal) {
   return action
 }
 
-export function getPeriod(modal) {
+export function getPeriod(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Period/GetPeriod/${modal}`, config
+    axios.get(`${apiURL}/Period/GetPeriod/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -256,11 +256,12 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights, BaseFactor) {
+export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       
@@ -308,11 +309,12 @@ export function getSimulatedSpendData(scenarioID) {
   return action
 }
 
-export function saveResults(modal, period, geography, scenarioID, spendData, BaseFactor) {
+export function saveResults(modal, period, geography, scenarioID, spendData, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch({
@@ -333,11 +335,12 @@ export function saveResults(modal, period, geography, scenarioID, spendData, Bas
   return action
 }
 
-export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData, BaseFactor) {
+export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch(ajaxCallSuccess());

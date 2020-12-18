@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import moment from 'moment';
 
-
 class KeyHighlightsCharts extends React.Component {
     constructor(props) {
       super(props);
@@ -1033,7 +1032,7 @@ class KeyHighlightsCharts extends React.Component {
 
   <div id="chart">
             <div className="circleChart">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Spend (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Spend ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart1.options}
                         series={this.state.cart1.series}
@@ -1042,7 +1041,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Inc Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Inc Revenue ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart2.options}
                         series={this.state.cart2.series}
@@ -1051,7 +1050,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart lastCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Base Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Base Revenue ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart6.options}
                         series={this.state.cart6.series}
@@ -1060,7 +1059,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart bigCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Total Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Total Revenue ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart7.options}
                         series={this.state.cart7.series}
@@ -1069,7 +1068,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart bigCircle lastCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand Revenue (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand Revenue ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart4.options}
                         series={this.state.cart4.series}
@@ -1079,7 +1078,7 @@ class KeyHighlightsCharts extends React.Component {
                       </div>
                       <div className="spaceBetween"></div>
                       <div className="circleChart bigCircle ">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Inc ROI (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>{this.props.showProfit ? "Profit ROI" : "Inc ROI"} ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
@@ -1088,7 +1087,7 @@ class KeyHighlightsCharts extends React.Component {
                         />
                       </div>
                       <div className="circleChart bigCircle lastCircle">
-              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand ROI (€)</div>
+              <div className="chartTitle"><span className="smallLeftBorder"></span>Brand ROI ({sessionStorage.getItem('symbolVal')})</div>
                     <Chart
                         options={this.state.cart5.options}
                         series={this.state.cart5.series}

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover, Tooltip, Button, Modal  } from 'antd';
+import { Tabs, Table, Switch, Icon, InputNumber, Typography, Popover, Tooltip, Button, Modal, Checkbox } from 'antd';
 import { InfoCircleFilled, BarChartOutlined } from '@ant-design/icons';
 import './Simulate.less'
 import ColoredScrollbars from '../common/ColoredScrollbars';
@@ -459,14 +459,14 @@ export class SimpulateDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, Globalgeagraphy, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, profitValueData, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, keyHighlights } = this.props
         const columns = [
             { fixed: 'left', width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { width: 200, title: 'Change Spending', dataIndex: 'changeInSpend', key: 'changeInSpend', render: (changeInSpend, record) => {
                 const content = (
                     <div className="spenTooltip">
-                       <div className="optSpend"><strong>Max ROI: </strong> €{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
-                       <div className="optSpend"><strong>Max Marginal: </strong> €{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max ROI: </strong> {sessionStorage.getItem('symbolVal')}{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max Marginal: </strong> {sessionStorage.getItem('symbolVal')}{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
                     </div>
                   );
                 return <span className="borderRight" >
@@ -478,28 +478,28 @@ export class SimpulateDetails extends React.Component {
 
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newSpend && <strong>Old</strong> } {`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newSpend && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         {/* <InputNumber defaultValue={spend}  id={`oldspend_${record.key}`} className="hide" /> */}
                         {record.newSpend && 
-                            <div><strong>New</strong> {`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                            <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         }       
                         {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                             Math.round(record.newSpend) - Math.round(spend) > 0 ?
                                 <div className="newSpend positive">
                                     <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                                 :
                                 <div className="newSpend negitive">
                                     <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                             :
-                            <div className="newSpend">€0</div>
+                            <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
                         }
                     </div>
                   );
@@ -508,20 +508,20 @@ export class SimpulateDetails extends React.Component {
                     {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                         Math.round(record.newSpend) - Math.round(spend) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                     
                     </span>
@@ -530,27 +530,27 @@ export class SimpulateDetails extends React.Component {
             { width: 200, title: <span>Inc Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuModal} /></span>, dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newRevenue && <strong>Old</strong> } {`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newRevenue && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     {record.newRevenue && 
-                        <div><strong>New</strong> {`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     } 
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
                     }
                     </div>
                   );
@@ -562,99 +562,77 @@ export class SimpulateDetails extends React.Component {
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                 </span>
             }},
-            { width: 200, title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
+            { width: 200, title: <span>{showProfit ? "Profit ROI" : "Inc ROI"} <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newLTRevenue && <strong>Old</strong> } {`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    {record.newLTRevenue && 
-                        <div><strong>New</strong> {`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    } 
-                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
-                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
-                            <div className="newSpend positive">
-                                <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                            </div>
-                            :
-                            <div className="newSpend negitive">
-                                <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                            </div>
-                        :
-                        <div className="newSpend">€0</div>
-                    }
-                    </div>
-                  );
-                return <span className="borderRight">
-                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    {record.newRevenue && 
-                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    }  */}
-                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
-                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
-                            <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
-                            </div>
-                            :
-                            <div className="newSpend negitive">
-                               <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
-                            </div>
-                        :
-                        <div className="newSpend"><span>{`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
-                    }
-                </span>
-            }},
-            { width: 200, title: <span>Inc ROI <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
-                const content = (
-                    <div className="spenTooltip">
-                        <div>{record.newROI && <strong>Old</strong> } {`€${parseFloat(roi).toFixed(2)}`}</div>
+                        <div>{record.newROI && <strong>Old</strong> }
+                            {
+                                showProfit ? 
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(((roi*profitValueData)/100)*100)/100}`
+                                :
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(roi*100)/100}`
+                            // `${sessionStorage.getItem('symbolVal')}${parseFloat(roi).toFixed(2)}`
+                            }
+                        </div>
                     {record.newROI && 
-                        <div><strong>New</strong> {`€${parseFloat(record.newROI).toFixed(2)}`}</div>
+                        <div><strong>New</strong> 
+                            {
+                                showProfit ? 
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                :
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                            }
+                        </div>
                     } 
                     {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
                         parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100 - (roi*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round((record.newROI - roi)*100)/100}`
+                                    }
+                                </span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100 - (roi*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round((record.newROI - roi)*100)/100}`
+                                    }
+                                </span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0.00</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0.00</div>
                     }
                     </div>
                   );
@@ -662,47 +640,126 @@ export class SimpulateDetails extends React.Component {
                     {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
                         parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                        // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                    }
+                                </span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                        // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                    }
+                                </span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${parseFloat(roi).toFixed(2)}`}</span></div>
+                        <div className="newSpend">
+                            <span>
+                                {
+                                    showProfit ? 
+                                    `${sessionStorage.getItem('symbolVal')}${Math.round(((roi*profitValueData)/100)*100)/100}`
+                                    :
+                                    `${sessionStorage.getItem('symbolVal')}${Math.round(roi*100)/100}`
+                                    // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                }
+                            </span>
+                        </div>
                     }
                 </span>
             }},
+            { width: 200, title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newLTRevenue && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newLTRevenue && 
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    } 
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
+                    }
+                    </div>
+                  );
+                return <span className="borderRight">
+                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newRevenue && 
+                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    }  */}
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                               <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                        :
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                    }
+                </span>
+            }},
+            
             { width: 200, title: <span>Brand ROI <BarChartOutlined className="linkToCharts" onClick={this.showROILTModal} /></span>, dataIndex: 'oldLTROI', key: 'oldLTROI', render: (oldLTROI, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newLTROI && <strong>Old</strong> } {`€${parseFloat(oldLTROI).toFixed(2)}`}</div>
+                        <div>{record.newLTROI && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${parseFloat(oldLTROI).toFixed(2)}`}</div>
                     {record.newLTROI && 
-                        <div><strong>New</strong> {`€${parseFloat(record.newLTROI).toFixed(2)}`}</div>
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</div>
                     } 
                     {record.newLTROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
                         parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
                                     <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
                                     <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0.00</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0.00</div>
                     }
                     </div>
                   );
@@ -710,20 +767,20 @@ export class SimpulateDetails extends React.Component {
                     {record.newROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
                         parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${parseFloat(oldLTROI).toFixed(2)}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(oldLTROI).toFixed(2)}`}</span></div>
                     }
                 </span>
             }},
@@ -733,8 +790,8 @@ export class SimpulateDetails extends React.Component {
             { width: 200, title: 'Change Spending', dataIndex: 'changeInSpend', key: 'changeInSpend', render: (changeInSpend, record) => {
                 const content = (
                     <div className="spenTooltip">
-                       <div className="optSpend"><strong>Max ROI: </strong> €{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
-                       <div className="optSpend"><strong>Max Marginal: </strong> €{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max ROI: </strong> {sessionStorage.getItem('symbolVal')}{Math.round(record.optimalSpend1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend1Percentage)} %)</div>
+                       <div className="optSpend"><strong>Max Marginal: </strong> {sessionStorage.getItem('symbolVal')}{Math.round(record.optimalSpend2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ({Math.round(record.optimalSpend2Percentage)} %)</div>
                     </div>
                   );
                 return <span className="borderRight" >
@@ -752,28 +809,28 @@ export class SimpulateDetails extends React.Component {
 
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newSpend && <strong>Old</strong> } {`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newSpend && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         {/* <InputNumber defaultValue={spend}  id={`oldspend_${record.key}`} className="hide" /> */}
                         {record.newSpend && 
-                            <div><strong>New</strong> {`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                            <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                         }       
                         {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                             Math.round(record.newSpend) - Math.round(spend) > 0 ?
                                 <div className="newSpend positive">
                                     <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                                 :
                                 <div className="newSpend negitive">
                                     <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newSpend) - Math.round(spend)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 </div>
                             :
-                            <div className="newSpend">€0</div>
+                            <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
                         }
                     </div>
                   );
@@ -782,20 +839,20 @@ export class SimpulateDetails extends React.Component {
                     {record.newSpend && Math.round(record.newSpend) - Math.round(spend) != 0 ?
                         Math.round(record.newSpend) - Math.round(spend) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop" ><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newSpend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newSpend) - Math.round(spend))/Math.round(spend))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                     
                     </span>
@@ -804,27 +861,27 @@ export class SimpulateDetails extends React.Component {
             { width: 200, title: <span>Inc Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuModal} /></span>, dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newRevenue && <strong>Old</strong> } {`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div>{record.newRevenue && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     {record.newRevenue && 
-                        <div><strong>New</strong> {`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                     } 
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newRevenue) - Math.round(revenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
                                     <span className="pipe">||</span>
                                     <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
                     }
                     </div>
                   );
@@ -836,99 +893,77 @@ export class SimpulateDetails extends React.Component {
                     {record.newRevenue && Math.round(record.newRevenue) - Math.round(revenue) != 0 ?
                         Math.round(record.newRevenue) - Math.round(revenue) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                               <span className="oldSpend">{`€${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                               <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{Math.round(((Math.round(record.newRevenue) - Math.round(revenue))/Math.round(revenue))*100)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                     }
                 </span>
             }},
-            { width: 200, title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
+            { width: 200, title: <span>{showProfit ? "Profit ROI" : "Inc ROI"} <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newLTRevenue && <strong>Old</strong> } {`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    {record.newLTRevenue && 
-                        <div><strong>New</strong> {`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    } 
-                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
-                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
-                            <div className="newSpend positive">
-                                <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                            </div>
-                            :
-                            <div className="newSpend negitive">
-                                <span className="title">Change</span>
-                                    <span>€{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                            </div>
-                        :
-                        <div className="newSpend">€0</div>
-                    }
-                    </div>
-                  );
-                return <span className="borderRight">
-                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    {record.newRevenue && 
-                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
-                    }  */}
-                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
-                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
-                            <div className="newSpend positive">
-                                <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
-                            </div>
-                            :
-                            <div className="newSpend negitive">
-                               <span className="oldSpend">{`€${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
-                                <span className="pipe">||</span>
-                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
-                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
-                            </div>
-                        :
-                        <div className="newSpend"><span>{`€${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
-                    }
-                </span>
-            }},
-            { width: 200, title: <span>Inc ROI <BarChartOutlined className="linkToCharts" onClick={this.showROIModal} /></span>, dataIndex: 'roi', key: 'roi', render: (roi, record) => {
-                const content = (
-                    <div className="spenTooltip">
-                        <div>{record.newROI && <strong>Old</strong> } {`€${parseFloat(roi).toFixed(2)}`}</div>
+                        <div>{record.newROI && <strong>Old</strong> }
+                            {
+                                showProfit ? 
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(((roi*profitValueData)/100)*100)/100}`
+                                :
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(roi*100)/100}`
+                            // `${sessionStorage.getItem('symbolVal')}${parseFloat(roi).toFixed(2)}`
+                            }
+                        </div>
                     {record.newROI && 
-                        <div><strong>New</strong> {`€${parseFloat(record.newROI).toFixed(2)}`}</div>
+                        <div><strong>New</strong> 
+                            {
+                                showProfit ? 
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                :
+                                `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                            }
+                        </div>
                     } 
                     {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
                         parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100 - (roi*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round((record.newROI - roi)*100)/100}`
+                                    }
+                                </span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newROI) - parseFloat(roi)).toFixed(2)}</span>
-                                    <span className="pipe">||</span>
-                                    <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100 - (roi*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round((record.newROI - roi)*100)/100}`
+                                    }
+                                </span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0.00</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0.00</div>
                     }
                     </div>
                   );
@@ -936,47 +971,126 @@ export class SimpulateDetails extends React.Component {
                     {record.newROI && parseFloat(record.newROI).toFixed(3) - parseFloat(roi).toFixed(3) != 0 ?
                         parseFloat(record.newROI) - parseFloat(roi) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                        // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                    }
+                                </span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${parseFloat(record.newROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">
+                                    {
+                                        showProfit ? 
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(((record.newROI*profitValueData)/100)*100)/100}`
+                                        :
+                                        `${sessionStorage.getItem('symbolVal')}${Math.round(record.newROI*100)/100}`
+                                        // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                    }
+                                </span>
                                 <span className="pipe">||</span>
-                                <span>{parseFloat(((parseFloat(record.newROI) - parseFloat(roi))/parseFloat(roi))*100).toFixed(2)}%</span>
+                                <span>{Math.round(((record.newROI - roi)/roi)*10000)/100}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${parseFloat(roi).toFixed(2)}`}</span></div>
+                        <div className="newSpend">
+                            <span>
+                                {
+                                    showProfit ? 
+                                    `${sessionStorage.getItem('symbolVal')}${Math.round(((roi*profitValueData)/100)*100)/100}`
+                                    :
+                                    `${sessionStorage.getItem('symbolVal')}${Math.round(roi*100)/100}`
+                                    // `${sessionStorage.getItem('symbolVal')}${parseFloat(record.newROI).toFixed(2)}`
+                                }
+                            </span>
+                        </div>
                     }
                 </span>
             }},
+            { width: 200, title: <span>Brand Revenue <BarChartOutlined className="linkToCharts" onClick={this.showRevenuLTModal} /></span>, dataIndex: 'oldLTRevenue', key: 'oldLTRevenue', render: (oldLTRevenue, record) => {
+                const content = (
+                    <div className="spenTooltip">
+                        <div>{record.newLTRevenue && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newLTRevenue && 
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    } 
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="title">Change</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                                <span className="title">Change</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{Math.round(Math.round(record.newLTRevenue) - Math.round(oldLTRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="pipe">||</span>
+                                    <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                            </div>
+                        :
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0</div>
+                    }
+                    </div>
+                  );
+                return <span className="borderRight">
+                    {/* <div>{record.newRevenue && <strong>Old</strong> } {`$${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    {record.newRevenue && 
+                        <div><strong>New</strong> {`$${Math.round(record.newRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                    }  */}
+                    {record.newLTRevenue && Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) != 0 ?
+                        Math.round(record.newLTRevenue) - Math.round(oldLTRevenue) > 0 ?
+                            <div className="newSpend positive">
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                            :
+                            <div className="newSpend negitive">
+                               <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${Math.round(record.newLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                <span className="pipe">||</span>
+                                <span>{Math.round(((Math.round(record.newLTRevenue) - Math.round(oldLTRevenue))/Math.round(oldLTRevenue))*100)}%</span>
+                                <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
+                            </div>
+                        :
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${Math.round(oldLTRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
+                    }
+                </span>
+            }},
+            
             { width: 200, title: <span>Brand ROI <BarChartOutlined className="linkToCharts" onClick={this.showROILTModal} /></span>, dataIndex: 'oldLTROI', key: 'oldLTROI', render: (oldLTROI, record) => {
                 const content = (
                     <div className="spenTooltip">
-                        <div>{record.newLTROI && <strong>Old</strong> } {`€${parseFloat(oldLTROI).toFixed(2)}`}</div>
+                        <div>{record.newLTROI && <strong>Old</strong> } {`${sessionStorage.getItem('symbolVal')}${parseFloat(oldLTROI).toFixed(2)}`}</div>
                     {record.newLTROI && 
-                        <div><strong>New</strong> {`€${parseFloat(record.newLTROI).toFixed(2)}`}</div>
+                        <div><strong>New</strong> {`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</div>
                     } 
                     {record.newLTROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
                         parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
                             <div className="newSpend positive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
                                     <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                             </div>
                             :
                             <div className="newSpend negitive">
                                 <span className="title">Change</span>
-                                    <span>€{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
+                                    <span>{sessionStorage.getItem('symbolVal')}{parseFloat(parseFloat(record.newLTROI) - parseFloat(oldLTROI)).toFixed(2)}</span>
                                     <span className="pipe">||</span>
                                     <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                             </div>
                         :
-                        <div className="newSpend">€0.00</div>
+                        <div className="newSpend">{sessionStorage.getItem('symbolVal')}0.00</div>
                     }
                     </div>
                   );
@@ -984,20 +1098,20 @@ export class SimpulateDetails extends React.Component {
                     {record.newROI && parseFloat(record.newLTROI).toFixed(3) - parseFloat(oldLTROI).toFixed(3) != 0 ?
                         parseFloat(record.newLTROI) - parseFloat(oldLTROI) > 0 ?
                             <div className="newSpend positive">
-                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                             :
                             <div className="newSpend negitive">
-                                <span className="oldSpend">{`€${parseFloat(record.newLTROI).toFixed(2)}`}</span>
+                                <span className="oldSpend">{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.newLTROI).toFixed(2)}`}</span>
                                 <span className="pipe">||</span>
                                 <span>{parseFloat(((parseFloat(record.newLTROI) - parseFloat(oldLTROI))/parseFloat(oldLTROI))*100).toFixed(2)}%</span>
                                 <Popover content={content} className="toolPop"><InfoCircleFilled /></Popover>
                             </div>
                         :
-                        <div className="newSpend"><span>{`€${parseFloat(oldLTROI).toFixed(2)}`}</span></div>
+                        <div className="newSpend"><span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(oldLTROI).toFixed(2)}`}</span></div>
                     }
                 </span>
             }},
@@ -1005,7 +1119,7 @@ export class SimpulateDetails extends React.Component {
         const tableData = spendData
         const spendSeries = [];
         const oldSpendSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const newSpendSeries = {
@@ -1014,7 +1128,7 @@ export class SimpulateDetails extends React.Component {
         }
         const revenuSeries = [];
         const oldRevenuSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const newRevenuSeries = {
@@ -1023,7 +1137,7 @@ export class SimpulateDetails extends React.Component {
         }
         const roiSeries = [];
         const oldroiSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const newroiSeries = {
@@ -1032,7 +1146,7 @@ export class SimpulateDetails extends React.Component {
         }
         const revenuLTSeries = [];
         const oldRevenuLTSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const newRevenuLTSeries = {
@@ -1041,7 +1155,7 @@ export class SimpulateDetails extends React.Component {
         }
         const roiLTSeries = [];
         const oldroiLTSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const newroiLTSeries = {
@@ -1050,7 +1164,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keySpendSeries = []
         const keyoldSpendSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewSpendSeries = {
@@ -1060,7 +1174,7 @@ export class SimpulateDetails extends React.Component {
         const keySpendLabels = []
         const keyRevenueSeries = []
         const keyoldRevenuSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewRevenuSeries = {
@@ -1069,7 +1183,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keyBaseRevenueSeries = []
         const keyoldBaseRevenuSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewBaseRevenuSeries = {
@@ -1078,7 +1192,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keyTotalRevenueSeries = []
         const keyoldTotalRevenuSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewTotalRevenuSeries = {
@@ -1087,7 +1201,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keyRevenueLTSeries = []
         const keyoldRevenuLTSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewRevenuLTSeries = {
@@ -1096,7 +1210,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keyROISeries = []
         const keyoldroiSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewroiSeries = {
@@ -1105,7 +1219,7 @@ export class SimpulateDetails extends React.Component {
         }
         const keyROILTSeries = []
         const keyoldroiLTSeries = {
-            name: '2019 Plan',
+            name: 'Previous Plan',
             data: []
         }
         const keynewroiLTSeries = {
@@ -1117,14 +1231,22 @@ export class SimpulateDetails extends React.Component {
             tableData.forEach(element => {
                 oldSpendSeries.data.push(element.spend)
                 oldRevenuSeries.data.push(element.revenue)
-                oldroiSeries.data.push(element.roi)
+                if (showProfit) {
+                    oldroiSeries.data.push((element.roi*profitValueData)/100)
+                } else {
+                    oldroiSeries.data.push(element.roi)
+                }
                 oldRevenuLTSeries.data.push(element.oldLTRevenue)
                 oldroiLTSeries.data.push(element.oldLTROI)
                 categories.push(element.tactic)
                 if (element.newSpend) {
                     newSpendSeries.data.push(element.newSpend)
                     newRevenuSeries.data.push(element.newRevenue)
-                    newroiSeries.data.push(element.newROI)
+                    if (showProfit) {
+                        newroiSeries.data.push((element.newROI*profitValueData)/100)
+                    } else {
+                        newroiSeries.data.push(element.newROI)
+                    }
                     newRevenuLTSeries.data.push(element.newLTRevenue)
                     newroiLTSeries.data.push(element.newLTROI)
                 }
@@ -1141,7 +1263,11 @@ export class SimpulateDetails extends React.Component {
                         keyoldRevenuSeries.data.push(keyHighlights[i].revenue)
                         keyoldBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
                         keyoldTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
-                        keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        if (showProfit) {
+                            keyoldroiSeries.data.push((keyHighlights[i].roi*profitValueData)/100)
+                        } else {
+                            keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        }
                         keyoldRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
                         keyoldroiLTSeries.data.push(keyHighlights[i].ltroi)
                     } 
@@ -1150,7 +1276,12 @@ export class SimpulateDetails extends React.Component {
                         keynewRevenuSeries.data.push(keyHighlights[i].revenue)
                         keynewBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
                         keynewTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
-                        keynewroiSeries.data.push(keyHighlights[i].roi)
+                        
+                        if (showProfit) {
+                            keynewroiSeries.data.push((keyHighlights[i].roi*profitValueData)/100)
+                        } else {
+                            keynewroiSeries.data.push(keyHighlights[i].roi)
+                        }
                         keynewRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
                         keynewroiLTSeries.data.push(keyHighlights[i].ltroi)
                     }
@@ -1164,7 +1295,12 @@ export class SimpulateDetails extends React.Component {
                         keyoldRevenuSeries.data.push(keyHighlights[i].revenue)
                         keyoldBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
                         keyoldTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
-                        keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        
+                        if (showProfit) {
+                            keyoldroiSeries.data.push((keyHighlights[i].roi*profitValueData)/100)
+                        } else {
+                            keyoldroiSeries.data.push(keyHighlights[i].roi)
+                        }
                         keyoldRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
                         keyoldroiLTSeries.data.push(keyHighlights[i].ltroi)
                     } 
@@ -1173,7 +1309,11 @@ export class SimpulateDetails extends React.Component {
                         keynewRevenuSeries.data.push(keyHighlights[i].revenue)
                         keynewBaseRevenuSeries.data.push(keyHighlights[i].baseRevenue)
                         keynewTotalRevenuSeries.data.push(keyHighlights[i].revenue + keyHighlights[i].baseRevenue)
-                        keynewroiSeries.data.push(keyHighlights[i].roi)
+                        if (showProfit) {
+                            keynewroiSeries.data.push((keyHighlights[i].roi*profitValueData)/100)
+                        } else {
+                            keynewroiSeries.data.push(keyHighlights[i].roi)
+                        }
                         keynewRevenuLTSeries.data.push(keyHighlights[i].ltRevenue)
                         keynewroiLTSeries.data.push(keyHighlights[i].ltroi)
                     }
@@ -1220,6 +1360,20 @@ export class SimpulateDetails extends React.Component {
                 <div><strong>Base Trend Factor</strong></div>
                 <InputNumber value={baseValueData} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onChange={this.props.onChangeBase}  />
            
+            </div>
+          );
+
+          const contentProfit = (
+            <div className="spenTooltip">
+                <div><strong>Profit ROI Factor</strong></div>
+                <InputNumber value={this.props.profitValueData} formatter={value => `${value}%`} parser={value => value.replace('%', '')} onChange={this.props.onChangeProfit}  />
+           
+            </div>
+          );
+
+          const contentProfitText = (
+            <div className="spenTooltip tooltipContent">
+              <p>Select /Edit Profit ROI Factor by clicking on (i) icon. </p>
             </div>
           );
 
@@ -1288,6 +1442,7 @@ export class SimpulateDetails extends React.Component {
                                 keyROISeries={keyROISeries}
                                 keyRevenueLTSeries={keyRevenueLTSeries}
                                 keyROILTSeries={keyROILTSeries}
+                                showProfit={showProfit}
                             />
                             </Modal>
                         }
@@ -1295,7 +1450,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.spendVisible && spendSeries.length > 0 &&
                         <Modal
-                          title="Spend (€)"
+                          title={`Spend (${sessionStorage.getItem('symbolVal')})`}
                           visible={this.state.spendVisible}
                           onOk={this.handleSpendOk}
                           onCancel={this.handleSpendCancel}
@@ -1312,7 +1467,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.revenuVisible && revenuSeries.length > 0 &&
                         <Modal
-                          title="Revenue (€)"
+                          title={`Revenue (${sessionStorage.getItem('symbolVal')})`}
                           visible={this.state.revenuVisible}
                           onOk={this.handleRevenuOk}
                           onCancel={this.handleRevenuCancel}
@@ -1329,7 +1484,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.revenuLTVisible && revenuLTSeries.length > 0 &&
                         <Modal
-                          title="Brand Revenue (€)"
+                          title={`Brand Revenue (${sessionStorage.getItem('symbolVal')})`}
                           visible={this.state.revenuLTVisible}
                           onOk={this.handleRevenuLTOk}
                           onCancel={this.handleRevenuLTCancel}
@@ -1346,7 +1501,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.roiVisible && roiSeries.length > 0 &&
                         <Modal
-                          title="Inc ROI (€)"
+                          title={`${showProfit ? "Profit ROI" : "Inc ROI"} (${sessionStorage.getItem('symbolVal')})`}
                           visible={this.state.roiVisible}
                           onOk={this.handleROIOk}
                           onCancel={this.handleROICancel}
@@ -1363,7 +1518,7 @@ export class SimpulateDetails extends React.Component {
                     {
                       this.state.roiLTVisible && roiLTSeries.length > 0 &&
                         <Modal
-                          title="Brand ROI (€)"
+                          title={`Brand ROI (${sessionStorage.getItem('symbolVal')})`}
                           visible={this.state.roiLTVisible}
                           onOk={this.handleROILTOk}
                           onCancel={this.handleROILTCancel}
@@ -1454,12 +1609,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="leftData">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1468,13 +1623,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].spend >= 0 ?
                                                                 <span className="positive">
-                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(keyHighlights[2].spendPercentage *10)/10}%`}</span>
                                                                 </span>
                                                                 :
                                                                 <span className="negitive">
-                                                                    <span>{`€${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(keyHighlights[2].spendPercentage*10)/10}%`}</span>
                                                                 </span>
@@ -1492,9 +1647,9 @@ export class SimpulateDetails extends React.Component {
                                             <span className="leftHeadTop"><Popover content={IncRevenuecontent}>Short Term</Popover> <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></span>
                                             {/* <span className="rightHeadTop">-</span> */}
                                             <span className="leftHead_rev"><Popover content={IncRevenuecontent}>Inc Revenue</Popover></span>
-                                            <span className="rightHead_rev"><Popover content={basecontent}>Base</Popover> <Popover content={contentBase} className="toolPop" trigger="click" ><InfoCircleFilled /></Popover></span>
-                                            <span className="rightHead_rev"><Popover content={totalcontent}>Total</Popover></span>
-                                            <span className="rightHead_rev"><span><Popover content={IncROIcontent}>Inc ROI</Popover></span></span>
+                                            <span className="rightHead_rev"><Popover content={basecontent}>Base Revenue</Popover> <Popover content={contentBase} className="toolPop" trigger="click" ><InfoCircleFilled /></Popover></span>
+                                            <span className="rightHead_rev"><Popover content={totalcontent}>Total Revenue</Popover></span>
+                                            <span className="rightHead_rev"><span><Popover content={IncROIcontent}>{showProfit ? "Profit ROI": "Inc ROI"}</Popover></span></span>
                                         </h5>
                                         <div className="spendContent">
                                             {/* <div className="baseData">Base<span>{` €${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div> */}
@@ -1502,12 +1657,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="leftData_rev">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1516,13 +1671,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].revenue >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].revenuePercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].revenuePercentage*10)/10}%`}</span>
                                                                     </span>
@@ -1534,12 +1689,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="rightData_rev">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1548,13 +1703,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].baseRevenue >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].baseRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].baseRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
@@ -1566,12 +1721,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="rightData_rev">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].revenue + keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].revenue + keyHighlights[0].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].revenue + keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].revenue + keyHighlights[1].baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1580,13 +1735,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {(keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue) >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round((((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue))/(keyHighlights[0].revenue + keyHighlights[0].baseRevenue))*1000)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round((((keyHighlights[1].revenue + keyHighlights[1].baseRevenue) - (keyHighlights[0].revenue + keyHighlights[0].baseRevenue))/(keyHighlights[0].revenue + keyHighlights[0].baseRevenue))*1000)/10}%`}</span>
                                                                     </span>
@@ -1598,12 +1753,26 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="rightData_rev">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].roi*10)/10}`}</div>
+                                                        <div className="planData">
+                                                            {
+                                                            showProfit ? 
+                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(((keyHighlights[0].roi*profitValueData)/100)*10)/10}`
+                                                                :
+                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].roi*10)/10}`
+                                                            }
+                                                        </div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].roi *10)/10}`}</div>
+                                                            <div className="planData">
+                                                                {
+                                                                     showProfit ? 
+                                                                     `${sessionStorage.getItem('symbolVal')}${Math.round(((keyHighlights[1].roi*profitValueData)/100)*10)/10}`
+                                                                     :
+                                                                    `${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].roi *10)/10}`
+                                                                }
+                                                            </div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1612,13 +1781,27 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].roi >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].roi*10)/10}`}</span>
+                                                                        <span>
+                                                                            {
+                                                                                showProfit ? 
+                                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(((keyHighlights[2].roi*profitValueData)/100)*10)/10}`
+                                                                                :
+                                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].roi*10)/10}`
+                                                                            }
+                                                                        </span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].roiPercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].roi*10)/10}`}</span>
+                                                                        <span>
+                                                                            {
+                                                                                showProfit ? 
+                                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(((keyHighlights[2].roi*profitValueData)/100)*10)/10}`
+                                                                                :
+                                                                                `${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].roi*10)/10}`
+                                                                            }
+                                                                        </span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].roiPercentage*10)/10}%`}</span>
                                                                     </span>
@@ -1643,12 +1826,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="leftData">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1657,13 +1840,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].ltRevenue >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].ltRevenuePercentage*10)/10}%`}</span>
                                                                     </span>
@@ -1675,12 +1858,12 @@ export class SimpulateDetails extends React.Component {
                                                 <div className="rightData">
                                                     <div className="oldPlan">
                                                         <div className="planTitle">{keyHighlights[0].tactic}</div>
-                                                        <div className="planData">{`€${Math.round(keyHighlights[0].ltroi*10)/10}`}</div>
+                                                        <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[0].ltroi*10)/10}`}</div>
                                                     </div>
                                                     {keyHighlights.length > 1 && 
                                                         <div className="newPlan">
                                                             <div className="planTitle">{keyHighlights[1].tactic}</div>
-                                                            <div className="planData">{`€${Math.round(keyHighlights[1].ltroi*10)/10}`}</div>
+                                                            <div className="planData">{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[1].ltroi*10)/10}`}</div>
                                                         </div>
                                                     }
                                                     {keyHighlights.length > 2 && 
@@ -1689,13 +1872,13 @@ export class SimpulateDetails extends React.Component {
                                                             <div className="planData">
                                                                 {keyHighlights[2].ltroi >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].ltroi*10)/10}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].ltroi*10)/10}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].ltroiPercentage*10)/10}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(keyHighlights[2].ltroi*10)/10}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(keyHighlights[2].ltroi*10)/10}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(keyHighlights[2].ltroiPercentage*10)/10}%`}</span>
                                                                     </span>
@@ -1726,18 +1909,18 @@ export class SimpulateDetails extends React.Component {
                                                                 {record.tactic && record.tactic === 'Change' ?
                                                                     record.spend >= 0 ?
                                                                     <span className="positive">
-                                                                        <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(record.spendPercentage)}%`}</span>
                                                                     </span>
                                                                     :
                                                                     <span className="negitive">
-                                                                        <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                         <span className="pipe">||</span>
                                                                         <span>{`${Math.round(record.spendPercentage)}%`}</span>
                                                                     </span>
                                                                 :
-                                                                <span>{`€${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                 }
                                                             </div>
                                                         
@@ -1760,25 +1943,25 @@ export class SimpulateDetails extends React.Component {
                                                 return (
                                                     
                                                         <div>
-                                                            {record.tactic === "2019 Plan" &&
+                                                            {record.tactic === "Previous Plan" &&
                                                             <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                                                             }
                                                             {record.tactic}: 
                                                             {record.tactic && record.tactic === 'Change' ?
                                                                 record.revenue >= 0 ?
                                                                 <span className="positive">
-                                                                    <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(record.revenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
                                                                 <span className="negitive">
-                                                                    <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(record.revenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
-                                                                <span>{`€${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                             }
                                                         </div>
                                                     
@@ -1801,25 +1984,25 @@ export class SimpulateDetails extends React.Component {
                                                 return (
                                                     
                                                         <div>
-                                                            {record.tactic === "2019 Plan" &&
+                                                            {record.tactic === "Previous Plan" &&
                                                             <div>Base: <span>{` €${Math.round(record.baseRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span></div>
                                                             }
                                                             {record.tactic}: 
                                                             {record.tactic && record.tactic === 'Change' ?
                                                                 record.ltRevenue >= 0 ?
                                                                 <span className="positive">
-                                                                    <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(record.ltRevenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
                                                                 <span className="negitive">
-                                                                    <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                    <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                                     <span className="pipe">||</span>
                                                                     <span>{`${Math.round(record.ltRevenuePercentage)}%`}</span>
                                                                 </span>
                                                                 :
-                                                                <span>{`€${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(record.ltRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                                                             }
                                                         </div>
                                                     
@@ -1846,18 +2029,18 @@ export class SimpulateDetails extends React.Component {
                                                         {record.tactic && record.tactic === 'Change' ?
                                                             record.roi >= 0 ?
                                                             <span className="positive">
-                                                                <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.roi).toFixed(2)}`}</span>
                                                                 <span className="pipe">||</span>
                                                                 <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
                                                             </span>
                                                             :
                                                             <span className="negitive">
-                                                                <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.roi).toFixed(2)}`}</span>
                                                                 <span className="pipe">||</span>
                                                                 <span>{`${parseFloat(record.roiPercentage).toFixed(2)}%`}</span>
                                                             </span>
                                                             :
-                                                            <span>{`€${parseFloat(record.roi).toFixed(2)}`}</span>
+                                                            <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.roi).toFixed(2)}`}</span>
                                                         }
                                                     </div>
                                                     
@@ -1882,18 +2065,18 @@ export class SimpulateDetails extends React.Component {
                                                         {record.tactic && record.tactic === 'Change' ?
                                                             record.ltroi >= 0 ?
                                                             <span className="positive">
-                                                                <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.ltroi).toFixed(2)}`}</span>
                                                                 <span className="pipe">||</span>
                                                                 <span>{`${parseFloat(record.ltroiPercentage).toFixed(2)}%`}</span>
                                                             </span>
                                                             :
                                                             <span className="negitive">
-                                                                <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                                <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.ltroi).toFixed(2)}`}</span>
                                                                 <span className="pipe">||</span>
                                                                 <span>{`${parseFloat(record.ltroiPercentage).toFixed(2)}%`}</span>
                                                             </span>
                                                             :
-                                                            <span>{`€${parseFloat(record.ltroi).toFixed(2)}`}</span>
+                                                            <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(record.ltroi).toFixed(2)}`}</span>
                                                         }
                                                     </div>
                                                     
@@ -1930,7 +2113,11 @@ export class SimpulateDetails extends React.Component {
                                         </Tooltip>
                                     }
                                     </div>
-                                    <span className="showColumns"> <Switch checked={showColumns} onChange={changeShowColumns} /> Cost & Response</span>
+                                    <span className="showColumns profit"> <Checkbox checked={showColumns} onChange={changeShowColumns} /> Cost & Response</span>
+                                    <span className="showColumns"> 
+                                    <Popover content={contentProfitText} className="toolPop" ><Switch checked={showProfit} disabled={profitValueData === null} onChange={changeShowProfit} /> </Popover>
+                                    Profit ROI <Popover content={contentProfit} className="toolPop" trigger="click" ><InfoCircleFilled /></Popover></span>
+                                    
                                 </h3>
                                 <div className="simulateTable">
                                 <Table

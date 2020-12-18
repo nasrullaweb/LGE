@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import moment from 'moment';
 import SpendTable from './SpendTable'
 import { Button, Modal } from 'antd';
-import { priceSymbol } from '../../config/apiConfig'
+
 
 
 class MainTab3Charts extends React.Component {
@@ -92,7 +92,7 @@ class MainTab3Charts extends React.Component {
                   },
                 },
                 title: {
-                  text: "Spend (€)",
+                  text: `Spend (${sessionStorage.getItem('symbolVal')})`,
                   style: {
                     color: '#DB1348',
                     fontWeight : 'bold',

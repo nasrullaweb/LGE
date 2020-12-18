@@ -92,7 +92,7 @@ class MainTab1Charts extends React.Component {
                       color: '#8E8E8E'
                     },
                     title: {
-                      text: "Sales Value (€)",
+                      text: `Sales Value (${sessionStorage.getItem('symbolVal')})`,
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',

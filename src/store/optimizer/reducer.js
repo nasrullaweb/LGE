@@ -21,6 +21,7 @@ export const initialState = {
     saveAsId: '',
     isOptimized: false,
     isSaved: false,
+    profitROI: 0,
 }
 
 export default function optimizer (state = initialState, action = {}) {
@@ -152,6 +153,7 @@ export default function optimizer (state = initialState, action = {}) {
                 setLoader: false,
                 isOptimized: true,
                 isSaved: action.isSaved,
+                profitROI: action.payload.profitROI
             });
         case CLEAR_DATA:
             return Object.assign({}, state, {
