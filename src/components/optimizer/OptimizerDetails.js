@@ -140,14 +140,19 @@ export class OptimizerDetails extends React.Component {
     handleChangeInMaxSpend = (e) => {
         const data = this.props.spendData;
         const id = e.target.id.split('maxspend_')
-        const changeSpend = e.target.value
+        let changeSpend = e.target.value
         const spend = document.getElementById('oldspend_'+id[1]).value
         const parentId = id[1].split('_')
         const changeDiff = changeSpend - spend
 
         const minSpend = document.getElementById('minspend_'+id[1]).value
 
-        if (parseInt(minSpend-changeSpend) == 0) {
+        if (changeSpend === "") {
+            changeSpend = ((spend * (9999+100))/100)
+        }
+
+        if (minSpend-changeSpend > 0) {
+            changeSpend = minSpend;
             alert("Maximum Spending should be >= Minimum Spending")
         }
         const outputData = []
@@ -232,15 +237,17 @@ export class OptimizerDetails extends React.Component {
     handleChangeInMaxSpendPercentage = (e) => {
         const data = this.props.spendData;
         const id = e.target.id.split('maxpercentage_')
-        const value = parseFloat(e.target.value)
-        const changePercentage = ((value + 100)/100)
+        let value = e.target.value === "%" ?  9999 : parseFloat(e.target.value)
         const spend = document.getElementById('oldspend_'+id[1]).value
+        let changePercentage = ((value + 100)/100)
         const parentId = id[1].split('_')
         const changeDiff = changePercentage*spend - spend
 
         const minSpend = document.getElementById('minspend_'+id[1]).value
 
-        if (parseInt(minSpend-changePercentage*spend) == 0) {
+        if (parseInt(minSpend-Math.round(changePercentage*spend)) > 0) {
+            changePercentage = Math.round(this.getChangePercentage(minSpend, spend))
+            value = Math.round(this.getChangePercentage(minSpend, spend))
             alert("Maximum Spending should be >= Minimum Spending")
         }
         const outputData = []
@@ -325,14 +332,17 @@ export class OptimizerDetails extends React.Component {
     handleChangeInMinSpend = (e) => {
         const data = this.props.spendData;
         const id = e.target.id.split('minspend_')
-        const changeSpend = e.target.value
         const spend = document.getElementById('oldspend_'+id[1]).value
+        let changeSpend = e.target.value === "" ? 0 : e.target.value
         const parentId = id[1].split('_')
         const changeDiff = changeSpend - spend
 
-        const maxSpend = document.getElementById('maxspend_'+id[1]).value
+        let maxSpend = document.getElementById('maxspend_'+id[1]).value
+        maxSpend = maxSpend === "" ? ((spend * (9999+100))/100) : maxSpend;
 
-        if (parseInt(changeSpend-maxSpend) == 0) {
+        console.log(changeSpend, maxSpend, "spendValues")
+        if (changeSpend-maxSpend > 0) {
+            changeSpend = maxSpend;
             alert("Minimum Spending should be <= Maximum Spending")
         }
         const outputData = []
@@ -417,14 +427,24 @@ export class OptimizerDetails extends React.Component {
     handleChangeInMinSpendPercentage = (e) => {
         const data = this.props.spendData;
         const id = e.target.id.split('minpercentage_')
-        const value = parseFloat(e.target.value)
-        const changePercentage = ((value + 100)/100)
+        let value = e.target.value === "%" ?  -100 : parseFloat(e.target.value)
+        let changePercentage = value === "-100" ? 0.01 : ((value + 100)/100)
         const spend = document.getElementById('oldspend_'+id[1]).value
         const parentId = id[1].split('_')
         const changeDiff = changePercentage*spend - spend
-        const maxSpend = document.getElementById('maxspend_'+id[1]).value
+        let maxSpend = document.getElementById('maxspend_'+id[1]).value
+        maxSpend = maxSpend === "" ? ((spend * (9999+100))/100) : maxSpend;
 
-        if (parseInt(changePercentage*spend-maxSpend) == 0) {
+        // if (parseInt(minSpend-Math.round(changePercentage*spend)) > 0) {
+        //     changePercentage = Math.round(this.getChangePercentage(minSpend, spend))
+        //     value = Math.round(this.getChangePercentage(minSpend, spend))
+        //     alert("Maximum Spending should be >= Minimum Spending")
+        // }
+
+        //console.log(Math.round(changePercentage*spend), maxSpend, parseInt(changePercentage*spend-maxSpend))
+        if (parseInt(changePercentage*spend-maxSpend) > 0) {
+            changePercentage = Math.round(this.getChangePercentage(maxSpend, spend))
+            value = Math.round(this.getChangePercentage(maxSpend, spend))
             alert("Minimum Spending should be <= Maximum Spending")
         }
         const outputData = []
@@ -507,7 +527,7 @@ export class OptimizerDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, keyHighlights, profitValueData } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, constraintsVal, keyHighlights, profitValueData } = this.props
         const columns = [
             { fixed: 'left', width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { width: 200, title: <span>Spend <BarChartOutlined className="linkToCharts" onClick={this.showSpendModal} /></span>, dataIndex: 'spend', key: 'spend', render: (spend, record) => {
@@ -820,9 +840,20 @@ export class OptimizerDetails extends React.Component {
                     </div>
                   );
                 return <span className="borderRight">
-                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0}  max={Math.round(record.changeInMaxSpend)} value={`${Math.round(changeInMinSpend)}`} onBlur={(e) => this.handleChangeInMinSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpend(e)} id={`minspend_${record.key}`} /></Popover>
-                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={-100} max={record.changeInMaxSpendPercentage} value={`${parseFloat(record.changeInMinSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMinSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpendPercentage(e)} id={`minpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
-                </span>
+                        { constraintsVal.minimumSpending === record.changeInMinSpendPercentage ?
+                        <span>
+                            <span className="constText">No Constraint</span>
+                            <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0}  value="" onBlur={(e) => this.handleChangeInMinSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpend(e)} id={`minspend_${record.key}`} /></Popover>
+                            <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={-100} value="" onBlur={(e) => this.handleChangeInMinSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpendPercentage(e)} id={`minpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                        </span> 
+                        :
+                        <span>
+                            <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0}  value={`${Math.round(changeInMinSpend)}`} onBlur={(e) => this.handleChangeInMinSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpend(e)} id={`minspend_${record.key}`} /></Popover>
+                            <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={-100} value={`${parseFloat(record.changeInMinSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMinSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMinSpendPercentage(e)} id={`minpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                        </span>
+                        }
+                    </span>      
+                    
              }
             },
             {width: 200, title: 'Maximum Spending', className: 'maxTdSpend', dataIndex: 'changeInMaxSpend', key: 'changeInMaxSpend', render: (changeInMaxSpend, record) => {
@@ -833,8 +864,18 @@ export class OptimizerDetails extends React.Component {
                     </div>
                   );
                 return <span>
-                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0} min={Math.round(record.changeInMinSpend)} value={`${Math.round(changeInMaxSpend)}`} onBlur={(e) => this.handleChangeInMaxSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpend(e)} id={`maxspend_${record.key}`} /></Popover>
-                    <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} min={record.changeInMinSpendPercentage} value={`${parseFloat(record.changeInMaxSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMaxSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpendPercentage(e)} id={`maxpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                { constraintsVal.maximumSpending === record.changeInMaxSpendPercentage ?
+                    <span className="borderRight">
+                        <span className="constText">No Constraint</span>
+                        <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0} value="" onBlur={(e) => this.handleChangeInMaxSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpend(e)} id={`maxspend_${record.key}`} /></Popover>
+                        <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} value="" onBlur={(e) => this.handleChangeInMaxSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpendPercentage(e)} id={`maxpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                    </span>
+                    :
+                    <span className="borderRight">
+                        <Popover content={content} className="toolPop" trigger="focus"><InputNumber disabled={record.spend <=0} value={`${Math.round(changeInMaxSpend)}`} onBlur={(e) => this.handleChangeInMaxSpend(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpend(e)} id={`maxspend_${record.key}`} /></Popover>
+                        <Popover content={content} className="toolPop" trigger="focus"><InputNumber className="maxTdSpendPer" disabled={record.spend <=0} value={`${parseFloat(record.changeInMaxSpendPercentage).toFixed(1)}`} onBlur={(e) => this.handleChangeInMaxSpendPercentage(e)} onKeyUp={(e) => e.key === 'Enter' && this.handleChangeInMaxSpendPercentage(e)} id={`maxpercentage_${record.key}`} formatter={value => `${value}%`} parser={value => value.replace('%', '')} /></Popover>
+                    </span>
+                }
                 </span>
             }},
         ];
@@ -1068,11 +1109,11 @@ export class OptimizerDetails extends React.Component {
         keynewroiLTSeries.data.length > 0 && keyROILTSeries.push(keynewroiLTSeries)
 
         const baseValueData = 
-            this.props.baseValue 
+            this.props.baseValue !== ""
             ? this.props.baseValue 
             : keyHighlights.length >= 2 
                 ? Math.round(keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                : "0.538"
+                : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
         const contentBase = (
             <div className="spenTooltip">
                 <div><strong>Base Trend Factor</strong></div>

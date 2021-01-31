@@ -1350,11 +1350,11 @@ export class SimpulateDetails extends React.Component {
         keynewroiLTSeries.data.length > 0 && keyROILTSeries.push(keynewroiLTSeries)
 
         const baseValueData = 
-            this.props.baseValue 
+            this.props.baseValue !== ""
             ? this.props.baseValue 
             : keyHighlights.length >= 2 
                 ? Math.round(keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                : "0.538"
+                : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
         const contentBase = (
             <div className="spenTooltip">
                 <div><strong>Base Trend Factor</strong></div>

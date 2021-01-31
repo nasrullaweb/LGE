@@ -168,7 +168,10 @@ export function removeSimulatedMsg () {
 export function getKeyHighLights(brand, geography, subBrand, period, tactic, modal) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Spend/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}`, config)
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/Spend/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${modal}`, tac, config)
     .then(response => {
       dispatch({
           type: GET_KEY_HIGHLIGHTS,
@@ -192,7 +195,10 @@ export function getKeyHighLights(brand, geography, subBrand, period, tactic, mod
 export function getSpendingCostData(brand, geography, subBrand, period, tactic, modal) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Spend/GetSpendValues/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}`, config
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/Spend/GetSpendValues/${brand}/${geography}/${subBrand}/${period}/${modal}`, tac, config
     )
     .then(response => {
       const spendingData = getNestedChildren(response.data.result)

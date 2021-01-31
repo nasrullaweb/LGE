@@ -58,6 +58,23 @@ export class Home extends React.Component {
     geography.checkedList = ''
     sessionStorage.setItem('modelValue', JSON.stringify(e.target.value));
     sessionStorage.removeItem('geographyValue');
+    sessionStorage.removeItem('RbrandValue');
+    sessionStorage.removeItem('RsubBrandValue');
+    sessionStorage.removeItem('RtacticValue');
+    sessionStorage.removeItem('RtacticValue1');
+    sessionStorage.removeItem('brandValue');
+    sessionStorage.removeItem('subBrandValue');
+    sessionStorage.removeItem('var2Value');
+    sessionStorage.removeItem('var1Value');
+    sessionStorage.removeItem('brandValueTab1');
+    sessionStorage.removeItem('subBrandValueTab1');
+    sessionStorage.removeItem('var2ValueTab1');
+    sessionStorage.removeItem('brandValueTab2');
+    sessionStorage.removeItem('subBrandValueTab2');
+    sessionStorage.removeItem('var2ValueTab2');
+    sessionStorage.removeItem('var1ValueTab2');
+    sessionStorage.removeItem('brandValueTab3');
+    sessionStorage.removeItem('subBrandValueTab3');
     this.props.getGeographyList(e.target.value)
     this.setState({
         modelValue: e.target.value,
@@ -82,11 +99,31 @@ onGeographyChange = (e) => {
     const geography = {}
     geography.checkedList = e.target.value
     sessionStorage.setItem('geographyValue', JSON.stringify(e.target.value));
+    sessionStorage.removeItem('RbrandValue');
+    sessionStorage.removeItem('RsubBrandValue');
+    sessionStorage.removeItem('RtacticValue');
+    sessionStorage.removeItem('RtacticValue1');
+    sessionStorage.removeItem('brandValue');
+    sessionStorage.removeItem('subBrandValue');
+    sessionStorage.removeItem('var2Value');
+    sessionStorage.removeItem('var1Value');
+    sessionStorage.removeItem('brandValueTab1');
+    sessionStorage.removeItem('subBrandValueTab1');
+    sessionStorage.removeItem('var2ValueTab1');
+    sessionStorage.removeItem('brandValueTab2');
+    sessionStorage.removeItem('subBrandValueTab2');
+    sessionStorage.removeItem('var2ValueTab2');
+    sessionStorage.removeItem('var1ValueTab2');
+    sessionStorage.removeItem('brandValueTab3');
+    sessionStorage.removeItem('subBrandValueTab3');
     if (e.target.value === "FRANCE") {
       sessionStorage.setItem('symbolVal', '€');
     }
     if (e.target.value === "SPAIN") {
       sessionStorage.setItem('symbolVal', '$');
+    }
+    if (e.target.value === "RUSSIA") {
+      sessionStorage.setItem('symbolVal', '₽');
     }
     this.setState({
         geographyValue: e.target.value,

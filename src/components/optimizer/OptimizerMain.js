@@ -462,11 +462,11 @@ export class SimpulateMain extends React.Component {
         if (this.state.optimizationType) {
             const spendData = this.state.spendNewData
             this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
-            let baseValueData = this.state.baseValue 
+            let baseValueData = this.state.baseValue !== ""
                                     ? this.state.baseValue 
                                     : this.props.keyHighlights.length >= 2 
                                         ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                                        : "0.538"
+                                        : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
             baseValueData = Math.round(baseValueData * 1000)
             this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue, baseValueData, this.state.profitValueData)
         }
@@ -478,13 +478,13 @@ export class SimpulateMain extends React.Component {
 
     handleSave = () => {
         this.setState({simulatedMsg: ''})
-        this.props.saveResults(this.props.scenarioId)
+        this.props.saveResults(this.props.scenarioId, this.state.profitValueData)
     }
 
     saveAsScenarioHandle = (values) => {
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []},
-            this.props.saveAsScenario(this.props.modal, values.scenarioname, scenarioNote, this.props.scenarioId)
+            this.props.saveAsScenario(this.props.modal, values.scenarioname, scenarioNote, this.props.scenarioId, this.state.profitValueData)
             )
         
     }
@@ -499,7 +499,7 @@ export class SimpulateMain extends React.Component {
         
 
     render() {
-      const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
+      const { scenarioName, isSaved, setLoader, spendData, constraintsVal, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
       const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange, changeShowProfit } = this
       const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
       const optType = Array.isArray(this.state.optimizationType) ? this.state.optimizationType.toString() : this.state.optimizationType;
@@ -632,6 +632,7 @@ export class SimpulateMain extends React.Component {
                             <OptimizerDetails 
                                 {...this.state}
                                 spendData={spendData}
+                                constraintsVal={constraintsVal}
                                 keyHighlights={keyHighlights}
                                 handleChangeSpendData={this.handleChangeSpendData}
                                 scenarioName={scenarioName}
@@ -707,7 +708,7 @@ export class SimpulateMain extends React.Component {
 
 const mapStateToProps = (state) => {
     const { brandOptions, geographyOptions, periodOptions, tacticsOptions, subBrandOptions, 
-        spendData, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, isSaved,
+        spendData, constraintsVal, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, isSaved,
         selectedGeography, selectedPeriod, selectedtactic, selectedSubBrand, selectedOptimisationType, 
         optimizationTypeOptions, saveAsId, runSimulate, setLoader, isOptimized, selectedOptimisationTypeValues, profitROI
     } =state.optimizer
@@ -721,6 +722,7 @@ const mapStateToProps = (state) => {
       subBrandOptions,
       optimizationTypeOptions,
       spendData,
+      constraintsVal,
       keyHighlights,
       oldSpendData,
       selectedBrand,

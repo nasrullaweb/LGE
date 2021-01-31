@@ -305,7 +305,7 @@ class MainTab4Charts extends React.Component {
   <div id="chart">
       {
           this.props.graphData4 &&
-            <div className="chartContent">
+            <div className="chartContent respCurv">
                 <div className="downChart titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>Sufficiency & Efficiency: {this.props.tacticValue}</div>
                 <Chart

@@ -286,33 +286,33 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSimulate = () => {
-        let baseValueData = this.state.baseValue 
+        let baseValueData = this.state.baseValue !== ""
                                     ? this.state.baseValue 
                                     : this.props.keyHighlights.length >= 2 
                                         ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                                        : "0.538"
+                                        : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
 
         baseValueData = Math.round(baseValueData * 1000)
         this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.state.spendNewData, this.props.keyHighlights, baseValueData, this.state.profitValueData)
     }
 
     handleSave = () => {
-        let baseValueData = this.state.baseValue 
-                                    ? this.state.baseValue 
+        let baseValueData = this.state.baseValue !== ""
+                                    ? this.state.baseValue
                                     : this.props.keyHighlights.length >= 2 
                                         ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                                        : "0.538"
+                                        : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
         baseValueData = Math.round(baseValueData * 1000)
         this.props.saveResults(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, this.props.spendData, baseValueData, this.state.profitValueData)
         this.props.setisSimulated()
     }
 
     saveAsScenario = (values) => {
-        let baseValueData = this.state.baseValue 
-                                    ? this.state.baseValue 
+        let baseValueData = this.state.baseValue !== ""
+                                    ? this.state.baseValue
                                     : this.props.keyHighlights.length >= 2 
                                         ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                                        : "0.538"
+                                        : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
         baseValueData = Math.round(baseValueData * 1000)
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []}, () => {

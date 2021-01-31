@@ -22,6 +22,7 @@ export const initialState = {
     isOptimized: false,
     isSaved: false,
     profitROI: 0,
+    constraintsVal: {}
 }
 
 export default function optimizer (state = initialState, action = {}) {
@@ -97,6 +98,7 @@ export default function optimizer (state = initialState, action = {}) {
             return Object.assign({}, state, {
                 ...state,
                 spendData: action.payload,
+                constraintsVal: action.constraintsVal,
                 oldSpendData: JSON.parse(JSON.stringify(action.payload)),
                 runSimulate: false,
                 isOptimized: false,
@@ -123,6 +125,7 @@ export default function optimizer (state = initialState, action = {}) {
                 ...state,
                 simulatedMsg: '',
                 spendData: [],
+                constraintsVal: {},
                 oldSpendData: [],
                 keyHighlights: [],
                 runSimulate: true,
@@ -148,6 +151,7 @@ export default function optimizer (state = initialState, action = {}) {
                 selectedSubBrand: action.payload.selectedSubBrands,
                 selectedOptimisationType: action.payload.selectedOptimisationType,
                 selectedOptimisationTypeValues: action.payload.selectedOptimisationTypeValues,
+                constraintsVal: action.payload.result1,
                 simulatedMsg: '',
                 runSimulate: false,
                 setLoader: false,
