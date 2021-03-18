@@ -6,7 +6,9 @@ import { apiURL } from '../../config/apiConfig'
 import axios from 'axios'
 
 
-
+const config = {
+  headers: { Authorization: `Bearer ${JSON.parse(sessionStorage.getItem('accessToken'))}` }
+};
 export function login(email, password) {
   const action = function (dispatch) {
     var params = `grant_type=password&username=${email}&password=${password}`
@@ -24,9 +26,11 @@ export function login(email, password) {
       sessionStorage.setItem('userId', JSON.stringify(response.data.userId));
       sessionStorage.setItem('accessToken', JSON.stringify(response.data.access_token));
       sessionStorage.setItem('tokenType', JSON.stringify(response.data.token_type));
+      sessionStorage.setItem('SessionId', JSON.stringify(response.data.SessionId));
       sessionStorage.setItem('user', JSON.stringify(response.data.email));
       sessionStorage.setItem('role', JSON.stringify(response.data.roles));
       localStorage.setItem('user', JSON.stringify(response.data.email));
+      
       window.location = window.location.origin
       dispatch({
         type: SET_LOGIN_SUCCESS,
@@ -139,11 +143,27 @@ export function setMenu(menuItem) {
 }
 
 export function logOut() {
-  return dispatch => {
-    callLogoutApi(() => {
+
+  const action = function (dispatch) {
+    axios.put(`${apiURL}/Users/LogOut/${sessionStorage.getItem('user')}/${sessionStorage.getItem('SessionId')}`, "", config)
+    .then(response => {
+      callLogoutApi(() => {
+      
+      
         dispatch(setLogoutSuccess());
     });
+    })
+    .catch(error => {
+     
+      callLogoutApi(() => {
+      
+      
+        dispatch(setLogoutSuccess());
+    });
+    })
   }
+  return action
+ 
 }
 
 export function clearAuth() {

@@ -10,18 +10,18 @@ import './variable.less'
 import HttpsRedirect from 'react-https-redirect';
 
 import configureStore from './store/configureStore'
+import { BoldOutlined } from '@ant-design/icons';
 const store = configureStore()
 const rootEl = document.getElementById('root')
 
 ReactDOM.render(
-    // <HttpsRedirect>
+    <HttpsRedirect>
         <Provider store={store}>
             <App />
         </Provider>
-    // </HttpsRedirect>
+    </HttpsRedirect>
     , rootEl
 )
-
 
 
 // If you want your app to work offline and load faster, you can change

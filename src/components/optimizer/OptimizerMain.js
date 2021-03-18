@@ -15,6 +15,7 @@ import { Spin, Progress  } from 'antd';
 import Heartbeat from 'react-heartbeat';
 import ShareScenario from '../scenario/ShareScenario'
 import TypeModal from './TypeModal'
+import FixedModal from './FixedModal'
 import { getUsersList, postShareScenario } from '../../store/scenario/actionCreator'
 import { apiURL } from '../../config/apiConfig'
 
@@ -41,6 +42,7 @@ export class SimpulateMain extends React.Component {
         visibleSaveAs: false,
         shareVisible: false,
         typeVisible: false,
+        fixedVisible: false,
         revertActive: false,
         minimizeSpendValue: 0,
         maximizeRevenueValue: 0,
@@ -92,6 +94,27 @@ export class SimpulateMain extends React.Component {
             typeVisible: true,
         });
     }
+
+    showfixedModal = () => {
+        this.setState({
+            fixedVisible: true,
+        });
+    }
+
+    handleTfixedOk = data => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
+    
+      handlefixedCancel = e => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
+
 
     handleTypeOk = data => {
         this.setState({
@@ -499,7 +522,7 @@ export class SimpulateMain extends React.Component {
         
 
     render() {
-      const { scenarioName, isSaved, setLoader, spendData, constraintsVal, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
+      const { scenarioName, isSaved, setLoader, spendData, constraintsVal, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy, fixedTactics } = this.props
       const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange, changeShowProfit } = this
       const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
       const optType = Array.isArray(this.state.optimizationType) ? this.state.optimizationType.toString() : this.state.optimizationType;
@@ -632,6 +655,7 @@ export class SimpulateMain extends React.Component {
                             <OptimizerDetails 
                                 {...this.state}
                                 spendData={spendData}
+                                fixedTactics={fixedTactics}
                                 constraintsVal={constraintsVal}
                                 keyHighlights={keyHighlights}
                                 handleChangeSpendData={this.handleChangeSpendData}
@@ -642,6 +666,7 @@ export class SimpulateMain extends React.Component {
                                 onChangeBase={this.onChangeBase}
                                 changeShowProfit={changeShowProfit}
                                 onChangeProfit={this.onChangeProfit}
+                                showfixedModal={this.showfixedModal}
                             />
                         </div>
 
@@ -700,6 +725,22 @@ export class SimpulateMain extends React.Component {
                         onrevChangeOk={this.onrevChangeOk}
                       />
                     </Modal>
+                    <Modal
+                      title="Fixed Tactics"
+                      visible={this.state.fixedVisible}
+                      onOk={this.handleTfixedOk}
+                      onCancel={this.handlefixedCancel}
+                      className="managePopup"
+                    >
+                      <FixedModal
+                        handleOk={this.handleTfixedOk} 
+                        handleCancel={this.handlefixedCancel} 
+                        fixedTactics={fixedTactics}
+                        changeShowProfit={changeShowProfit}
+                        showProfit={this.state.showProfit}
+                        profitValueData={this.state.profitValueData}
+                      />
+                    </Modal>
                 </div>
             )
           }
@@ -710,7 +751,8 @@ const mapStateToProps = (state) => {
     const { brandOptions, geographyOptions, periodOptions, tacticsOptions, subBrandOptions, 
         spendData, constraintsVal, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, isSaved,
         selectedGeography, selectedPeriod, selectedtactic, selectedSubBrand, selectedOptimisationType, 
-        optimizationTypeOptions, saveAsId, runSimulate, setLoader, isOptimized, selectedOptimisationTypeValues, profitROI
+        optimizationTypeOptions, saveAsId, runSimulate, setLoader, isOptimized, selectedOptimisationTypeValues, profitROI,
+        fixedTactics
     } =state.optimizer
   return {
       usersList: state.scenario.usersList,
@@ -738,7 +780,8 @@ const mapStateToProps = (state) => {
       setLoader,
       isOptimized,
       isSaved,
-      profitROI
+      profitROI,
+      fixedTactics
   };
 }
 

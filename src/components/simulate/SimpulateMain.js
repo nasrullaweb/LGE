@@ -14,6 +14,7 @@ import  SaveAs from './SaveAs'
 import ShareScenario from '../scenario/ShareScenario'
 import { getUsersList, postShareScenario } from '../../store/scenario/actionCreator'
 import { apiURL } from '../../config/apiConfig'
+import FixedModal from './FixedModal'
 
 const { Title } = Typography;
 const { confirm } = Modal;
@@ -42,6 +43,7 @@ export class SimpulateMain extends React.Component {
         baseValue: "",
         profitValueData: null,
         profitValue: 0,
+        fixedVisible: false,
     }
 
     componentDidMount() {
@@ -84,6 +86,26 @@ export class SimpulateMain extends React.Component {
           visibleSaveAs: true,
         });
     };
+
+    showfixedModal = () => {
+        this.setState({
+            fixedVisible: true,
+        });
+    }
+
+    handleTfixedOk = data => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
+    
+      handlefixedCancel = e => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
 
     handleSaveAsOk = e => {
         this.setState({
@@ -327,7 +349,7 @@ export class SimpulateMain extends React.Component {
     }
 
     render() {
-      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
+      const { scenarioName, spendData, keyHighlights, isSimulated, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy, fixedTactics } = this.props
       const { multiProductChange, handleProductChange, handleCompanyChange,  handleYearChange, handleTacticsChange, handleSubBrandChange,  changeShowProfit, changeShowColumns, handleTacticsOkChange } = this
       const url = `/simulator/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`  
 
@@ -432,6 +454,8 @@ export class SimpulateMain extends React.Component {
                             handleSimulate={this.handleSimulate}
                             onChangeBase={this.onChangeBase}
                             onChangeProfit={this.onChangeProfit}
+                            fixedTactics={fixedTactics}
+                            showfixedModal={this.showfixedModal}
                         />
                     </div>
 
@@ -468,6 +492,19 @@ export class SimpulateMain extends React.Component {
                         scenarios={scenariosList}
                       />
                     </Modal>
+                    <Modal
+                      title="Fixed Tactics"
+                      visible={this.state.fixedVisible}
+                      onOk={this.handleTfixedOk}
+                      onCancel={this.handlefixedCancel}
+                      className="managePopup"
+                    >
+                      <FixedModal
+                        handleOk={this.handleTfixedOk} 
+                        handleCancel={this.handlefixedCancel} 
+                        fixedTactics={fixedTactics}
+                      />
+                    </Modal>
                 </div>
             )
           }
@@ -477,7 +514,7 @@ export class SimpulateMain extends React.Component {
 const mapStateToProps = (state) => {
     const { brandOptions, geographyOptions, periodOptions, tacticsOptions, subBrandOptions, 
         spendData, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, saveAsId,
-        selectedGeography, selectedPeriod, selectedtactic, selectedSubBrand, runSimulate, profitROI
+        selectedGeography, selectedPeriod, selectedtactic, selectedSubBrand, runSimulate, profitROI, fixedTactics
     } =state.simulate
   return {
       usersList: state.scenario.usersList,
@@ -498,7 +535,8 @@ const mapStateToProps = (state) => {
       simulatedMsg,
       runSimulate,
       saveAsId,
-      profitROI
+      profitROI,
+      fixedTactics
   };
 }
 

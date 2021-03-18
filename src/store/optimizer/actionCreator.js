@@ -188,6 +188,7 @@ export function getSpendingCostData(brand, geography, subBrand, period, tactic, 
       dispatch({
           type: GET_SPENDINGCOST_DATA,
           payload: spendingData,
+          fixedTactics: response.data.fixedTactics,
           constraintsVal: constraintsVal,
       })
       dispatch(ajaxCallSuccess());

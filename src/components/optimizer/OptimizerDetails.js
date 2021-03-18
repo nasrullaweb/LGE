@@ -527,7 +527,7 @@ export class OptimizerDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, Globalgeagraphy, geographyList, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, constraintsVal, keyHighlights, profitValueData } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, geographyList, fixedTactics, minimizeSpendValue, optimizationType, maximizeRevenueValue, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, constraintsVal, keyHighlights, profitValueData } = this.props
         const columns = [
             { fixed: 'left', width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { width: 200, title: <span>Spend <BarChartOutlined className="linkToCharts" onClick={this.showSpendModal} /></span>, dataIndex: 'spend', key: 'spend', render: (spend, record) => {
@@ -1373,7 +1373,7 @@ export class OptimizerDetails extends React.Component {
                             keyHighlights.length > 0 &&
                             <div className="simulateHeader keyContainer">
                                 {/* <h3 className="keyHeading"> Key Highlights <BarChartOutlined className="linkToCharts" onClick={this.showKeyModal} /></h3> */}
-                                <div className="keyHiCont">
+                                <div className="keyHiCont optkeyHi">
                                     <div className="spendCont">
                                     <h5 className="spendHead">
                                             <span className="leftHeadTop"><Popover content={spendcontent}>Spend</Popover></span>
@@ -1666,6 +1666,49 @@ export class OptimizerDetails extends React.Component {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="spendCont lastCont">
+                                    <h5 className="spendHead">
+                                            <span className="leftHeadTop">Most Preferred Brand</span>
+                                        </h5>
+                                        <div className="spendContent">
+                                            {/* <div className="baseData">Base</div> */}
+                                            <div className="planCont">
+                                                <div className="leftData">
+                                                    <div className="oldPlan">
+                                                        <div className="planTitle">{keyHighlights[0].tactic}</div>
+                                                        <div className="planData">{`${Math.round(keyHighlights[0].prefferedBrand *10)/10}`}</div>
+                                                    </div>
+                                                    {keyHighlights.length > 1 && 
+                                                        <div className="newPlan">
+                                                            <div className="planTitle">{keyHighlights[1].tactic}</div>
+                                                            <div className="planData">{`${Math.round(keyHighlights[1].prefferedBrand*10)/10}`}</div>
+                                                        </div>
+                                                    }
+                                                    {keyHighlights.length > 2 && 
+                                                        <div className="changePlan">
+                                                            <div className="planTitle">Change: </div>
+                                                            <div className="planData">
+                                                                {keyHighlights[2].prefferedBrand >= 0 ?
+                                                                <span className="positive">
+                                                                    <span>{`${Math.round(keyHighlights[2].prefferedBrand*10)/10}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].prefferedBrandPercentage *10)/10}%`}</span>
+                                                                </span>
+                                                                :
+                                                                <span className="negitive">
+                                                                    <span>{`${Math.round(keyHighlights[2].prefferedBrand*10)/10}`}</span>
+                                                                    <span className="pipe">||</span>
+                                                                    <span>{`${Math.round(keyHighlights[2].prefferedBrandPercentage *10)/10}%`}</span>
+                                                                </span>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <div className="clearClass"></div>
                                 </div>
                             </div>
@@ -1909,8 +1952,16 @@ export class OptimizerDetails extends React.Component {
                                     scroll={{ y: 'calc(100vh - 345px)', x: 'calc(100vw - 140px)' }}
                                 />
                                 </div>
+
+                                
                             </div>
                         }
+                        {fixedTactics.length > 0 &&
+                            <div className="fixedButton">
+                                <Button type="primary" className="createButtom setPadding" onClick={this.props.showfixedModal}>Fixed Tactics</Button>
+                            </div>
+                        }
+
                     </ColoredScrollbars>
                     </div>
                 }

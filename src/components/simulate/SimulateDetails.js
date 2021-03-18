@@ -459,7 +459,7 @@ export class SimpulateDetails extends React.Component {
     }
 
     render() {
-        const { brandList, scenarioName, Globalgeagraphy, profitValueData, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, keyHighlights } = this.props
+        const { brandList, scenarioName, Globalgeagraphy, profitValueData, fixedTactics, geographyList, periodValue, tacticValue, subBrandValue, showColumns, changeShowColumns, showProfit, changeShowProfit, spendData, keyHighlights } = this.props
         const columns = [
             { fixed: 'left', width: 300, title: 'Tactic', dataIndex: 'tactic', key: 'tactic', className: 'leftAlign', render: (text, record) => <span className="borderRight">{text}</span>, },
             { width: 200, title: 'Change Spending', dataIndex: 'changeInSpend', key: 'changeInSpend', render: (changeInSpend, record) => {
@@ -2145,6 +2145,11 @@ export class SimpulateDetails extends React.Component {
                                 
                             //     </Tabs>
                             // </div>
+                        }
+                        {fixedTactics.length > 0 &&
+                            <div className="fixedButton">
+                                <Button type="primary" className="createButtom setPadding" onClick={this.props.showfixedModal}>Fixed Tactics</Button>
+                            </div>
                         }
                         </ColoredScrollbars>
                     </div>
