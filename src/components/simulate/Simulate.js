@@ -126,7 +126,7 @@ export class Simulate extends React.Component {
         const modal = scenarioObj[0].model
         const Globalgeagraphy = scenarioObj[0].geography
         if (props.periodOptions.length <=0 && !state.isSimulated) {
-          props.getPeriod(modal)
+          props.getPeriod(modal, Globalgeagraphy)
         }
         return {scenarioName, modal, Globalgeagraphy}
       }
@@ -169,7 +169,7 @@ export class Simulate extends React.Component {
 
  resetData = () => {
   this.props.clearData()
-  this.props.getPeriod(this.state.modal)
+  this.props.getPeriod(this.state.modal, this.state.Globalgeagraphy)
   this.setState({
     isSimulated: false,
   });

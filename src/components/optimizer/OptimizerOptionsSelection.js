@@ -263,6 +263,7 @@ export class OptimizerOptionsSelection extends React.Component {
                                                     <span onClick={TypePop}><Radio value={option}>{option}  </Radio></span>
                                             )
                                         }
+                                        
                                     </Radio.Group>
                                     {/* {
                                         this.state[keyName].checkedList === 'Minimize Spend' &&
@@ -285,6 +286,17 @@ export class OptimizerOptionsSelection extends React.Component {
                                         listOption.map((option) =>
                                             <Radio value={option} disabled={this.props.isSimulated} >{option}</Radio>
                                         )
+                                    }
+                                    {
+                                        keyName === 'period' && 
+                                        <span>
+                                        <Radio value="Q1" disabled="true" >Q1</Radio>
+                                        <Radio value="Q2" disabled="true" >Q2</Radio>
+                                        <Radio value="Q3" disabled="true" >Q3</Radio>
+                                        <Radio value="Q4" disabled="true" >Q4</Radio>
+                                        <Radio value="H1" disabled="true" >H1</Radio>
+                                        <Radio value="H2" disabled="true" >H2</Radio>
+                                        </span>
                                     }
                                 </Radio.Group>
                         :

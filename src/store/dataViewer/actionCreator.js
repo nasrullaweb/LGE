@@ -616,7 +616,10 @@ export function getTacticList2(modal, geography, region, brand, subBrand) {
 export function getGraphData21(modal, geography, region, brand, subBrand, var1, var2) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/DMMultipleTactics/GetChart/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+    const tac = {
+      tactic : var2.toString()
+    }
+    axios.post(`${apiURL}/DMMultipleTactics/GetChart/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
     )
     .then(response => {
       dispatch({
@@ -638,7 +641,10 @@ export function getGraphData21(modal, geography, region, brand, subBrand, var1, 
 export function getGraphData22(modal, geography, region, brand, subBrand, var1, var2) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/DMMultipleTactics/GetBar1/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+    const tac = {
+      tactic : var2.toString()
+    }
+    axios.post(`${apiURL}/DMMultipleTactics/GetBar1/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
     )
     .then(response => {
       dispatch({
@@ -660,7 +666,10 @@ export function getGraphData22(modal, geography, region, brand, subBrand, var1, 
 export function getGraphData23(modal, geography, region, brand, subBrand, var1, var2) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/DMMultipleTactics/GetBar2/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+    const tac = {
+      tactic : var2.toString()
+    }
+    axios.post(`${apiURL}/DMMultipleTactics/GetBar2/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
     )
     .then(response => {
       dispatch({
@@ -711,7 +720,10 @@ export function getTab2AllData(modal, geography) {
                 if (sessionStorage.getItem('var2ValueTab2')) {
                   const var1 = JSON.parse(sessionStorage.getItem('var1ValueTab2'))
                   const var2 = JSON.parse(sessionStorage.getItem('var2ValueTab2'))
-                  axios.get(`${apiURL}/DMMultipleTactics/GetChart/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+                  const tac = {
+                    tactic : var2.toString()
+                  }
+                  axios.post(`${apiURL}/DMMultipleTactics/GetChart/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
                   )
                   .then(response => {
                     dispatch({
@@ -724,7 +736,7 @@ export function getTab2AllData(modal, geography) {
                       type: DV_GET_GRAPH_DATA21_ERROR,
                     })
                   })
-                  axios.get(`${apiURL}/DMMultipleTactics/GetBar1/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+                  axios.post(`${apiURL}/DMMultipleTactics/GetBar1/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
                   )
                   .then(response => {
                     dispatch({
@@ -737,7 +749,7 @@ export function getTab2AllData(modal, geography) {
                       type: DV_GET_GRAPH_DATA22_ERROR,
                     })
                   })
-                  axios.get(`${apiURL}/DMMultipleTactics/GetBar2/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}/${var2}`, config
+                  axios.post(`${apiURL}/DMMultipleTactics/GetBar2/${modal}/${geography}/${region}/${brand}/${subBrand}/${var1}`, tac, config
                   )
                   .then(response => {
                     dispatch({

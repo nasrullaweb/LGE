@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Chart from "react-apexcharts";
 import ColoredScrollbars from '../common/ColoredScrollbars';
 
-
 class MainTab2Charts extends React.Component {
     constructor(props) {
       super(props);
@@ -820,7 +819,7 @@ class MainTab2Charts extends React.Component {
             grid: {
               show: false,
             },
-            colors: ['#186609','#9BBB59', '#F79646','#4BACC6','#C0504D', '#D6D7D9',
+            colors: ['#186609','#9BBB59', '#F79646','#4BACC6','#C0504D', '#aaaaaa',
             '#4EB9D2','#4D8DD3','#3558EB','#005086','#032F4E','#404040',
             '#7F7F7F','#BFBFBF','#8EBDCB','#8A85BD','#EAB0B8','#E54878',
             '#994561','#CC3A8E'],
@@ -918,7 +917,7 @@ class MainTab2Charts extends React.Component {
                 },
               },
               title: {
-                text: "ROI (€)",
+                text: `ROI (${sessionStorage.getItem('symbolVal')})`,
                 style: {
                   color: '#DB1348',
                   fontWeight : 'bold',
@@ -1075,8 +1074,8 @@ class MainTab2Charts extends React.Component {
     if (props.graphData1 && props.graphData1.sdSeries && subBrandValue !== props.subBrandValue) {
       cart2.series[0].data = props.graphData1.sdSeries[0].series
       cart2.options.xaxis.categories = props.graphData1.sdSeries[0].labels
-      //tiltleVal3 = props.graphData1.sdSeries[0].bucket + ": " + Math.round(props.graphData1.sdSeries[0].value * 10) / 10 + "%"
-      tiltleVal3 = props.graphData1.sdSeries[0].bucket + ": " + "10.0%"
+      tiltleVal3 = props.graphData1.sdSeries[0].bucket + ": " + Math.round(props.graphData1.sdSeries[0].value * 10) / 10 + "%"
+      //tiltleVal3 = props.graphData1.sdSeries[0].bucket + ": " + "10.0%"
     }
 
     if (props.graphData21 && props.graphData21.series && subBrandValue !== props.subBrandValue) {
@@ -1147,7 +1146,7 @@ class MainTab2Charts extends React.Component {
                           options={this.state.cart0.options}
                           series={this.state.cart0.series}
                           type="bar" 
-                          height={200}
+                          height={280}
                           />
                         </div>
                         <div className="chartSub">
@@ -1156,7 +1155,7 @@ class MainTab2Charts extends React.Component {
                           options={this.state.cart01.options}
                           series={this.state.cart01.series}
                           type="bar" 
-                          height={200}
+                          height={280}
                           />
                         </div>
                         
@@ -1184,7 +1183,7 @@ class MainTab2Charts extends React.Component {
                           options={this.state.cart02.options}
                           series={this.state.cart02.series}
                           type="bar" 
-                          height={200}
+                          height={280}
                           />
                         </div>
               </div>

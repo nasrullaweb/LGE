@@ -3,9 +3,6 @@ import { Table } from 'antd';
 import ColoredScrollbars from '../common/ColoredScrollbars';
 
 
-
-
-
 export class SpendTable extends React.Component {
 
     render() {
@@ -17,12 +14,12 @@ export class SpendTable extends React.Component {
           render: (text, record) => <span className="borderRight">{text}</span>,
         },
         {
-            title: '2018 (€)',
+            title: `2018 (${sessionStorage.getItem('symbolVal')})`,
             dataIndex: 'previous',
             render: (text, record) => <span className="borderRight">{Math.round(text)}</span>,
           },
         {
-          title: '2019 (€)',
+          title: `2019 (${sessionStorage.getItem('symbolVal')})`,
           dataIndex: 'current',
           key: 'current',
           render: (text, record) => <span className="borderRight">{Math.round(text)}</span>,

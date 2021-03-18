@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Chart from "react-apexcharts";
 
-
 class MainTab4Charts extends React.Component {
     constructor(props) {
       super(props);
@@ -55,7 +54,7 @@ class MainTab4Charts extends React.Component {
                     enabled: false
                   },
                   title: {
-                    text: "Spend (€)",
+                    text: `Spend (${sessionStorage.getItem('symbolVal')})`,
                     offsetY: 8,
                     style: {
                       color: '#333',
@@ -130,7 +129,7 @@ class MainTab4Charts extends React.Component {
                       enabled: false
                     },
                     title: {
-                      text: "Incremental Sales (€)",
+                      text: `Incremental Sales (${sessionStorage.getItem('symbolVal')})`,
                       style: {
                         color: '#DB1348',
                         fontWeight : 'bold',
@@ -150,7 +149,7 @@ class MainTab4Charts extends React.Component {
                       color: '#8E8E8E'
                     },
                     title: {
-                      text: "ROI (€)",
+                      text: `ROI (${sessionStorage.getItem('symbolVal')})`,
                       rotate: -90,
                       style: {
                         color: '#FF9933',
@@ -306,14 +305,14 @@ class MainTab4Charts extends React.Component {
   <div id="chart">
       {
           this.props.graphData4 &&
-            <div className="chartContent">
+            <div className="chartContent respCurv">
                 <div className="downChart titleAdded">
               <div className="chartTitle"><span className="smallLeftBorder"></span>Sufficiency & Efficiency: {this.props.tacticValue}</div>
                 <Chart
                         options={this.state.cart3.options}
                         series={this.state.cart3.series}
                         type="line" 
-                        height={400}
+                        height={350}
                         />
                   <p>Response curves are at overall level and will be the same across all Channel/Type.</p>
                 </div>

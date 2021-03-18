@@ -5,6 +5,7 @@ import SpendTable from './SpendTable'
 import { Button, Modal } from 'antd';
 
 
+
 class MainTab3Charts extends React.Component {
     constructor(props) {
       super(props);
@@ -91,7 +92,7 @@ class MainTab3Charts extends React.Component {
                   },
                 },
                 title: {
-                  text: "Spend (€)",
+                  text: `Spend (${sessionStorage.getItem('symbolVal')})`,
                   style: {
                     color: '#DB1348',
                     fontWeight : 'bold',

@@ -74,10 +74,10 @@ export function getGeography(brand, modal) {
   return action
 }
 
-export function getPeriod(modal) {
+export function getPeriod(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Period/GetPeriod/${modal}`, config
+    axios.get(`${apiURL}/Period/GetPeriod/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -150,7 +150,10 @@ export function getSubBrands(brand, geography, modal) {
 export function getKeyHighLights(brand, geography, subBrand, period, tactic, modal, optimizationType, typeValue) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Optimiser/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}/${optimizationType}`, config)
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/Optimiser/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${modal}/${optimizationType}`, tac, config)
     .then(response => {
       dispatch({
           type: GET_KEY_HIGHLIGHTS,
@@ -173,14 +176,20 @@ export function getKeyHighLights(brand, geography, subBrand, period, tactic, mod
 
 export function getSpendingCostData(brand, geography, subBrand, period, tactic, modal, optimizationType, typeValue) {
   const action = function (dispatch) {
+    const tac = {
+      tactic : tactic.toString()
+    }
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Optimiser/GetSpends/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}/${optimizationType}`, config
+    axios.post(`${apiURL}/Optimiser/GetSpends/${brand}/${geography}/${subBrand}/${period}/${modal}/${optimizationType}`, tac, config
     )
     .then(response => {
       const spendingData = getNestedChildren(response.data.result)
+      const constraintsVal = response.data.result1
       dispatch({
           type: GET_SPENDINGCOST_DATA,
           payload: spendingData,
+          fixedTactics: response.data.fixedTactics,
+          constraintsVal: constraintsVal,
       })
       dispatch(ajaxCallSuccess());
     })
@@ -238,12 +247,13 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue, BaseFactor) {
+export function simulateData(modal, period, geography, scenarioID, spendData, optimizationType, minimizeSpendValue, maximizeRevenueValue, methodValue, BaseFactor, profitFactor) {
   const params = spendData;
   const methodValueData = methodValue ? methodValue : 'NA'
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/optimiser/SaveOptimisationResults/${modal}/${period}/${geography}/${optimizationType}/${minimizeSpendValue}/${maximizeRevenueValue}/${scenarioID}/${methodValueData}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch({
@@ -351,10 +361,11 @@ export function getOptimizationType(modal) {
   return action
 }
 
-export function saveResults(scenarioID) {
+export function saveResults(scenarioID, profitFactor) {
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Optimiser/SaveOptimisationFinalResult/${scenarioID}`, '', config
+    axios.post(`${apiURL}/Optimiser/SaveOptimisationFinalResult/${scenarioID}/${profitData}`, '', config
     )
     .then(response => {
       dispatch({
@@ -375,10 +386,11 @@ export function saveResults(scenarioID) {
   return action
 }
 
-export function saveAsScenario(modal, scenarioName, scenarioNote, oldScenarioID) {
+export function saveAsScenario(modal, scenarioName, scenarioNote, oldScenarioID, profitFactor) {
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Optimiser/SaveAsOptimisationFinalResult/${oldScenarioID}/${scenarioName}/${scenarioNote}/${modal}`, '', config
+    axios.post(`${apiURL}/Optimiser/SaveAsOptimisationFinalResult/${oldScenarioID}/${scenarioName}/${scenarioNote}/${modal}/${profitData}`, '', config
     )
     .then(response => {
       dispatch(ajaxCallSuccess());

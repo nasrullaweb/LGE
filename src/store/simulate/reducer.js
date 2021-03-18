@@ -17,6 +17,8 @@ export const initialState = {
     simulatedMsg: '',
     runSimulate: false,
     saveAsId: '',
+    profitROI: 0,
+    fixedTactics: [],
 }
 
 export default function simulate (state = initialState, action = {}) {
@@ -72,6 +74,7 @@ export default function simulate (state = initialState, action = {}) {
                 ...state,
                 spendData: action.payload,
                 oldSpendData: JSON.parse(JSON.stringify(action.payload)),
+                fixedTactics: action.fixedTactics,
                 runSimulate: false,
             });
         case REVERT_SPENDINGCOST_DATA:
@@ -111,8 +114,10 @@ export default function simulate (state = initialState, action = {}) {
                 selectedPeriod: action.payload.selectedPeriods,
                 selectedtactic: action.payload.selectedTactics,
                 selectedSubBrand: action.payload.selectedSubBrands,
+                fixedTactics: action.payload.fixedTactics,
                 simulatedMsg: '',
                 runSimulate: false,
+                profitROI: action.payload.profitROI
             });
         case CLEAR_DATA:
             return Object.assign({}, state, {
@@ -125,6 +130,7 @@ export default function simulate (state = initialState, action = {}) {
                 spendData: [],
                 oldSpendData: [],
                 keyHighlights: [],
+                fixedTactics: [],
                 simulatedMsg: '',
                 runSimulate: false,
                 saveAsId: '',

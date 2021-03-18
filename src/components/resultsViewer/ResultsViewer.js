@@ -496,6 +496,10 @@ class ResultsViewer extends Component {
         const subBrandMenu = this.setboxOption(subBrandList, 'subBrand', this.onCheckAllSubBrandChange, this.onSubBrandChange, true, 'subBrand', this.handleSubBrandOkChange)
         const tacticMenu = this.setboxOption(tacticList, 'tactic', '', this.onTacticChange, false, 'tactic')
         const tacticMenu1 = this.setboxOption(tacticList1, 'tactic', this.onCheckAllTactic1Change, this.onTactic1Change, true, 'tactic1', this.handleTactic1OkChange)
+        const listOptionTactic = []
+        tacticList.forEach(function(value, key) {
+            listOptionTactic.push(value["tactic"])
+        })
         return (
             <div className="container dataViewer tabsDesign resultView">
                 {ajaxCallsInProgress > 0 && <Loading />}
@@ -728,20 +732,34 @@ class ResultsViewer extends Component {
                                         <TabPane tab="Response Curve" key="tab4" type="card">
                                             {
                                                 tacticList.length > 0 &&
-                                                <div className="tabContent">
-                                                    <div className="tabHeader withAbsolut">
+                                                <div className="tabContent respTab">
+                                                    <div className="tabHeader withAbsolut chartContent tacticAbsolute">
                                                     {
                                                         messageTac && !tacticValue &&
                                                         <div className="messageContainer">
                                                             {messageTac}
                                                         </div>
                                                     }
-                                                        <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'onVisibleChange={this.handleVisible3Change}
+                                                        {/* <Dropdown overlay={tacticMenu} trigger={['click']} overlayClassName='DropDownOverLay'onVisibleChange={this.handleVisible3Change}
         visible={this.state.visible3}>
                                                             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                                                 Tactic <Icon type="caret-down" theme="outlined" />
                                                             </a>
-                                                        </Dropdown>
+                                                        </Dropdown> */}
+                                                        <div className="tacticName chartTitle"><span className="smallLeftBorder"></span>Tactic</div>
+                                                        <div className="tacticList">
+                                                        {listOptionTactic.length > 0 &&
+                                                            <Radio.Group onChange={this.onTacticChange} value={this.state["tactic"].checkedList}>
+                                                            {
+                                                                listOptionTactic.map((option) =>
+                                                                    <Radio value={option} key={option}>{option}</Radio>
+                                                                )
+                                                            }
+                                                            </Radio.Group>
+                                                            //</ColoredScrollbars>
+                                                            
+                                                    }
+                                                        </div>
                                                     </div>
                                                     <div className="graphContent">
                                                     {geographyValue &&

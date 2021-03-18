@@ -21,6 +21,9 @@ export const initialState = {
     saveAsId: '',
     isOptimized: false,
     isSaved: false,
+    profitROI: 0,
+    constraintsVal: {},
+    fixedTactics: [],
 }
 
 export default function optimizer (state = initialState, action = {}) {
@@ -96,7 +99,9 @@ export default function optimizer (state = initialState, action = {}) {
             return Object.assign({}, state, {
                 ...state,
                 spendData: action.payload,
+                constraintsVal: action.constraintsVal,
                 oldSpendData: JSON.parse(JSON.stringify(action.payload)),
+                fixedTactics: action.fixedTactics,
                 runSimulate: false,
                 isOptimized: false,
                 isSaved: false,
@@ -122,6 +127,8 @@ export default function optimizer (state = initialState, action = {}) {
                 ...state,
                 simulatedMsg: '',
                 spendData: [],
+                fixedTactics: [],
+                constraintsVal: {},
                 oldSpendData: [],
                 keyHighlights: [],
                 runSimulate: true,
@@ -147,11 +154,14 @@ export default function optimizer (state = initialState, action = {}) {
                 selectedSubBrand: action.payload.selectedSubBrands,
                 selectedOptimisationType: action.payload.selectedOptimisationType,
                 selectedOptimisationTypeValues: action.payload.selectedOptimisationTypeValues,
+                constraintsVal: action.payload.result1,
+                fixedTactics: action.payload.fixedTactics,
                 simulatedMsg: '',
                 runSimulate: false,
                 setLoader: false,
                 isOptimized: true,
                 isSaved: action.isSaved,
+                profitROI: action.payload.profitROI
             });
         case CLEAR_DATA:
             return Object.assign({}, state, {
@@ -164,6 +174,7 @@ export default function optimizer (state = initialState, action = {}) {
                 spendData: [],
                 oldSpendData: [],
                 keyHighlights: [],
+                fixedTactics: [],
                 optimizationTypeOptions: [],
                 simulatedMsg: '',
                 runSimulate: false,
@@ -206,6 +217,7 @@ export default function optimizer (state = initialState, action = {}) {
             return Object.assign({}, state, {
                 ...state,
                 spendData: [],
+                fixedTactics: [],
                 oldSpendData: [],
                 setLoader: false,
                 isOptimized: false,

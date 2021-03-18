@@ -345,7 +345,10 @@ export function getGraphData4(modal, geography, region, brand, subBrand, tactic)
 export function getGraphData5(modal, geography, region, brand, subBrand, tactic) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}/${tactic}`, config
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}`, tac, config
     )
     .then(response => {
       dispatch({
@@ -564,7 +567,10 @@ export function getAllData() {
                           }
                           if (sessionStorage.getItem('RtacticValue1')) {
                             const tactic = JSON.parse(sessionStorage.getItem('RtacticValue1'))
-                            axios.get(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}/${tactic}`, config
+                            const tac = {
+                              tactic : tactic.toString()
+                            }
+                            axios.post(`${apiURL}/RVCharts/GetSynergies/${modal}/${geography}/${region}/${brand}/${subBrand}`, tac, config
                             )
                             .then(response => {
                               dispatch({

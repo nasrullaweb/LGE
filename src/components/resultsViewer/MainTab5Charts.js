@@ -138,9 +138,9 @@ class MainTab5Charts extends React.Component {
                   },
                   formatter: function (value) {
                     let val = value;
-                      val = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      //val = parseFloat(value).toFixed(4).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     
-                    return isNaN(val) ? "" :`${Math.round(val*100)}%`;
+                    return isNaN(value) ? "" : value === 0 ? "" : `${Math.round(value*1000)/10}%`;
                   },
                 },
                 stroke: {
@@ -213,9 +213,9 @@ class MainTab5Charts extends React.Component {
                       },
                       formatter: function (value) {
                         let val = value;
-                          val = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          //val = parseFloat(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         
-                          return isNaN(val) ? "" :`${Math.round(val*100)}%`;
+                          return isNaN(val) ? "" :`${Math.round(val*1000)/10}%`;
                       },
                   },
                   

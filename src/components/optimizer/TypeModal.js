@@ -37,22 +37,22 @@ export class TypeModal extends React.Component {
            
             { title: 'Spend', dataIndex: 'spend', key: 'spend', render: (spend, record) => (
                 <span className="borderRight">
-                    {record.tactic && record.tactic === '2019 Plan' &&
-                        <span>{`€${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                    {record.tactic && record.tactic === 'Previous Plan' &&
+                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(spend).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'Revenue', dataIndex: 'revenue', key: 'revenue', render: (revenue, record) => (
                 <span className="borderRight">
-                    {record.tactic && record.tactic === '2019 Plan' &&
-                        <span>{`€${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
+                    {record.tactic && record.tactic === 'Previous Plan' &&
+                        <span>{`${sessionStorage.getItem('symbolVal')}${Math.round(revenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</span>
                     }
                 </span>
              )},
             { title: 'ROI', dataIndex: 'roi', key: 'roi', render: (roi, record) => (
                 <span>
-                    {record.tactic && record.tactic === '2019 Plan' &&
-                        <span>{`€${parseFloat(roi).toFixed(2)}`}</span>
+                    {record.tactic && record.tactic === 'Previous Plan' &&
+                        <span>{`${sessionStorage.getItem('symbolVal')}${parseFloat(roi).toFixed(2)}`}</span>
                     }
                 </span>
              )},
@@ -73,7 +73,7 @@ export class TypeModal extends React.Component {
                                 </div>
                           <Radio.Group className="radioHead" onChange={revValueChange} value={revValue} >
                             <Radio value="price">
-                                €
+                                {sessionStorage.getItem('symbolVal')}
                             </Radio>
                             <Radio value="per">
                                 % (Increase / Decrease)
@@ -82,7 +82,7 @@ export class TypeModal extends React.Component {
                         <div className="modalInput" >
                             {
                                 revValue && revValue == "price" &&
-                                <InputNumber  value={revPrice} onChange={e => onChangerevPrice(e)} formatter={value => `€ ${value}`}/>
+                                <InputNumber  value={revPrice} onChange={e => onChangerevPrice(e)} formatter={value => `${sessionStorage.getItem('symbolVal')} ${value}`}/>
                             }
                             {
                             revValue && revValue == "per" &&

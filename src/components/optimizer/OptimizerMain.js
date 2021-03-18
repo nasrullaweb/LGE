@@ -15,6 +15,7 @@ import { Spin, Progress  } from 'antd';
 import Heartbeat from 'react-heartbeat';
 import ShareScenario from '../scenario/ShareScenario'
 import TypeModal from './TypeModal'
+import FixedModal from './FixedModal'
 import { getUsersList, postShareScenario } from '../../store/scenario/actionCreator'
 import { apiURL } from '../../config/apiConfig'
 
@@ -41,6 +42,7 @@ export class SimpulateMain extends React.Component {
         visibleSaveAs: false,
         shareVisible: false,
         typeVisible: false,
+        fixedVisible: false,
         revertActive: false,
         minimizeSpendValue: 0,
         maximizeRevenueValue: 0,
@@ -49,7 +51,10 @@ export class SimpulateMain extends React.Component {
         revPrice: 0,
         revPer: 0,
         methodValue: '',
-        baseValue: ""
+        baseValue: "",
+        showProfit: false,
+        profitValueData: null,
+        profitValue: 0,
     }
 
     componentDidMount() {
@@ -90,6 +95,27 @@ export class SimpulateMain extends React.Component {
         });
     }
 
+    showfixedModal = () => {
+        this.setState({
+            fixedVisible: true,
+        });
+    }
+
+    handleTfixedOk = data => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
+    
+      handlefixedCancel = e => {
+        console.log("ttt")
+        this.setState({
+            fixedVisible: false,
+        });
+      };
+
+
     handleTypeOk = data => {
         this.setState({
             typeVisible: false,
@@ -128,6 +154,19 @@ export class SimpulateMain extends React.Component {
           });
     }
 
+    
+    onChangeProfit = (value) => {
+        this.setState({
+            profitValueData: value
+          });
+    }
+
+    changeShowProfit = checked => {
+        this.setState({
+            showProfit: checked,
+        });
+    }
+
     handleProductChange = (value) => {
     //     if (value.length > 2) {
     //         alert("Don't select more than 2 Brand")
@@ -148,7 +187,7 @@ export class SimpulateMain extends React.Component {
             })
 
             
-            this.props.getPeriod(this.props.modal)
+            this.props.getPeriod(this.props.modal, this.props.Globalgeagraphy)
         //}
         
     }
@@ -212,7 +251,7 @@ export class SimpulateMain extends React.Component {
         //         message: 'Please select Geography'
         //     })
         // } else {
-            this.props.getPeriod(this.props.modal)
+            this.props.getPeriod(this.props.modal, this.props.Globalgeagraphy)
             this.setState({
                 geographyList: value,
                 periodValue: [],
@@ -324,7 +363,7 @@ export class SimpulateMain extends React.Component {
     }
 
     handleSubBrandChange = (value) => {
-        this.props.getPeriod(this.props.modal)
+        this.props.getPeriod(this.props.modal, this.props.Globalgeagraphy)
         this.setState({
             subBrandValue: value,
             periodValue: [],
@@ -398,6 +437,13 @@ export class SimpulateMain extends React.Component {
                 revertActive: false,
             } 
         }
+
+        if (props.profitROI && props.profitROI !== state.profitValue) {
+            return {
+                profitValueData: props.profitROI,
+                profitValue: props.profitROI,
+            } 
+        }
         // if(props.setLoader, props.spendData.length === 0)
         // {
             
@@ -439,13 +485,13 @@ export class SimpulateMain extends React.Component {
         if (this.state.optimizationType) {
             const spendData = this.state.spendNewData
             this.setState({spendNewData: [], setOptimizerDefault: false, revertActive: false}) ;
-            let baseValueData = this.state.baseValue 
+            let baseValueData = this.state.baseValue !== ""
                                     ? this.state.baseValue 
                                     : this.props.keyHighlights.length >= 2 
                                         ? Math.round(this.props.keyHighlights[2].baseRevenuePercentage * 1000) / 1000
-                                        : "0.538"
+                                        : this.props.Globalgeagraphy === "SPAIN" || this.props.Globalgeagraphy === "RUSSIA" ? "6.4" : "0.538"
             baseValueData = Math.round(baseValueData * 1000)
-            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue, baseValueData)
+            this.props.simulateData(this.props.modal, this.state.periodValue, this.props.Globalgeagraphy, this.props.scenarioId, spendData, this.state.optimizationType, this.state.minimizeSpendValue, this.state.maximizeRevenueValue, this.state.methodValue, baseValueData, this.state.profitValueData)
         }
     }
 
@@ -455,13 +501,13 @@ export class SimpulateMain extends React.Component {
 
     handleSave = () => {
         this.setState({simulatedMsg: ''})
-        this.props.saveResults(this.props.scenarioId)
+        this.props.saveResults(this.props.scenarioId, this.state.profitValueData)
     }
 
     saveAsScenarioHandle = (values) => {
         const scenarioNote = values.scenarioNote ? values.scenarioNote : 'NA'
         this.setState({visibleSaveAs: false, spendNewData: []},
-            this.props.saveAsScenario(this.props.modal, values.scenarioname, scenarioNote, this.props.scenarioId)
+            this.props.saveAsScenario(this.props.modal, values.scenarioname, scenarioNote, this.props.scenarioId, this.state.profitValueData)
             )
         
     }
@@ -476,8 +522,8 @@ export class SimpulateMain extends React.Component {
         
 
     render() {
-      const { scenarioName, isSaved, setLoader, spendData, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy } = this.props
-      const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange } = this
+      const { scenarioName, isSaved, setLoader, spendData, constraintsVal, keyHighlights, isSimulated, isOptimized, runSimulate, modal, saveAsId, scenariosList, scenarioList, Globalgeagraphy, fixedTactics } = this.props
+      const { multiProductChange, handleProductChange, handleCompanyChange, openPopupType, handleOptimizationTypeChange, handleYearChange, handleTacticsChange, handleSubBrandChange, handleTacticsOkChange, changeShowProfit } = this
       const url = `/optimizer/${saveAsId}/${modal}/${Globalgeagraphy}/${isSimulated ? `Simulated` : ''}`
       const optType = Array.isArray(this.state.optimizationType) ? this.state.optimizationType.toString() : this.state.optimizationType;
       
@@ -609,6 +655,8 @@ export class SimpulateMain extends React.Component {
                             <OptimizerDetails 
                                 {...this.state}
                                 spendData={spendData}
+                                fixedTactics={fixedTactics}
+                                constraintsVal={constraintsVal}
                                 keyHighlights={keyHighlights}
                                 handleChangeSpendData={this.handleChangeSpendData}
                                 scenarioName={scenarioName}
@@ -616,6 +664,9 @@ export class SimpulateMain extends React.Component {
                                 handleSimulate={this.handleSimulate}
                                 optType={optType}
                                 onChangeBase={this.onChangeBase}
+                                changeShowProfit={changeShowProfit}
+                                onChangeProfit={this.onChangeProfit}
+                                showfixedModal={this.showfixedModal}
                             />
                         </div>
 
@@ -674,6 +725,22 @@ export class SimpulateMain extends React.Component {
                         onrevChangeOk={this.onrevChangeOk}
                       />
                     </Modal>
+                    <Modal
+                      title="Fixed Tactics"
+                      visible={this.state.fixedVisible}
+                      onOk={this.handleTfixedOk}
+                      onCancel={this.handlefixedCancel}
+                      className="managePopup"
+                    >
+                      <FixedModal
+                        handleOk={this.handleTfixedOk} 
+                        handleCancel={this.handlefixedCancel} 
+                        fixedTactics={fixedTactics}
+                        changeShowProfit={changeShowProfit}
+                        showProfit={this.state.showProfit}
+                        profitValueData={this.state.profitValueData}
+                      />
+                    </Modal>
                 </div>
             )
           }
@@ -682,9 +749,10 @@ export class SimpulateMain extends React.Component {
 
 const mapStateToProps = (state) => {
     const { brandOptions, geographyOptions, periodOptions, tacticsOptions, subBrandOptions, 
-        spendData, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, isSaved,
+        spendData, constraintsVal, keyHighlights, oldSpendData, selectedBrand, simulatedMsg, isSaved,
         selectedGeography, selectedPeriod, selectedtactic, selectedSubBrand, selectedOptimisationType, 
-        optimizationTypeOptions, saveAsId, runSimulate, setLoader, isOptimized, selectedOptimisationTypeValues
+        optimizationTypeOptions, saveAsId, runSimulate, setLoader, isOptimized, selectedOptimisationTypeValues, profitROI,
+        fixedTactics
     } =state.optimizer
   return {
       usersList: state.scenario.usersList,
@@ -696,6 +764,7 @@ const mapStateToProps = (state) => {
       subBrandOptions,
       optimizationTypeOptions,
       spendData,
+      constraintsVal,
       keyHighlights,
       oldSpendData,
       selectedBrand,
@@ -711,6 +780,8 @@ const mapStateToProps = (state) => {
       setLoader,
       isOptimized,
       isSaved,
+      profitROI,
+      fixedTactics
   };
 }
 

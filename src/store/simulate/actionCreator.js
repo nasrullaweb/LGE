@@ -84,10 +84,10 @@ export function getGeography(brand, modal) {
   return action
 }
 
-export function getPeriod(modal) {
+export function getPeriod(modal, geography) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Period/GetPeriod/${modal}`, config
+    axios.get(`${apiURL}/Period/GetPeriod/${modal}/${geography}`, config
     )
     .then(response => {
       dispatch({
@@ -168,7 +168,10 @@ export function removeSimulatedMsg () {
 export function getKeyHighLights(brand, geography, subBrand, period, tactic, modal) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Spend/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}`, config)
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/Spend/GetKeyHighlights/${brand}/${geography}/${subBrand}/${period}/${modal}`, tac, config)
     .then(response => {
       dispatch({
           type: GET_KEY_HIGHLIGHTS,
@@ -192,13 +195,17 @@ export function getKeyHighLights(brand, geography, subBrand, period, tactic, mod
 export function getSpendingCostData(brand, geography, subBrand, period, tactic, modal) {
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.get(`${apiURL}/Spend/GetSpendValues/${brand}/${geography}/${subBrand}/${period}/${tactic}/${modal}`, config
+    const tac = {
+      tactic : tactic.toString()
+    }
+    axios.post(`${apiURL}/Spend/GetSpendValues/${brand}/${geography}/${subBrand}/${period}/${modal}`, tac, config
     )
     .then(response => {
       const spendingData = getNestedChildren(response.data.result)
       dispatch({
           type: GET_SPENDINGCOST_DATA,
           payload: spendingData,
+          fixedTactics: response.data.fixedTactics,
       })
       dispatch(ajaxCallSuccess());
     })
@@ -256,11 +263,12 @@ export function getNestedChildren(data) {
   return out
 }
 
-export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights, BaseFactor) {
+export function simulateData(modal, period, geography, scenarioID, spendData, oldKeyHighlights, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/RunSimulator/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       
@@ -308,11 +316,12 @@ export function getSimulatedSpendData(scenarioID) {
   return action
 }
 
-export function saveResults(modal, period, geography, scenarioID, spendData, BaseFactor) {
+export function saveResults(modal, period, geography, scenarioID, spendData, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/SaveResults/${modal}/${period}/${geography}/${scenarioID}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch({
@@ -333,11 +342,12 @@ export function saveResults(modal, period, geography, scenarioID, spendData, Bas
   return action
 }
 
-export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData, BaseFactor) {
+export function saveAsScenario(modal, period, geography, scenarioName, scenarioNote, spendData, BaseFactor, profitFactor) {
   const params = spendData;
+  const profitData = profitFactor ? Math.round(profitFactor*1000) : 0;
   const action = function (dispatch) {
     dispatch(ajaxCallBegin())
-    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}/${BaseFactor}`, params, config
+    axios.post(`${apiURL}/Spend/SaveAsResults/${modal}/${period}/${geography}/${scenarioName}/${scenarioNote}/${BaseFactor}/${profitData}`, params, config
     )
     .then(response => {
       dispatch(ajaxCallSuccess());

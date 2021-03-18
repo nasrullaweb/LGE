@@ -76,6 +76,35 @@
         .tabContent {
             padding: 10px;
             position: relative;
+
+            &.respTab .tabHeader.withAbsolut {
+                top: 85px;
+                z-index: 10;
+                
+
+                &.tacticAbsolute {
+                    text-align: left;
+                    width: 380px;
+                    text-align: left;
+                    padding: 10px;
+                    border: 1px Solid rgba(198, 198, 198, 0.5);
+                    border-radius: 8px;
+                    background-color: #fff;
+                    right: 33px;
+                    height: calc(100% - 105px);
+                    overflow-y: auto;
+
+                    .messageContainer {
+                        left: 60px;
+                        top: 4px;
+                    }
+
+                    .ant-radio-wrapper {
+                        display: block;
+                        padding-bottom: 5px;
+                    }
+                }
+            }
         }
 
         .tabHeader.withAbsolut {
@@ -98,6 +127,30 @@
             
         }
 
+        .respTab {
+           #chart .chartContent {
+                width: calc(100% - 440px);
+                max-width: 856px;
+            }
+
+            .chartTitle {
+                background: linear-gradient(180deg, #ffffff 0%, #f9f9f9 47.72%, #e3e3e3 100%);
+                height: 36px;
+                border-radius: 8px 8px 0px 0px;
+                border-bottom: 1px Solid rgba(178, 178, 178, 0.5);
+                width: 100%;
+                font-size: 14px;
+                color: #3D3D3D;
+                padding: 10px;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .tacticList {
+                padding-top: 36px;
+            }
+        }
+
         .chartContent {
             padding: 0;
             max-width: 100%;
@@ -111,7 +164,7 @@
                 background-color: #fff;
 
                 &.setHeight {
-                    height: 700px;
+                    height: 860px;
                     width: calc(33% - 10px);
                 }
 
@@ -146,7 +199,7 @@
                 position: relative;
 
                 &.setWidth {
-                    height: 700px;
+                    height: 860px;
                     width: calc(67% - 10px);
 
                     .chartSub {
@@ -387,7 +440,7 @@
         background-color: #4BACC6;
     }
     .chartTitleSub4 {
-        background-color: #186609;
+        background-color: #33a31f;
     }
     .chartTitleSub5 {
         background-color: #C0504D;
